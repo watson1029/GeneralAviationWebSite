@@ -13,7 +13,7 @@
                 <tr>
                     <td style="padding-left: 2px">
                         <a href="#" onclick="$('#form_edit input').val('');Main.OpenWin();return false;" id="a_add"
-                            class="easyui-linkbutton" iconcls="icon-add">添加</a> <a href="#" onclick="Main.Delete(0);return false;"
+                            class="easyui-linkbutton" iconcls="icon-add">添加</a> <a href="#" onclick="Main.Delete();return false;"
                                 id="a_del" class="easyui-linkbutton" iconcls="icon-cancel">删除</a>
                     </td>
                     <td style="text-align: right; padding-right: 15px">
@@ -199,23 +199,18 @@
             },
 
             //删除按钮事件
-            Delete: function (id) {
+            Delete: function () {
+                var selected = "";
+                $($('#tab_list').datagrid('getSelections')).each(function () {
+                    selected += this.JSON_ID + ",";
+                });
+                selected = selected.substr(0, selected.length - 1);
+                if (selected == "") {
+                    $.messager.alert('提示', '请选择要删除的数据！', 'info');
+                    return;
+                }
                 $.messager.confirm('提示', '确认删除该条记录？', function (r) {
                     if (r) {
-                        var selected = "";
-                        if (id <= 0) {
-                            $($('#tab_list').datagrid('getSelections')).each(function () {
-                                selected += this.JSON_ID + ",";
-                            });
-                            selected = selected.substr(0, selected.length - 1);
-                            if (selected == "") {
-                                $.messager.alert('提示', '请选择要删除的数据！', 'info');
-                                return;
-                            }
-                        }
-                        else {
-                            selected = id;
-                        }
                         $.post("UserInfo.aspx", { "action": "del", "cbx_select": selected }, function (data) {
                             $.messager.alert('提示', data, 'info', function () { $("#tab_list").datagrid("reload"); });
                         });

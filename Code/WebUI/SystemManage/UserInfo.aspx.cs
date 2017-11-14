@@ -14,11 +14,9 @@ public partial class SystemManage_UserInfo : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-            string action = string.Empty;
-            if (Request.Form["action"] != "")
-                action = Request.Form["action"];
-
-            switch (action)
+        if (Request.Form["action"] != null)
+        {
+            switch (Request.Form["action"])
             {
                 case "query"://查询数据
                     QueryData();
@@ -35,23 +33,19 @@ public partial class SystemManage_UserInfo : System.Web.UI.Page
                 default:
                     break;
             }
+        }
     }
         
         private void Delete()
         {
             var writeMsg = "删除失败！";
-            if (Request.Form["cbx_select"] != null && Request.Form["cbx_select"] != "0")
+            if (Request.Form["cbx_select"] != null)
             {
-                if (UserInfoBLL.Delete(int.Parse(Request.Form["cbx_select"])))
+                if (UserInfoBLL.Delete(Request.Form["cbx_select"].ToString()))
                 {
                     writeMsg = "删除成功";
                 }
-                else
-                {
-                    writeMsg = "删除失败！";
-                }
             }
-
             Response.Clear();
             Response.Write(writeMsg);
             Response.End();

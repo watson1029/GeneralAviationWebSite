@@ -20,9 +20,9 @@ namespace BLL.SystemManagement
     //    {
     //        return UserInfoDAL.GetUserByName(userName);
     //    }
-        public static bool Delete(int id)
+        public static bool Delete(string ids)
         {
-            return UserInfoDAL.Delete(id);
+            return UserInfoDAL.Delete(ids);
         }
         /// <summary>
         /// 增加一条数据

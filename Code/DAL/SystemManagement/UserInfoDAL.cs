@@ -16,13 +16,11 @@ namespace DAL.SystemManagement
        private static SqlDbHelper dao= new SqlDbHelper();
 
 
-        public static bool Delete(int id)
+        public static bool Delete(string ids)
         {
-            var sql = "delete from UserInfo WHERE ID=@ID";
-            SqlParameter[] parameters = {
-					new SqlParameter("@ID", id)
-			};
-            return dao.ExecNonQuery(sql, parameters) > 0;
+            var sql = string.Format("delete from UserInfo WHERE  (ID IN ({0}))", ids);
+    
+            return dao.ExecNonQuery(sql) > 0;
         }
         public static bool Add(UserInfo model)
         {
