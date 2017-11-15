@@ -30,9 +30,9 @@
     </form>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" title="编辑用户" style="width: 500px; height: 350px;"
+    <div id="edit" class="easyui-dialog" title="新增编辑" style="width: 500px; height: 350px;"
         modal="true" closed="true" buttons="#edit-buttons">
-        <form id="form_edit" name="form_edit" method="post" url="UserInfo.aspx">
+        <form id="form_edit" name="form_edit" method="post">
             <div>
                 <table class="table_edit">
                     <tr>
@@ -57,8 +57,7 @@
                         <td class="tdal">手机号码：
                         </td>
                         <td class="tdar">
-                            <input id="Mobile" name="Mobile" type="text" class="easyui-validatebox"
-                                required="true" />
+                            <input id="Mobile" name="Mobile" style="width: 100%" type="text" class="easyui-validatebox" />
                         </td>
 
                     </tr>
@@ -66,9 +65,9 @@
                         <td class="tdar">状态：
                         </td>
                         <td class="tdar">
-                            <select id="Status" class="easyui-combobox" name="Status">
+                            <select class="easyui-combobox" name="Status" labelPosition="top" panelheight="auto" style="width:100%;">
+                                 <option value="1" selected>冻结</option>
                                 <option value="0">正常</option>
-                                <option value="1" selected="selected">冻结</option>
                             </select>
                         </td>
 </tr>
@@ -76,9 +75,9 @@
                         <td class="tdar">是否通航用户：
                         </td>
                         <td class="tdar">
-                            <select id="IsGeneralAviation" class="easyui-combobox" name="IsGeneralAviation">
+                            <select class="easyui-combobox" name="IsGeneralAviation" labelPosition="top"  panelheight="auto" style="width:100%;">   
+                                <option value="1" selected>是</option>
                                 <option value="0">否</option>
-                                <option value="1" selected="selected">是</option>
                             </select>
                         </td>
 </tr>
@@ -154,29 +153,15 @@
             //打开添加窗口
             OpenWin: function () {
                 $("#edit").dialog("open");
-                $("#btn_add").attr("onclick", "Main.Save(0); return false;")
+                $("#btn_add").attr("onclick", "Main.Save(); return false;")
             },
-            GetInputData: function (id, cmd) {
-                var postdata = "{ \"action\":\"" + cmd + "\",";
-                $("#" + id + " input[type!='checkbox']").each(function () {
-                    postdata += "\"" + $(this).attr("name") + "\":\"" + $(this).val() + "\",";
-                });
-                $("#" + id + " input[type='checkbox']").each(function () {
-                    postdata += "\"" + $(this).attr("name") + "\":\"" + this.checked + "\",";
-                });
-                postdata = postdata.substr(0, postdata.length - 1);
-                postdata += "}";
-                return eval("(" + postdata + ")");
-            },
-
             //提交按钮事件
             Save: function (uid) {
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
-                var json = this.GetInputData('edit', 'submit');
-
-                json.id = uid;
+                var json = $.param({ "id": uid, "action": "submit" }) + '&' + $('#form_edit').serialize();
+   
                 $.post("UserInfo.aspx", json, function (data) {
                     $.messager.alert('提示', data, 'info', function () {
                         if (data.indexOf("成功") > 0) {
@@ -200,18 +185,17 @@
 
             //删除按钮事件
             Delete: function () {
-                var selected = "";
-                $($('#tab_list').datagrid('getSelections')).each(function () {
-                    selected += this.JSON_ID + ",";
+                var idArray = [];
+                $($('#tab_list').datagrid('getSelected')).each(function () {
+                    idArray.push(this.JSON_ID);
                 });
-                selected = selected.substr(0, selected.length - 1);
-                if (selected == "") {
-                    $.messager.alert('提示', '请选择要删除的数据！', 'info');
+                if (idArray.length <= 0) { 
+                    $.messager.alert('提示', '请选择一条记录！', 'info');
                     return;
                 }
                 $.messager.confirm('提示', '确认删除该条记录？', function (r) {
                     if (r) {
-                        $.post("UserInfo.aspx", { "action": "del", "cbx_select": selected }, function (data) {
+                        $.post("UserInfo.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
                             $.messager.alert('提示', data, 'info', function () { $("#tab_list").datagrid("reload"); });
                         });
                     }

@@ -35,11 +35,11 @@ namespace Untity
                     {
                         if (j < dt.Columns.Count - 1)
                         {
-                            JsonString.Append("ipt_" + dt.Columns[j].ColumnName.ToString() + ":" + "\"" + dt.Rows[i][j].ToString() + "\",");
+                            JsonString.Append( dt.Columns[j].ColumnName.ToString() + ":" + "\"" + dt.Rows[i][j].ToString() + "\",");
                         }
                         else if (j == dt.Columns.Count - 1)
                         {
-                            JsonString.Append("ipt_" + dt.Columns[j].ColumnName.ToString() + ":" + "\"" + dt.Rows[i][j].ToString() + "\"");
+                            JsonString.Append(dt.Columns[j].ColumnName.ToString() + ":" + "\"" + dt.Rows[i][j].ToString() + "\"");
                         }
                     }
 

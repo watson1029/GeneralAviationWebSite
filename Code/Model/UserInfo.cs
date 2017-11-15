@@ -12,7 +12,7 @@ namespace Model
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Mobile { get; set; }
-        public bool IsGeneralAviation { get; set; }
+        public byte IsGeneralAviation { get; set; }
         public string CompanyCode3 { get; set; }
         public DateTime CreateTime { get; set; }
         public byte Status { get; set; }
