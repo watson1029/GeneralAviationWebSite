@@ -1,5 +1,6 @@
 ﻿using BLL.SystemManagement;
 using Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,7 +23,7 @@ public partial class SystemManage_UserInfo : System.Web.UI.Page
                     QueryData();
                     break;
                 case "queryone"://获取一条记录
-                    QueryOneData();
+                    GetData();
                     break;
                 case "submit":
                     Save();
@@ -38,25 +39,30 @@ public partial class SystemManage_UserInfo : System.Web.UI.Page
 
     private void Delete()
     {
-        var writeMsg = "删除失败！";
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
             if (UserInfoBLL.Delete(Request.Form["cbx_select"].ToString()))
             {
-                writeMsg = "删除成功！";
+                result.IsSuccess = true;
+                result.Msg = "删除成功！";
             }
         }
         Response.Clear();
-        Response.Write(writeMsg);
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json"; 
         Response.End();
     }
     private void Save()
     {
-        bool result = false;
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "保存失败！";
         int? id =null;
         if(!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var writeMsg = "操作失败！";
         var model = new UserInfo()
         {
             UserName = Request.Form["UserName"],
@@ -68,51 +74,41 @@ public partial class SystemManage_UserInfo : System.Web.UI.Page
         if (!id.HasValue)//新增
         {
             model.CreateTime = DateTime.Now;
-            result = UserInfoBLL.Add(model);
-            if (result)
+            if (UserInfoBLL.Add(model))
             {
-                writeMsg = "增加成功！";
-            }
-            else
-            {
-                writeMsg = "增加失败！";
+                result.IsSuccess = true;
+                result.Msg = "增加成功！";
             }
         }
         else//编辑
         {
             model.ID = id.Value ;
-            result = UserInfoBLL.Update(model);
-            if (result)
+            if (UserInfoBLL.Update(model))
             {
-                writeMsg = "更新成功！";
-            }
-            else
-            {
-                writeMsg = "更新失败！";
+                result.IsSuccess = true;
+                result.Msg = "更新成功！";
             }
         }
         Response.Clear();
-        Response.Write(writeMsg);
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json"; 
         Response.End();
     }
 
-
-    #region 查询指定ID 的数据
     /// <summary>
     /// 获取指定ID的数据
     /// </summary>
-    private void QueryOneData()
+    private void GetData()
     {
         var userid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        DataTable dt = UserInfoBLL.Get(userid);
-        var strJSON = JsonHelper.CreateJsonOne(dt, false);
+        var userinfo = UserInfoBLL.Get(userid);
+        var strJSON = JsonConvert.SerializeObject(userinfo);
         Response.Clear();
         Response.Write(strJSON);
+        Response.ContentType = "application/json"; 
         Response.End();
     }
-    #endregion
 
-    #region 查询数据
 
     /// <summary>
     /// 查询数据
@@ -126,11 +122,30 @@ public partial class SystemManage_UserInfo : System.Web.UI.Page
         if (page < 1) return;
         string orderField = sort.Replace("JSON_", "");
         string strWhere = GetWhere();
+        var pageList = UserInfoBLL.GetList(size, page, strWhere);
+        //var vms = new List<UserInfo>();
+        //if (pageList != null && pageList.TotalCount > 0)
+        //{
+        //    vms.AddRange(pageList.Select(dto => new UserInfo
+        //    {
+        //        ID = dto.ID,
+        //        Password = dto.Password,
+        //        Status = dto.Status,
+        //        CreateTime = dto.CreateTime,
+        //        Phone = dto.Phone,
+        //        ContactPerson = dto.ContactPerson,
+        //        ContactPhone = dto.ContactPhone,
+        //        ContactEmail = dto.ContactEmail,
+        //        AreaName = dto.AreaName,
+        //        Deposit = IFPECBasicInfoFacade.GetDisp(dto.ECCode),
+        //        WillApproveStatus = IFPECDepositHistoryFacade.DepositWillApproveStatus(dto.ECCode)
+        //    }));
 
-        DataTable dsUser = UserInfoBLL.GetList("UserInfo", "*", "ID", size, page, false, false, strWhere);
-        string strJSON = JsonHelper.CreateJsonParameters(dsUser, true, 1);
+        //}
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
         //   strJSON= "{ \"rows\":[ { \"JSON_ID\":\"1\",\"JSON_UserName\":\"adads\",\"JSON_Password\":\"asdasdf\",\"JSON_Mobile\":\"sdfasdf\",\"JSON_Status\":\"0\",\"JSON_CreateTime\":\"2017-11-1\",\"JSON_IsGeneralAviation\":1,\"JSON_CompanyCode3\":\"222\"} ],\"total\":1}";
         Response.Write(strJSON);
+        Response.ContentType = "application/json"; 
         Response.End();
     }
 
@@ -141,12 +156,9 @@ public partial class SystemManage_UserInfo : System.Web.UI.Page
     private string GetWhere()
     {
         StringBuilder sb = new StringBuilder("1=1");
-        var searchType = Request.Form["search_type"] != null ? Request.Form["search_type"] : string.Empty;
-        var searchValue = Request.Form["search_value"] != null ? Request.Form["search_value"] : string.Empty;
-
-        if (!string.IsNullOrEmpty(searchType) && !string.IsNullOrEmpty(searchValue))
+        if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", searchValue, searchType);
+            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
         else
         {
@@ -155,5 +167,4 @@ public partial class SystemManage_UserInfo : System.Web.UI.Page
         return sb.ToString();
     }
 
-    #endregion
 }

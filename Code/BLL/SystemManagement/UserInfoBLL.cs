@@ -5,21 +5,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
+using Untity;
 namespace BLL.SystemManagement
 {
     public class UserInfoBLL
     {
-    //    /// <summary>
-    //    /// 获取指定名称的用户
-    //    /// </summary>
-    //    /// <param name="userName">用户名称</param>
-    //    /// <returns></returns>
-    //    public static UserInfo GetUserByName(string userName)
-    //    {
-    //        return UserInfoDAL.GetUserByName(userName);
-    //    }
+
         public static bool Delete(string ids)
         {
             return UserInfoDAL.Delete(ids);
@@ -41,12 +32,12 @@ namespace BLL.SystemManagement
         }
 
 
-        public static DataTable GetList(string tableName, string getFields, string orderName, int pageSize, int pageIndex, bool isGetCount, bool orderType, string strWhere)
+        public static PagedList<UserInfo> GetList(int pageSize, int pageIndex, string strWhere)
         {
-            return UserInfoDAL.GetList(tableName,getFields,orderName, pageSize, pageIndex, isGetCount, orderType,strWhere);
+            return UserInfoDAL.GetList(pageSize, pageIndex, strWhere);
         }
 
-        public static DataTable Get(int id)
+        public static UserInfo Get(int id)
         {
             return UserInfoDAL.Get(id);
         }
