@@ -82,7 +82,7 @@ PlanState=@PlanState,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT
         }
 
 
-        public static PagedList<RepetitivePlan> GetMyLongPlanList(int pageSize, int pageIndex, string strWhere)
+        public static PagedList<RepetitivePlan> GetMyRepetitivePlanList(int pageSize, int pageIndex, string strWhere)
         {
 
             var sql = string.Format("select * from RepetitivePlan where {0}", strWhere);
@@ -123,12 +123,12 @@ PlanState=@PlanState,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT
             if (!dr["Remark"].Equals(DBNull.Value))
                 plan.Remark = Convert.ToString(dr["Remark"]);
             if (!dr["PlanState"].Equals(DBNull.Value))
-                plan.PlanState = Convert.ToByte(dr["PlanState"]);
+                plan.PlanState = Convert.ToString(dr["PlanState"]);
             plan.ADES = Convert.ToString(dr["ADES"]);
             plan.ADEP = Convert.ToString(dr["ADEP"]);
             plan.WeekSchedule = Convert.ToString(dr["WeekSchedule"]);
-            plan.SIBT = Convert.ToDateTime(dr["SIBT"]);
-            plan.SOBT = Convert.ToDateTime(dr["SOBT"]);
+            plan.SIBT = DateTime.ParseExact(dr["SIBT"].ToString(),"HH:mm:ss",null);
+            plan.SOBT = DateTime.ParseExact(dr["SOBT"].ToString(), "HH:mm:ss", null);
             return plan;
         }
     }

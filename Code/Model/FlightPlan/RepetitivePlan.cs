@@ -20,7 +20,7 @@ namespace Model.FlightPlan
         public string CompanyCode3 { get; set; }
         public string AttchFile { get; set; }
         public string Remark { get; set; }
-        public byte PlanState { get; set; }
+        public string PlanState { get; set; }
         public int? ActorID { get; set; }
         public int Creator { get; set; }
         public string ADES { get; set; }

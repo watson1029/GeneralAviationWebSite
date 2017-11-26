@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="BasicData\FlightTaskDAL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanDAL.cs" />
+    <Compile Include="FlightPlan\WorkflowNodeInstanceDAL.cs" />
+    <Compile Include="FlightPlan\WorkflowTplNodeDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManagement\MenuDAL.cs" />
     <Compile Include="SystemManagement\RoleDAL.cs" />

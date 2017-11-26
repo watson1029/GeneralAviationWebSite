@@ -1,4 +1,5 @@
 ﻿using BLL.FlightPlan;
+using DAL.FlightPlan;
 using Model.FlightPlan;
 using Newtonsoft.Json;
 using System;
@@ -10,7 +11,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class FlightPlan_MyUnSubmitRepetPlan : System.Web.UI.Page
+public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -24,8 +25,11 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : System.Web.UI.Page
                 case "queryone"://获取一条记录
                     GetData();
                     break;
-                case "submit":
+                case "save":
                     Save();
+                    break;
+                case "submit":
+                    Submit();
                     break;
                 case "del":
                     Delete();
@@ -75,8 +79,10 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : System.Web.UI.Page
             CompanyCode3 = "",
             AttchFile = "",
             Remark = Request.Form["Remark"],
-            PlanState = 0,
-            Creator = 1,
+            PlanState = "0",
+            Creator = User.ID,
+            ActorID = User.ID,
+        
             ADES = Request.Form["ADES"],
             ADEP = Request.Form["ADEP"],
             WeekSchedule = Request.Form["WeekSchedule"],
@@ -106,6 +112,25 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : System.Web.UI.Page
         Response.ContentType = "application/json";
         Response.End();
     }
+    private void Submit()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "提交失败！";
+        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        WorkflowTemplateBLL.CreateWorkflowInstance(1,planid,User.ID,User.UserName);
+        WorkflowNodeInstanceDAL.Submit(planid,"");
+
+                result.IsSuccess = true;
+                result.Msg = "提交成功！";
+
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
+    
+    
+    }
 
     /// <summary>
     /// 获取指定ID的数据
@@ -134,7 +159,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : System.Web.UI.Page
         if (page < 1) return;
         string orderField = sort.Replace("JSON_", "");
         string strWhere = GetWhere();
-        var pageList = RepetitivePlanBLL.GetMyLongPlanList(size, page, strWhere);
+        var pageList = RepetitivePlanBLL.GetMyRepetitivePlanList(size, page, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -148,7 +173,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : System.Web.UI.Page
     private string GetWhere()
     {
         StringBuilder sb = new StringBuilder("1=1");
-        sb.AppendFormat(" and Creator=1 and PlanState=0");
+        sb.AppendFormat(" and Creator={0} and PlanState='0'",User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);

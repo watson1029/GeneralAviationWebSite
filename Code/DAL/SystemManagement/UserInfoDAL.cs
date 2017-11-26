@@ -20,7 +20,6 @@ namespace DAL.SystemManagement
         public static bool Delete(string ids)
         {
             var sql = string.Format("delete from UserInfo WHERE  (ID IN ({0}))", ids);
-    
             return dao.ExecNonQuery(sql) > 0;
         }
         public static bool Add(UserInfo model)
