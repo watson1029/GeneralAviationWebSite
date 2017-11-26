@@ -1,58 +1,10 @@
 ﻿$(function(){
-	//InitLeftMenu();
 	tabClose();
 	tabCloseEven();
 })
 
-//初始化左侧
-function InitLeftMenu() {
 
-    $(".easyui-accordion").empty();
-    var menulist = "";
-   
-    $.each(_menus.menus, function(i, n) {
-        menulist += '<div title="'+n.menuname+'"  icon="'+n.icon+'" style="overflow:auto;">';
-		menulist += '<ul>';
-        $.each(n.menus, function(j, o) {
-			menulist += '<li><div><a ref="'+o.menuid+'" href="#" rel="' + o.url + '" ><span class="icon '+o.icon+'" >&nbsp;</span><span class="nav">' + o.menuname + '</span></a></div></li> ';
-        })
-        menulist += '</ul></div>';
-    })
 
-	$(".easyui-accordion").append(menulist);
-	
-	$('.easyui-accordion li a').click(function(){
-		var tabTitle = $(this).children('.nav').text();
-
-		var url = $(this).attr("rel");
-		var menuid = $(this).attr("ref");
-		var icon = getIcon(menuid,icon);
-		
-		addTab(tabTitle,url,icon);
-		$('.easyui-accordion li div').removeClass("selected");
-		$(this).parent().addClass("selected");
-	}).hover(function(){
-		$(this).parent().addClass("hover");
-	},function(){
-		$(this).parent().removeClass("hover");
-	});
-	
-	//导航菜单绑定初始化
-	$(".easyui-accordion").accordion();
-}
-//获取左侧导航的图标
-function getIcon(menuid){
-	var icon = 'icon ';
-	$.each(_menus.menus, function(i, n) {
-		 $.each(n.menus, function(j, o) {
-		 	if(o.menuid==menuid){
-				icon += o.icon;
-			}
-		 })
-	})
-	
-	return icon;
-}
 
 function addTab(subtitle,url,icon){
 	if(!$('#tabs').tabs('exists',subtitle)){

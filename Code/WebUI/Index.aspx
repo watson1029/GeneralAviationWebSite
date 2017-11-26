@@ -12,31 +12,37 @@
     <script src="<%=Page.ResolveUrl("~/")%>Content/JS/wikmain.js" type="text/javascript"></script>
     <link href="<%=Page.ResolveUrl("~/")%>Content/css/default.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
-        var _menus = {
-            "menus": [
-             {
-                 "menuid": "1", "icon": "icon-sys", "menuname": "系统管理",
-                 "menus": [{ "menuid": "11", "menuname": "用户管理", "icon": "icon-nav", "url": "/SystemManage/UserInfo.aspx" },
-                 { "menuid": "12", "menuname": "角色管理", "icon": "icon-nav", "url": "/SystemManage/Role.aspx" }]
-             }
-            ]
-        };
-
-
-
-        //初始化左侧
-        function InitLeftMenu1() {
-            $(".easyui-accordion1").empty();
-            var menulist = "";
-            $.each(_menus.menus, function (i, n) {
-                menulist += '<div title="' + n.menuname + '"  icon="' + n.icon + '" style="overflow:auto;">';
-                menulist += '<ul>';
+        //获取左侧导航的图标
+        function getIcon(menuid) {
+            var icon = 'icon ';
+            var json = '<%=GetMenuJson()%>';    
+            $.each($.parseJSON(json), function (i, n) {
                 $.each(n.menus, function (j, o) {
-                    menulist += '<li><div><a ref="' + o.menuid + '" href="#" rel="' + o.url + '" ><span class="icon ' + o.icon + '" >&nbsp;</span><span class="nav">' + o.menuname + '</span></a></div></li> ';
+                    if (o.menuid == menuid) {
+                        icon += o.icon;
+                    }
                 })
-                menulist += '</ul></div>';
             })
 
+            return icon;
+        }
+        //初始化左侧
+        function InitLeftMenu() {
+            $(".easyui-accordion1").empty();
+            var menulist = "";
+            var json = '<%=GetMenuJson()%>';    
+
+            $.each($.parseJSON(json), function (i, n) {
+                menulist += '<div title="' + n.menuname + '"  icon="' + n.icon + '" style="overflow:auto;">';
+                menulist += '<ul>';
+                if (n.menus instanceof Array) {
+                    $.each(n.menus, function (j, o) {
+                        menulist += '<li><div><a ref="' + o.menuid + '" href="#" rel="' + o.url + '" ><span class="icon ' + o.icon + '" >&nbsp;</span><span class="nav">' + o.menuname + '</span></a></div></li> ';
+                    })
+                    menulist += '</ul></div>';
+                }
+            })
+              
             $(".easyui-accordion1").append(menulist);
 
             $('.easyui-accordion1 li a').click(function () {
@@ -62,12 +68,11 @@
 
 
         $(function () {
-            InitLeftMenu1();
+            InitLeftMenu();
             $('#loginOut').click(function () {
                 $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function (r) {
-
                     if (r) {
-                        location.href = '/ajax/loginout.ashx';
+                        location.href = 'loginout.ashx';
                     }
                 });
             })

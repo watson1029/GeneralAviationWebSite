@@ -1,5 +1,5 @@
 ﻿using DAL.SystemManagement;
-using Model;
+using Model.SystemManagement;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -40,6 +40,58 @@ namespace BLL.SystemManagement
         public static UserInfo Get(int id)
         {
             return UserInfoDAL.Get(id);
+        }
+        public static UserInfo Get(string userName)
+        {
+            return UserInfoDAL.Get(userName);
+        }
+        /// <summary>
+        /// 获取用户的menucode
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static List<string> GetUserPermissions(int userID)
+        {
+            List<string> list = new List<string>();
+            List<Menu> menuList = null;
+            //管理员判断
+            if (UserInfoDAL.IsAdmin(userID))
+            {
+                menuList = MenuDAL.GetList("1=1");
+                if (menuList != null & menuList.Any())
+                {
+                    list = menuList.Select(u => (u.MenuCode ?? "")).Distinct().ToList();
+
+                }
+            }
+            else
+            {
+                menuList = MenuDAL.GetUserMenuList(userID);
+                if (menuList != null && menuList.Any())
+                {
+                    list = menuList.Select(u => (u.MenuCode ?? "")).Distinct().ToList();
+                }
+            }
+            return list;
+        }
+        /// <summary>
+        /// 获取用户菜单
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static List<Menu> GetUserMenu(int userID)
+        {
+            List<Menu> menuList = null;
+            //管理员判断
+            if (UserInfoDAL.IsAdmin(userID))
+            {
+                menuList = MenuDAL.GetList("1=1");
+            }
+            else
+            {
+                menuList = MenuDAL.GetUserMenuList(userID);
+            }
+            return menuList;
         }
     }
 }

@@ -39,7 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicData\FlightTaskDAL.cs" />
+    <Compile Include="FlightPlan\RepetitivePlanDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemManagement\MenuDAL.cs" />
+    <Compile Include="SystemManagement\RoleDAL.cs" />
     <Compile Include="SystemManagement\UserInfoDAL.cs" />
     <Compile Include="SystemManagement\UserLoginLogDAL.cs" />
   </ItemGroup>

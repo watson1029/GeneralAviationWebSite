@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="AjaxResult.cs" />
     <Compile Include="DB\SqlDbHelper.cs" />
+    <Compile Include="OrderHelper.cs" />
     <Compile Include="Pager\PagedList.cs" />
     <Compile Include="PasswordCheckResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

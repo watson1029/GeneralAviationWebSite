@@ -39,9 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicData\FlightTask.cs" />
+    <Compile Include="FlightPlan\RepetitivePlan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserInfo.cs" />
-    <Compile Include="UserLoginLog.cs" />
+    <Compile Include="SystemManagement\Menu.cs" />
+    <Compile Include="SystemManagement\MenuModel.cs" />
+    <Compile Include="SystemManagement\Role.cs" />
+    <Compile Include="SystemManagement\RoleMenu.cs" />
+    <Compile Include="SystemManagement\TreeNode.cs" />
+    <Compile Include="SystemManagement\UserInfo.cs" />
+    <Compile Include="SystemManagement\UserLoginLog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

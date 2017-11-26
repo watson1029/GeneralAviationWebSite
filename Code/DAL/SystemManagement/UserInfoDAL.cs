@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using Model.SystemManagement;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -55,8 +55,7 @@ namespace DAL.SystemManagement
         public static PagedList<UserInfo> GetList(int pageSize, int pageIndex, string strWhere)
         {
            var sql = string.Format("select * from UserInfo where {0}",strWhere);
-           return dao.ExecSelectCmd(ExecReader, sql).ToPagedList<UserInfo>(pageIndex, pageSize); 
-
+           return (dao.ExecSelectCmd(ExecReader, sql) ?? new List<UserInfo>()).ToPagedList<UserInfo>(pageIndex, pageSize); 
         }
 
 
@@ -67,25 +66,45 @@ namespace DAL.SystemManagement
         {
             var sql = "select  top 1 * from UserInfo where ID=@ID";
             SqlParameter[] parameters = {
-					new SqlParameter("@ID", SqlDbType.Int,4)
+					new SqlParameter("@ID",id)
 			};
-            parameters[0].Value = id;
             return dao.ExecSelectSingleCmd<UserInfo>(ExecReader,sql, parameters);
         }
-
+        public static UserInfo Get(string userName)
+        {
+            var sql = "select  top 1 * from UserInfo where UserName=@UserName";
+            SqlParameter[] parameters = {
+					new SqlParameter("@UserName",userName)
+			};
+            return dao.ExecSelectSingleCmd<UserInfo>(ExecReader, sql, parameters);
+        }
         private static UserInfo ExecReader(SqlDataReader dr)
         {
             UserInfo userinfo = new UserInfo();
             userinfo.UserName = Convert.ToString(dr["UserName"]);
             userinfo.ID = Convert.ToInt32(dr["ID"]);
             userinfo.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
+            if (!dr["Mobile"].Equals(DBNull.Value))
             userinfo.Mobile = Convert.ToString(dr["Mobile"]);
-            userinfo.Password = Convert.ToString(dr["Password"]);
+            userinfo.Password =Convert.ToString(dr["Password"]);
             userinfo.IsGeneralAviation = Convert.ToByte(dr["IsGeneralAviation"]);
+            if (!dr["CompanyCode3"].Equals(DBNull.Value))
             userinfo.CompanyCode3 = Convert.ToString(dr["CompanyCode3"]);
-            if (!dr["Status"].Equals(DBNull.Value))
                 userinfo.Status = Convert.ToByte(dr["Status"]);
             return userinfo;
+        }
+        /// <summary>
+        /// 管理员判断
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public static bool IsAdmin(int userID)
+        {
+            var sql = "select Count(1) from UserRole a inner join  Role b on a.RoleID=b.ID where b.IsAdmin=1 and a.UserID=@UserID ";
+            SqlParameter[] parameters = {
+					new SqlParameter("@UserID", userID)};
+
+            return Convert.ToInt32(dao.ExecScalar(sql, parameters)) > 0;
         }
     }
 }
