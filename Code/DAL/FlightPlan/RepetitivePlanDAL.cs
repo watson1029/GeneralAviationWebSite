@@ -13,11 +13,11 @@ namespace DAL.FlightPlan
     public class RepetitivePlanDAL
     {
 
-        private static SqlDbHelper dao = new SqlDbHelper();
 
 
         public static bool Delete(string ids)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = string.Format("delete from RepetitivePlan WHERE  (RepetPlanID IN ({0}))", ids);
 
             return dao.ExecNonQuery(sql) > 0;
@@ -25,9 +25,10 @@ namespace DAL.FlightPlan
 
         public static bool Add(RepetitivePlan model)
         {
-            var sql = @"insert into RepetitivePlan(FlightType,FlightDirHeight,PlanCode,AircraftType,StartDate,EndDate,CreateTime,Creator,ActorID,CompanyCode3,AttchFile,Remark,
+            SqlDbHelper dao = new SqlDbHelper();
+            var sql = @"insert into RepetitivePlan(FlightType,FlightDirHeight,PlanCode,AircraftType,StartDate,EndDate,CreateTime,ModifyTime,Creator,ActorID,CompanyCode3,AttchFile,Remark,
 PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT)
-                                  values (@FlightType,@FlightDirHeight,@PlanCode,@AircraftType,@StartDate,@EndDate,@CreateTime,@Creator,@ActorID,@CompanyCode3,@AttchFile,@Remark,
+                                  values (@FlightType,@FlightDirHeight,@PlanCode,@AircraftType,@StartDate,@EndDate,@CreateTime,@ModifyTime,@Creator,@ActorID,@CompanyCode3,@AttchFile,@Remark,
 @PlanState,@ADES,@ADEP,@WeekSchedule,@SIBT,@SOBT)";
             SqlParameter[] parameters = {
                             new SqlParameter("@FlightType",  model.FlightType),
@@ -37,6 +38,7 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT)
                             new SqlParameter("@StartDate", model.StartDate),
                                new SqlParameter("@EndDate",  model.EndDate),
                             new SqlParameter("@CreateTime", model.CreateTime),
+                            new SqlParameter("@ModifyTime", model.ModifyTime),
                             new SqlParameter("@Creator", model.Creator),
                             new SqlParameter("@ActorID", model.ActorID),
                             new SqlParameter("@CompanyCode3", model.CompanyCode3),
@@ -54,9 +56,9 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT)
         }
         public static bool Update(RepetitivePlan model)
         {
-            var sql = @"update RepetitivePlan set FlightType=@FlightType,FlightDirHeight=@FlightDirHeight,PlanCode=@PlanCode,AircraftType=@AircraftType,StartDate=@StartDate,
- ,EndDate=@EndDate,ActorID=@ActorID,CompanyCode3=@CompanyCode3,AttchFile=@AttchFile,Remark=@Remark,
-PlanState=@PlanState,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT,SOBT=@SOBT where RepetPlanID=@ID";
+            SqlDbHelper dao = new SqlDbHelper();
+            var sql = @"update RepetitivePlan set FlightType=@FlightType,FlightDirHeight=@FlightDirHeight,ModifyTime=@ModifyTime,PlanCode=@PlanCode,AircraftType=@AircraftType,StartDate=@StartDate,
+ ,EndDate=@EndDate,AttchFile=@AttchFile,Remark=@Remark,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT,SOBT=@SOBT where RepetPlanID=@ID";
             SqlParameter[] parameters = {
                              new SqlParameter("@FlightType",  model.FlightType),
                             new SqlParameter("@FlightDirHeight", model.FlightDirHeight),
@@ -64,13 +66,9 @@ PlanState=@PlanState,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT
                             new SqlParameter("@AircraftType", model.AircraftType),
                             new SqlParameter("@StartDate", model.StartDate),
                                new SqlParameter("@EndDate",  model.EndDate),
-                            new SqlParameter("@CreateTime", model.CreateTime),
-                            new SqlParameter("@Creator", model.Creator),
-                            new SqlParameter("@ActorID", model.ActorID),
-                            new SqlParameter("@CompanyCode3", model.CompanyCode3),
+                            new SqlParameter("@ModifyTime", model.ModifyTime),
                             new SqlParameter("@AttchFile", model.AttchFile),
                             new SqlParameter("@Remark", model.Remark),
-                            new SqlParameter("@PlanState", model.PlanState),
                             new SqlParameter("@ADES", model.ADES),
                             new SqlParameter("@ADEP", model.ADEP),
                             new SqlParameter("@WeekSchedule", model.WeekSchedule),
@@ -84,7 +82,7 @@ PlanState=@PlanState,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT
 
         public static PagedList<RepetitivePlan> GetMyRepetitivePlanList(int pageSize, int pageIndex, string strWhere)
         {
-
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = string.Format("select * from RepetitivePlan where {0}", strWhere);
             return (dao.ExecSelectCmd(ExecReader, sql) ?? new List<RepetitivePlan>()).ToPagedList<RepetitivePlan>(pageIndex, pageSize);
         }
@@ -95,6 +93,7 @@ PlanState=@PlanState,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT
         /// </summary>
         public static RepetitivePlan Get(int id)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = "select  top 1 * from RepetitivePlan where RepetPlanID=@PlanID";
             SqlParameter[] parameters = {
 					new SqlParameter("@PlanID",id)

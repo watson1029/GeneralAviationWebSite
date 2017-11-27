@@ -10,7 +10,6 @@ namespace DAL.FlightPlan
 {
     public class WorkflowTplNodeDAL
     {
-        private static SqlDbHelper dao = new SqlDbHelper();
 
         /// <summary>
         /// 根据模板获取节点
@@ -19,6 +18,7 @@ namespace DAL.FlightPlan
         /// <returns></returns>
         public static List<WorkflowTplNode> GetNodeByTWFID(int twfId)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = "select * from TWFSteps where TWFID=@twfId";
             SqlParameter[] parameters = {
 					new SqlParameter("@twfId",  twfId)};
@@ -51,6 +51,7 @@ namespace DAL.FlightPlan
        /// <returns></returns>
         public static WorkflowNodeInstance CreateNodeInstance(WorkflowTplNode tnode, int planId)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var guid=Guid.NewGuid();
             var date = DateTime.Now;
             WorkflowNodeInstance nodeInst = new WorkflowNodeInstance();
@@ -83,6 +84,7 @@ namespace DAL.FlightPlan
 
         public static WorkflowTplNode GetNode(int stepId)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = "select * from TWFSteps where StepID=@stepId";
             SqlParameter[] parameters = {
 					new SqlParameter("@stepId",stepId)

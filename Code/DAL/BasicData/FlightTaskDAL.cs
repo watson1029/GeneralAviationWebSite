@@ -8,14 +8,15 @@ namespace DAL.BasicData
 {
   public  class FlightTaskDAL
   {
-      private static SqlDbHelper dao = new SqlDbHelper();
       public static List<FlightTask> GetAllList()
       {
+          SqlDbHelper dao = new SqlDbHelper();
           var sql = "select TaskCode,Abbreviation from FlightTask";
           return dao.ExecSelectCmd(ExecReader, sql);
       }
       private static FlightTask ExecReader(SqlDataReader dr)
       {
+          SqlDbHelper dao = new SqlDbHelper();
           FlightTask task = new FlightTask();
           task.Abbreviation = Convert.ToString(dr["Abbreviation"]);
           task.TaskCode = Convert.ToString(dr["TaskCode"]);

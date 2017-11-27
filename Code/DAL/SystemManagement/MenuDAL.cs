@@ -11,10 +11,10 @@ namespace DAL.SystemManagement
 {
   public class MenuDAL
   {
-      private static SqlDbHelper dao = new SqlDbHelper();
 
       public static List<Menu> GetList(string strWhere)
       {
+          SqlDbHelper dao = new SqlDbHelper();
           var sql = string.Format("select * from Menu where {0} ", strWhere);
           return dao.ExecSelectCmd(ExecReader, sql);
       }
@@ -46,6 +46,7 @@ namespace DAL.SystemManagement
       /// <returns></returns>
       public static bool IsParentMenu( int menuID)
       {
+          SqlDbHelper dao = new SqlDbHelper();
           var sql = string.Format("select count(1) from Menu where ParentMenuID=@MenuID ", menuID);
           SqlParameter[] parameters = {
 					new SqlParameter("@MenuID", menuID)};
@@ -54,6 +55,7 @@ namespace DAL.SystemManagement
       }
       public static List<Menu> GetUserMenuList(int userID)
       {
+          SqlDbHelper dao = new SqlDbHelper();
           var sql = @"select d.* from UserRole a inner join Role b on a.RoleID=b.ID
                     inner join RoleMenu c on b.ID=c.RoleID 
                     inner join Menu d on c.MenuID=d.ID where a.ID=@ID";

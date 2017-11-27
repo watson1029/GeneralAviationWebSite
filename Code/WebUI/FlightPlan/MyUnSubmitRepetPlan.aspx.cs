@@ -74,23 +74,21 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
             FlightDirHeight = Request.Form["FlightDirHeight"],
             StartDate = DateTime.Parse(Request.Form["StartDate"]),
             EndDate = DateTime.Parse(Request.Form["EndDate"]),
-            CreateTime = DateTime.Now,
             ModifyTime = DateTime.Now,
-            CompanyCode3 = "",
             AttchFile = "",
             Remark = Request.Form["Remark"],
-            PlanState = "0",
-            Creator = User.ID,
-            ActorID = User.ID,
-        
             ADES = Request.Form["ADES"],
             ADEP = Request.Form["ADEP"],
-            WeekSchedule = Request.Form["WeekSchedule"],
+            WeekSchedule = Request.Form["qx"],
             SIBT = DateTime.Parse(Request.Form["SIBT"]),
             SOBT = DateTime.Parse(Request.Form["SOBT"])
         };
         if (!id.HasValue)//新增
         {
+            model.PlanState = "0";
+            model.CompanyCode3 = "";
+            model.Creator = User.ID;
+            model.ActorID = User.ID;
             model.CreateTime = DateTime.Now;
             if (RepetitivePlanBLL.Add(model))
             {
@@ -118,18 +116,18 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         result.IsSuccess = false;
         result.Msg = "提交失败！";
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        WorkflowTemplateBLL.CreateWorkflowInstance(1,planid,User.ID,User.UserName);
-        WorkflowNodeInstanceDAL.Submit(planid,"");
+        WorkflowTemplateBLL.CreateWorkflowInstance(1, planid, User.ID, User.UserName);
+        WorkflowNodeInstanceDAL.Submit(planid, "");
 
-                result.IsSuccess = true;
-                result.Msg = "提交成功！";
+        result.IsSuccess = true;
+        result.Msg = "提交成功！";
 
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
         Response.End();
-    
-    
+
+
     }
 
     /// <summary>
@@ -139,7 +137,13 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     {
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
         var plan = RepetitivePlanBLL.Get(planid);
-        var strJSON = JsonConvert.SerializeObject(plan);
+        var strJSON = "";
+        if (plan != null)
+        {
+            plan.WeekSchedule = plan.WeekSchedule.Replace("*","");
+            strJSON=JsonConvert.SerializeObject(plan);
+        }
+         
         Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -173,7 +177,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     private string GetWhere()
     {
         StringBuilder sb = new StringBuilder("1=1");
-        sb.AppendFormat(" and Creator={0} and PlanState='0'",User.ID);
+        sb.AppendFormat(" and Creator={0} and PlanState='0'", User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);

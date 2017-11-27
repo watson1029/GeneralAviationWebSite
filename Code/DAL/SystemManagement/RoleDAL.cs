@@ -13,17 +13,18 @@ namespace DAL.SystemManagement
 {
    public class RoleDAL
     {
-        private static SqlDbHelper dao = new SqlDbHelper();
 
 
         public static bool Delete(string ids)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = string.Format("delete from Role WHERE (ID IN ({0}))", ids);
 
             return dao.ExecNonQuery(sql) > 0;
         }
         public static bool Add(Role model)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = @"insert into Role(RoleName,Description,IsAdmin,CreateTime)
                           values (@RoleName,@Description,@IsAdmin,@CreateTime)";
             SqlParameter[] parameters = {
@@ -36,6 +37,7 @@ namespace DAL.SystemManagement
         }
         public static bool Update(Role model)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = @"update Role set RoleName=@RoleName,Description=@Description,IsAdmin=@IsAdmin where ID=@ID";
             SqlParameter[] parameters = {
 					new SqlParameter("@RoleName",model.RoleName),
@@ -49,6 +51,7 @@ namespace DAL.SystemManagement
 
         public static PagedList<Role> GetList(int pageSize, int pageIndex, string strWhere)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = string.Format("select * from Role where {0}", strWhere);
             return (dao.ExecSelectCmd(ExecReader, sql) ?? new List<Role>()).ToPagedList<Role>(pageIndex, pageSize);
 
@@ -60,6 +63,7 @@ namespace DAL.SystemManagement
         /// </summary>
         public static Role Get(int id)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = "select  top 1 * from Role where ID=@ID";
             SqlParameter[] parameters = {
 					new SqlParameter("@ID", SqlDbType.Int,4)
@@ -84,6 +88,7 @@ namespace DAL.SystemManagement
 
         public static int GetRoleMenuCount(int roleID,int menuID)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = string.Format("select count(1) from RoleMenu where MenuID=@MenuID and RoleID=@RoleID ", menuID, roleID);
             SqlParameter[] parameters = {
 					new SqlParameter("@RoleID",roleID),
@@ -93,6 +98,7 @@ namespace DAL.SystemManagement
         }
         public static List<RoleMenu> GetRoleMenuList(string strWhere)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = string.Format("select * from RoleMenu where {0} ", strWhere);
             return dao.ExecSelectCmd(rmExecReader, sql);
         }
@@ -105,8 +111,10 @@ namespace DAL.SystemManagement
         }
    public static bool SetRoleMenu(int roleID, IEnumerable<int> addRoleMenuList, IEnumerable<int> removeRoleMenuList)
         {
+       SqlDbHelper dao = new SqlDbHelper();
             try
             {
+                
                 dao.BeginTran();
                 foreach (var rmp in removeRoleMenuList)
                 {

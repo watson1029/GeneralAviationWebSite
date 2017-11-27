@@ -69,7 +69,7 @@
                        { title: '创建人', field: 'Creator', width: 100 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
-                      { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : value+"审核中" }, width: 100 },
+                      { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == "Deserted" ? '审核不通过' : value + "审核中" }, width: 100 },
                 
                   ]],
                   toolbar: "#tab_toolbar",
@@ -92,7 +92,7 @@
                   },
                   prompt: '请输入要查询的信息'
               });
-          },
+          }
 
       };
     </script>

@@ -31,7 +31,7 @@
         </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-   <div id="edit" class="easyui-dialog" style="width: 500px; height:500px;"
+   <div id="edit" class="easyui-dialog" style="width: 600px; height:600px;"
         modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit"  method="post">
                 <table class="table_edit">
@@ -49,9 +49,9 @@
                         <td class="tdal">航空器类型：
                         </td>
                         <td class="tdar">
-                            <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" />
-                      <%--      <input id="AircraftType" name="AircraftType" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200" required="true" class="easyui-combobox" />--%>
+                          <%--  <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" />--%>
+                            <input id="AircraftType" name="AircraftType" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                                ,panelMaxHeight:200" required="true" class="easyui-combobox" />
                         </td>
 
                     </tr>
@@ -91,7 +91,7 @@
                         <td class="tdal">预计结束日期：
                         </td>
                         <td class="tdar">
-                            <input id="EndDate" name="EndDate"  style="width:200px"  type="text"  required="true" class="easyui-datebox" />
+                            <input id="EndDate" name="EndDate"  style="width:200px"  type="text"  required="true" class="easyui-datebox" validType="md['#StartDate']"/>
                         </td>
 
                     </tr>
@@ -107,7 +107,7 @@
                         <td class="tdal">降落时刻：
                         </td>
                         <td class="tdar">
-                            <input id="SIBT" name="SIBT" style="width:200px" type="text"  required="true" class="easyui-timespinner" />
+                            <input id="SIBT" name="SIBT" style="width:200px" type="text"  required="true" class="easyui-timespinner" validType="md['#SOBT']"/>
                         </td>
 
                     </tr>
@@ -121,10 +121,16 @@
 
                     </tr>
                     <tr>
-                        <td class="tdal">批件：
+                        <td class="tdal">周执行计划：
                         </td>
                         <td class="tdar">
-                                 <input id="WeekSchedule" name="WeekSchedule"  maxlength="30" type="text"  required="true" class="easyui-textbox" />
+                               <input id="d1" type="checkbox" name ="WeekSchedule" value="1"/>星期一
+                             <input id="d2" type="checkbox" name ="WeekSchedule" value="2"/>星期二
+                             <input id="d3" type="checkbox" name ="WeekSchedule" value="3"/>星期三
+                             <input id="d4" type="checkbox" name ="WeekSchedule" value="4"/>星期四
+                             <input id="d5" type="checkbox" name ="WeekSchedule" value="5"/>星期五
+                             <input id="d6" type="checkbox" name ="WeekSchedule" value="6"/>星期六
+                             <input id="d7" type="checkbox" name ="WeekSchedule" value="7"/>星期七
                         </td>
 
                     </tr>
@@ -132,7 +138,7 @@
                         <td class="tdal">其他需要说明的事项：
                         </td>
                         <td class="tdar">
-                            <input id="Remark" name="Remark"  maxlength="200" style="width:300px;height:100px" type="text" data-options="multiline:true"  class="easyui-textbox" />
+                            <input id="Remark" name="Remark"  maxlength="200" style="width:300px;height:150px" type="text" data-options="multiline:true"  class="easyui-textbox" />
                         </td>
 
                     </tr>
@@ -227,9 +233,17 @@
             Save: function (uid) {
                 if (!$("#form_edit").form("validate")) {
                     return;
-                }
-                var json = $.param({ "id": uid, "action": "save" }) + '&' + $('#form_edit').serialize();
-
+                } 
+                qx = $("input[name='WeekSchedule']").map(function () {
+                    var $this = $(this);
+                    if ($this.is(':checked')) {
+                        return $this.val();
+                    }
+                    else {
+                          return '*';
+                    }
+                }).get().join('');
+                var json = $.param({ "id": uid, "action": "save", "qx": qx }) + '&' + $('#form_edit').serialize();
                 $.post(location.href, json, function (data) {
                     $.messager.alert('提示', data.msg, 'info', function () {
                         if (data.isSuccess) {
@@ -245,8 +259,11 @@
                 $("#edit").dialog("open").dialog('setTitle', '编辑');
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
 
-                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
+                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {        
                     $("#form_edit").form('load', data);
+                    $.each(data.WeekSchedule.toCharArray(), function (i, n) {
+                        $("#d" + n).attr("checked",true);
+                    });
                 });
             },
 

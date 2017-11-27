@@ -12,9 +12,9 @@ namespace DAL.FlightPlan
 {
     public class WorkflowNodeInstanceDAL
     {
-        private static SqlDbHelper dao = new SqlDbHelper();
         public static bool UpdateNodeInstance(List<WorkflowNodeInstance> nodesInstance)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             try
             {
                 dao.BeginTran();
@@ -40,6 +40,7 @@ namespace DAL.FlightPlan
         }
         public static bool UpdateFirstNode(WorkflowNodeInstance firstNodeInst, int userID, string userName)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             firstNodeInst.State = WorkflowNodeInstance.StepStateType.Processing;
             var sql = "update ActualSteps set State=@state, ActorID=@actID, ActorName=@actName, ApplyTime=@applyTime where ID=@id";
 
@@ -57,6 +58,7 @@ namespace DAL.FlightPlan
 
         public static WorkflowNodeInstance Submit(int planId, string comments)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId);
             var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
             WorkflowNodeInstance nextInst = null;
@@ -86,22 +88,14 @@ namespace DAL.FlightPlan
                         var userInfo = UserInfoDAL.Get(int.Parse(tnode.AuthorType));
                         int? actor = null;
                         //判断节点的活动所有者类型
-                        //if (tnode.AuthorType.Contains("@"))
-                        //{
-                        //    //待扩展
-                        //}
-                        //else
-                        //{
 
-                            SqlParameter[] parameters1 = {
+                           SqlParameter[] parameters1 = {
 					new SqlParameter("@state", (byte)WorkflowNodeInstance.StepStateType.Processing),
 					new SqlParameter("@applyTime", DateTime.Now),
                      new SqlParameter("@id", currInst.NextId),
                        new SqlParameter("@gid", userInfo.ID),
                                     new SqlParameter("@actName", userInfo.UserName) };
 
-                            actor = userInfo.ID;
-                     //   }
                         result = dao.ExecNonQuery(sql, parameters1);
                         //更新申请单的状态
                         sql = "update RepetitivePlan set ActorID=@actor, PlanState=@planState where RepetPlanID=@planId";
@@ -119,7 +113,7 @@ namespace DAL.FlightPlan
                         //更新申请单的状态
                         sql = "update RepetitivePlan set ActorID=@actor, PlanState=@planState where RepetPlanID=@planId";
                         SqlParameter[] parameters2 = {
-					new SqlParameter("@actor", null),
+					new SqlParameter("@actor", DBNull.Value),
 					new SqlParameter("@planState", "end"),
                      new SqlParameter("@planId", planId)};
                         dao.ExecNonQuery(sql, parameters2);
@@ -143,8 +137,9 @@ namespace DAL.FlightPlan
         /// <param name="planId"></param>
         /// <param name="comments"></param>
         /// <returns></returns>
-        public int Terminate(int planId, string comments)
+        public static int Terminate(int planId, string comments)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId);
             var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
             var sql = "update ActualSteps set State=@state, Comments=@comments where ID=@id";
@@ -159,7 +154,7 @@ namespace DAL.FlightPlan
                     sql = "update RepetitivePlan set ActorID=@actor, PlanState=@planstate where RepetPlanID=@planid";
 
                     SqlParameter[] parameters1 = {
-					new SqlParameter("@actor",  null),
+					new SqlParameter("@actor",   DBNull.Value),
 					new SqlParameter("@planstate", WorkflowNodeInstance.StepStateType.Deserted.ToString()),
                      new SqlParameter("@planid",  planId)};
                     result += dao.ExecNonQuery(sql, parameters1);
@@ -168,6 +163,7 @@ namespace DAL.FlightPlan
         }
         public static List<WorkflowNodeInstance> GetAllNodeInstance(int planId)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             var sql = "select * from ActualSteps where PlanID=@planId and PrevID=@prevId";
             SqlParameter[] parameters = {
 					new SqlParameter("@planId",planId),
@@ -199,6 +195,7 @@ namespace DAL.FlightPlan
         }
         public static WorkflowNodeInstance GetNodeInstance(Guid id)
         {
+            SqlDbHelper dao = new SqlDbHelper();
             string sql = "select * from ActualSteps where ID=@id";
 
             SqlParameter[] parameters = {
@@ -214,7 +211,7 @@ namespace DAL.FlightPlan
             if (!dr["Id"].Equals(DBNull.Value))
                 ninst.Id = new Guid(dr["Id"].ToString());
             if (!dr["State"].Equals(DBNull.Value))
-                ninst.State = (WorkflowNodeInstance.StepStateType)Convert.ToByte(dr["StepId"]);
+                ninst.State = (WorkflowNodeInstance.StepStateType)Convert.ToByte(dr["State"]);
             ninst.PlanID = Convert.ToInt32(dr["PlanID"]);
             ninst.StepId = Convert.ToInt32(dr["StepId"]);
             ninst.TWFID = Convert.ToInt32(dr["TWFID"]);
