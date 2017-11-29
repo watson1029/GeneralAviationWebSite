@@ -31,7 +31,7 @@
         </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-   <div id="edit" class="easyui-dialog" style="width: 600px; height:600px;"
+   <div id="edit" class="easyui-dialog" style="width: 800px; height:600px;"
         modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit"  method="post">
                 <table class="table_edit">
@@ -63,11 +63,12 @@
                         </td>
 
                     </tr>
+
                       <tr>
-                        <td class="tdal">起飞机场：
+                        <td class="tdal">航空器呼号：
                         </td>
                         <td class="tdar">
-                            <input id="ADEP" name="ADEP"  maxlength="30" type="text"  required="true" class="easyui-textbox" />
+                            <input id="CallSign" name="CallSign"  maxlength="30" type="text"  required="true" class="easyui-textbox" />
                         </td>
 
                     </tr>
@@ -115,12 +116,18 @@
                         <td class="tdal">批件：
                         </td>
                         <td class="tdar">
-                                 <input id="AttchFile" name="AttchFile"  maxlength="30" type="text"  required="true" class="easyui-textbox" />
-  <%--    <input id="AttchFile" name="AttchFile"  style="width:200px"  type="text"  class="easyui-filebox" data-options="buttonText:'请选择',prompt:'选择文件...'" />--%>
+
+<input type="hidden" name="AttchFileInfo" id="AttchFileInfo"/>
+
+ <input type="file" id="AttchFile" name="AttchFile"/>
+<input type="button" class="btn" value="上传" onclick="dj.getCmp('AttchFile').uploadFiles()"/>
+<div id="AttchFile-fileQueue"></div>
+<div id="AttchFile-fileList" style="margin-top: 2px;zoom:1"></div>
+
                         </td>
 
                     </tr>
-                    <tr>
+              <%--      <tr>
                         <td class="tdal">周执行计划：
                         </td>
                         <td class="tdar">
@@ -138,10 +145,10 @@
                         <td class="tdal">其他需要说明的事项：
                         </td>
                         <td class="tdar">
-                            <input id="Remark" name="Remark"  maxlength="200" style="width:300px;height:150px" type="text" data-options="multiline:true"  class="easyui-textbox" />
+                            <input id="Remark" name="Remark"  maxlength="200" style="width:600px;height:150px" type="text" data-options="multiline:true"  class="easyui-textbox" />
                         </td>
 
-                    </tr>
+                    </tr>--%>
                 </table>
 
         </form>
@@ -150,12 +157,18 @@
         <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
             class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
+
+<script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
+<script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
+<link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
+<script src="<%=Page.ResolveUrl("~/Content/JS/GA/upload.js")%>" type="text/javascript"></script>
     <%--添加 修改 end--%>
   <script type="text/javascript">
 
         $(function () {
             Main.InitGird();
             Main.InitSearch();
+  
         });
         Main = {
             //初始化表格
@@ -178,25 +191,60 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '申请单号', field: 'PlanCode', width: 100 },
-                        { title: '任务类型', field: 'FlightType', width: 100 },
-                        { title: '使用机型', field: 'AircraftType', width: 100 },
+                        { title: '申请单号', field: 'PlanCode', width: 180 },
+                        { title: '任务类型', field: 'FlightType', width: 60 },
+                        { title: '航空器呼号', field: 'CallSign', width: 80 },   
+                        { title: '使用机型', field: 'AircraftType', width: 60 },
                         { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
-                        { title: '预计开始时间', field: 'StartDate', width: 100 },
-                        { title: '预计结束时间', field: 'EndDate', width: 100 },
-                        { title: '起飞时刻', field: 'SOBT', width: 100 },
-                        { title: '降落时刻', field: 'SIBT', width: 100 },
-                        { title: '起飞机场', field: 'ADEP', width: 100 },
-                        { title: '降落机场', field: 'ADES', width: 100 },
+                        { title: '预计开始时间', field: 'StartDate',width: 100, formatter: function (value, rec, index) { 
+                        
+                            var timesstamp = new Date(value);
+                            return timesstamp.toLocaleDateString();
+                        
+                        } },
+                        {
+                            title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) { 
+                        
+                                var timesstamp = new Date(value);
+                                return timesstamp.toLocaleDateString();
+                        
+                            }
+                        },
+                        {
+                            title: '起飞时刻', field: 'SOBT', width: 100, formatter: function (value, rec, index) {
 
-                        { title: '公司三字码', field: 'CompanyCode3', width: 100 },
-                         { title: '创建人', field: 'Creator', width: 100 },
+                                var timesstamp = new Date(value);
+                                return timesstamp.toLocaleTimeString();
+
+                            }
+                        },
+                        { title: '降落时刻', field: 'SIBT', width: 100 , formatter: function (value, rec, index) {
+
+                            var timesstamp = new Date(value);
+                            return timesstamp.toLocaleTimeString();
+
+                        }},
+                        { title: '起飞机场', field: 'ADEP', width: 80 },
+                        { title: '降落机场', field: 'ADES', width: 80 },
+
+                        {
+                            title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
+                                var array = [];
+                                $.each(value.toCharArray(), function (i, n) {
+
+                                    array.push("星期" + n);
+                                });
+                              return  array.join(',');
+
+                            }
+                        },
+                         { title: '创建人', field: 'CreatorName', width: 60 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
-                        { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 100 },
+                        { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
                             title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>&nbsp;&nbsp;<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>';
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
                                 return str;
                             }
                         }
@@ -228,12 +276,24 @@
                 $("#edit").dialog("open").dialog('setTitle', '新增');
                 $("#form_edit").form('clear');
                 $("#btn_add").attr("onclick", "Main.Save();")
+                new dj.upload({
+                    id: "AttchFile",
+                    maxSize: 5,
+                    multi: true,
+                    queueId: "AttchFile-fileQueue",
+                    listId: "AttchFile-fileList",
+                    truncate: "18",
+                    maxCount: "1",
+                    uploadPath: "Files/PJ/"
+                });
             },
             //提交按钮事件
             Save: function (uid) {
                 if (!$("#form_edit").form("validate")) {
                     return;
-                } 
+                }
+                var fileInfo = dj.getCmp("AttchFile").getUploadedFiles();
+                $("#AttchFileInfo").val(fileInfo);
                 qx = $("input[name='WeekSchedule']").map(function () {
                     var $this = $(this);
                     if ($this.is(':checked')) {

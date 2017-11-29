@@ -11,6 +11,7 @@
     <script src="<%=Page.ResolveUrl("~/")%>Content/JS/wikmenu.js" type="text/javascript"></script>
     <script src="<%=Page.ResolveUrl("~/")%>Content/JS/wikmain.js" type="text/javascript"></script>
     <link href="<%=Page.ResolveUrl("~/")%>Content/css/default.css" rel="stylesheet" type="text/css" />
+
     <script type="text/javascript">
         //获取左侧导航的图标
         function getIcon(menuid) {
