@@ -50,6 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicData\Aircraft.cs" />
+    <Compile Include="BasicData\CBusiness.cs" />
+    <Compile Include="BasicData\CInformation.cs" />
+    <Compile Include="BasicData\CLicence.cs" />
     <Compile Include="BasicData\FlightTask.cs" />
     <Compile Include="EF\ActualSteps.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
@@ -120,7 +124,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ZHCC_GAPlan.edmx</DependentUpon>
     </Compile>
-    <Compile Include="FlightPlan\RepetitivePlan.cs" />
+    <Compile Include="FlightPlan\vFlightPlan.cs" />
+    <Compile Include="BasicData\Pilot.cs" />    <Compile Include="FlightPlan\RepetitivePlan.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstance.cs" />
     <Compile Include="FlightPlan\WorkflowTemplate.cs" />
     <Compile Include="FlightPlan\WorkflowTplNode.cs" />

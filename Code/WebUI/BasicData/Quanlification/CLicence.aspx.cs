@@ -1,17 +1,12 @@
-﻿using BLL.FlightPlan;
-using DAL.FlightPlan;
-using Model.FlightPlan;
+﻿using BLL.BasicData;
+using Model.BasicData;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Untity;
 
-public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
+public partial class BasicData_Quanlification_CLicence : BasePage
+
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -25,11 +20,8 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                 case "queryone"://获取一条记录
                     GetData();
                     break;
-                case "save":
-                    Save();
-                    break;
                 case "submit":
-                    Submit();
+                    Save();
                     break;
                 case "del":
                     Delete();
@@ -38,8 +30,8 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                     break;
             }
         }
-    }
 
+    }
     private void Delete()
     {
         AjaxResult result = new AjaxResult();
@@ -47,7 +39,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (RepetitivePlanBLL.Delete(Request.Form["cbx_select"].ToString()))
+            if (CLicenceBLL.Delete(Request.Form["cbx_select"].ToString()))
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -66,32 +58,23 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var model = new RepetitivePlan()
+        var model = new CLicence()
         {
-            PlanCode = OrderHelper.GenerateId(""),
-            FlightType = Request.Form["FlightType"],
-            AircraftType = Request.Form["AircraftType"],
-            FlightDirHeight = Request.Form["FlightDirHeight"],
-            StartDate = DateTime.Parse(Request.Form["StartDate"]),
-            EndDate = DateTime.Parse(Request.Form["EndDate"]),
-            ModifyTime = DateTime.Now,
-            AttchFile = "",
-            Remark = Request.Form["Remark"],
-            ADES = Request.Form["ADES"],
-            ADEP = Request.Form["ADEP"],
-            WeekSchedule = Request.Form["qx"],
-            SIBT = DateTime.Parse(Request.Form["SIBT"]),
-            SOBT = DateTime.Parse(Request.Form["SOBT"])
+            CompanyCode3 = Request.Form["CompanyCode3"],
+            LegalPerson = Request.Form["LegalPerson"],
+            Licence = Request.Form["Licence"],
+            Project = Request.Form["Project"],
+            BaseAirport = Request.Form["BaseAirport"],
+            EffectiveData = Request.Form["EffectiveData"],
+            CompanyType = Request.Form["CompanyType"],
+            LssueData = Request.Form["LssueData"],
+            Capital = Request.Form["Capital"],
+            Quota = Request.Form["Quota"],
         };
         if (!id.HasValue)//新增
         {
-            model.PlanState = "0";
-            model.CompanyCode3 = "";
-            model.Creator = User.ID;
-            model.CreatorName = User.UserName;
-            model.ActorID = User.ID;
             model.CreateTime = DateTime.Now;
-            if (RepetitivePlanBLL.Add(model))
+            if (CLicenceBLL.Add(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -99,8 +82,8 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         }
         else//编辑
         {
-            model.RepetPlanID = id.Value;
-            if (RepetitivePlanBLL.Update(model))
+            model.ID = id.Value;
+            if (CLicenceBLL.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -111,39 +94,15 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
-    private void Submit()
-    {
-        AjaxResult result = new AjaxResult();
-        result.IsSuccess = false;
-        result.Msg = "提交失败！";
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        WorkflowTemplateBLL.CreateWorkflowInstance(1, planid, User.ID, User.UserName);
-        WorkflowNodeInstanceDAL.Submit(planid, "");
-
-        result.IsSuccess = true;
-        result.Msg = "提交成功！";
-
-        Response.Clear();
-        Response.Write(result.ToJsonString());
-        Response.ContentType = "application/json";
-        Response.End();
-
-
-    }
 
     /// <summary>
     /// 获取指定ID的数据
     /// </summary>
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var plan = RepetitivePlanBLL.Get(planid);
-        var strJSON = "";
-        if (plan != null)
-        {
-            strJSON=JsonConvert.SerializeObject(plan);
-        }
-         
+        var pilotid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var pilot = CLicenceBLL.Get(pilotid);
+        var strJSON = JsonConvert.SerializeObject(pilot);
         Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -163,8 +122,28 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         if (page < 1) return;
         string orderField = sort.Replace("JSON_", "");
         string strWhere = GetWhere();
-        var pageList = RepetitivePlanBLL.GetMyRepetitivePlanList(size, page, strWhere);
+        var pageList = CLicenceBLL.GetList(size, page, strWhere);
+        //var vms = new List<UserInfo>();
+        //if (pageList != null && pageList.TotalCount > 0)
+        //{
+        //    vms.AddRange(pageList.Select(dto => new UserInfo
+        //    {
+        //        ID = dto.ID,
+        //        Password = dto.Password,
+        //        Status = dto.Status,
+        //        CreateTime = dto.CreateTime,
+        //        Phone = dto.Phone,
+        //        ContactPerson = dto.ContactPerson,
+        //        ContactPhone = dto.ContactPhone,
+        //        ContactEmail = dto.ContactEmail,
+        //        AreaName = dto.AreaName,
+        //        Deposit = IFPECBasicInfoFacade.GetDisp(dto.ECCode),
+        //        WillApproveStatus = IFPECDepositHistoryFacade.DepositWillApproveStatus(dto.ECCode)
+        //    }));
+
+        //}
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
+        //   strJSON= "{ \"rows\":[ { \"JSON_ID\":\"1\",\"JSON_UserName\":\"adads\",\"JSON_Password\":\"asdasdf\",\"JSON_Mobile\":\"sdfasdf\",\"JSON_Status\":\"0\",\"JSON_CreateTime\":\"2017-11-1\",\"JSON_IsGeneralAviation\":1,\"JSON_CompanyCode3\":\"222\"} ],\"total\":1}";
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -177,7 +156,6 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     private string GetWhere()
     {
         StringBuilder sb = new StringBuilder("1=1");
-        sb.AppendFormat(" and Creator={0} and PlanState='0'", User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
@@ -188,4 +166,5 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         }
         return sb.ToString();
     }
+
 }

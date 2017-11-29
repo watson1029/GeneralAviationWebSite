@@ -137,10 +137,10 @@ namespace DAL.FlightPlan
         public static bool Add(Model.FlightPlan.RepetitivePlan model)
         {
             SqlDbHelper dao = new SqlDbHelper();
-            var sql = @"insert into RepetitivePlan(FlightType,FlightDirHeight,PlanCode,AircraftType,StartDate,EndDate,CreateTime,ModifyTime,Creator,ActorID,CompanyCode3,AttchFile,Remark,
-PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT)
-                                  values (@FlightType,@FlightDirHeight,@PlanCode,@AircraftType,@StartDate,@EndDate,@CreateTime,@ModifyTime,@Creator,@ActorID,@CompanyCode3,@AttchFile,@Remark,
-@PlanState,@ADES,@ADEP,@WeekSchedule,@SIBT,@SOBT)";
+            var sql = @"insert into RepetitivePlan(FlightType,FlightDirHeight,PlanCode,AircraftType,StartDate,EndDate,CreateTime,ModifyTime,Creator,CreatorName,ActorID,CompanyCode3,AttchFile,Remark,
+PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT,CallSign)
+                                  values (@FlightType,@FlightDirHeight,@PlanCode,@AircraftType,@StartDate,@EndDate,@CreateTime,@ModifyTime,@Creator,@CreatorName,@ActorID,@CompanyCode3,@AttchFile,@Remark,
+@PlanState,@ADES,@ADEP,@WeekSchedule,@SIBT,@SOBT,@CallSign)";
             SqlParameter[] parameters = {
                             new SqlParameter("@FlightType",  model.FlightType),
                             new SqlParameter("@FlightDirHeight", model.FlightDirHeight),
@@ -151,6 +151,7 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT)
                             new SqlParameter("@CreateTime", model.CreateTime),
                             new SqlParameter("@ModifyTime", model.ModifyTime),
                             new SqlParameter("@Creator", model.Creator),
+                             new SqlParameter("@CreatorName", model.CreatorName),
                             new SqlParameter("@ActorID", model.ActorID),
                             new SqlParameter("@CompanyCode3", model.CompanyCode3),
                             new SqlParameter("@AttchFile", model.AttchFile),
@@ -160,7 +161,8 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT)
                             new SqlParameter("@ADEP", model.ADEP),
                             new SqlParameter("@WeekSchedule", model.WeekSchedule),
                             new SqlParameter("@SIBT", model.SIBT),
-                            new SqlParameter("@SOBT", model.SOBT)
+                            new SqlParameter("@SOBT", model.SOBT),
+                            new SqlParameter("@CallSign", model.CallSign)
                                         };
             return dao.ExecNonQuery(sql, parameters) > 0;
 
@@ -169,7 +171,7 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT)
         {
             SqlDbHelper dao = new SqlDbHelper();
             var sql = @"update RepetitivePlan set FlightType=@FlightType,FlightDirHeight=@FlightDirHeight,ModifyTime=@ModifyTime,PlanCode=@PlanCode,AircraftType=@AircraftType,StartDate=@StartDate,
- ,EndDate=@EndDate,AttchFile=@AttchFile,Remark=@Remark,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT,SOBT=@SOBT where RepetPlanID=@ID";
+ ,EndDate=@EndDate,AttchFile=@AttchFile,Remark=@Remark,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT,SOBT=@SOBT,CallSign=@CallSign where RepetPlanID=@ID";
             SqlParameter[] parameters = {
                              new SqlParameter("@FlightType",  model.FlightType),
                             new SqlParameter("@FlightDirHeight", model.FlightDirHeight),
@@ -185,7 +187,8 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT)
                             new SqlParameter("@WeekSchedule", model.WeekSchedule),
                             new SqlParameter("@SIBT", model.SIBT),
                             new SqlParameter("@SOBT", model.SOBT),
-                              new SqlParameter("@ID", model.RepetPlanID)};
+                              new SqlParameter("@ID", model.RepetPlanID),
+                                         new SqlParameter("@CallSign", model.CallSign)};
             return dao.ExecNonQuery(sql, parameters) > 0;
 
         }
@@ -224,6 +227,7 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT)
             plan.EndDate = Convert.ToDateTime(dr["EndDate"]);
             plan.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
             plan.Creator = Convert.ToInt32(dr["Creator"]);
+            plan.CreatorName = Convert.ToString(dr["CreatorName"]);
             plan.RepetPlanID = Convert.ToInt32(dr["RepetPlanID"]);
             if (!dr["ActorID"].Equals(DBNull.Value))
                 plan.ActorID = Convert.ToInt32(dr["ActorID"]);
@@ -236,9 +240,10 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT)
                 plan.PlanState = Convert.ToString(dr["PlanState"]);
             plan.ADES = Convert.ToString(dr["ADES"]);
             plan.ADEP = Convert.ToString(dr["ADEP"]);
-            plan.WeekSchedule = Convert.ToString(dr["WeekSchedule"]);
+            plan.WeekSchedule = Convert.ToString(dr["WeekSchedule"]).Replace("*","");
             plan.SIBT = DateTime.ParseExact(dr["SIBT"].ToString(),"HH:mm:ss",null);
             plan.SOBT = DateTime.ParseExact(dr["SOBT"].ToString(), "HH:mm:ss", null);
+            plan.CallSign = Convert.ToString(dr["CallSign"]);
             return plan;
         }
     }
