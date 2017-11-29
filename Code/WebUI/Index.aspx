@@ -12,21 +12,6 @@
     <script src="<%=Page.ResolveUrl("~/")%>Content/JS/wikmain.js" type="text/javascript"></script>
     <link href="<%=Page.ResolveUrl("~/")%>Content/css/default.css" rel="stylesheet" type="text/css" />
 
-       
-
-        <script src="<%=Page.ResolveUrl("~/")%>Content/JS/GA/base.js" type="text/javascript"></script>  
-          
-
-        <script src="<%=Page.ResolveUrl("~/")%>Content/JS/GA/dj.project.js" type="text/javascript"></script>
-        <script src="<%=Page.ResolveUrl("~/")%>Content/JS/GA/dj.jqueryextend.js" type="text/javascript"></script>  
-      <script type="text/javascript">
-                   dj.root = "<%=Page.ResolveUrl("~/")%>";
-    </script>
-<link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
-    <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
-<script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
-
-<script src="<%=Page.ResolveUrl("~/Content/JS/GA/upload.js")%>" type="text/javascript"></script>
     <script type="text/javascript">
         //获取左侧导航的图标
         function getIcon(menuid) {
@@ -121,30 +106,6 @@
             <div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
                 <h1>
                    通航服务站</h1>
-                <input type="hidden" name="AttchFileInfo" id="AttchFileInfo"/>
-
- <input type="file" id="fileplctures" name="fileplctures"/>
-<input type="button" class="btn" value="上传" onclick="dj.getCmp('fileplctures').uploadFiles()"/>
-<div id="fileplctures-fileQueue"></div>
-<div id="fileplctures-fileList" style="margin-top: 2px;zoom:1"></div>
-                <script type="text/javascript">
-
-                    $(document).ready (function() {
-                    
-                        new dj.upload({
-                            id: "fileplctures",
-                            maxSize: 5,
-                            multi: true,
-                            queueId: "fileplctures-fileQueue",
-                            listId: "fileplctures-fileList",
-                            truncate: 18,
-                            maxCount: "1",
-                            IsMust: false,
-                            autoUpload: false,
-                            uploadPath: "Files/PJ/"
-                        })
-                    });
-                </script>
             </div>
         </div>
     </div>
