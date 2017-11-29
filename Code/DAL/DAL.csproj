@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicData\FlightTaskDAL.cs" />
+    <Compile Include="FlightPlan\FlightPlanDAL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanDAL.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstanceDAL.cs" />
     <Compile Include="FlightPlan\WorkflowTplNodeDAL.cs" />

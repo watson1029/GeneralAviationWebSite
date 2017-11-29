@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicData\FlightTaskBLL.cs" />
+    <Compile Include="FlightPlan\FlightPlanBLL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanBLL.cs" />
     <Compile Include="FlightPlan\WorkflowTemplateBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

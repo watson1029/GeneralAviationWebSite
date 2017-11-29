@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicData\FlightTask.cs" />
+    <Compile Include="FlightPlan\vFlightPlan.cs" />
     <Compile Include="FlightPlan\RepetitivePlan.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstance.cs" />
     <Compile Include="FlightPlan\WorkflowTemplate.cs" />
