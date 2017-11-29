@@ -52,25 +52,70 @@
                   collapsible: false, //可折叠
                   sortOrder: 'desc', //排序类型
                   remoteSort: true, //定义是否从服务器给数据排序
-              
+                  frozenColumns: [[//冻结的列，不会随横向滚动轴移动
+                      { field: 'cbx', checkbox: true },
+                  ]],
                   columns: [[
                       { title: '申请单号', field: 'PlanCode', width: 100 },
                       { title: '任务类型', field: 'FlightType', width: 100 },
                       { title: '使用机型', field: 'AircraftType', width: 100 },
                       { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
-                      { title: '预计开始时间', field: 'StartDate', width: 100 },
-                      { title: '预计结束时间', field: 'EndDate', width: 100 },
-                      { title: '起飞时刻', field: 'SOBT', width: 100 },
-                      { title: '降落时刻', field: 'SIBT', width: 100 },
+                      {
+                          title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
+
+                              var timesstamp = new Date(value);
+                              return timesstamp.toLocaleDateString();
+
+                          }
+                      },
+                      {
+                          title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) {
+
+                              var timesstamp = new Date(value);
+                              return timesstamp.toLocaleDateString();
+
+                          }
+                      },
+                      {
+                          title: '起飞时刻', field: 'SOBT', width: 100, formatter: function (value, rec, index) {
+
+                              var timesstamp = new Date(value);
+                              return timesstamp.toLocaleTimeString();
+
+                          }
+                      },
+                      {
+                          title: '降落时刻', field: 'SIBT', width: 100, formatter: function (value, rec, index) {
+
+                              var timesstamp = new Date(value);
+                              return timesstamp.toLocaleTimeString();
+
+                          }
+                      },
                       { title: '起飞机场', field: 'ADEP', width: 100 },
                       { title: '降落机场', field: 'ADES', width: 100 },
 
-                      { title: '公司三字码', field: 'CompanyCode3', width: 100 },
-                       { title: '创建人', field: 'Creator', width: 100 },
+                      {
+                          title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
+                              var array = [];
+                              $.each(value.toCharArray(), function (i, n) {
+
+                                  array.push("星期" + n);
+                              });
+                              return array.join(',');
+
+                          }
+                      },
+                       { title: '创建人', field: 'CreatorName', width: 60 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
-                      { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == "Deserted" ? '审核不通过' : value + "审核中" }, width: 100 },
-                
+                      { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 100 },
+                      {
+                          title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
+                              var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
+                              return str;
+                          }
+                      }
                   ]],
                   toolbar: "#tab_toolbar",
                   queryParams: { "action": "query" },

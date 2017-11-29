@@ -44,6 +44,7 @@
     <Compile Include="BasicData\CInformation.cs" />
     <Compile Include="BasicData\CLicence.cs" />
     <Compile Include="BasicData\FlightTask.cs" />
+    <Compile Include="FlightPlan\vFlightPlan.cs" />
     <Compile Include="BasicData\Pilot.cs" />
     <Compile Include="FlightPlan\RepetitivePlan.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstance.cs" />

@@ -88,6 +88,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
             model.PlanState = "0";
             model.CompanyCode3 = "";
             model.Creator = User.ID;
+            model.CreatorName = User.UserName;
             model.ActorID = User.ID;
             model.CreateTime = DateTime.Now;
             if (RepetitivePlanBLL.Add(model))
@@ -140,7 +141,6 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         var strJSON = "";
         if (plan != null)
         {
-            plan.WeekSchedule = plan.WeekSchedule.Replace("*","");
             strJSON=JsonConvert.SerializeObject(plan);
         }
          

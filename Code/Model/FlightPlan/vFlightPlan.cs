@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Model.FlightPlan
 {
-    public class RepetitivePlan
+    public class vFlightPlan
     {
         public int RepetPlanID { get; set; }
         public string PlanCode { get; set; }
@@ -29,6 +30,23 @@ namespace Model.FlightPlan
         public string WeekSchedule { get; set; }
         public DateTime SIBT { get; set; }
         public DateTime SOBT { get; set; }
-        public string CallSign { get; set; }
+        [Description("空勤组人数")]
+        public int AircrewGroupNum { get; set; }
+         [Description("飞行气候条件")]
+        public string WeatherCondition { get; set; }
+          [Description("二次雷达应答机代码")]
+        public string RadarCode { get; set; }
+          [Description("飞行员姓名")]
+          public string Pilot { get; set; }
+          [Description("航空器架数")]
+          public int AircraftNum { get; set; }
+              [Description("通信联络方法")]
+          public string ContactWay { get; set; }
+        [Description("代号呼号")]
+              public string CallSign { get; set; }
+        [Description("实际飞行开始时间")]
+        public DateTime? ActualStartTime { get; set; }
+        [Description("实际飞行结束时间")]
+        public DateTime? ActualEndTime { get; set; }
     }
 }
