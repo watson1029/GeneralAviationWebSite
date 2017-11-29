@@ -41,9 +41,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Untity">
-      <HintPath>..\Untity\bin\Debug\Untity.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicData\AircraftBLL.cs" />
@@ -68,6 +65,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{b93bef96-535c-4e72-852b-84ea89e4b096}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Untity\Untity.csproj">
+      <Project>{9059577f-5aa3-44da-a8b2-3b1cfe25495f}</Project>
+      <Name>Untity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
