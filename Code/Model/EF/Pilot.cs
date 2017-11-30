@@ -16,7 +16,7 @@ namespace Model.EF
     {
         public string pilot1 { get; set; }
         public string pilotcardNo { get; set; }
-        public System.DateTime datatime { get; set; }
+        public System.DateTime pilotDT { get; set; }
         public string phoneNo { get; set; }
         public string licensesort { get; set; }
         public string licenseNo { get; set; }

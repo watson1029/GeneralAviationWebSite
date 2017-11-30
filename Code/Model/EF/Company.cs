@@ -15,8 +15,8 @@ namespace Model.EF
     public partial class Company
     {
         public int CompanyID { get; set; }
-        public string Code3 { get; set; }
-        public string Code2 { get; set; }
+        public string CompanyCode3 { get; set; }
+        public string CompanyCode2 { get; set; }
         public string EnglishName { get; set; }
         public string CompanyName { get; set; }
         public Nullable<bool> DomesticFlag { get; set; }
