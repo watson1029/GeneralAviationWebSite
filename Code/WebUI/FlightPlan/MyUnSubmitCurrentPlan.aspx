@@ -116,13 +116,13 @@
                         <td class="tdal">周执行计划：
                         </td>
                         <td class="tdar">
-                             <input id="d1" type="checkbox" name ="WeekSchedule" value="1" aria-readonly="true"/>星期一
-                             <input id="d2" type="checkbox" name ="WeekSchedule" value="2" aria-readonly="true"/>星期二
-                             <input id="d3" type="checkbox" name ="WeekSchedule" value="3" aria-readonly="true"/>星期三
-                             <input id="d4" type="checkbox" name ="WeekSchedule" value="4" aria-readonly="true"/>星期四
-                             <input id="d5" type="checkbox" name ="WeekSchedule" value="5" aria-readonly="true"/>星期五
-                             <input id="d6" type="checkbox" name ="WeekSchedule" value="6" aria-readonly="true"/>星期六
-                             <input id="d7" type="checkbox" name ="WeekSchedule" value="7" aria-readonly="true"/>星期七
+                             <input id="d1" type="checkbox" name ="WeekSchedule" value="1"/>星期一
+                             <input id="d2" type="checkbox" name ="WeekSchedule" value="2"/>星期二
+                             <input id="d3" type="checkbox" name ="WeekSchedule" value="3"/>星期三
+                             <input id="d4" type="checkbox" name ="WeekSchedule" value="4"/>星期四
+                             <input id="d5" type="checkbox" name ="WeekSchedule" value="5"/>星期五
+                             <input id="d6" type="checkbox" name ="WeekSchedule" value="6"/>星期六
+                             <input id="d7" type="checkbox" name ="WeekSchedule" value="7"/>星期七
                         </td>
 
                     </tr>
