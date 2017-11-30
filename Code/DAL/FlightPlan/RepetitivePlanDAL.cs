@@ -3,17 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 using Untity;
 using Untity.DB;
+using Model.EF;
+using System.Data.Entity;
 
 namespace DAL.FlightPlan
 {
     public class RepetitivePlanDAL
     {
-
-
+        private ZHCC_GAPlanEntities db = new ZHCC_GAPlanEntities();
 
         public static bool Delete(string ids)
         {
@@ -23,7 +23,118 @@ namespace DAL.FlightPlan
             return dao.ExecNonQuery(sql) > 0;
         }
 
-        public static bool Add(RepetitivePlan model)
+        //使用EF     
+        #region
+
+        /// <summary>
+        /// 新增记录
+        /// </summary>
+        /// <param name="plan"></param>
+        /// <returns></returns>
+        public bool Add(Model.EF.RepetitivePlan plan)
+        {
+            if (plan == null) return false;
+
+            db.RepetitivePlan.Add(plan);
+            db.SaveChanges();
+            return false;
+        }
+
+        /// <summary>
+        /// 删除记录
+        /// </summary>
+        /// <param name="id">主键ID</param>
+        /// <returns></returns>
+        public bool Delete(int? id)
+        {
+            if (id == null) return false;
+
+            var plan = db.RepetitivePlan.Find(id);
+            if (plan != null)
+            {
+                db.RepetitivePlan.Remove(plan);
+                return db.SaveChanges() > 0;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 获取全部记录，按照指定方式排序
+        /// 调用方式为  List<Model.EF.RepetitivePlan> result=GetAllListOrderBy<string>(
+        /// </summary>
+        /// <typeparam name="TKey">排序字段类型</typeparam>
+        /// <param name="orderBy">排序字段</param>
+        /// /// <param name="isASC">是否升序</param>
+        /// <returns></returns>
+        public List<Model.EF.RepetitivePlan> GetAllListOrderBy<TKey>(Expression<Func<Model.EF.RepetitivePlan, TKey>> orderBy,bool isASC)
+        {
+            if(isASC)
+                return db.RepetitivePlan.OrderBy(orderBy).ToList();
+            else
+                return db.RepetitivePlan.OrderByDescending(orderBy).ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="planWhere"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="isASC"></param>
+        /// <returns></returns>
+        public List<Model.EF.RepetitivePlan> GetAllListWhereAndOrderBy<TKey>(Expression<Func<Model.EF.RepetitivePlan,bool>> planWhere,
+            Expression<Func<Model.EF.RepetitivePlan, TKey>> orderBy, bool isASC)
+        {
+            if (isASC)
+                return db.RepetitivePlan.Where(planWhere).OrderBy(orderBy).ToList();
+            else
+                return db.RepetitivePlan.Where(planWhere).OrderByDescending(orderBy).ToList();
+        }
+
+        public List<Model.EF.RepetitivePlan> GetPageListWhereAndOrderBy<TKey>(int PageIndex,int PageSize,
+            Expression<Func<Model.EF.RepetitivePlan, bool>> planWhere,
+            Expression<Func<Model.EF.RepetitivePlan, TKey>> orderBy, bool isASC)
+        {
+            if (isASC)
+                return db.RepetitivePlan.Where(planWhere).OrderBy(orderBy).Skip((PageIndex - 1) * PageSize).Take(PageSize).ToList();
+            else
+                return db.RepetitivePlan.Where(planWhere).OrderByDescending(orderBy).Skip((PageIndex - 1) * PageSize).Take(PageSize).ToList();
+        }
+
+        public bool Update(Model.EF.RepetitivePlan plan)
+        {
+            var RepetitivePlan = db.RepetitivePlan.Find(plan.RepetPlanID);
+
+            RepetitivePlan.FlightType = plan.FlightType;
+            RepetitivePlan.FlightDirHeight = plan.FlightDirHeight;
+            RepetitivePlan.PlanCode = plan.PlanCode;
+            RepetitivePlan.AircraftType = plan.AircraftType;
+            RepetitivePlan.StartDate = plan.StartDate;
+            RepetitivePlan.EndDate = plan.EndDate;
+            RepetitivePlan.ModifyTime = plan.ModifyTime;
+            RepetitivePlan.AttchFile = plan.AttchFile;
+            RepetitivePlan.Remark = plan.Remark;
+            RepetitivePlan.ADES = plan.ADES;
+            RepetitivePlan.ADEP = plan.ADEP;
+            RepetitivePlan.WeekSchedule = plan.WeekSchedule;
+            RepetitivePlan.SIBT = plan.SIBT;
+            RepetitivePlan.SOBT = plan.SOBT;
+
+            if (plan != null)
+            {
+                return db.SaveChanges() > 0;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        public static bool Add(Model.FlightPlan.RepetitivePlan model)
         {
             SqlDbHelper dao = new SqlDbHelper();
             var sql = @"insert into RepetitivePlan(FlightType,FlightDirHeight,PlanCode,AircraftType,StartDate,EndDate,CreateTime,ModifyTime,Creator,CreatorName,ActorID,CompanyCode3,AttchFile,Remark,
@@ -56,7 +167,7 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT,CallSign)
             return dao.ExecNonQuery(sql, parameters) > 0;
 
         }
-        public static bool Update(RepetitivePlan model)
+        public static bool Update(Model.FlightPlan.RepetitivePlan model)
         {
             SqlDbHelper dao = new SqlDbHelper();
             var sql = @"update RepetitivePlan set FlightType=@FlightType,FlightDirHeight=@FlightDirHeight,ModifyTime=@ModifyTime,PlanCode=@PlanCode,AircraftType=@AircraftType,StartDate=@StartDate,
@@ -83,30 +194,30 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT,CallSign)
         }
 
 
-        public static PagedList<RepetitivePlan> GetMyRepetitivePlanList(int pageSize, int pageIndex, string strWhere)
+        public static PagedList<Model.FlightPlan.RepetitivePlan> GetMyRepetitivePlanList(int pageSize, int pageIndex, string strWhere)
         {
             SqlDbHelper dao = new SqlDbHelper();
             var sql = string.Format("select * from RepetitivePlan where {0}", strWhere);
-            return (dao.ExecSelectCmd(ExecReader, sql) ?? new List<RepetitivePlan>()).ToPagedList<RepetitivePlan>(pageIndex, pageSize);
+            return (dao.ExecSelectCmd(ExecReader, sql) ?? new List<Model.FlightPlan.RepetitivePlan>()).ToPagedList<Model.FlightPlan.RepetitivePlan>(pageIndex, pageSize);
         }
 
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public static RepetitivePlan Get(int id)
+        public static Model.FlightPlan.RepetitivePlan Get(int id)
         {
             SqlDbHelper dao = new SqlDbHelper();
             var sql = "select  top 1 * from RepetitivePlan where RepetPlanID=@PlanID";
             SqlParameter[] parameters = {
 					new SqlParameter("@PlanID",id)
 			};
-            return dao.ExecSelectSingleCmd<RepetitivePlan>(ExecReader, sql, parameters);
+            return dao.ExecSelectSingleCmd<Model.FlightPlan.RepetitivePlan>(ExecReader, sql, parameters);
         }
 
-        private static RepetitivePlan ExecReader(SqlDataReader dr)
+        private static Model.FlightPlan.RepetitivePlan ExecReader(SqlDataReader dr)
         {
-            RepetitivePlan plan = new RepetitivePlan();
+            Model.FlightPlan.RepetitivePlan plan = new Model.FlightPlan.RepetitivePlan();
             plan.FlightType = Convert.ToString(dr["FlightType"]);
             plan.FlightDirHeight = Convert.ToString(dr["FlightDirHeight"]);
             plan.AircraftType = Convert.ToString(dr["AircraftType"]);
