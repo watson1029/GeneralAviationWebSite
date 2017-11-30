@@ -60,16 +60,16 @@ public partial class BasicData_Quanlification_CLicence : BasePage
         { id = Convert.ToInt32(Request.Form["id"]); }
         var model = new CLicence()
         {
-            CompanyCode3 = Request.Form["CompanyCode3"],
-            LegalPerson = Request.Form["LegalPerson"],
-            Licence = Request.Form["Licence"],
-            Project = Request.Form["Project"],
-            BaseAirport = Request.Form["BaseAirport"],
-            EffectiveData = Request.Form["EffectiveData"],
-            CompanyType = Request.Form["CompanyType"],
-            LssueData = Request.Form["LssueData"],
-            Capital = Request.Form["Capital"],
-            Quota = Request.Form["Quota"],
+            //CompanyCode3 = Request.Form["CompanyCode3"],
+            //LegalPerson = Request.Form["LegalPerson"],
+            //Licence = Request.Form["Licence"],
+            //Project = Request.Form["Project"],
+            //BaseAirport = Request.Form["BaseAirport"],
+            //EffectiveData = Request.Form["EffectiveData"],
+            //CompanyType = Request.Form["CompanyType"],
+            //LssueData = Request.Form["LssueData"],
+            //Capital = Request.Form["Capital"],
+            //Quota = Request.Form["Quota"],
         };
         if (!id.HasValue)//新增
         {

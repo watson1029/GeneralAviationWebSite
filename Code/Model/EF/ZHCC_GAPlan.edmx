@@ -23,7 +23,7 @@
           <Property Name="ActorTime" Type="datetime" />
           <Property Name="ActorName" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Aicraft">
+        <EntityType Name="Aircraft">
           <Key>
             <PropertyRef Name="AircraftID" />
           </Key>
@@ -157,6 +157,14 @@
           <Property Name="FlightType" Type="nchar" MaxLength="1" Nullable="false" />
           <Property Name="DefaultMapping" Type="bit" Nullable="false" />
         </EntityType>
+        <!--生成过程中发现错误:
+警告 6013: 表/视图“ZHCC_GAPlan.dbo.LoginLog”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+        <EntityType Name="LoginLog">
+          <Property Name="UserID" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" />
+          <Property Name="LoginTime" Type="datetime" />
+          <Property Name="IPAddress" Type="varchar" MaxLength="50" />
+        </EntityType>-->
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="ID" />
@@ -292,7 +300,7 @@
         </EntityType>
         <EntityContainer Name="ZHCC_GAPlanModelStoreContainer">
           <EntitySet Name="ActualSteps" EntityType="Self.ActualSteps" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Aicraft" EntityType="Self.Aicraft" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Aircraft" EntityType="Self.Aircraft" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusinessCertificate" EntityType="Self.BusinessCertificate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusinessIntroduction" EntityType="Self.BusinessIntroduction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusinessLicense" EntityType="Self.BusinessLicense" Schema="dbo" store:Type="Tables" />
@@ -316,7 +324,6 @@
       <Schema Namespace="ZHCC_GAPlanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ZHCC_GAPlanEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ActualSteps" EntityType="ZHCC_GAPlanModel.ActualSteps" />
-          <EntitySet Name="Aicraft" EntityType="ZHCC_GAPlanModel.Aicraft" />
           <EntitySet Name="BusinessCertificate" EntityType="ZHCC_GAPlanModel.BusinessCertificate" />
           <EntitySet Name="BusinessIntroduction" EntityType="ZHCC_GAPlanModel.BusinessIntroduction" />
           <EntitySet Name="BusinessLicense" EntityType="ZHCC_GAPlanModel.BusinessLicense" />
@@ -333,6 +340,7 @@
           <EntitySet Name="TWFSteps" EntityType="ZHCC_GAPlanModel.TWFSteps" />
           <EntitySet Name="UserInfo" EntityType="ZHCC_GAPlanModel.UserInfo" />
           <EntitySet Name="UserRole" EntityType="ZHCC_GAPlanModel.UserRole" />
+          <EntitySet Name="Aircraft" EntityType="ZHCC_GAPlanModel.Aircraft" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -351,26 +359,6 @@
           <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ActorTime" Type="DateTime" Precision="3" />
           <Property Name="ActorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Aicraft">
-          <Key>
-            <PropertyRef Name="AircraftID" />
-          </Key>
-          <Property Name="AircraftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AcfType" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="true" />
-          <Property Name="AltnAircraft" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="AcfClass" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="Manufacture" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="WakeTurbulance" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="FueledWeight" Type="Int32" />
-          <Property Name="FuelCapacity" Type="Int32" />
-          <Property Name="Range" Type="Int32" />
-          <Property Name="PassengerSize" Type="Int32" />
-          <Property Name="CruiseAltd" Type="Double" />
-          <Property Name="CruiseSpeed" Type="Double" />
-          <Property Name="MinSpeed" Type="Double" />
-          <Property Name="MaxSpeed" Type="Double" />
-          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="BusinessCertificate">
           <Key>
@@ -619,6 +607,26 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Aircraft">
+          <Key>
+            <PropertyRef Name="AircraftID" />
+          </Key>
+          <Property Name="AircraftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AcfType" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="AltnAircraft" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="AcfClass" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="Manufacture" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WakeTurbulance" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="FueledWeight" Type="Int32" />
+          <Property Name="FuelCapacity" Type="Int32" />
+          <Property Name="Range" Type="Int32" />
+          <Property Name="PassengerSize" Type="Int32" />
+          <Property Name="CruiseAltd" Type="Double" />
+          <Property Name="CruiseSpeed" Type="Double" />
+          <Property Name="MinSpeed" Type="Double" />
+          <Property Name="MaxSpeed" Type="Double" />
+          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -641,27 +649,6 @@
                 <ScalarProperty Name="StepID" ColumnName="StepID" />
                 <ScalarProperty Name="PlanID" ColumnName="PlanID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Aicraft">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Aicraft">
-              <MappingFragment StoreEntitySet="Aicraft">
-                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
-                <ScalarProperty Name="MaxSpeed" ColumnName="MaxSpeed" />
-                <ScalarProperty Name="MinSpeed" ColumnName="MinSpeed" />
-                <ScalarProperty Name="CruiseSpeed" ColumnName="CruiseSpeed" />
-                <ScalarProperty Name="CruiseAltd" ColumnName="CruiseAltd" />
-                <ScalarProperty Name="PassengerSize" ColumnName="PassengerSize" />
-                <ScalarProperty Name="Range" ColumnName="Range" />
-                <ScalarProperty Name="FuelCapacity" ColumnName="FuelCapacity" />
-                <ScalarProperty Name="FueledWeight" ColumnName="FueledWeight" />
-                <ScalarProperty Name="WakeTurbulance" ColumnName="WakeTurbulance" />
-                <ScalarProperty Name="Manufacture" ColumnName="Manufacture" />
-                <ScalarProperty Name="AcfClass" ColumnName="AcfClass" />
-                <ScalarProperty Name="AltnAircraft" ColumnName="AltnAircraft" />
-                <ScalarProperty Name="AcfType" ColumnName="AcfType" />
-                <ScalarProperty Name="AircraftID" ColumnName="AircraftID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -925,6 +912,27 @@
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aircraft">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Aircraft">
+              <MappingFragment StoreEntitySet="Aircraft">
+                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
+                <ScalarProperty Name="MaxSpeed" ColumnName="MaxSpeed" />
+                <ScalarProperty Name="MinSpeed" ColumnName="MinSpeed" />
+                <ScalarProperty Name="CruiseSpeed" ColumnName="CruiseSpeed" />
+                <ScalarProperty Name="CruiseAltd" ColumnName="CruiseAltd" />
+                <ScalarProperty Name="PassengerSize" ColumnName="PassengerSize" />
+                <ScalarProperty Name="Range" ColumnName="Range" />
+                <ScalarProperty Name="FuelCapacity" ColumnName="FuelCapacity" />
+                <ScalarProperty Name="FueledWeight" ColumnName="FueledWeight" />
+                <ScalarProperty Name="WakeTurbulance" ColumnName="WakeTurbulance" />
+                <ScalarProperty Name="Manufacture" ColumnName="Manufacture" />
+                <ScalarProperty Name="AcfClass" ColumnName="AcfClass" />
+                <ScalarProperty Name="AltnAircraft" ColumnName="AltnAircraft" />
+                <ScalarProperty Name="AcfType" ColumnName="AcfType" />
+                <ScalarProperty Name="AircraftID" ColumnName="AircraftID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

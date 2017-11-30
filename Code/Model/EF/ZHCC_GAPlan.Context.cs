@@ -26,7 +26,6 @@ namespace Model.EF
         }
     
         public virtual DbSet<ActualSteps> ActualSteps { get; set; }
-        public virtual DbSet<Aicraft> Aicraft { get; set; }
         public virtual DbSet<BusinessCertificate> BusinessCertificate { get; set; }
         public virtual DbSet<BusinessIntroduction> BusinessIntroduction { get; set; }
         public virtual DbSet<BusinessLicense> BusinessLicense { get; set; }
@@ -43,5 +42,6 @@ namespace Model.EF
         public virtual DbSet<TWFSteps> TWFSteps { get; set; }
         public virtual DbSet<UserInfo> UserInfo { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<Aircraft> Aircraft { get; set; }
     }
 }

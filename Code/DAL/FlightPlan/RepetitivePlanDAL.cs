@@ -22,35 +22,8 @@ namespace DAL.FlightPlan
         /// 【新增】:字段验证在BLL中进行
         /// </summary>
         /// <returns>true or false</returns>
-        public bool Add(string PlanCode, string FlightType, string AircraftType, string FlightDirHeight, System.DateTime StartDate,
-            System.DateTime EndDate, string CompanyCode3, string AttchFile,
-            string PlanState, Nullable<int> ActorID, int Creator, string Remark, System.TimeSpan SOBT, System.TimeSpan SIBT, string WeekSchedule,
-            string ADEP, string ADES, string CreatorName, string CallSign)
+        public bool Add(RepetitivePlan plan)
         {
-            Model.EF.RepetitivePlan plan = new Model.EF.RepetitivePlan()
-            {
-                PlanCode = PlanCode,
-                FlightType = FlightType,
-                AircraftType = AircraftType,
-                FlightDirHeight = FlightDirHeight,
-                StartDate = StartDate,
-                EndDate = EndDate,
-                CreateTime = DateTime.Now,
-                CompanyCode3 = CompanyCode3,
-                AttchFile = AttchFile,
-                PlanState = PlanState,
-                ActorID = ActorID,
-                Creator = Creator,
-                Remark = Remark,
-                SOBT = SOBT,
-                SIBT = SIBT,
-                WeekSchedule = WeekSchedule,
-                ADEP = ADEP,
-                ADES = ADES,
-                CreatorName = CreatorName,
-                CallSign = CallSign
-            };
-
             db.RepetitivePlan.Add(plan);
             return db.SaveChanges() > 0;
         }
@@ -77,38 +50,54 @@ namespace DAL.FlightPlan
         }
 
         /// <summary>
+        /// 【删除多条记录】
+        /// </summary>
+        /// <param name="flightPlanIDs">以英文逗号隔开的多个RepetPlanID</param>
+        /// <returns></returns>
+        public bool BatchDelete(string repetPlanIDs)
+        {
+            if (string.IsNullOrEmpty(repetPlanIDs)) return false;
+
+            string[] ids = repetPlanIDs.Split(',');
+            int id = -1;
+            Model.EF.RepetitivePlan plan;
+            foreach (var item in ids)
+            {
+                id = int.Parse(item);
+                plan = db.RepetitivePlan.Find(id);
+                db.RepetitivePlan.Remove(plan);
+            }
+            return db.SaveChanges() > 0;
+        }
+
+        /// <summary>
         /// 【修改】
         /// </summary>
         /// <param name="repetPlanID">主键值</param>
         /// <returns>true or false</returns>
-        public bool Update(int? repetPlanID, string PlanCode, string FlightType, string AircraftType, string FlightDirHeight,
-            System.DateTime StartDate, System.DateTime EndDate, string CompanyCode3, string AttchFile,
-            string PlanState, Nullable<int> ActorID, string Remark, System.TimeSpan SOBT, System.TimeSpan SIBT, string WeekSchedule,
-            string ADEP, string ADES, string CallSign)
+        public bool Update(RepetitivePlan plan)
         {
-            if (repetPlanID == null) return false;
-
-            var repetitivePlan = db.RepetitivePlan.Find(repetPlanID);
+            var repetitivePlan = db.RepetitivePlan.Find(plan.RepetPlanID);
             if (repetitivePlan != null)
             {
-                repetitivePlan.PlanCode = PlanCode;
-                repetitivePlan.FlightType = FlightType;
-                repetitivePlan.AircraftType = AircraftType;
-                repetitivePlan.FlightDirHeight = FlightDirHeight;
-                repetitivePlan.StartDate = StartDate;
-                repetitivePlan.EndDate = EndDate;
+                repetitivePlan.PlanCode = plan.PlanCode;
+                repetitivePlan.FlightType = plan.FlightType;
+                repetitivePlan.AircraftType = plan.AircraftType;
+                repetitivePlan.FlightDirHeight = plan.FlightDirHeight;
+                repetitivePlan.StartDate = plan.StartDate;
+                repetitivePlan.EndDate = plan.EndDate;
                 repetitivePlan.ModifyTime = DateTime.Now;
-                repetitivePlan.CompanyCode3 = CompanyCode3;
-                repetitivePlan.AttchFile = AttchFile;
-                repetitivePlan.PlanState = PlanState;
-                repetitivePlan.ActorID = ActorID;
-                repetitivePlan.Remark = Remark;
-                repetitivePlan.SOBT = SOBT;
-                repetitivePlan.SIBT = SIBT;
-                repetitivePlan.WeekSchedule = WeekSchedule;
-                repetitivePlan.ADEP = ADEP;
-                repetitivePlan.ADES = ADES;
-                repetitivePlan.CallSign = CallSign;
+                repetitivePlan.CompanyCode3 = plan.CompanyCode3;
+                repetitivePlan.AttchFile = plan.AttchFile;
+                repetitivePlan.PlanState = plan.PlanState;
+                repetitivePlan.ActorID = plan.ActorID;
+                repetitivePlan.Remark = plan.Remark;
+                repetitivePlan.SOBT = plan.SOBT;
+                repetitivePlan.SIBT = plan.SIBT;
+                repetitivePlan.WeekSchedule = plan.WeekSchedule;
+                repetitivePlan.ADEP = plan.ADEP;
+                repetitivePlan.ADES = plan.ADES;
+                repetitivePlan.CallSign = plan.CallSign;
 
                 return db.SaveChanges() > 0;
             }

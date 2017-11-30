@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="cee278f8a6fb48aeadf30f9b32aca78e" Name="Diagram1">
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.ActualSteps" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aicraft" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusinessCertificate" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusinessIntroduction" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusinessLicense" Width="1.5" PointX="2.75" PointY="5.75" />
@@ -23,6 +22,7 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.TWFSteps" Width="1.5" PointX="0.75" PointY="11.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.UserInfo" Width="1.5" PointX="2.75" PointY="11.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.UserRole" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aircraft" Width="1.5" PointX="5.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

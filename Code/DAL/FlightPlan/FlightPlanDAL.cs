@@ -22,35 +22,8 @@ namespace DAL.FlightPlan
         /// 【新增】:字段验证在BLL中进行
         /// </summary>
         /// <returns>true or false</returns>
-        public bool Add(string PlanCode, string FlightType, string AircraftType, string FlightDirHeight, System.DateTime StartDate,
-            System.DateTime EndDate, string CompanyCode3, string AttchFile,
-            string PlanState, Nullable<int> ActorID, int Creator, string Remark, System.TimeSpan SOBT, System.TimeSpan SIBT, string WeekSchedule,
-            string ADEP, string ADES, string CreatorName, string CallSign)
+        public bool Add(Model.EF.FlightPlan plan)
         {
-            Model.EF.FlightPlan plan = new Model.EF.FlightPlan()
-            {
-                PlanCode = PlanCode,
-                FlightType = FlightType,
-                AircraftType = AircraftType,
-                FlightDirHeight = FlightDirHeight,
-                StartDate = StartDate,
-                EndDate = EndDate,
-                CreateTime = DateTime.Now,
-                CompanyCode3 = CompanyCode3,
-                AttchFile = AttchFile,
-                PlanState = PlanState,
-                ActorID = ActorID,
-                Creator = Creator,
-                Remark = Remark,
-                SOBT = SOBT,
-                SIBT = SIBT,
-                WeekSchedule = WeekSchedule,
-                ADEP = ADEP,
-                ADES = ADES,
-                CreatorName = CreatorName,
-                CallSign = CallSign
-            };
-
             db.FlightPlan.Add(plan);
             return db.SaveChanges() > 0;
         }
@@ -77,37 +50,53 @@ namespace DAL.FlightPlan
         }
 
         /// <summary>
+        /// 【删除多条记录】
+        /// </summary>
+        /// <param name="flightPlanIDs">以英文逗号隔开的多个FlightPlanID</param>
+        /// <returns></returns>
+        public bool BatchDelete(string flightPlanIDs)
+        {
+            if (string.IsNullOrEmpty(flightPlanIDs)) return false;
+
+            string[] ids = flightPlanIDs.Split(',');
+            int id = -1;
+            Model.EF.FlightPlan plan;
+            foreach (var item in ids)
+            {
+                id = int.Parse(item);
+                plan = db.FlightPlan.Find(id);
+                db.FlightPlan.Remove(plan);
+            }
+            return db.SaveChanges() > 0;
+        }
+
+        /// <summary>
         /// 【修改】
         /// </summary>
         /// <returns>true or false</returns>
-        public bool Update(int? flightPlanID, string PlanCode, string FlightType, string AircraftType, string FlightDirHeight,
-            System.DateTime StartDate, System.DateTime EndDate, string CompanyCode3, string AttchFile,
-            string PlanState, Nullable<int> ActorID, string Remark, System.TimeSpan SOBT, System.TimeSpan SIBT, string WeekSchedule,
-            string ADEP, string ADES, string CallSign)
+        public bool Update(Model.EF.FlightPlan plan)
         {
-            if (flightPlanID == null) return false;
-
-            var FlightPlan = db.FlightPlan.Find(flightPlanID);
+            var FlightPlan = db.FlightPlan.Find(plan.FlightPlanID);
             if (FlightPlan != null)
             {
-                FlightPlan.PlanCode = PlanCode;
-                FlightPlan.FlightType = FlightType;
-                FlightPlan.AircraftType = AircraftType;
-                FlightPlan.FlightDirHeight = FlightDirHeight;
-                FlightPlan.StartDate = StartDate;
-                FlightPlan.EndDate = EndDate;
+                FlightPlan.PlanCode = plan.PlanCode;
+                FlightPlan.FlightType = plan.FlightType;
+                FlightPlan.AircraftType = plan.AircraftType;
+                FlightPlan.FlightDirHeight = plan.FlightDirHeight;
+                FlightPlan.StartDate = plan.StartDate;
+                FlightPlan.EndDate = plan.EndDate;
                 FlightPlan.ModifyTime = DateTime.Now;
-                FlightPlan.CompanyCode3 = CompanyCode3;
-                FlightPlan.AttchFile = AttchFile;
-                FlightPlan.PlanState = PlanState;
-                FlightPlan.ActorID = ActorID;
-                FlightPlan.Remark = Remark;
-                FlightPlan.SOBT = SOBT;
-                FlightPlan.SIBT = SIBT;
-                FlightPlan.WeekSchedule = WeekSchedule;
-                FlightPlan.ADEP = ADEP;
-                FlightPlan.ADES = ADES;
-                FlightPlan.CallSign = CallSign;
+                FlightPlan.CompanyCode3 = plan.CompanyCode3;
+                FlightPlan.AttchFile = plan.AttchFile;
+                FlightPlan.PlanState = plan.PlanState;
+                FlightPlan.ActorID = plan.ActorID;
+                FlightPlan.Remark = plan.Remark;
+                FlightPlan.SOBT = plan.SOBT;
+                FlightPlan.SIBT = plan.SIBT;
+                FlightPlan.WeekSchedule = plan.WeekSchedule;
+                FlightPlan.ADEP = plan.ADEP;
+                FlightPlan.ADES = plan.ADES;
+                FlightPlan.CallSign = plan.CallSign;
 
                 return db.SaveChanges() > 0;
             }

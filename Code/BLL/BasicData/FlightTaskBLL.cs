@@ -10,9 +10,9 @@ namespace BLL.BasicData
 {
    public class FlightTaskBLL
     {
-       public static List<FlightTask> GetAllList()
-       {
-           return FlightTaskDAL.GetAllList();
-       }
+       //public static List<FlightTask> GetAllList()
+       //{
+       //    return FlightTaskDAL.GetAllList();
+       //}
     }
 }
