@@ -59,27 +59,12 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
             SIBT = DateTime.Parse(Request.Form["SIBT"]),
             SOBT = DateTime.Parse(Request.Form["SOBT"])
         };
-        if (!id.HasValue)//新增
+        
+        model.RepetPlanID = id.Value;
+        if (RepetitivePlanBLL.Update(model))
         {
-            model.PlanState = "0";
-            model.CompanyCode3 = "";
-            model.Creator = User.ID;
-            model.ActorID = User.ID;
-            model.CreateTime = DateTime.Now;
-            if (RepetitivePlanBLL.Add(model))
-            {
-                result.IsSuccess = true;
-                result.Msg = "增加成功！";
-            }
-        }
-        else//编辑
-        {
-            model.RepetPlanID = id.Value;
-            if (RepetitivePlanBLL.Update(model))
-            {
-                result.IsSuccess = true;
-                result.Msg = "更新成功！";
-            }
+            result.IsSuccess = true;
+            result.Msg = "更新成功！";
         }
         Response.Clear();
         Response.Write(result.ToJsonString());
