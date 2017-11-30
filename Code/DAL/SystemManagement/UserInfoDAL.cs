@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using Untity.DB;
 using Untity;
+using Model.EF;
 
 namespace DAL.SystemManagement
 {

@@ -1,4 +1,5 @@
-﻿using Model.SystemManagement;
+﻿using Model.EF;
+using Model.SystemManagement;
 using System;
 using System.Collections.Generic;
 using System.Data;
