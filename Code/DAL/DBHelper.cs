@@ -159,19 +159,18 @@ public class DBHelper<T> where T : class
     /// </summary>
     /// <param name="where"></param>
     /// <returns></returns>
-    public IQueryable<T> FindList()
+    public List<T> FindList()
     {
-        var temp = context.Set<T>();
-        return temp;
+        return context.Set<T>().ToList();
     }
     /// <summary>
     /// 按条件查询
     /// </summary>
     /// <param name="where"></param>
     /// <returns></returns>
-    public IQueryable<T> FindList(Expression<Func<T, bool>> where)
+    public List<T> FindList(Expression<Func<T, bool>> where)
     {
-        return context.Set<T>().Where(where);
+        return context.Set<T>().Where(where).ToList();
     }
     /// <summary>
     /// 按条件查询，排序
@@ -181,7 +180,7 @@ public class DBHelper<T> where T : class
     /// <param name="orderBy"></param>
     /// <param name="isAsc"></param>
     /// <returns></returns>
-    public IQueryable<T> FindList<S>(Expression<Func<T, bool>> where, Expression<Func<T, S>> orderBy, bool isAsc)
+    public List<T> FindList<S>(Expression<Func<T, bool>> where, Expression<Func<T, S>> orderBy, bool isAsc)
     {
 
         var list = context.Set<T>().Where(where);
@@ -189,7 +188,7 @@ public class DBHelper<T> where T : class
             list = list.OrderBy<T, S>(orderBy);
         else
             list = list.OrderByDescending<T, S>(orderBy);
-        return list;
+        return list.ToList();
     }
     /// <summary>
     /// 按条件查询，分页
@@ -199,7 +198,7 @@ public class DBHelper<T> where T : class
     /// <param name="rowCount"></param>
     /// <param name="where"></param>
     /// <returns></returns>
-    public IQueryable<T> FindPagedList(int pageIndex, int pageSize, out int pageCount,out int rowCount, Expression<Func<T, bool>> where)
+    public List<T> FindPagedList(int pageIndex, int pageSize, out int pageCount,out int rowCount, Expression<Func<T, bool>> where)
     {
         var list = context.Set<T>().Where(where);
         rowCount = list.Count();
@@ -209,7 +208,7 @@ public class DBHelper<T> where T : class
             pageCount++;
 
         list = list.Skip(pageSize * (pageIndex - 1)).Take(pageSize);
-        return list;
+        return list.ToList();
     }
     /// <summary>
     /// 按条件查询，分页，排序
@@ -222,7 +221,7 @@ public class DBHelper<T> where T : class
     /// <param name="orderBy"></param>
     /// <param name="isAsc"></param>
     /// <returns></returns>
-    public IQueryable<T> FindPagedList<S>(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<T, bool>> where, 
+    public List<T> FindPagedList<S>(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<T, bool>> where, 
         Expression<Func<T, S>> orderBy, bool isAsc)
     {
         var list = context.Set<T>().Where(where);
@@ -236,6 +235,6 @@ public class DBHelper<T> where T : class
             list = list.OrderBy<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         else
             list = list.OrderByDescending<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
-        return list;
+        return list.ToList();
     }
 }
