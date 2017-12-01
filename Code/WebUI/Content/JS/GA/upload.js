@@ -1,9 +1,9 @@
 ﻿; (function (dj, j) {
     dj.upload = function (options) {
         var cmp = dj.getCmp(options.id);
-        if (!!cmp) {
-            return cmp;
-        }
+        //if (!!cmp) {
+        //    return cmp;
+        //}
         dj.upload.base.constructor.call(this, dj.upload.defaults, options);
     }
     j.extend(dj.upload, {
@@ -54,7 +54,7 @@
             var selectedCount = $("#" + this.queueId).find(".uploadifyQueueItem").length;
             if (this.maxCount > 0) {
                 if (uploadedCount + selectedCount > this.maxCount) {
-                    alert("最多只能上传{0}个文件".format(this.maxCount));
+                    $.messager.alert('提示','最多只能上传{0}个文件'.format(this.maxCount), 'info');
                     return false;
                 }
             }
@@ -62,7 +62,7 @@
                 params && this.el.uploadifySettings('scriptData', params);
                 this.el.uploadifyUpload();
             } else {
-                alert("请选择文件！");
+                $.messager.alert('提示', '请选择文件！', 'info');
             }
         },
         url: function (url) {
@@ -94,6 +94,7 @@
                         filename = info[1],
                         truncatename = this.truncate ? filename.truncate(this.truncate) : filename;
                     filepath = dj.root + "/" + info[0],
+                    
                         delHtml = this.editable ? '<a class="upload-deletefile" href="{0}" onclick="{1}">删除</a>'.format(dj.href, del) : '';
                     j("#" + this.listId).append('<div filename="{0}" class="upload-fileitem"><a href="{1}" target="_blank" class="upload-filename" title="{2}">{3}</a>{4}</div>'.format(
                         info[0], filepath, info[1], truncatename, delHtml));
@@ -110,22 +111,21 @@
         },
         deleteFile: function (fileinfo) {
             var that = this;
-            bootbox.dialog("确定删除该附件吗？", [{
-                "label": "删除",
-                "class": "btn-danger",
-                "callback": function () {
+            $.messager.confirm('提示', '确定删除该附件吗？', function (r) {
+                if (r) {
                     var info = fileinfo.split(',');
                     j("div[filename='{0}']".format(info[0])).remove();
                     that.updateHideFile(fileinfo, "Upload");
                 }
-            }, {
-                "label": "取消",
-                "class": "btn-default"
-            }]);
+            });
+
         },
         createDom: function () {
             this.hideFileId = this.id + "-hiddenfile";
             this.hideUploadId = this.id + "-hiddenupload";
+            //  this.clearQueueFile();
+            j("#" + this.hideFileId).remove();
+            j("#" + this.hideUploadId).remove();
             j("<input type='hidden'>").attr({ id: this.hideFileId }).appendTo('body');
             j("<input type='hidden'>").attr({ id: this.hideUploadId }).appendTo('body');
         },
@@ -155,7 +155,7 @@
 
         clearQueueFile: function () {
             j("#" + this.hideFileId).val('');
-            // j("#"+this.hideUpload).val('');
+          //  j("#"+this.hideUpload).val('');
         },
         render: function () {
             this.createDom();
@@ -167,7 +167,7 @@
                 this.flag = false;
                 this.el.uploadify({
                     'uploader': this.url("Content/JS/JqueryUpload/uploadify2.swf"),
-                    'script': this.url("UploadFile.aspx?filePath=" + this.uploadPath),
+                    'script': this.url("Upload.ashx?filePath=" + this.uploadPath),
                     'cancelImg': this.url("Content/JS/JqueryUpload/cancel.png"),
                     //'folder': '@Url.Content("~/Content/JS/JqueryUpload/TempImg")',
                     'queueID': this.queueId,
@@ -183,28 +183,25 @@
                     'width': 75,
                     'height': 26,
                     'onComplete': function (e, queueId, fileObj, uploadFileName, other) {
-                        alert(1);
-                        if (uploadFileName) {
-                            
+                        if (uploadFileName) {  
                             //绑定已经上传文件
                             that.bindFiles([uploadFileName, fileObj.name].join(','));
                             //删除队列的文件
                             that.updateHideFile([queueId, fileObj.name].join(','), "File");
                         }
                     },
-
                     'onSelect': function (e, queueId, fileObj) {
                         var fileName = fileObj.name,
                             ext = fileObj.type || dj.path.getExtension(fileName),
                             exts = that.getExts();
                         if (exts.indexOf(ext) <= -1) {
-                            alert("上传文件格式不正确！");
+                            $.messager.alert('提示', '上传文件格式不正确！', 'info');
                             //that.flag=false;
                             return false;
                         }
 
                         if (fileObj.size > that.getFileByte()) {
-                            alert("上传文件不能大于{0}M".format(that.maxSize));
+                            $.messager.alert('提示', '上传文件不能大于{0}M'.format(that.maxSize), 'info');
                             //that.flag=false;
                             return false;
                         }

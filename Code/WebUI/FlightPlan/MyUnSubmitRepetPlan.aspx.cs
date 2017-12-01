@@ -66,6 +66,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
+        string fileInfo = Request.Params["AttchFilesInfo"];
         var model = new RepetitivePlan()
         {
             PlanCode = OrderHelper.GenerateId(""),
@@ -75,13 +76,14 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
             StartDate = DateTime.Parse(Request.Form["StartDate"]),
             EndDate = DateTime.Parse(Request.Form["EndDate"]),
             ModifyTime = DateTime.Now,
-            AttchFile = "",
+            AttchFile = Request.Params["AttchFilesInfo"],
             Remark = Request.Form["Remark"],
             ADES = Request.Form["ADES"],
             ADEP = Request.Form["ADEP"],
             WeekSchedule = Request.Form["qx"],
             SIBT = DateTime.Parse(Request.Form["SIBT"]),
-            SOBT = DateTime.Parse(Request.Form["SOBT"])
+            SOBT = DateTime.Parse(Request.Form["SOBT"]),
+            CallSign = Request.Form["CallSign"]
         };
         if (!id.HasValue)//新增
         {

@@ -32,18 +32,18 @@ namespace Model.FlightPlan
         public DateTime SOBT { get; set; }
         [Description("空勤组人数")]
         public int AircrewGroupNum { get; set; }
-         [Description("飞行气候条件")]
+        [Description("飞行气候条件")]
         public string WeatherCondition { get; set; }
-          [Description("二次雷达应答机代码")]
+        [Description("二次雷达应答机代码")]
         public string RadarCode { get; set; }
-          [Description("飞行员姓名")]
-          public string Pilot { get; set; }
-          [Description("航空器架数")]
-          public int AircraftNum { get; set; }
-              [Description("通信联络方法")]
-          public string ContactWay { get; set; }
+        [Description("飞行员姓名")]
+        public string Pilot { get; set; }
+        [Description("航空器架数")]
+        public int AircraftNum { get; set; }
+        [Description("通信联络方法")]
+        public string ContactWay { get; set; }
         [Description("代号呼号")]
-              public string CallSign { get; set; }
+        public string CallSign { get; set; }
         [Description("实际飞行开始时间")]
         public DateTime? ActualStartTime { get; set; }
         [Description("实际飞行结束时间")]

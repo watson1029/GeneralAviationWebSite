@@ -60,7 +60,7 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT,CallSign)
         {
             SqlDbHelper dao = new SqlDbHelper();
             var sql = @"update RepetitivePlan set FlightType=@FlightType,FlightDirHeight=@FlightDirHeight,ModifyTime=@ModifyTime,PlanCode=@PlanCode,AircraftType=@AircraftType,StartDate=@StartDate,
- ,EndDate=@EndDate,AttchFile=@AttchFile,Remark=@Remark,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT,SOBT=@SOBT,CallSign=@CallSign where RepetPlanID=@ID";
+ EndDate=@EndDate,AttchFile=@AttchFile,Remark=@Remark,ADES=@ADES,ADEP=@ADEP,WeekSchedule=@WeekSchedule,SIBT=@SIBT,SOBT=@SOBT,CallSign=@CallSign where RepetPlanID=@ID";
             SqlParameter[] parameters = {
                              new SqlParameter("@FlightType",  model.FlightType),
                             new SqlParameter("@FlightDirHeight", model.FlightDirHeight),
@@ -129,8 +129,8 @@ PlanState,ADES,ADEP,WeekSchedule,SIBT,SOBT,CallSign)
                 plan.PlanState = Convert.ToString(dr["PlanState"]);
             plan.ADES = Convert.ToString(dr["ADES"]);
             plan.ADEP = Convert.ToString(dr["ADEP"]);
-            plan.WeekSchedule = Convert.ToString(dr["WeekSchedule"]).Replace("*","");
-            plan.SIBT = DateTime.ParseExact(dr["SIBT"].ToString(),"HH:mm:ss",null);
+            plan.WeekSchedule = Convert.ToString(dr["WeekSchedule"]).Replace("*", "");
+            plan.SIBT = DateTime.ParseExact(dr["SIBT"].ToString(), "HH:mm:ss", null);
             plan.SOBT = DateTime.ParseExact(dr["SOBT"].ToString(), "HH:mm:ss", null);
             plan.CallSign = Convert.ToString(dr["CallSign"]);
             return plan;
