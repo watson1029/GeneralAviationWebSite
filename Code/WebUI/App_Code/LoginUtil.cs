@@ -16,12 +16,13 @@ public class LoginUtil
 
     public static LoginResultEnum GALogin(string userName, string password, out string msg)
     {
+        UserInfoBLL bll = new UserInfoBLL();
         msg = string.Empty;
         //登录结果
         LoginResultEnum loginResult = LoginResultEnum.LoginSuccess;
         try
         {
-            UserInfo user = UserInfoBLL.Get(userName);
+            UserInfo user = bll.Get(userName);
             if (user == null)
             {
                 msg = "用户不存在！";

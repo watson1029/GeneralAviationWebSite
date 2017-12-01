@@ -9,7 +9,7 @@ namespace BLL.BasicData
         private CLicenceDAL _dal = new CLicenceDAL();
         public int Delete(string ids)
         {
-            return _dal.RemoveList(ids);
+            return _dal.BatchDelete(ids);
         }
         /// <summary>
         /// 增加一条数据

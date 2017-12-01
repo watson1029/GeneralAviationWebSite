@@ -15,7 +15,7 @@ namespace BLL.FlightPlan
          RepetitivePlanDAL dal = new RepetitivePlanDAL(); 
         public  bool Delete(string ids)
         {
-            return dal.RemoveList(ids)>0;
+            return dal.BatchDelete(ids)>0;
         }
         /// <summary>
         /// 增加一条数据

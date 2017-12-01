@@ -14,7 +14,7 @@ namespace BLL.BasicData
         private FlightTaskDAL _dal = new FlightTaskDAL();
         public int Delete(string ids)
         {
-            return _dal.RemoveList(ids);
+            return _dal.BatchDelete(ids);
         }
         /// <summary>
         /// 增加一条数据

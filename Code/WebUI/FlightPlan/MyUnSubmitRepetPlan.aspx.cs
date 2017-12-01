@@ -1,14 +1,9 @@
 ﻿using BLL.FlightPlan;
 using DAL.FlightPlan;
-using Model.FlightPlan;
+using Model.EF;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Untity;
 
 public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage

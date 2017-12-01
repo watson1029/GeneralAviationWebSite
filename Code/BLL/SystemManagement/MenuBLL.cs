@@ -11,7 +11,7 @@ namespace BLL.SystemManagement
     {
         private MenuDAL menuDAL;
         private UserInfoBLL userInforBLL;
-
+        private RoleDAL roledal = new RoleDAL();
         public MenuBLL()
         {
             menuDAL = new DAL.SystemManagement.MenuDAL();
@@ -53,7 +53,7 @@ namespace BLL.SystemManagement
                     }
                     else
                     {
-                        if (RoleDAL.GetRoleMenuCount(roleID, item.ID) > 0)
+                        if (roledal.GetRoleMenuCount(roleID, item.ID) > 0)
                         {
                             node.@checked = true;
                         }

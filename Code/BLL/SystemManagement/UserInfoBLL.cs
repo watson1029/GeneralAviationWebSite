@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Untity;
 namespace BLL.SystemManagement
@@ -16,7 +17,7 @@ namespace BLL.SystemManagement
 
         public  bool Delete(string ids)
         {
-            return userinfodal.RemoveList(ids)>0;
+            return userinfodal.BatchDelete(ids)>0;
         }
         /// <summary>
         /// 增加一条数据
@@ -35,9 +36,9 @@ namespace BLL.SystemManagement
         }
 
 
-        public  PagedList<UserInfo> GetList(int pageSize, int pageIndex, string strWhere)
+        public List<UserInfo> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<UserInfo, bool>> where)
         {
-            return userinfodal.FindPagedList<UserInfo>(pageSize, pageIndex, strWhere);
+            return userinfodal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
         }
 
         public  UserInfo Get(int id)
