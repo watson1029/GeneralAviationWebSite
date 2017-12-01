@@ -15,12 +15,7 @@ public class DBHelper<T> where T : class
     {
         this.context = new ZHCC_GAPlanEntities();
     }
-
-    public ZHCC_GAPlanEntities GetContext()
-    {
-        return this.context;
-    }
-
+    
     /// <summary>
     /// 新增一个实体
     /// </summary>
@@ -159,7 +154,16 @@ public class DBHelper<T> where T : class
     {
         return context.Set<T>().Where(where).AsNoTracking().FirstOrDefault();
     }
-
+    /// <summary>
+    /// 按条件查询
+    /// </summary>
+    /// <param name="where"></param>
+    /// <returns></returns>
+    public IQueryable<T> FindList()
+    {
+        var temp = context.Set<T>();
+        return temp;
+    }
     /// <summary>
     /// 按条件查询
     /// </summary>
@@ -167,8 +171,7 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public IQueryable<T> FindList(Expression<Func<T, bool>> where)
     {
-        var temp = context.Set<T>().Where(where);
-        return temp;
+        return context.Set<T>().Where(where);
     }
     /// <summary>
     /// 按条件查询，排序

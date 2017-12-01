@@ -11,6 +11,7 @@ namespace BLL.SystemManagement
 {
     public class UserInfoBLL
     {
+        private MenuDAL menudal = new MenuDAL();
 
         public static bool Delete(string ids)
         {
@@ -51,14 +52,15 @@ namespace BLL.SystemManagement
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public static List<string> GetUserPermissions(int userID)
+        public List<string> GetUserPermissions(int userID)
         {
             List<string> list = new List<string>();
             List<Menu> menuList = null;
             //管理员判断
             if (UserInfoDAL.IsAdmin(userID))
             {
-                menuList = MenuDAL.GetList("1=1");
+                //menuList = menudal.GetList("1=1");
+                menuList = menudal.FindList().ToList();
                 if (menuList != null & menuList.Any())
                 {
                     list = menuList.Select(u => (u.MenuCode ?? "")).Distinct().ToList();
@@ -67,7 +69,8 @@ namespace BLL.SystemManagement
             }
             else
             {
-                menuList = MenuDAL.GetUserMenuList(userID);
+                //menuList = MenuDAL.GetUserMenuList(userID);
+                menuList = menudal.GetUserMenuList(userID);
                 if (menuList != null && menuList.Any())
                 {
                     list = menuList.Select(u => (u.MenuCode ?? "")).Distinct().ToList();
@@ -80,17 +83,17 @@ namespace BLL.SystemManagement
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public static List<Menu> GetUserMenu(int userID)
+        public List<Menu> GetUserMenu(int userID)
         {
             List<Menu> menuList = null;
             //管理员判断
             if (UserInfoDAL.IsAdmin(userID))
             {
-                menuList = MenuDAL.GetList("1=1");
+                menuList = menudal.FindList().ToList();
             }
             else
             {
-                menuList = MenuDAL.GetUserMenuList(userID);
+                menuList = menudal.GetUserMenuList(userID);
             }
             return menuList;
         }

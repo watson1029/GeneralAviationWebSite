@@ -5,6 +5,8 @@ namespace BLL.BasicData
 {
     public class AircraftBLL
     {
+        private AircraftDAL aircraftDAL = new AircraftDAL();
+
         //public static bool Delete(string ids)
         //{
         //    return AircraftDAL.Delete(ids);

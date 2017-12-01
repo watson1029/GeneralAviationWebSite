@@ -42,7 +42,7 @@ namespace BLL.SystemManagement
        /// </summary>
        /// <param name="strWhere"></param>
        /// <returns></returns>
-        public static List<int> GetRoleMenuList(string strWhere)
+        public static List<int?> GetRoleMenuList(string strWhere)
         {
             var list= (RoleDAL.GetRoleMenuList(strWhere)??new List<RoleMenu>()).Select(t => t.MenuID).ToList();
             return list;

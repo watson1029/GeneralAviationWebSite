@@ -79,7 +79,7 @@ public class BasePage : Page
     {
         if (HttpContext.Current.Items[userOwnRightKey] == null)
         {
-            var list = UserInfoBLL.GetUserPermissions(userID);
+            var list = new UserInfoBLL().GetUserPermissions(userID);
             HttpContext.Current.Items[userOwnRightKey] = list;
         }
         return (List<string>)HttpContext.Current.Items[userOwnRightKey];
