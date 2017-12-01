@@ -15,9 +15,13 @@ public class DBHelper<T> where T : class
     {
         this.context = new ZHCC_GAPlanEntities();
     }
-    
+    public bool IsExist(T entity)
+    {
+        return context.Set<T>().ToList().Contains(entity);
+    }
+
     /// <summary>
-    /// 新增一个实体
+    /// 新增单个实体
     /// </summary>
     /// <param name="entity"></param>
     /// <returns></returns>
@@ -25,68 +29,10 @@ public class DBHelper<T> where T : class
     {
         //第一种方式
         context.Entry<T>(entity).State = System.Data.Entity.EntityState.Added;
-
         //第二种方式
         //context.Set<T>().Add(entity);
 
         return context.SaveChanges();        
-    }
-    /// <summary>
-    /// 删除一个实体
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <returns></returns>
-    public int Remove(T entity)
-    {
-        //第一种方式
-        context.Entry<T>(entity).State = System.Data.Entity.EntityState.Deleted;
-        
-        //第二种方式
-        //context.Set<T>().Attach(entity);
-        //context.Set<T>().Remove(entity);
-
-        return context.SaveChanges();
-    }
-    /// <summary>
-    /// 按条件删除实体
-    /// </summary>
-    /// <param name="where"></param>
-    /// <returns></returns>
-    public int Remove(Expression<Func<T,bool>> where)
-    {
-        var list = context.Set<T>().Where(where).AsNoTracking().ToList();
-        foreach (var item in list)
-        {
-            context.Entry<T>(item).State = EntityState.Deleted;
-        }
-        return context.SaveChanges();
-    }
-
-    /// <summary>
-    /// 修改一个实体
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <returns></returns>
-    public int Update(T entity)
-    {
-        context.Entry<T>(entity).State = System.Data.Entity.EntityState.Modified;
-        return context.SaveChanges();
-    }
-    /// <summary>
-    /// 修改一个实体，可修改指定属性
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <param name="propertyNames"></param>
-    /// <returns></returns>
-    public int Update(T entity, params string[] propertyNames)
-    {
-        DbEntityEntry entry = context.Entry<T>(entity);
-        entry.State = EntityState.Unchanged;
-        foreach (string propertyName in propertyNames)
-        {
-            entry.Property(propertyName).IsModified = true;
-        }
-        return context.SaveChanges();
     }
     /// <summary>
     /// 批量新增实体
@@ -112,16 +58,36 @@ public class DBHelper<T> where T : class
         return result;
     }
     /// <summary>
-    /// 批量删除
+    /// 删除单个实体
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public int Delete(T entity)
+    {
+        if (IsExist(entity))
+        {
+            //第一种方式
+            context.Entry<T>(entity).State = System.Data.Entity.EntityState.Deleted;
+
+            //第二种方式
+            //context.Set<T>().Attach(entity);
+            //context.Set<T>().Remove(entity);
+
+            return context.SaveChanges();            
+        }
+        return 0;
+    }
+    /// <summary>
+    /// 按条件删除多个实体
     /// </summary>
     /// <param name="where"></param>
     /// <returns></returns>
-    public int RemoveList(Expression<Func<T, bool>> where)
+    public int BatchDelete(Expression<Func<T,bool>> where)
     {
-        var temp = context.Set<T>().Where(where);
-        foreach (var item in temp)
+        var list = context.Set<T>().Where(where).AsNoTracking().ToList();
+        foreach (var item in list)
         {
-            context.Entry<T>(item).State = System.Data.Entity.EntityState.Deleted;
+            context.Entry<T>(item).State = EntityState.Deleted;
         }
         return context.SaveChanges();
     }
@@ -130,7 +96,7 @@ public class DBHelper<T> where T : class
     /// </summary>
     /// <param name="IDs"></param>
     /// <returns></returns>
-    public int RemoveList(string IDs)
+    public int BatchDelete(string IDs)
     {
         if (string.IsNullOrEmpty(IDs)) return 0;
 
@@ -141,9 +107,43 @@ public class DBHelper<T> where T : class
         {
             id = int.Parse(item);
             temp = context.Set<T>().Find(id);
-            context.Entry<T>(temp).State = EntityState.Deleted;
+            if(temp!= null)context.Entry<T>(temp).State = EntityState.Deleted;
         }
         return context.SaveChanges();
+    }
+    /// <summary>
+    /// 修改单个实体
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public int Update(T entity)
+    {
+        if (IsExist(entity))
+        {
+            context.Entry<T>(entity).State = System.Data.Entity.EntityState.Modified;
+            return context.SaveChanges();
+        }
+        return 0;
+    }
+    /// <summary>
+    /// 修改单个实体，可修改指定属性
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="propertyNames"></param>
+    /// <returns></returns>
+    public int Update(T entity, params string[] propertyNames)
+    {
+        if (IsExist(entity))
+        {
+            DbEntityEntry entry = context.Entry<T>(entity);
+            entry.State = EntityState.Unchanged;
+            foreach (string propertyName in propertyNames)
+            {
+                entry.Property(propertyName).IsModified = true;
+            }
+            return context.SaveChanges();
+        }
+        return 0;
     }
     /// <summary>
     /// 按条件查询，返回单个实体
@@ -159,19 +159,18 @@ public class DBHelper<T> where T : class
     /// </summary>
     /// <param name="where"></param>
     /// <returns></returns>
-    public IQueryable<T> FindList()
+    public List<T> FindList()
     {
-        var temp = context.Set<T>();
-        return temp;
+        return context.Set<T>().ToList();
     }
     /// <summary>
     /// 按条件查询
     /// </summary>
     /// <param name="where"></param>
     /// <returns></returns>
-    public IQueryable<T> FindList(Expression<Func<T, bool>> where)
+    public List<T> FindList(Expression<Func<T, bool>> where)
     {
-        return context.Set<T>().Where(where);
+        return context.Set<T>().Where(where).ToList();
     }
     /// <summary>
     /// 按条件查询，排序
@@ -181,7 +180,7 @@ public class DBHelper<T> where T : class
     /// <param name="orderBy"></param>
     /// <param name="isAsc"></param>
     /// <returns></returns>
-    public IQueryable<T> FindList<S>(Expression<Func<T, bool>> where, Expression<Func<T, S>> orderBy, bool isAsc)
+    public List<T> FindList<S>(Expression<Func<T, bool>> where, Expression<Func<T, S>> orderBy, bool isAsc)
     {
 
         var list = context.Set<T>().Where(where);
@@ -189,27 +188,7 @@ public class DBHelper<T> where T : class
             list = list.OrderBy<T, S>(orderBy);
         else
             list = list.OrderByDescending<T, S>(orderBy);
-        return list;
-    }
-    /// <summary>
-    /// 按条件查询，分页
-    /// </summary>
-    /// <param name="pageIndex"></param>
-    /// <param name="pageSize"></param>
-    /// <param name="rowCount"></param>
-    /// <param name="where"></param>
-    /// <returns></returns>
-    public IQueryable<T> FindPagedList(int pageIndex, int pageSize, out int pageCount,out int rowCount, Expression<Func<T, bool>> where)
-    {
-        var list = context.Set<T>().Where(where);
-        rowCount = list.Count();
-
-        pageCount = rowCount / pageSize;
-        if (rowCount % pageSize > 0)
-            pageCount++;
-
-        list = list.Skip(pageSize * (pageIndex - 1)).Take(pageSize);
-        return list;
+        return list.ToList();
     }
     /// <summary>
     /// 按条件查询，分页，排序
@@ -222,7 +201,7 @@ public class DBHelper<T> where T : class
     /// <param name="orderBy"></param>
     /// <param name="isAsc"></param>
     /// <returns></returns>
-    public IQueryable<T> FindPagedList<S>(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<T, bool>> where, 
+    public List<T> FindPagedList<S>(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<T, bool>> where, 
         Expression<Func<T, S>> orderBy, bool isAsc)
     {
         var list = context.Set<T>().Where(where);
@@ -236,6 +215,6 @@ public class DBHelper<T> where T : class
             list = list.OrderBy<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         else
             list = list.OrderByDescending<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
-        return list;
+        return list.ToList();
     }
 }

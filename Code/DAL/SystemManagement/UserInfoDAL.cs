@@ -10,8 +10,7 @@ using Untity;
 using Model.EF;
 
 namespace DAL.SystemManagement
-{
-    
+{    
     public class UserInfoDAL : DBHelper<UserInfo>
     {
 

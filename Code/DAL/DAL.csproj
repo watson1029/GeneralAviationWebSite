@@ -52,7 +52,7 @@
     <Compile Include="DBHelper.cs" />
     <Compile Include="FlightPlan\FlightPlanDAL.cs" />
     <Compile Include="BasicData\PilotDAL.cs" />
-    <Compile Include="BasicData\Quanlification\CbusinessDAL.cs" />
+    <Compile Include="BasicData\Quanlification\CBusinessDAL.cs" />
     <Compile Include="BasicData\Quanlification\CInformationDAL.cs" />
     <Compile Include="BasicData\Quanlification\CLicenceDAL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanDAL.cs" />
