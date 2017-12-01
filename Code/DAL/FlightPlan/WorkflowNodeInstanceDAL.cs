@@ -175,7 +175,7 @@ namespace DAL.FlightPlan
                     {
                         nextInst = GetNodeInstance(currInst.NextId);
                         WorkflowTplNode tnode = WorkflowTplNodeDAL.GetNode(nextInst.StepId);
-                        var userInfo = UserInfoDAL.Get(int.Parse(tnode.AuthorType));
+                        var userInfo = new UserInfoDAL().Find(u => u.ID == int.Parse(tnode.AuthorType)); //UserInfoDAL.Get(int.Parse(tnode.AuthorType));
                         int actor = userInfo.ID;
                         //判断节点的活动所有者类型
                         
