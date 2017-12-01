@@ -12,40 +12,41 @@ namespace BLL.SystemManagement
     public class UserInfoBLL
     {
         private MenuDAL menudal = new MenuDAL();
+        private UserInfoDAL userinfodal = new UserInfoDAL();
 
-        public static bool Delete(string ids)
+        public  bool Delete(string ids)
         {
-            return UserInfoDAL.Delete(ids);
+            return userinfodal.RemoveList(ids)>0;
         }
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public  static bool Add(UserInfo model)
+        public  bool Add(UserInfo model)
         {
-            return UserInfoDAL.Add(model);
+            return userinfodal.Add(model)>0;
         }
 
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public static bool Update(UserInfo model)
+        public bool Update(UserInfo model)
         {
-            return UserInfoDAL.Update(model);
+            return userinfodal.Update(model)>0;
         }
 
 
-        public static PagedList<UserInfo> GetList(int pageSize, int pageIndex, string strWhere)
+        public  PagedList<UserInfo> GetList(int pageSize, int pageIndex, string strWhere)
         {
-            return UserInfoDAL.GetList(pageSize, pageIndex, strWhere);
+            return userinfodal.FindPagedList<UserInfo>(pageSize, pageIndex, strWhere);
         }
 
-        public static UserInfo Get(int id)
+        public  UserInfo Get(int id)
         {
-            return UserInfoDAL.Get(id);
+            return userinfodal.Find(u=>u.ID==id);
         }
-        public static UserInfo Get(string userName)
+        public  UserInfo Get(string userName)
         {
-            return UserInfoDAL.Get(userName);
+            return userinfodal.Find(u => u.UserName == userName);
         }
         /// <summary>
         /// 获取用户的menucode
@@ -57,7 +58,7 @@ namespace BLL.SystemManagement
             List<string> list = new List<string>();
             List<Menu> menuList = null;
             //管理员判断
-            if (UserInfoDAL.IsAdmin(userID))
+            if (userinfodal.IsAdmin(userID))
             {
                 //menuList = menudal.GetList("1=1");
                 menuList = menudal.FindList().ToList();
@@ -87,7 +88,7 @@ namespace BLL.SystemManagement
         {
             List<Menu> menuList = null;
             //管理员判断
-            if (UserInfoDAL.IsAdmin(userID))
+            if (userinfodal.IsAdmin(userID))
             {
                 menuList = menudal.FindList().ToList();
             }

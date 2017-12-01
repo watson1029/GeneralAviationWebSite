@@ -63,7 +63,6 @@
     <Compile Include="SystemManagement\ResourceDAL.cs" />
     <Compile Include="SystemManagement\RoleDAL.cs" />
     <Compile Include="SystemManagement\UserInfoDAL.cs" />
-    <Compile Include="SystemManagement\LoginLogDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">

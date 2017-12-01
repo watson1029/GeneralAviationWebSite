@@ -26,7 +26,7 @@ namespace DAL.SystemManagement
         {
             //SELECT DISTINCT c.RoleID FROM dbo.UserRole c WHERE c.UserID=18
             var roleIDs = from a in context.UserRole
-                                  where a.UserID == int.Parse(userID.ToString())
+                                  where a.UserID == userID
                                   select a.RoleID;
             var distinctRoleIDs = roleIDs.Distinct();
 
