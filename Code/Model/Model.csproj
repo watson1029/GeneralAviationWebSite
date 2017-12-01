@@ -123,6 +123,7 @@
       <DependentUpon>ZHCC_GAPlan.edmx</DependentUpon>
     </Compile>
     <Compile Include="FlightPlan\WorkflowNodeInstance.cs" />
+    <Compile Include="FlightPlan\WorkflowPlan.cs" />
     <Compile Include="FlightPlan\WorkflowTemplate.cs" />
     <Compile Include="FlightPlan\WorkflowTplNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
