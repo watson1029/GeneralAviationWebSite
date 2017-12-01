@@ -1,40 +1,39 @@
 ﻿using DAL.BasicData;
 using Model.BasicData;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using Untity;
 namespace BLL.BasicData
 {
     public class CBusinessBLL
     {
+        private CBusinessDAL _dal = new CBusinessDAL();
 
-        public static bool Delete(string ids)
+        public int Delete(string ids)
         {
-            return CBusinessDAL.Delete(ids);
+            return _dal.BatchDelete(ids);
         }
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public static bool Add(CBusiness model)
+        public int Add(CBusiness model)
         {
-            return CBusinessDAL.Add(model);
+            return _dal.Add(model);
         }
-
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public static bool Update(CBusiness model)
+        public int Update(CBusiness model)
         {
-            return CBusinessDAL.Update(model);
+            return _dal.Update(model);
+        }        public CBusiness Get(int id)
+        {
+            return _dal.Find(m => m.ID == id);
         }
-
-
-        public static PagedList<CBusiness> GetList(int pageSize, int pageIndex, string strWhere)
+        public List<CBusiness> FindPagedList(int pageIndex, int pageSize, out int pageCount, out int rowCount, bool isAsc)
         {
-            return CBusinessDAL.GetList(pageSize, pageIndex, strWhere);
-        }
-
-        public static CBusiness Get(int id)
-        {
-            return CBusinessDAL.Get(id);
+            //参考
+            return _dal.FindPagedList(pageIndex, pageSize,out pageCount,out rowCount, m => m.ID == 1,m=>m.ID, true);
         }
     }
 }

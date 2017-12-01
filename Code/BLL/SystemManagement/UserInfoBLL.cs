@@ -5,60 +5,64 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Untity;
 namespace BLL.SystemManagement
 {
     public class UserInfoBLL
     {
+        private MenuDAL menudal = new MenuDAL();
+        private UserInfoDAL userinfodal = new UserInfoDAL();
 
-        public static bool Delete(string ids)
+        public  bool Delete(string ids)
         {
-            return UserInfoDAL.Delete(ids);
+            return userinfodal.BatchDelete(ids)>0;
         }
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public  static bool Add(UserInfo model)
+        public  bool Add(UserInfo model)
         {
-            return UserInfoDAL.Add(model);
+            return userinfodal.Add(model)>0;
         }
 
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public static bool Update(UserInfo model)
+        public bool Update(UserInfo model)
         {
-            return UserInfoDAL.Update(model);
+            return userinfodal.Update(model)>0;
         }
 
 
-        public static PagedList<UserInfo> GetList(int pageSize, int pageIndex, string strWhere)
+        public List<UserInfo> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<UserInfo, bool>> where)
         {
-            return UserInfoDAL.GetList(pageSize, pageIndex, strWhere);
+            return userinfodal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
         }
 
-        public static UserInfo Get(int id)
+        public  UserInfo Get(int id)
         {
-            return UserInfoDAL.Get(id);
+            return userinfodal.Find(u=>u.ID==id);
         }
-        public static UserInfo Get(string userName)
+        public  UserInfo Get(string userName)
         {
-            return UserInfoDAL.Get(userName);
+            return userinfodal.Find(u => u.UserName == userName);
         }
         /// <summary>
         /// 获取用户的menucode
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public static List<string> GetUserPermissions(int userID)
+        public List<string> GetUserPermissions(int userID)
         {
             List<string> list = new List<string>();
             List<Menu> menuList = null;
             //管理员判断
-            if (UserInfoDAL.IsAdmin(userID))
+            if (userinfodal.IsAdmin(userID))
             {
-                menuList = MenuDAL.GetList("1=1");
+                //menuList = menudal.GetList("1=1");
+                menuList = menudal.FindList().ToList();
                 if (menuList != null & menuList.Any())
                 {
                     list = menuList.Select(u => (u.MenuCode ?? "")).Distinct().ToList();
@@ -67,7 +71,8 @@ namespace BLL.SystemManagement
             }
             else
             {
-                menuList = MenuDAL.GetUserMenuList(userID);
+                //menuList = MenuDAL.GetUserMenuList(userID);
+                menuList = menudal.GetUserMenuList(userID);
                 if (menuList != null && menuList.Any())
                 {
                     list = menuList.Select(u => (u.MenuCode ?? "")).Distinct().ToList();
@@ -80,17 +85,17 @@ namespace BLL.SystemManagement
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public static List<Menu> GetUserMenu(int userID)
+        public List<Menu> GetUserMenu(int userID)
         {
             List<Menu> menuList = null;
             //管理员判断
-            if (UserInfoDAL.IsAdmin(userID))
+            if (userinfodal.IsAdmin(userID))
             {
-                menuList = MenuDAL.GetList("1=1");
+                menuList = menudal.FindList().ToList();
             }
             else
             {
-                menuList = MenuDAL.GetUserMenuList(userID);
+                menuList = menudal.GetUserMenuList(userID);
             }
             return menuList;
         }

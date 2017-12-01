@@ -2,16 +2,22 @@
 using Model.EF;
 using Model.SystemManagement;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.SystemManagement
 {
     public class MenuBLL
     {
+        private MenuDAL menuDAL;
+        private UserInfoBLL userInforBLL;
+        private RoleDAL roledal = new RoleDAL();
+        public MenuBLL()
+        {
+            menuDAL = new DAL.SystemManagement.MenuDAL();
+            userInforBLL = new UserInfoBLL();
+        }
+
         /// <summary>
         /// 递归生成树
         /// </summary>
@@ -19,20 +25,19 @@ namespace BLL.SystemManagement
         /// <param name="roleID"></param>
         /// <param name="isAdmin"></param>
         /// <returns></returns>
-        public static List<TreeNode> CreateMenuTree(int? menuID, int roleID, bool isAdmin)
+        public List<TreeNode> CreateMenuTree(int? menuID, int roleID, bool isAdmin)
         {
             var whereStr = string.Empty;
             whereStr = menuID.HasValue ? string.Format("ParentMenuID={0} order by OrderSort asc", menuID.Value) : "ParentMenuID is null order by OrderSort asc";
-
+            List<Menu> menulist;
             if (menuID.HasValue)
             {
-
+                menulist = menuDAL.FindList(m => m.ParentMenuID == menuID.Value, b => b.OrderSort, true).ToList();
             }
             else
-            { }
-
-            var menulist = MenuDAL.GetList(whereStr);
-
+            {
+                menulist = menuDAL.FindList(m => m.ParentMenuID == null, b => b.OrderSort, true).ToList();
+            }
 
             var treeList = new List<TreeNode>();
             if (menulist != null && menulist.Any())
@@ -48,13 +53,13 @@ namespace BLL.SystemManagement
                     }
                     else
                     {
-                        if (RoleDAL.GetRoleMenuCount(roleID, item.ID) > 0)
+                        if (roledal.GetRoleMenuCount(roleID, item.ID) > 0)
                         {
                             node.@checked = true;
                         }
                     }
                     var _treeList = new List<TreeNode>();
-                    if (MenuDAL.IsParentMenu(item.ID))
+                    if (menuDAL.IsParentMenu(item.ID))
                     {
                         _treeList = CreateMenuTree(item.ID, roleID, isAdmin);
                     }
@@ -64,10 +69,9 @@ namespace BLL.SystemManagement
             }
             return treeList;
         }
-        public static string CreateMenuJson(int userID)
+        public string CreateMenuJson(int userID)
         {
-
-            List<Menu> userMenus = UserInfoBLL.GetUserMenu(userID);
+            List<Menu> userMenus = userInforBLL.GetUserMenu(userID);
             var menuList = new List<MenuModel>();
             if (userMenus != null && userMenus.Any())
             {

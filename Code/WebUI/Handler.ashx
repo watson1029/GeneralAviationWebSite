@@ -4,7 +4,7 @@ using System;
 using System.Web;
 using System.IO;
 using System.Collections.Generic;
-using Model;
+using Model.EF;
 using DAL.SystemManagement;
 using Untity;
 public class Handler : IHttpHandler

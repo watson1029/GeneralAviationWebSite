@@ -5,7 +5,7 @@ using System;
 using System.Text;
 using Untity;
 
-public partial class BasicData_Quanlification_CBusiness : BasePage
+public partial class BasicData_Quanlification_Certificate : BasePage
 
 {
     protected void Page_Load(object sender, EventArgs e)
@@ -39,7 +39,7 @@ public partial class BasicData_Quanlification_CBusiness : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (CBusinessBLL.Delete(Request.Form["cbx_select"].ToString()))
+            if (CertificateBLL.Delete(Request.Form["cbx_select"].ToString()))
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -58,28 +58,23 @@ public partial class BasicData_Quanlification_CBusiness : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var model = new CBusiness()
+        var model = new Certificate()
         {
-            CompanyCode3 = int.Parse(Request.Form["CompanyCode3"]),
-            LegalName = Request.Form["LegalName"],
-            JoinData = DateTime.Parse(Request.Form["JoinData"]),
-            LegalCard = int.Parse(Request.Form["LegalCard"]),
-            JoinAddress = Request.Form["JoinAddress"],
-            LegalAddress = Request.Form["LegalAddress"],
-            Capital = int.Parse(Request.Form["Capital"]),
-            LegalPhone = int.Parse(Request.Form["LegalPhone"]),
-            EffectiveData = DateTime.Parse(Request.Form["EffectiveData"]),
-            LegalConsignor = Request.Form["LegalConsignor"],
-            Contacts = Request.Form["Contacts"],
-            ConsignorAddress = Request.Form["ConsignorAddress"],
-            ConsignorName = Request.Form["ConsignorName"],
-            ConsignorCard = int.Parse(Request.Form["ConsignorCard"]),
-            ConsignorPhone = int.Parse(Request.Form["ConsignorPhone"]),
+            CompanyCode3 = int.Parse (Request.Form["CompanyCode3"]),
+            LicenseNo = int.Parse(Request.Form["LicenseNo"]),
+            BaseAirport = Request.Form["BaseAirport"],
+            ConpanyType = Request.Form["ConpanyType"],
+            RegisteredCapital = int.Parse(Request.Form["RegisteredCapital"]),
+            CapitalLimit = int.Parse(Request.Form["CapitalLimit"]),
+            Legalperson = Request.Form["Legalperson"],
+            ManageItemsScope = Request.Form["ManageItemsScope"],
+            DealLine = DateTime.Parse(Request.Form["DealLine"]),
+            PresentationDate = DateTime.Parse(Request.Form["PresentationDate"]),
         };
         if (!id.HasValue)//新增
         {
             model.CreateTime = DateTime.Now;
-            if (CBusinessBLL.Add(model))
+            if (CertificateBLL.Add(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -88,7 +83,7 @@ public partial class BasicData_Quanlification_CBusiness : BasePage
         else//编辑
         {
             model.ID = id.Value;
-            if (CBusinessBLL.Update(model))
+            if (CertificateBLL.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -105,9 +100,9 @@ public partial class BasicData_Quanlification_CBusiness : BasePage
     /// </summary>
     private void GetData()
     {
-        var pilotid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var pilot = CBusinessBLL.Get(pilotid);
-        var strJSON = JsonConvert.SerializeObject(pilot);
+        var certificateid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var certificate = CertificateBLL.Get(certificateid);
+        var strJSON = JsonConvert.SerializeObject(certificate);
         Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -127,28 +122,8 @@ public partial class BasicData_Quanlification_CBusiness : BasePage
         if (page < 1) return;
         string orderField = sort.Replace("JSON_", "");
         string strWhere = GetWhere();
-        var pageList = CBusinessBLL.GetList(size, page, strWhere);
-        //var vms = new List<UserInfo>();
-        //if (pageList != null && pageList.TotalCount > 0)
-        //{
-        //    vms.AddRange(pageList.Select(dto => new UserInfo
-        //    {
-        //        ID = dto.ID,
-        //        Password = dto.Password,
-        //        Status = dto.Status,
-        //        CreateTime = dto.CreateTime,
-        //        Phone = dto.Phone,
-        //        ContactPerson = dto.ContactPerson,
-        //        ContactPhone = dto.ContactPhone,
-        //        ContactEmail = dto.ContactEmail,
-        //        AreaName = dto.AreaName,
-        //        Deposit = IFPECBasicInfoFacade.GetDisp(dto.ECCode),
-        //        WillApproveStatus = IFPECDepositHistoryFacade.DepositWillApproveStatus(dto.ECCode)
-        //    }));
-
-        //}
+        var pageList = CertificateBLL.GetList(size, page, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
-        //   strJSON= "{ \"rows\":[ { \"JSON_ID\":\"1\",\"JSON_UserName\":\"adads\",\"JSON_Password\":\"asdasdf\",\"JSON_Mobile\":\"sdfasdf\",\"JSON_Status\":\"0\",\"JSON_CreateTime\":\"2017-11-1\",\"JSON_IsGeneralAviation\":1,\"JSON_CompanyCode3\":\"222\"} ],\"total\":1}";
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -173,4 +148,3 @@ public partial class BasicData_Quanlification_CBusiness : BasePage
     }
 
 }
-

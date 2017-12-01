@@ -108,8 +108,13 @@ namespace DAL.FlightPlan
                         sql = "update ActualSteps set State=@state, ActorID=@gid, ActorName=@actName, ApplyTime=@applyTime where ID=@id";
 
 
+<<<<<<< HEAD
                         var userInfo = UserInfoDAL.Get(int.Parse(tnode.AuthorType));
                         int actor = userInfo.ID;
+=======
+                        var userInfo = new UserInfoDAL().Find(m=>m.ID==int.Parse(tnode.AuthorType));
+                        int? actor = null;
+>>>>>>> 24d7ba9c6f493d76125a74f83a1b23461ab56ef2
                         //判断节点的活动所有者类型
 
                         SqlParameter[] parameters1 = {

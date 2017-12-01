@@ -133,16 +133,7 @@
     <script type="text/javascript">
         $(function () {
             var id = '<%=Request.QueryString["id"] %>';
-            var obj = {
-                id: "AttchFiles",
-                maxSize: 5,
-                multi: true,
-                queueId: "AttchFiles-fileQueue",
-                listId: "AttchFiles-fileList",
-                truncate: "30",
-                maxCount: "1",
-                uploadPath: "Files/PJ/"
-            };
+
             if (id) {
                 $.post(location.href, { "action": "queryone", "id": id }, function (data) {
                     $("#form_edit").form('load', data);
