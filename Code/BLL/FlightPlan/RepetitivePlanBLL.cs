@@ -1,4 +1,5 @@
 ﻿using DAL.FlightPlan;
+using Model.EF;
 using Model.FlightPlan;
 using System;
 using System.Collections.Generic;
@@ -11,37 +12,36 @@ namespace BLL.FlightPlan
 {
     public class RepetitivePlanBLL
     {
-
-
-        public static bool Delete(string ids)
+         RepetitivePlanDAL dal = new RepetitivePlanDAL(); 
+        public  bool Delete(string ids)
         {
-            return RepetitivePlanDAL.Delete(ids);
+            return dal.BatchDelete(ids)>0;
         }
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public static bool Add(RepetitivePlan model)
+        public  bool Add(RepetitivePlan model)
         {
-            return RepetitivePlanDAL.Add(model);
+            return dal.Add(model)>0;
         }
 
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public static bool Update(RepetitivePlan model)
+        public  bool Update(RepetitivePlan model)
         {
-            return RepetitivePlanDAL.Update(model);
+            return dal.Update(model)>0;
         }
 
 
-        public static PagedList<RepetitivePlan> GetMyRepetitivePlanList(int pageSize, int pageIndex, string strWhere)
-        {
-            return RepetitivePlanDAL.GetMyRepetitivePlanList(pageSize, pageIndex, strWhere);
-        }
+        //public  PagedList<RepetitivePlan> GetMyRepetitivePlanList(int pageSize, int pageIndex, out  strWhere)
+        //{
+        //    return dal.FindPagedList(pageIndex,pageSize, strWhere);
+        //}
 
-        public static RepetitivePlan Get(int id)
+        public  RepetitivePlan Get(int id)
         {
-            return RepetitivePlanDAL.Get(id);
+            return dal.Find(u=>u.RepetPlanID==id);
         }
     }
 }

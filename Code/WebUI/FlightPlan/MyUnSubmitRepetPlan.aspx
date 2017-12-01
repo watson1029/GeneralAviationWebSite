@@ -2,9 +2,7 @@
     CodeFile="MyUnSubmitRepetPlan.aspx.cs" Inherits="FlightPlan_MyUnSubmitRepetPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
-
-
-    
+   
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
    <%-- <div class="gridsearch">
@@ -30,145 +28,11 @@
  
         </div>
     <%--列表 end--%>
-    <%--添加 修改 start--%>
-   <div id="edit" class="easyui-dialog" style="width: 800px; height:600px;"
-        modal="true" closed="true" buttons="#edit-buttons">
-        <form id="form_edit"  method="post">
-                <table class="table_edit">
-      
-                    <tr>
-                        <td class="tdal">任务类型：
-                        </td>
-                        <td class="tdar">
-                            <input id="FlightType" name="FlightType" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200"  required="true" class="easyui-combobox" />
-                        </td>
 
-                    </tr>
-                      <tr>
-                        <td class="tdal">航空器类型：
-                        </td>
-                        <td class="tdar">
-                          <%--  <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" />--%>
-                            <input id="AircraftType" name="AircraftType" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200" required="true" class="easyui-combobox" />
-                        </td>
-
-                    </tr>
-                       <tr>
-                        <td class="tdal">航线走向和飞行高度：
-                        </td>
-                        <td class="tdar">
-                            <input id="FlightDirHeight" name="FlightDirHeight"  maxlength="30" type="text"  required="true" class="easyui-textbox" />
-                        </td>
-
-                    </tr>
-
-                      <tr>
-                        <td class="tdal">航空器呼号：
-                        </td>
-                        <td class="tdar">
-                            <input id="CallSign" name="CallSign"  maxlength="30" type="text"  required="true" class="easyui-textbox" />
-                        </td>
-
-                    </tr>
-                         <tr>
-                        <td class="tdal">降落机场：
-                        </td>
-                        <td class="tdar">
-                            <input id="ADES" name="ADES"  maxlength="30" type="text"  required="true" class="easyui-textbox" />
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="tdal">预计开始日期：
-                        </td>
-                        <td class="tdar">
-                            <input id="StartDate" name="StartDate" style="width:200px" type="text"  required="true" class="easyui-datebox" />
-                        </td>
-
-                    </tr>
-                      <tr>
-                        <td class="tdal">预计结束日期：
-                        </td>
-                        <td class="tdar">
-                            <input id="EndDate" name="EndDate"  style="width:200px"  type="text"  required="true" class="easyui-datebox" validType="md['#StartDate']"/>
-                        </td>
-
-                    </tr>
-                       <tr>
-                        <td class="tdal">起飞时刻：
-                        </td>
-                        <td class="tdar">
-                            <input id="SOBT" name="SOBT" style="width:200px" type="text"  required="true" class="easyui-timespinner" />
-                        </td>
-
-                    </tr>
-                       <tr>
-                        <td class="tdal">降落时刻：
-                        </td>
-                        <td class="tdar">
-                            <input id="SIBT" name="SIBT" style="width:200px" type="text"  required="true" class="easyui-timespinner" validType="md['#SOBT']"/>
-                        </td>
-
-                    </tr>
-                          <tr>
-                        <td class="tdal">批件：
-                        </td>
-                        <td class="tdar">
-
-<input type="hidden" name="AttchFileInfo" id="AttchFileInfo"/>
-
- <input type="file" id="AttchFile" name="AttchFile"/>
-<input type="button" class="btn" value="上传" onclick="dj.getCmp('AttchFile').uploadFiles()"/>
-<div id="AttchFile-fileQueue"></div>
-<div id="AttchFile-fileList" style="margin-top: 2px;zoom:1"></div>
-
-                        </td>
-
-                    </tr>
-              <%--      <tr>
-                        <td class="tdal">周执行计划：
-                        </td>
-                        <td class="tdar">
-                               <input id="d1" type="checkbox" name ="WeekSchedule" value="1"/>星期一
-                             <input id="d2" type="checkbox" name ="WeekSchedule" value="2"/>星期二
-                             <input id="d3" type="checkbox" name ="WeekSchedule" value="3"/>星期三
-                             <input id="d4" type="checkbox" name ="WeekSchedule" value="4"/>星期四
-                             <input id="d5" type="checkbox" name ="WeekSchedule" value="5"/>星期五
-                             <input id="d6" type="checkbox" name ="WeekSchedule" value="6"/>星期六
-                             <input id="d7" type="checkbox" name ="WeekSchedule" value="7"/>星期七
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="tdal">其他需要说明的事项：
-                        </td>
-                        <td class="tdar">
-                            <input id="Remark" name="Remark"  maxlength="200" style="width:600px;height:150px" type="text" data-options="multiline:true"  class="easyui-textbox" />
-                        </td>
-
-                    </tr>--%>
-                </table>
-
-        </form>
-    </div>
-    <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
-            class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>
-    </div>
-
-<script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
-<script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
-<link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
-<script src="<%=Page.ResolveUrl("~/Content/JS/GA/upload.js")%>" type="text/javascript"></script>
-    <%--添加 修改 end--%>
   <script type="text/javascript">
-
-        $(function () {
+      $(function () {
             Main.InitGird();
             Main.InitSearch();
-  
         });
         Main = {
             //初始化表格
@@ -273,27 +137,17 @@
 
             //打开添加窗口
             OpenWin: function () {
-                $("#edit").dialog("open").dialog('setTitle', '新增');
-                $("#form_edit").form('clear');
+                $("#edit").dialog("open").dialog('setTitle', '新增').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx');
                 $("#btn_add").attr("onclick", "Main.Save();")
-                new dj.upload({
-                    id: "AttchFile",
-                    maxSize: 5,
-                    multi: true,
-                    queueId: "AttchFile-fileQueue",
-                    listId: "AttchFile-fileList",
-                    truncate: "18",
-                    maxCount: "1",
-                    uploadPath: "Files/PJ/"
-                });
             },
             //提交按钮事件
             Save: function (uid) {
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
-                var fileInfo = dj.getCmp("AttchFile").getUploadedFiles();
-                $("#AttchFileInfo").val(fileInfo);
+
+                var fileInfo = dj.getCmp("AttchFiles").getUploadedFiles();
+                $("#AttchFilesInfo").val(fileInfo);
                 qx = $("input[name='WeekSchedule']").map(function () {
                     var $this = $(this);
                     if ($this.is(':checked')) {
@@ -316,15 +170,8 @@
 
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑');
+                $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx?id='+uid);
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
-
-                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {        
-                    $("#form_edit").form('load', data);
-                    $.each(data.WeekSchedule.toCharArray(), function (i, n) {
-                        $("#d" + n).attr("checked",true);
-                    });
-                });
             },
 
             //删除按钮事件
@@ -367,4 +214,15 @@
             }
         };
     </script>
+
+        <%--添加 修改 start--%>
+   <div id="edit" class="easyui-dialog" style="width: 850px; height:600px;"
+        modal="true" closed="true" buttons="#edit-buttons">
+        
+    </div>
+    <div id="edit-buttons">
+        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
+            class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>
+    </div>
+        <%--添加 修改 end--%>
 </asp:Content>

@@ -1,4 +1,5 @@
 ﻿using BLL.SystemManagement;
+using Model.EF;
 using Model.SystemManagement;
 using Newtonsoft.Json;
 using System;
@@ -12,6 +13,7 @@ using Untity;
 
 public partial class SystemManage_Role : BasePage
 {
+    RoleBLL bll = new RoleBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -103,7 +105,7 @@ public partial class SystemManage_Role : BasePage
         result.IsSuccess = false;
         result.Msg = "保存失败！";
         var roleid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var oldRoleMenuList = RoleBLL.GetRoleMenuList(string.Format("RoleID={0}", roleid));
+        var oldRoleMenuList = bll.GetRoleMenuList(string.Format("RoleID={0}", roleid));
         List<int> newRoleMenuList = new List<int>();
         var array = (Request.Form["newRoleMenus"] ?? "").Split(',');
         foreach (var item in array)
@@ -113,7 +115,7 @@ public partial class SystemManage_Role : BasePage
         var sameRoleMenuList = oldRoleMenuList.Intersect(newRoleMenuList);
         var addRoleMenuList = newRoleMenuList.Except(sameRoleMenuList);
         var removeRoleMenuList = oldRoleMenuList.Except(sameRoleMenuList);
-        if (RoleBLL.SetRoleMenu(roleid, addRoleMenuList, removeRoleMenuList))
+        if (bll.SetRoleMenu(roleid, addRoleMenuList, removeRoleMenuList))
         {
             result.IsSuccess = true;
             result.Msg = "保存成功！";

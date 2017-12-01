@@ -1,40 +1,38 @@
 ﻿using DAL.BasicData;
 using Model.BasicData;
+using System.Collections.Generic;
 using Untity;
 namespace BLL.BasicData
 {
     public class CLicenceBLL
     {
-
-        public static bool Delete(string ids)
+        private CLicenceDAL _dal = new CLicenceDAL();
+        public int Delete(string ids)
         {
-            return CLicenceDAL.Delete(ids);
+            return _dal.BatchDelete(ids);
         }
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public static bool Add(CLicence model)
+        public int Add(CLicence model)
         {
-            return CLicenceDAL.Add(model);
+            return _dal.Add(model);
         }
-
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public static bool Update(CLicence model)
+        public int Update(CLicence model)
         {
-            return CLicenceDAL.Update(model);
+            return _dal.Update(model);
         }
-
-
-        public static PagedList<CLicence> GetList(int pageSize, int pageIndex, string strWhere)
+        public CLicence Get(int id)
         {
-            return CLicenceDAL.GetList(pageSize, pageIndex, strWhere);
+            return _dal.Find(m => m.ID == id);
         }
-
-        public static CLicence Get(int id)
+        public List<CLicence> FindPagedList(int pageIndex, int pageSize, out int pageCount, out int rowCount, bool isAsc)
         {
-            return CLicenceDAL.Get(id);
+            //参考
+            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.ID == 1, m => m.ID, true);
         }
     }
 }

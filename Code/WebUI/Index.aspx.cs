@@ -21,7 +21,7 @@ public partial class Index : BasePage
     }
     protected string GetMenuJson()
     {
-        return MenuBLL.CreateMenuJson(User.ID);
+        return new MenuBLL().CreateMenuJson(User.ID);
 
     }
 }

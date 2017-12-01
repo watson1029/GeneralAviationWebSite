@@ -1,40 +1,40 @@
 ﻿using DAL.BasicData;
 using Model.BasicData;
+using Model.EF;
+using System.Collections.Generic;
 using Untity;
 namespace BLL.BasicData
 {
     public class AircraftBLL
     {
-        public static bool Delete(string ids)
+        private AircraftDAL _dal = new AircraftDAL();
+        
+        public int Delete(string ids)
         {
-            return AircraftDAL.Delete(ids);
+            return _dal.BatchDelete(ids);
         }
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public static bool Add(Aircraft model)
+        public int Add(Aircraft model)
         {
-            return AircraftDAL.Add(model);
+            return _dal.Add(model);
         }
-
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public static bool Update(Aircraft model)
+        public int Update(Aircraft model)
         {
-            return AircraftDAL.Update(model);
+            return _dal.Update(model);
         }
-
-
-        public static PagedList<Aircraft> GetList(int pageSize, int pageIndex, string strWhere)
+        public Aircraft Get(int id)
         {
-            return AircraftDAL.GetList(pageSize, pageIndex, strWhere);
+            return _dal.Find(m => m.AircraftID == id);
         }
-
-        public static Aircraft Get(int id)
+        public List<Aircraft> FindPagedList(int pageIndex, int pageSize, out int pageCount, out int rowCount, bool isAsc)
         {
-            return AircraftDAL.Get(id);
+            //参考
+            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.AircraftID == 1, m => m.AircraftID, true);
         }
-       
     }
 }

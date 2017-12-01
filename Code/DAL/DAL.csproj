@@ -30,20 +30,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicData\AircraftDAL.cs" />
     <Compile Include="BasicData\FlightTaskDAL.cs" />
+    <Compile Include="DBHelper.cs" />
     <Compile Include="FlightPlan\FlightPlanDAL.cs" />
     <Compile Include="BasicData\PilotDAL.cs" />
-    <Compile Include="BasicData\Quanlification\CbusinessDAL.cs" />
+    <Compile Include="BasicData\Quanlification\CBusinessDAL.cs" />
     <Compile Include="BasicData\Quanlification\CInformationDAL.cs" />
     <Compile Include="BasicData\Quanlification\CLicenceDAL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanDAL.cs" />
@@ -51,9 +60,9 @@
     <Compile Include="FlightPlan\WorkflowTplNodeDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManagement\MenuDAL.cs" />
+    <Compile Include="SystemManagement\ResourceDAL.cs" />
     <Compile Include="SystemManagement\RoleDAL.cs" />
     <Compile Include="SystemManagement\UserInfoDAL.cs" />
-    <Compile Include="SystemManagement\UserLoginLogDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
@@ -64,6 +73,10 @@
       <Project>{9059577f-5aa3-44da-a8b2-3b1cfe25495f}</Project>
       <Name>Untity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

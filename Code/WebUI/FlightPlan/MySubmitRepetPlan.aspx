@@ -15,8 +15,8 @@
     <%--列表 start--%>
         <table id="tab_list">
         </table>
-        <div id="tab_toolbar" style="padding: 2px 2px;">
-            <a></a>
+        <div id="tab_toolbar" style="padding: 2px 2px;height:22px;">
+          
             <div style="float:right">
                         <input id="ipt_search" menu="#search_menu"/>
                         <div id="search_menu" style="width: 200px">
@@ -58,6 +58,7 @@
                   columns: [[
                       { title: '申请单号', field: 'PlanCode', width: 100 },
                       { title: '任务类型', field: 'FlightType', width: 100 },
+                      { title: '航空器呼号', field: 'CallSign', width: 80 },
                       { title: '使用机型', field: 'AircraftType', width: 100 },
                       { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
                       {
@@ -110,12 +111,6 @@
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
                       { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 100 },
-                      {
-                          title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                              var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
-                              return str;
-                          }
-                      }
                   ]],
                   toolbar: "#tab_toolbar",
                   queryParams: { "action": "query" },

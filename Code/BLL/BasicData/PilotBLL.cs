@@ -1,42 +1,40 @@
 ﻿using DAL.BasicData;
 using Model.BasicData;
+using Model.EF;
 using System;
+using System.Collections.Generic;
 using Untity;
 namespace BLL.BasicData
 {
     public class PilotBLL
     {
-
-        public static bool Delete(string ids)
+        private PilotDAL _dal = new PilotDAL();
+        public int Delete(string ids)
         {
-            return PilotBLL.Delete(ids);
+            return _dal.BatchDelete(ids);
         }
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public static bool Add(Pilot model)
+        public int Add(Pilot model)
         {
-            return PilotBLL.Add(model);
+            return _dal.Add(model);
         }
-
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public static bool Update(Pilot model)
+        public int Update(Pilot model)
         {
-            return PilotBLL.Update(model);
+            return _dal.Update(model);
         }
-
-
-        public static PagedList<Pilot> GetList(int pageSize, int pageIndex, string strWhere)
+        public Pilot Get(int id)
         {
-            return PilotDAL.GetList(pageSize, pageIndex, strWhere);
+            return _dal.Find(m => m.pilotcardNo == id.ToString());
         }
-
-        public static Pilot Get(int id)
+        public List<Pilot> FindPagedList(int pageIndex, int pageSize, out int pageCount, out int rowCount, bool isAsc)
         {
-            return PilotDAL.Get(id);
+            //参考
+            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.pilotcardNo == "1", m => m.pilotcardNo, true);
         }
-
     }
 }

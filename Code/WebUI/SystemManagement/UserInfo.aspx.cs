@@ -1,18 +1,14 @@
 ﻿using BLL.SystemManagement;
-using Model.SystemManagement;
+using Model.EF;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using Untity;
 
 public partial class SystemManage_UserInfo : BasePage
 {
+    UserInfoBLL userBll = new UserInfoBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -44,7 +40,7 @@ public partial class SystemManage_UserInfo : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (UserInfoBLL.Delete(Request.Form["cbx_select"].ToString()))
+            if (userBll.Delete(Request.Form["cbx_select"].ToString()))
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -74,7 +70,7 @@ public partial class SystemManage_UserInfo : BasePage
         if (!id.HasValue)//新增
         {
             model.CreateTime = DateTime.Now;
-            if (UserInfoBLL.Add(model))
+            if (userBll.Add(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -83,7 +79,7 @@ public partial class SystemManage_UserInfo : BasePage
         else//编辑
         {
             model.ID = id.Value;
-            if (UserInfoBLL.Update(model))
+            if (userBll.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -101,7 +97,7 @@ public partial class SystemManage_UserInfo : BasePage
     private void GetData()
     {
         var userid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var userinfo = UserInfoBLL.Get(userid);
+        var userinfo = userBll.Get(userid);
         var strJSON = JsonConvert.SerializeObject(userinfo);
         Response.Clear();
         Response.Write(strJSON);
@@ -119,11 +115,14 @@ public partial class SystemManage_UserInfo : BasePage
         int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
         string sort = Request.Form["sort"] ?? "";
         string order = Request.Form["order"] ?? "";
+        int pageCount=0;
+        int rowCount=0;
         if (page < 1) return;
         string orderField = sort.Replace("JSON_", "");
         string strWhere = GetWhere();
-        var pageList = UserInfoBLL.GetList(size, page, strWhere);
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
+        Expression<System.Func<UserInfo, bool>> exp = u => u.UserName == "admin";
+        var pageList = userBll.GetList(page,size, out pageCount, out rowCount, exp);
+       var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -135,10 +134,14 @@ public partial class SystemManage_UserInfo : BasePage
     /// <returns></returns>
     private string GetWhere()
     {
+
+        Expression<System.Func<UserInfo, bool>> exp;
         StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            exp = u => u.UserName == Request.Form["search_value"];
+
+          //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
         else
         {
