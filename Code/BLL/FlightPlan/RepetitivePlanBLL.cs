@@ -1,4 +1,5 @@
 ﻿using DAL.FlightPlan;
+using Model.EF;
 using Model.FlightPlan;
 using System;
 using System.Collections.Generic;
@@ -11,37 +12,35 @@ namespace BLL.FlightPlan
 {
     public class RepetitivePlanBLL
     {
+        //public static bool Delete(string ids)
+        //{
+        //    return RepetitivePlanDAL.Delete(ids);
+        //}
+        ///// <summary>
+        ///// 增加一条数据
+        ///// </summary>
+        //public static bool Add(FlightPlan model)
+        //{
+        //    return RepetitivePlanDAL.Add(model);
+        //}
+
+        ///// <summary>
+        ///// 更新一条数据
+        ///// </summary>
+        //public static bool Update(FlightPlan model)
+        //{
+        //    return RepetitivePlanDAL.Update(model);
+        //}
 
 
-        public static bool Delete(string ids)
-        {
-            return RepetitivePlanDAL.Delete(ids);
-        }
-        /// <summary>
-        /// 增加一条数据
-        /// </summary>
-        public static bool Add(RepetitivePlan model)
-        {
-            return RepetitivePlanDAL.Add(model);
-        }
+        //public static PagedList<FlightPlan> GetMyRepetitivePlanList(int pageSize, int pageIndex, string strWhere)
+        //{
+        //    return RepetitivePlanDAL.GetMyRepetitivePlanList(pageSize, pageIndex, strWhere);
+        //}
 
-        /// <summary>
-        /// 更新一条数据
-        /// </summary>
-        public static bool Update(RepetitivePlan model)
-        {
-            return RepetitivePlanDAL.Update(model);
-        }
-
-
-        public static PagedList<RepetitivePlan> GetMyRepetitivePlanList(int pageSize, int pageIndex, string strWhere)
-        {
-            return RepetitivePlanDAL.GetMyRepetitivePlanList(pageSize, pageIndex, strWhere);
-        }
-
-        public static RepetitivePlan Get(int id)
-        {
-            return RepetitivePlanDAL.Get(id);
-        }
+        //public static FlightPlan Get(int id)
+        //{
+        //    return RepetitivePlanDAL.Get(id);
+        //}
     }
 }
