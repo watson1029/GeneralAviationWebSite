@@ -74,6 +74,7 @@
     <Compile Include="EF\FlightTask.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\LoginLog.cs" />
     <Compile Include="EF\Menu.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
@@ -119,10 +120,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ZHCC_GAPlan.edmx</DependentUpon>
     </Compile>
+    <Compile Include="FlightPlan\TWFPlan.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstance.cs" />
+    <Compile Include="FlightPlan\WorkflowPlan.cs" />
     <Compile Include="FlightPlan\WorkflowTemplate.cs" />
     <Compile Include="FlightPlan\WorkflowTplNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemManagement\KeyValueModel.cs" />
     <Compile Include="SystemManagement\MenuModel.cs" />
     <Compile Include="SystemManagement\TreeNode.cs" />
   </ItemGroup>
