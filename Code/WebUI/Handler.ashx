@@ -10,7 +10,7 @@ using DAL.SystemManagement;
 using Untity;
 public class Handler : IHttpHandler
 {
-    private ResourceDAL dao;
+    private ResourceDAL dao=new ResourceDAL();
     public void ProcessRequest(HttpContext context)
     {
         string action = context.Request["action"];
