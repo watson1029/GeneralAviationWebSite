@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
@@ -19,7 +18,6 @@ public class DBHelper<T> where T : class
     {
         return context.Set<T>().ToList().Contains(entity);
     }
-
     /// <summary>
     /// 新增单个实体
     /// </summary>
@@ -155,39 +153,52 @@ public class DBHelper<T> where T : class
         return context.Set<T>().Where(where).AsNoTracking().FirstOrDefault();
     }
     /// <summary>
-    /// 按条件查询
+    /// 查询全部
     /// </summary>
     /// <param name="where"></param>
     /// <returns></returns>
-    public List<T> FindList()
+    public List<T> FindList<S>(Expression<Func<T, S>> orderBy,bool isAsc)
     {
-        return context.Set<T>().ToList();
-    }
-    /// <summary>
-    /// 按条件查询
-    /// </summary>
-    /// <param name="where"></param>
-    /// <returns></returns>
-    public List<T> FindList(Expression<Func<T, bool>> where)
-    {
-        return context.Set<T>().Where(where).ToList();
+        if(isAsc)
+            return context.Set<T>().OrderBy(orderBy).ToList();
+        else
+            return context.Set<T>().OrderByDescending(orderBy).ToList();
     }
     /// <summary>
     /// 按条件查询，排序
     /// </summary>
-    /// <typeparam name="S"><peparam>
     /// <param name="where"></param>
+    /// <returns></returns>
+    public List<T> FindList<S>(Expression<Func<T, bool>> where,Expression<Func<T, S>> orderBy, bool isAsc)
+    {
+        if (isAsc)
+            return context.Set<T>().Where(where).OrderBy(orderBy).ToList();
+        else
+            return context.Set<T>().Where(where).OrderByDescending(orderBy).ToList();
+    }
+    /// <summary>
+    /// 分页，排序
+    /// </summary>
+    /// <typeparam name="S"><peparam>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="rowCount"></param>
     /// <param name="orderBy"></param>
     /// <param name="isAsc"></param>
     /// <returns></returns>
-    public List<T> FindList<S>(Expression<Func<T, bool>> where, Expression<Func<T, S>> orderBy, bool isAsc)
+    public List<T> FindPagedList<S>(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<T, S>> orderBy, bool isAsc)
     {
+        var list = context.Set<T>().AsQueryable();
+        rowCount = list.Count();
 
-        var list = context.Set<T>().Where(where);
+        pageCount = rowCount / pageSize;
+        if (rowCount % pageSize > 0)
+            pageCount++;
+
         if (isAsc)
-            list = list.OrderBy<T, S>(orderBy);
+            list = list.OrderBy<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         else
-            list = list.OrderByDescending<T, S>(orderBy);
+            list = list.OrderByDescending<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         return list.ToList();
     }
     /// <summary>

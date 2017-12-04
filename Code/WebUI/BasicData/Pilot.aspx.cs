@@ -60,9 +60,13 @@ public partial class BasicData_Pilot : BasePage
         var model = new Pilot()
         {
             Pilots = Request.Form["Pilots"],
-            DataTime = DateTime.Parse(Request.Form["DataTime"]),
-            Password = Request.Form["Password"],
-            Company = byte.Parse(Request.Form["Company"] ?? "0"),
+            PilotCardNo = int.Parse(Request.Form["PilotCardNo"]),
+            PilotDT = DateTime.Parse(Request.Form["Password"]),
+            PhoneNo = int.Parse(Request.Form["PhoneNo"]),
+            LicenseNo = int.Parse(Request.Form["LicenseNo"]),
+            Sign = byte.Parse(Request.Form["Sign"]),
+            Licensesort = byte.Parse(Request.Form["Licensesort"]),
+            CompanyName = byte.Parse(Request.Form["CompanyName"]),
             Sex = byte.Parse(Request.Form["Sex"] ?? "0"),
         };
         if (!id.HasValue)//新增

@@ -49,6 +49,7 @@
     <Compile Include="DB\SqlDbHelper.cs" />
     <Compile Include="OrderHelper.cs" />
     <Compile Include="Pager\PagedList.cs" />
+    <Compile Include="PredicateBuilder.cs" />
     <Compile Include="TWFType.cs" />
     <Compile Include="PasswordCheckResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

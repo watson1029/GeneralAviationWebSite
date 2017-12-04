@@ -29,5 +29,8 @@ namespace Model.EF
         public Nullable<double> MinSpeed { get; set; }
         public Nullable<double> MaxSpeed { get; set; }
         public string CompanyCode3 { get; set; }
+        public string AcfNo { get; set; }
+        public Nullable<int> ASdate { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }

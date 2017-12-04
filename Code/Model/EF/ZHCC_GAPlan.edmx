@@ -29,19 +29,20 @@
           </Key>
           <Property Name="AircraftID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcfType" Type="nchar" MaxLength="8" Nullable="false" />
-          <Property Name="AltnAircraft" Type="nvarchar" MaxLength="512" />
+          <Property Name="AcfNo" Type="nvarchar" MaxLength="512" />
           <Property Name="AcfClass" Type="nchar" MaxLength="2" />
           <Property Name="Manufacture" Type="nvarchar" MaxLength="64" />
           <Property Name="WakeTurbulance" Type="nvarchar" MaxLength="1" Nullable="false" />
           <Property Name="FueledWeight" Type="int" />
           <Property Name="FuelCapacity" Type="int" />
           <Property Name="Range" Type="int" />
-          <Property Name="PassengerSize" Type="int" />
+          <Property Name="ASdate" Type="int" />
           <Property Name="CruiseAltd" Type="float" />
           <Property Name="CruiseSpeed" Type="float" />
           <Property Name="MinSpeed" Type="float" />
           <Property Name="MaxSpeed" Type="float" />
           <Property Name="CompanyCode3" Type="nchar" MaxLength="3" />
+          <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="BusinessCertificate">
           <Key>
@@ -59,6 +60,7 @@
           <Property Name="DealLine" Type="int" />
           <Property Name="PresentationDate" Type="datetime" />
           <Property Name="LicensedSeal" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="BusinessIntroduction">
           <Key>
@@ -96,6 +98,7 @@
           <Property Name="DelegateAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="DelegateTelePhone" Type="varchar" MaxLength="50" />
           <Property Name="DelegateCardImg" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -111,6 +114,7 @@
           <Property Name="SITAAddress" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="AFTNAddress" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="ReferSourceID" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="FlightPlan">
           <Key>
@@ -182,18 +186,20 @@
         </EntityType>
         <EntityType Name="Pilot">
           <Key>
-            <PropertyRef Name="pilot" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="pilot" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="pilotcardNo" Type="varchar" MaxLength="50" />
-          <Property Name="pilotDT" Type="datetime" Nullable="false" />
-          <Property Name="phoneNo" Type="varchar" MaxLength="11" Nullable="false" />
-          <Property Name="licensesort" Type="nvarchar" MaxLength="100" />
-          <Property Name="licenseNo" Type="varchar" MaxLength="100" />
-          <Property Name="sign" Type="nvarchar" MaxLength="200" />
-          <Property Name="sex" Type="tinyint" />
-          <Property Name="companyName" Type="nvarchar" MaxLength="100" />
-          <Property Name="licenseImg" Type="nvarchar" MaxLength="200" />
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Pilots" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PilotCardNo" Type="varchar" MaxLength="50" />
+          <Property Name="PilotDT" Type="datetime" Nullable="false" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Licensesort" Type="nvarchar" MaxLength="100" />
+          <Property Name="LicenseNo" Type="varchar" MaxLength="100" />
+          <Property Name="Sign" Type="nvarchar" MaxLength="200" />
+          <Property Name="Sex" Type="tinyint" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LicenseImg" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="RepetitivePlan">
           <Key>
@@ -236,6 +242,8 @@
           <Property Name="IsDeleted" Type="int" />
           <Property Name="Status" Type="int" />
           <Property Name="SenderId" Type="int" />
+          <Property Name="Started" Type="date" />
+          <Property Name="Ended" Type="date" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -376,6 +384,7 @@
           <Property Name="DealLine" Type="Int32" />
           <Property Name="PresentationDate" Type="DateTime" Precision="3" />
           <Property Name="LicensedSeal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="BusinessIntroduction">
           <Key>
@@ -413,6 +422,7 @@
           <Property Name="DelegateAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DelegateTelePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DelegateCardImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -428,6 +438,7 @@
           <Property Name="SITAAddress" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="AFTNAddress" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="ReferSourceID" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="FlightPlan">
           <Key>
@@ -492,6 +503,7 @@
         <EntityType Name="Pilot">
           <Key>
             <PropertyRef Name="pilot1" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="pilot1" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="pilotcardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -503,6 +515,18 @@
           <Property Name="sex" Type="Byte" />
           <Property Name="companyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="licenseImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Pilots" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PilotCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PilotDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Licensesort" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sign" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="Byte" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="RepetitivePlan">
           <Key>
@@ -545,6 +569,8 @@
           <Property Name="IsDeleted" Type="Int32" />
           <Property Name="Status" Type="Int32" />
           <Property Name="SenderId" Type="Int32" />
+          <Property Name="Started" Type="DateTime" Precision="0" />
+          <Property Name="Ended" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -626,6 +652,9 @@
           <Property Name="MinSpeed" Type="Double" />
           <Property Name="MaxSpeed" Type="Double" />
           <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="AcfNo" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="ASdate" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -655,6 +684,7 @@
           <EntitySetMapping Name="BusinessCertificate">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.BusinessCertificate">
               <MappingFragment StoreEntitySet="BusinessCertificate">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="LicensedSeal" ColumnName="LicensedSeal" />
                 <ScalarProperty Name="PresentationDate" ColumnName="PresentationDate" />
                 <ScalarProperty Name="DealLine" ColumnName="DealLine" />
@@ -686,6 +716,7 @@
           <EntitySetMapping Name="BusinessLicense">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.BusinessLicense">
               <MappingFragment StoreEntitySet="BusinessLicense">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="DelegateCardImg" ColumnName="DelegateCardImg" />
                 <ScalarProperty Name="DelegateTelePhone" ColumnName="DelegateTelePhone" />
                 <ScalarProperty Name="DelegateAddress" ColumnName="DelegateAddress" />
@@ -712,6 +743,7 @@
           <EntitySetMapping Name="Company">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Company">
               <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="ReferSourceID" ColumnName="ReferSourceID" />
                 <ScalarProperty Name="AFTNAddress" ColumnName="AFTNAddress" />
                 <ScalarProperty Name="SITAAddress" ColumnName="SITAAddress" />
@@ -791,16 +823,18 @@
           <EntitySetMapping Name="Pilot">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Pilot">
               <MappingFragment StoreEntitySet="Pilot">
-                <ScalarProperty Name="licenseImg" ColumnName="licenseImg" />
-                <ScalarProperty Name="companyName" ColumnName="companyName" />
-                <ScalarProperty Name="sex" ColumnName="sex" />
-                <ScalarProperty Name="sign" ColumnName="sign" />
-                <ScalarProperty Name="licenseNo" ColumnName="licenseNo" />
-                <ScalarProperty Name="licensesort" ColumnName="licensesort" />
-                <ScalarProperty Name="phoneNo" ColumnName="phoneNo" />
-                <ScalarProperty Name="pilotDT" ColumnName="pilotDT" />
-                <ScalarProperty Name="pilotcardNo" ColumnName="pilotcardNo" />
-                <ScalarProperty Name="pilot1" ColumnName="pilot" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LicenseImg" ColumnName="LicenseImg" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="Licensesort" ColumnName="Licensesort" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="PilotDT" ColumnName="PilotDT" />
+                <ScalarProperty Name="PilotCardNo" ColumnName="PilotCardNo" />
+                <ScalarProperty Name="Pilots" ColumnName="Pilots" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -835,6 +869,8 @@
           <EntitySetMapping Name="Resource">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Resource">
               <MappingFragment StoreEntitySet="Resource">
+                <ScalarProperty Name="Ended" ColumnName="Ended" />
+                <ScalarProperty Name="Started" ColumnName="Started" />
                 <ScalarProperty Name="SenderId" ColumnName="SenderId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -918,19 +954,20 @@
           <EntitySetMapping Name="Aircraft">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Aircraft">
               <MappingFragment StoreEntitySet="Aircraft">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ASdate" ColumnName="ASdate" />
+                <ScalarProperty Name="AcfNo" ColumnName="AcfNo" />
                 <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
                 <ScalarProperty Name="MaxSpeed" ColumnName="MaxSpeed" />
                 <ScalarProperty Name="MinSpeed" ColumnName="MinSpeed" />
                 <ScalarProperty Name="CruiseSpeed" ColumnName="CruiseSpeed" />
                 <ScalarProperty Name="CruiseAltd" ColumnName="CruiseAltd" />
-                <ScalarProperty Name="PassengerSize" ColumnName="PassengerSize" />
                 <ScalarProperty Name="Range" ColumnName="Range" />
                 <ScalarProperty Name="FuelCapacity" ColumnName="FuelCapacity" />
                 <ScalarProperty Name="FueledWeight" ColumnName="FueledWeight" />
                 <ScalarProperty Name="WakeTurbulance" ColumnName="WakeTurbulance" />
                 <ScalarProperty Name="Manufacture" ColumnName="Manufacture" />
                 <ScalarProperty Name="AcfClass" ColumnName="AcfClass" />
-                <ScalarProperty Name="AltnAircraft" ColumnName="AltnAircraft" />
                 <ScalarProperty Name="AcfType" ColumnName="AcfType" />
                 <ScalarProperty Name="AircraftID" ColumnName="AircraftID" />
               </MappingFragment>

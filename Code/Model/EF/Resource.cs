@@ -24,5 +24,7 @@ namespace Model.EF
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> Status { get; set; }
         public Nullable<int> SenderId { get; set; }
+        public Nullable<System.DateTime> Started { get; set; }
+        public Nullable<System.DateTime> Ended { get; set; }
     }
 }
