@@ -21,9 +21,9 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.TWFSteps" Width="1.5" PointX="0.75" PointY="11.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.UserInfo" Width="1.5" PointX="2.75" PointY="11.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.UserRole" Width="1.5" PointX="12.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aircraft" Width="1.5" PointX="5.375" PointY="12.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Pilot" Width="1.5" PointX="13.375" PointY="3.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.LoginLog" Width="1.5" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aircraft" Width="1.5" PointX="5.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
