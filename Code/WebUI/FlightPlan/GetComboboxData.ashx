@@ -49,16 +49,16 @@ public class GetComboboxData : IHttpHandler {
         }
         return JsonConvert.SerializeObject(arr);
     }
-    private string GetAllCompany()
-    {
-        List<Company> list = bll.GetList();
-        ArrayList arr = new ArrayList();
-        foreach (var item in list)
-        {
-            arr.Add(new { id = item.TaskCode, text = item.Abbreviation });
-        }
-        return JsonConvert.SerializeObject(arr);
-    }
+    //private string GetAllCompany()
+    //{
+    //    List<Company> list = bll.GetList();
+    //    ArrayList arr = new ArrayList();
+    //    foreach (var item in list)
+    //    {
+    //        arr.Add(new { id = item.TaskCode, text = item.Abbreviation });
+    //    }
+    //    return JsonConvert.SerializeObject(arr);
+    //}
     private string GetAllAircraftType()
     {
 
