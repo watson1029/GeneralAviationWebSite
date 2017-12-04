@@ -4,6 +4,7 @@ using Model.FlightPlan;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Untity;
@@ -34,10 +35,10 @@ namespace BLL.FlightPlan
         }
 
 
-        //public  PagedList<RepetitivePlan> GetMyRepetitivePlanList(int pageSize, int pageIndex, out  strWhere)
-        //{
-        //    return dal.FindPagedList(pageIndex,pageSize, strWhere);
-        //}
+        public List<RepetitivePlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<RepetitivePlan, bool>> where)
+         {
+             return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.RepetPlanID, true);
+         }
 
         public  RepetitivePlan Get(int id)
         {

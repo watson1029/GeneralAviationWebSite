@@ -3,11 +3,13 @@ using DAL.FlightPlan;
 using Model.EF;
 using Newtonsoft.Json;
 using System;
+using System.Linq.Expressions;
 using System.Text;
 using Untity;
 
 public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
 {
+    RepetitivePlanBLL bll = new RepetitivePlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -42,7 +44,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (RepetitivePlanBLL.Delete(Request.Form["cbx_select"].ToString()))
+            if (bll.Delete(Request.Form["cbx_select"].ToString()))
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -88,7 +90,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
             model.CreatorName = User.UserName;
             model.ActorID = User.ID;
             model.CreateTime = DateTime.Now;
-            if (RepetitivePlanBLL.Add(model))
+            if (bll.Add(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -97,7 +99,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         else//编辑
         {
             model.RepetPlanID = id.Value;
-            if (RepetitivePlanBLL.Update(model))
+            if (bll.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -134,7 +136,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     private void GetData()
     {
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var plan = RepetitivePlanBLL.Get(planid);
+        var plan = bll.Get(planid);
         var strJSON = "";
         if (plan != null)
         {
@@ -158,10 +160,12 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         string sort = Request.Form["sort"] ?? "";
         string order = Request.Form["order"] ?? "";
         if (page < 1) return;
+        int pageCount = 0;
+        int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
         string strWhere = GetWhere();
-        var pageList = RepetitivePlanBLL.GetMyRepetitivePlanList(size, page, strWhere);
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
+        var pageList = bll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -185,4 +189,18 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         }
         return sb.ToString();
     }
+
+    //private Expression<Func<RepetitivePlan, bool>> GetWhere()
+    //{
+
+    //    Expression<Func<RepetitivePlan, bool>> exp = u => u.UserName == Request.Form["search_value"];
+    //    //   StringBuilder sb = new StringBuilder("1=1");
+    //    if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
+    //    {
+    //        exp = u => u.UserName == Request.Form["search_value"];
+
+    //        //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+    //    }
+    //    return exp;
+    //}
 }

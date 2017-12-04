@@ -196,6 +196,7 @@
                 nodes.forEach(function (i) {
                     idarray.push(i.id);
                 });
+                console.info(idarray.join());
                 var json = { id: uid, action:"setrole",newRoleMenus: idarray.join() };
 
                 $.post("Role.aspx", json, function (data) {
