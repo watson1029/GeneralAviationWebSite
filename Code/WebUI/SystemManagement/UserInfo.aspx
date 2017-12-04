@@ -72,12 +72,20 @@
                         <td class="tdar">是否通航用户：
                         </td>
                         <td class="tdar">
-                            <select class="easyui-combobox" editable="false"  name="IsGeneralAviation" required="true"   panelheight="auto" style="width:100%;">   
-                                <option value="0">否</option>
-                                <option value="1">是</option>
-                            </select>
+
+                               <input type="text" id="IsGeneralAviation" name="IsGeneralAviation" class="easyui-validatebox" required="true" style="width:100%;"/>
+           
                         </td>
 </tr>
+                    <tr> <td class="tdar">公司三字码：
+                        </td>
+                        <td class="tdar">
+
+                               <input type="text" id="CompanyCode3" name="CompanyCode3" class="easyui-validatebox" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                                ,panelMaxHeight:200" style="width:100%;"/>
+           
+                        </td>
+                    </tr>
                 </table>
 
         </form>
@@ -105,6 +113,22 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
+            var depId = $('#IsGeneralAviation').combobox({
+                valueField: 'id',
+                panelHeight: 'auto',
+                textField: 'text',
+                data: [{
+                    id: 0,
+                    text: "否"
+                    
+                },
+                {
+                    id: 1,
+                    text: "是"
+                },
+                ],
+                onSelect: function (record) {
+                }    
         });
         Main = {
             //初始化表格

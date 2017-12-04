@@ -20,4 +20,13 @@ public class UserInfoCookie
     /// 状态
     /// </summary> 
     public byte Status { get; set; }
+    /// <summary>
+    /// 是否通航企业
+    /// </summary>
+    public byte IsGeneralAviation { get; set; }
+
+    /// <summary>
+    ///通航企业三字码
+    /// </summary>
+    public string CompanyCode3 { get; set; }
 }

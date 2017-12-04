@@ -163,7 +163,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         int pageCount = 0;
         int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
-        string strWhere = GetWhere();
+        var strWhere = GetWhere();
         var pageList = bll.GetList(page, size, out pageCount, out rowCount, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
@@ -175,32 +175,20 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private string GetWhere()
+    private Expression<Func<RepetitivePlan, bool>> GetWhere()
     {
-        StringBuilder sb = new StringBuilder("1=1");
-        sb.AppendFormat(" and Creator={0} and PlanState='0'", User.ID);
+
+        Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
+        predicate = predicate.And(m => m.PlanState=="0");
+        predicate = predicate.And(m => m.Creator == User.ID);
+
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            predicate = u => u.PlanCode == Request.Form["search_value"];
         }
-        else
-        {
-            sb.AppendFormat("");
-        }
-        return sb.ToString();
+
+        return predicate;
     }
 
-    //private Expression<Func<RepetitivePlan, bool>> GetWhere()
-    //{
 
-    //    Expression<Func<RepetitivePlan, bool>> exp = u => u.UserName == Request.Form["search_value"];
-    //    //   StringBuilder sb = new StringBuilder("1=1");
-    //    if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
-    //    {
-    //        exp = u => u.UserName == Request.Form["search_value"];
-
-    //        //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
-    //    }
-    //    return exp;
-    //}
 }

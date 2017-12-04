@@ -63,7 +63,7 @@ namespace BLL.SystemManagement
             if (userinfodal.IsAdmin(userID))
             {
                 //menuList = menudal.GetList("1=1");
-                menuList = menudal.FindList().ToList();
+                menuList = menudal.FindList(u=>u.ID,false).ToList();
                 if (menuList != null & menuList.Any())
                 {
                     list = menuList.Select(u => (u.MenuCode ?? "")).Distinct().ToList();
@@ -92,7 +92,7 @@ namespace BLL.SystemManagement
             //管理员判断
             if (userinfodal.IsAdmin(userID))
             {
-                menuList = menudal.FindList().ToList();
+                menuList = menudal.FindList(u=>u.ID,true).ToList();
             }
             else
             {

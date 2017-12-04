@@ -61,7 +61,7 @@ namespace BLL.SystemManagement
 
         public List<TreeNode> CreateRoleTree(int userID)
         {
-            List<Role> rolelist = roledal.FindList();
+            List<Role> rolelist = roledal.FindList(u=>u.ID,true);
 
             var treeList = new List<TreeNode>();
             if (rolelist != null && rolelist.Any())

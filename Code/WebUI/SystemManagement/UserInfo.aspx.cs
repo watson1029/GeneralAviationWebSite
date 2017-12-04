@@ -141,15 +141,17 @@ public partial class SystemManage_UserInfo : BasePage
     private Expression<Func<UserInfo, bool>> GetWhere()
     {
 
-        Expression<Func<UserInfo, bool>> exp=null;
+
+        Expression<Func<UserInfo, bool>> predicate = PredicateBuilder.True<UserInfo>();
+        predicate = predicate.And(m =>1 == 1);
      //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            exp = u => u.UserName == Request.Form["search_value"];
+            predicate = u => u.UserName == Request.Form["search_value"];
 
           //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
-        return exp;
+        return predicate;
     }
     private void SaveUserRole()
     {
