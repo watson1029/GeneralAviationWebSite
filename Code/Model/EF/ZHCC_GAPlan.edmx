@@ -4,7 +4,28 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZHCC_GAPlanModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="ZHCC_GAPlanModelStoreContainer">
+          <EntitySet Name="ActualSteps" EntityType="ZHCC_GAPlanModel.Store.ActualSteps" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Aircraft" EntityType="ZHCC_GAPlanModel.Store.Aircraft" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BusinessCertificate" EntityType="ZHCC_GAPlanModel.Store.BusinessCertificate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BusinessIntroduction" EntityType="ZHCC_GAPlanModel.Store.BusinessIntroduction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BusinessLicense" EntityType="ZHCC_GAPlanModel.Store.BusinessLicense" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Store.Company" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FlightPlan" EntityType="ZHCC_GAPlanModel.Store.FlightPlan" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FlightTask" EntityType="ZHCC_GAPlanModel.Store.FlightTask" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LoginLog" EntityType="ZHCC_GAPlanModel.Store.LoginLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Menu" EntityType="ZHCC_GAPlanModel.Store.Menu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Pilot" EntityType="ZHCC_GAPlanModel.Store.Pilot" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RepetitivePlan" EntityType="ZHCC_GAPlanModel.Store.RepetitivePlan" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Resource" EntityType="ZHCC_GAPlanModel.Store.Resource" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Role" EntityType="ZHCC_GAPlanModel.Store.Role" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RoleMenu" EntityType="ZHCC_GAPlanModel.Store.RoleMenu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TWFLibrary" EntityType="ZHCC_GAPlanModel.Store.TWFLibrary" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TWFSteps" EntityType="ZHCC_GAPlanModel.Store.TWFSteps" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserInfo" EntityType="ZHCC_GAPlanModel.Store.UserInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserRole" EntityType="ZHCC_GAPlanModel.Store.UserRole" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -27,12 +48,12 @@
           <Key>
             <PropertyRef Name="AircraftID" />
           </Key>
-          <Property Name="AircraftID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AcfType" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="AircraftID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AcfType" Type="nchar" Nullable="false" MaxLength="8" />
           <Property Name="AcfNo" Type="nvarchar" MaxLength="512" />
           <Property Name="AcfClass" Type="nchar" MaxLength="2" />
           <Property Name="Manufacture" Type="nvarchar" MaxLength="64" />
-          <Property Name="WakeTurbulance" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="WakeTurbulance" Type="nvarchar" Nullable="false" MaxLength="1" />
           <Property Name="FueledWeight" Type="int" />
           <Property Name="FuelCapacity" Type="int" />
           <Property Name="Range" Type="int" />
@@ -48,7 +69,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CompanyCode3" Type="nchar" MaxLength="3" />
           <Property Name="LicenseNo" Type="varchar" MaxLength="200" />
           <Property Name="BaseAirport" Type="nvarchar" MaxLength="200" />
@@ -66,7 +87,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Creator" Type="nvarchar" MaxLength="50" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="Introduction" Type="nvarchar(max)" />
@@ -78,7 +99,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CompanyCode3" Type="nchar" MaxLength="3" />
           <Property Name="RegisterTime" Type="datetime" />
           <Property Name="RegisterAddress" Type="nvarchar" MaxLength="200" />
@@ -104,15 +125,15 @@
           <Key>
             <PropertyRef Name="CompanyID" />
           </Key>
-          <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CompanyCode3" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyCode3" Type="nchar" Nullable="false" MaxLength="3" />
           <Property Name="CompanyCode2" Type="nchar" MaxLength="2" />
           <Property Name="EnglishName" Type="nvarchar" MaxLength="64" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="32" />
           <Property Name="DomesticFlag" Type="bit" />
           <Property Name="Surname" Type="nvarchar" MaxLength="512" />
-          <Property Name="SITAAddress" Type="varchar" MaxLength="1000" Nullable="false" />
-          <Property Name="AFTNAddress" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="SITAAddress" Type="varchar" Nullable="false" MaxLength="1000" />
+          <Property Name="AFTNAddress" Type="varchar" Nullable="false" MaxLength="1000" />
           <Property Name="ReferSourceID" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
@@ -120,34 +141,34 @@
           <Key>
             <PropertyRef Name="FlightPlanID" />
           </Key>
-          <Property Name="FlightPlanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PlanCode" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="FlightType" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="AircraftType" Type="nchar" MaxLength="8" Nullable="false" />
-          <Property Name="FlightDirHeight" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="FlightPlanID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlanCode" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="FlightType" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="AircraftType" Type="nchar" Nullable="false" MaxLength="8" />
+          <Property Name="FlightDirHeight" Type="nvarchar" Nullable="false" MaxLength="32" />
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="ModifyTime" Type="datetime" Nullable="false" />
-          <Property Name="CompanyCode3" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="CompanyCode3" Type="nchar" Nullable="false" MaxLength="3" />
           <Property Name="AttchFile" Type="nvarchar" MaxLength="200" />
-          <Property Name="PlanState" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="PlanState" Type="nvarchar" Nullable="false" MaxLength="36" />
           <Property Name="ActorID" Type="int" />
           <Property Name="Creator" Type="int" Nullable="false" />
           <Property Name="Remark" Type="nvarchar" MaxLength="200" />
-          <Property Name="SOBT" Type="time" Precision="0" Nullable="false" />
-          <Property Name="SIBT" Type="time" Precision="0" Nullable="false" />
-          <Property Name="WeekSchedule" Type="char" MaxLength="7" Nullable="false" />
-          <Property Name="ADEP" Type="char" MaxLength="4" Nullable="false" />
-          <Property Name="ADES" Type="char" MaxLength="4" Nullable="false" />
-          <Property Name="RadarCode" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="SOBT" Type="time" Nullable="false" Precision="0" />
+          <Property Name="SIBT" Type="time" Nullable="false" Precision="0" />
+          <Property Name="WeekSchedule" Type="char" Nullable="false" MaxLength="7" />
+          <Property Name="ADEP" Type="char" Nullable="false" MaxLength="4" />
+          <Property Name="ADES" Type="char" Nullable="false" MaxLength="4" />
+          <Property Name="RadarCode" Type="char" Nullable="false" MaxLength="4" />
           <Property Name="AircraftNum" Type="int" Nullable="false" />
-          <Property Name="Pilot" Type="nvarchar" MaxLength="36" Nullable="false" />
-          <Property Name="ContactWay" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="WeatherCondition" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Pilot" Type="nvarchar" Nullable="false" MaxLength="36" />
+          <Property Name="ContactWay" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="WeatherCondition" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="AircrewGroupNum" Type="int" Nullable="false" />
-          <Property Name="CreatorName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CallSign" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="CreatorName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CallSign" Type="nvarchar" Nullable="false" MaxLength="36" />
           <Property Name="ActualStartTime" Type="datetime" />
           <Property Name="ActualEndTime" Type="datetime" />
         </EntityType>
@@ -155,17 +176,17 @@
           <Key>
             <PropertyRef Name="TaskCode" />
           </Key>
-          <Property Name="TaskCode" Type="nchar" MaxLength="3" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="Abbreviation" Type="nchar" MaxLength="4" Nullable="false" />
-          <Property Name="FlightType" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="TaskCode" Type="nchar" Nullable="false" MaxLength="3" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="40" />
+          <Property Name="Abbreviation" Type="nchar" Nullable="false" MaxLength="4" />
+          <Property Name="FlightType" Type="nchar" Nullable="false" MaxLength="1" />
           <Property Name="DefaultMapping" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="LoginLog">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="int" />
           <Property Name="UserName" Type="nvarchar" MaxLength="20" />
           <Property Name="LoginTime" Type="datetime" />
@@ -175,7 +196,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MenuName" Type="nvarchar" MaxLength="36" />
           <Property Name="ParentMenuID" Type="int" />
           <Property Name="LinkUrl" Type="varchar" MaxLength="250" />
@@ -191,10 +212,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="Pilots" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Pilots" Type="nvarchar" Nullable="false" MaxLength="20" />
           <Property Name="PilotCardNo" Type="varchar" MaxLength="50" />
           <Property Name="PilotDT" Type="datetime" Nullable="false" />
-          <Property Name="PhoneNo" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="PhoneNo" Type="varchar" Nullable="false" MaxLength="11" />
           <Property Name="Licensesort" Type="nvarchar" MaxLength="100" />
           <Property Name="LicenseNo" Type="varchar" MaxLength="100" />
           <Property Name="Sign" Type="nvarchar" MaxLength="200" />
@@ -207,34 +228,34 @@
           <Key>
             <PropertyRef Name="RepetPlanID" />
           </Key>
-          <Property Name="RepetPlanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PlanCode" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="FlightType" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="AircraftType" Type="nchar" MaxLength="8" Nullable="false" />
-          <Property Name="FlightDirHeight" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="RepetPlanID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlanCode" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="FlightType" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="AircraftType" Type="nchar" Nullable="false" MaxLength="8" />
+          <Property Name="FlightDirHeight" Type="nvarchar" Nullable="false" MaxLength="32" />
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="ModifyTime" Type="datetime" Nullable="false" />
-          <Property Name="CompanyCode3" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="CompanyCode3" Type="nchar" Nullable="false" MaxLength="3" />
           <Property Name="AttchFile" Type="nvarchar" MaxLength="200" />
-          <Property Name="PlanState" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="PlanState" Type="nvarchar" Nullable="false" MaxLength="36" />
           <Property Name="ActorID" Type="int" />
           <Property Name="Creator" Type="int" Nullable="false" />
           <Property Name="Remark" Type="nvarchar" MaxLength="200" />
-          <Property Name="SOBT" Type="time" Precision="0" Nullable="false" />
-          <Property Name="SIBT" Type="time" Precision="0" Nullable="false" />
-          <Property Name="WeekSchedule" Type="char" MaxLength="7" Nullable="false" />
-          <Property Name="ADEP" Type="char" MaxLength="4" Nullable="false" />
-          <Property Name="ADES" Type="char" MaxLength="4" Nullable="false" />
-          <Property Name="CreatorName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CallSign" Type="nvarchar" MaxLength="36" Nullable="false" />
+          <Property Name="SOBT" Type="time" Nullable="false" Precision="0" />
+          <Property Name="SIBT" Type="time" Nullable="false" Precision="0" />
+          <Property Name="WeekSchedule" Type="char" Nullable="false" MaxLength="7" />
+          <Property Name="ADEP" Type="char" Nullable="false" MaxLength="4" />
+          <Property Name="ADES" Type="char" Nullable="false" MaxLength="4" />
+          <Property Name="CreatorName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CallSign" Type="nvarchar" Nullable="false" MaxLength="36" />
         </EntityType>
         <EntityType Name="Resource">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="nchar" MaxLength="60" />
           <Property Name="DealUser" Type="nchar" MaxLength="20" />
           <Property Name="ResourceType" Type="int" />
@@ -251,7 +272,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="36" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
@@ -261,7 +282,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MenuID" Type="int" />
           <Property Name="RoleID" Type="int" />
         </EntityType>
@@ -269,7 +290,7 @@
           <Key>
             <PropertyRef Name="TWFID" />
           </Key>
-          <Property Name="TWFID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TWFID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TWFName" Type="nvarchar" MaxLength="36" />
           <Property Name="TWFDescription" Type="nvarchar" MaxLength="50" />
           <Property Name="TWFType" Type="tinyint" />
@@ -278,7 +299,7 @@
           <Key>
             <PropertyRef Name="StepID" />
           </Key>
-          <Property Name="StepID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StepID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TWFID" Type="char" MaxLength="10" />
           <Property Name="StepName" Type="nvarchar" MaxLength="36" />
           <Property Name="PrevID" Type="int" />
@@ -291,9 +312,9 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="36" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="36" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Mobile" Type="varchar" MaxLength="11" />
           <Property Name="Status" Type="tinyint" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
@@ -304,31 +325,10 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="ZHCC_GAPlanModelStoreContainer">
-          <EntitySet Name="ActualSteps" EntityType="Self.ActualSteps" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Aircraft" EntityType="Self.Aircraft" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BusinessCertificate" EntityType="Self.BusinessCertificate" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BusinessIntroduction" EntityType="Self.BusinessIntroduction" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BusinessLicense" EntityType="Self.BusinessLicense" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FlightPlan" EntityType="Self.FlightPlan" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FlightTask" EntityType="Self.FlightTask" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LoginLog" EntityType="Self.LoginLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Pilot" EntityType="Self.Pilot" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RepetitivePlan" EntityType="Self.RepetitivePlan" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Resource" EntityType="Self.Resource" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RoleMenu" EntityType="Self.RoleMenu" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TWFLibrary" EntityType="Self.TWFLibrary" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TWFSteps" EntityType="Self.TWFSteps" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
-        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>

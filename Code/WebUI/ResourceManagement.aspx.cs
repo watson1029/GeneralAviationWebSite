@@ -8,8 +8,6 @@ using Model;
 using Untity;
 using DAL;
 using DAL.SystemManagement;
-using Model.EF;
-
 public partial class ResourceManagement : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
