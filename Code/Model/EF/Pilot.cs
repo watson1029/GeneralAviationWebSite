@@ -14,16 +14,6 @@ namespace Model.EF
     
     public partial class Pilot
     {
-        public string pilot1 { get; set; }
-        public string pilotcardNo { get; set; }
-        public System.DateTime pilotDT { get; set; }
-        public string phoneNo { get; set; }
-        public string licensesort { get; set; }
-        public string licenseNo { get; set; }
-        public string sign { get; set; }
-        public Nullable<byte> sex { get; set; }
-        public string companyName { get; set; }
-        public string licenseImg { get; set; }
         public int ID { get; set; }
         public string Pilots { get; set; }
         public string PilotCardNo { get; set; }

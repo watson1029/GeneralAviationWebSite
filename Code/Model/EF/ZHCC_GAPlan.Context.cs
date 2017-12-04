@@ -33,7 +33,6 @@ namespace Model.EF
         public virtual DbSet<FlightPlan> FlightPlan { get; set; }
         public virtual DbSet<FlightTask> FlightTask { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
-        public virtual DbSet<Pilot> Pilot { get; set; }
         public virtual DbSet<RepetitivePlan> RepetitivePlan { get; set; }
         public virtual DbSet<Resource> Resource { get; set; }
         public virtual DbSet<Role> Role { get; set; }
@@ -43,5 +42,7 @@ namespace Model.EF
         public virtual DbSet<UserInfo> UserInfo { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<Aircraft> Aircraft { get; set; }
+        public virtual DbSet<Pilot> Pilot { get; set; }
+        public virtual DbSet<LoginLog> LoginLog { get; set; }
     }
 }

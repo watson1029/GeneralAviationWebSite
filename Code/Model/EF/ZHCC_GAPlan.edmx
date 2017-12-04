@@ -161,14 +161,16 @@
           <Property Name="FlightType" Type="nchar" MaxLength="1" Nullable="false" />
           <Property Name="DefaultMapping" Type="bit" Nullable="false" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6013: 表/视图“ZHCC_GAPlan.dbo.LoginLog”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
         <EntityType Name="LoginLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="UserName" Type="nvarchar" MaxLength="20" />
           <Property Name="LoginTime" Type="datetime" />
           <Property Name="IPAddress" Type="varchar" MaxLength="50" />
-        </EntityType>-->
+        </EntityType>
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="ID" />
@@ -315,6 +317,7 @@
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightPlan" EntityType="Self.FlightPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightTask" EntityType="Self.FlightTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginLog" EntityType="Self.LoginLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pilot" EntityType="Self.Pilot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RepetitivePlan" EntityType="Self.RepetitivePlan" Schema="dbo" store:Type="Tables" />
@@ -339,7 +342,6 @@
           <EntitySet Name="FlightPlan" EntityType="ZHCC_GAPlanModel.FlightPlan" />
           <EntitySet Name="FlightTask" EntityType="ZHCC_GAPlanModel.FlightTask" />
           <EntitySet Name="Menu" EntityType="ZHCC_GAPlanModel.Menu" />
-          <EntitySet Name="Pilot" EntityType="ZHCC_GAPlanModel.Pilot" />
           <EntitySet Name="RepetitivePlan" EntityType="ZHCC_GAPlanModel.RepetitivePlan" />
           <EntitySet Name="Resource" EntityType="ZHCC_GAPlanModel.Resource" />
           <EntitySet Name="Role" EntityType="ZHCC_GAPlanModel.Role" />
@@ -349,6 +351,8 @@
           <EntitySet Name="UserInfo" EntityType="ZHCC_GAPlanModel.UserInfo" />
           <EntitySet Name="UserRole" EntityType="ZHCC_GAPlanModel.UserRole" />
           <EntitySet Name="Aircraft" EntityType="ZHCC_GAPlanModel.Aircraft" />
+          <EntitySet Name="Pilot" EntityType="ZHCC_GAPlanModel.Pilot" />
+          <EntitySet Name="LoginLog" EntityType="ZHCC_GAPlanModel.LoginLog" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -500,34 +504,6 @@
           <Property Name="MenuLevel" Type="Byte" Nullable="false" />
           <Property Name="MenuCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Pilot">
-          <Key>
-            <PropertyRef Name="pilot1" />
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="pilot1" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="pilotcardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pilotDT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="phoneNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="licensesort" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="licenseNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="sign" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="sex" Type="Byte" />
-          <Property Name="companyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="licenseImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Pilots" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="PilotCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PilotDT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="Licensesort" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LicenseNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Sign" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="Byte" />
-          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LicenseImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="RepetitivePlan">
           <Key>
             <PropertyRef Name="RepetPlanID" />
@@ -655,6 +631,33 @@
           <Property Name="AcfNo" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
           <Property Name="ASdate" Type="Int32" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Pilot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Pilots" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PilotCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PilotDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Licensesort" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sign" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="Byte" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="LoginLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoginTime" Type="DateTime" Precision="3" />
+          <Property Name="IPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -820,24 +823,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Pilot">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Pilot">
-              <MappingFragment StoreEntitySet="Pilot">
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="LicenseImg" ColumnName="LicenseImg" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="Sign" ColumnName="Sign" />
-                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
-                <ScalarProperty Name="Licensesort" ColumnName="Licensesort" />
-                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-                <ScalarProperty Name="PilotDT" ColumnName="PilotDT" />
-                <ScalarProperty Name="PilotCardNo" ColumnName="PilotCardNo" />
-                <ScalarProperty Name="Pilots" ColumnName="Pilots" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="RepetitivePlan">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.RepetitivePlan">
               <MappingFragment StoreEntitySet="RepetitivePlan">
@@ -970,6 +955,35 @@
                 <ScalarProperty Name="AcfClass" ColumnName="AcfClass" />
                 <ScalarProperty Name="AcfType" ColumnName="AcfType" />
                 <ScalarProperty Name="AircraftID" ColumnName="AircraftID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pilot">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Pilot">
+              <MappingFragment StoreEntitySet="Pilot">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LicenseImg" ColumnName="LicenseImg" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="Licensesort" ColumnName="Licensesort" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="PilotDT" ColumnName="PilotDT" />
+                <ScalarProperty Name="PilotCardNo" ColumnName="PilotCardNo" />
+                <ScalarProperty Name="Pilots" ColumnName="Pilots" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginLog">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.LoginLog">
+              <MappingFragment StoreEntitySet="LoginLog">
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
