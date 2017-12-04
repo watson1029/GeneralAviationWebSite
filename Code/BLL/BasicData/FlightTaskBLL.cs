@@ -39,5 +39,10 @@ namespace BLL.BasicData
             //参考
             return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.TaskCode == "1", m => m.TaskCode, true);
         }
+        public List<FlightTask> GetList()
+        {
+            return _dal.FindList(m => m.TaskCode, false);
+        }
+
     }
 }
