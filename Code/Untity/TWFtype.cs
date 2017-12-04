@@ -14,10 +14,14 @@ namespace Untity
         /// <summary>
         /// 长期飞行计划流程
         /// </summary>
-        RepetitivePlan,
+        RepetitivePlan=1,
         /// <summary>
         /// 当日飞行计划流程
         /// </summary>
-        CurrentPlan
+        CurrentPlan=2,
+        /// <summary>
+        /// 当日飞行计划流程
+        /// </summary>
+        FlightPlan = 3
     }
 }
