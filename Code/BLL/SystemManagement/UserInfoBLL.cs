@@ -16,19 +16,17 @@ namespace BLL.SystemManagement
         private UserInfoDAL userinfodal = new UserInfoDAL();
         private ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
 
-        public  bool Delete(string ids)
+
         public bool Delete(string ids)
         {
-            return userinfodal.BatchDelete(ids)>0;
+
             return userinfodal.BatchDelete(ids) > 0;
         }
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public  bool Add(UserInfo model)
         public bool Add(UserInfo model)
         {
-            return userinfodal.Add(model)>0;
             return userinfodal.Add(model) > 0;
         }
 
@@ -37,7 +35,6 @@ namespace BLL.SystemManagement
         /// </summary>
         public bool Update(UserInfo model)
         {
-            return userinfodal.Update(model)>0;
             return userinfodal.Update(model) > 0;
         }
 
@@ -47,13 +44,11 @@ namespace BLL.SystemManagement
             return userinfodal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
         }
 
-        public  UserInfo Get(int id)
         public UserInfo Get(int id)
         {
             return userinfodal.Find(u=>u.ID==id);
             return userinfodal.Find(u => u.ID == id);
         }
-        public  UserInfo Get(string userName)
         public UserInfo Get(string userName)
         {
             return userinfodal.Find(u => u.UserName == userName);
@@ -71,7 +66,6 @@ namespace BLL.SystemManagement
             if (userinfodal.IsAdmin(userID))
             {
                 //menuList = menudal.GetList("1=1");
-                menuList = menudal.FindList().ToList();
                 menuList = menudal.FindList(u=>u.ID,false).ToList();
                 if (menuList != null & menuList.Any())
                 {
@@ -101,7 +95,6 @@ namespace BLL.SystemManagement
             //管理员判断
             if (userinfodal.IsAdmin(userID))
             {
-                menuList = menudal.FindList().ToList();
                 menuList = menudal.FindList(u=>u.ID,true).ToList();
             }
             else
