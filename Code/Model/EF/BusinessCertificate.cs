@@ -26,5 +26,6 @@ namespace Model.EF
         public Nullable<int> DealLine { get; set; }
         public Nullable<System.DateTime> PresentationDate { get; set; }
         public string LicensedSeal { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }

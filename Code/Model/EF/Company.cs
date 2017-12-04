@@ -24,5 +24,6 @@ namespace Model.EF
         public string SITAAddress { get; set; }
         public string AFTNAddress { get; set; }
         public Nullable<int> ReferSourceID { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }

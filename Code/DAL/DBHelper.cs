@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
@@ -19,7 +18,6 @@ public class DBHelper<T> where T : class
     {
         return context.Set<T>().ToList().Contains(entity);
     }
-
     /// <summary>
     /// 新增单个实体
     /// </summary>

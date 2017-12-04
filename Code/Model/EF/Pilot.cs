@@ -24,5 +24,17 @@ namespace Model.EF
         public Nullable<byte> sex { get; set; }
         public string companyName { get; set; }
         public string licenseImg { get; set; }
+        public int ID { get; set; }
+        public string Pilots { get; set; }
+        public string PilotCardNo { get; set; }
+        public System.DateTime PilotDT { get; set; }
+        public string PhoneNo { get; set; }
+        public string Licensesort { get; set; }
+        public string LicenseNo { get; set; }
+        public string Sign { get; set; }
+        public Nullable<byte> Sex { get; set; }
+        public string CompanyName { get; set; }
+        public string LicenseImg { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }

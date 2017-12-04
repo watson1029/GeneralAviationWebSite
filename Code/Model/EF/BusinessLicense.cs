@@ -34,5 +34,6 @@ namespace Model.EF
         public string DelegateAddress { get; set; }
         public string DelegateTelePhone { get; set; }
         public string DelegateCardImg { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }
