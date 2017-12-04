@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" 
-    CodeFile="CInformation.aspx.cs" Inherits="BasicData_Quanlification_CInformation" %>
+    CodeFile="Company.aspx.cs" Inherits="BasicData_Quanlification_Company" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" Runat="server">
 </asp:Content>
@@ -23,7 +23,7 @@
     <%--添加 修改 start--%>
     <div id="edit" class="easyui-dialog" title="通航企业信息填写：" style="width: 500px; height: 350px;"
         modal="true" closed="true" buttons="#edit-button">
-        <form id="form_editci" name="form_editci" method="post" url="CInformation.aspx">
+        <form id="form_editci" name="form_editci" method="post" url="Company.aspx">
             <div>
                 <table class="table_editci">
                     <tr>
@@ -146,7 +146,7 @@
                 }
                 var json = $.param({ "id": uid, "action": "submit" }) + '&' + $('#form_edit').serialize();
 
-                $.post("CInformation.aspx", json, function (data) {
+                $.post("Company.aspx", json, function (data) {
                     $.messager.alert('提示', data.msg, 'info', function () {
                         if (data.isSuccess) {
                             $("#tab_list").datagrid("reload");
@@ -162,7 +162,7 @@
                 $("#pwdrow").hide();
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
 
-                $.post("CInformation.aspx", { "action": "queryone", "id": uid }, function (data) {
+                $.post("Company.aspx", { "action": "queryone", "id": uid }, function (data) {
                     $("#form_edit").form('load', data);
                 });
             },
@@ -181,7 +181,7 @@
                 }
                 $.messager.confirm('提示', '确认删除该条记录？', function (r) {
                     if (r) {
-                        $.post("CInformation.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
+                        $.post("Company.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
 
                             if (data.isSuccess) {
                                 $("#tab_list").datagrid("reload");

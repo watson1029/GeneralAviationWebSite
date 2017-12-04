@@ -1,8 +1,9 @@
 ﻿using DAL.BasicData;
-using Model.BasicData;
 using Model.EF;
 using System.Collections.Generic;
 using Untity;
+using System;
+
 namespace BLL.BasicData
 {
     public class AircraftBLL
@@ -35,6 +36,11 @@ namespace BLL.BasicData
         {
             //参考
             return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.AircraftID == 1, m => m.AircraftID, true);
+        }
+
+        public object GetList(int size, int page, string strWhere)
+        {
+            throw new NotImplementedException();
         }
     }
 }

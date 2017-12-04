@@ -1,18 +1,9 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using Untity.DB;
-using Untity;
-using Model.BasicData;
+﻿using Model.EF;
 
 namespace DAL.BasicData
 {
 
-    public class CBusinessDAL:DBHelper<CBusiness>
+    public class BusinessCertificateDAL : DBHelper<BusinessCertificate>
     {
 
         //private static SqlDbHelper dao = new SqlDbHelper();

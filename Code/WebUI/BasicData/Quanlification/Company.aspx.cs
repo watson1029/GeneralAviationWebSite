@@ -1,13 +1,15 @@
 ﻿using BLL.BasicData;
-using Model.BasicData;
+using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Text;
 using Untity;
 
-public partial class BasicData_Quanlification_CInformation : BasePage
+public partial class BasicData_Quanlification_Company : BasePage
 
 {
+
+    CompanyBLL bll = new CompanyBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.Form["action"] != null)
@@ -39,7 +41,7 @@ public partial class BasicData_Quanlification_CInformation : BasePage
             result.Msg = "删除失败！";
             if (Request.Form["cbx_select"] != null)
             {
-                if (CInformationBLL.Delete(Request.Form["cbx_select"].ToString()))
+                if (bll.Delete(Request.Form["cbx_select"].ToString())>0)
                 {
                     result.IsSuccess = true;
                     result.Msg = "删除成功！";
@@ -58,17 +60,17 @@ public partial class BasicData_Quanlification_CInformation : BasePage
             int? id = null;
             if (!string.IsNullOrEmpty(Request.Form["id"]))
             { id = Convert.ToInt32(Request.Form["id"]); }
-            var model = new CInformation()
+            var model = new Company()
             {
-                CompanyCode3 = int.Parse(Request.Form["CompanyCode3"]),
-                CompanyCode2 = int.Parse(Request.Form["CompanyCode2"]),
+                CompanyCode3 = Request.Form["CompanyCode3"],
+                CompanyCode2 = Request.Form["CompanyCode2"],
                 CompanyName = Request.Form["CompanyName"],
                 EnglishName = Request.Form["EnglishName"],
             };
             if (!id.HasValue)//新增
             {
                 model.CreateTime = DateTime.Now;
-                if (CInformationBLL.Add(model))
+                if (bll.Add(model)>0)
                 {
                     result.IsSuccess = true;
                     result.Msg = "增加成功！";
@@ -77,7 +79,7 @@ public partial class BasicData_Quanlification_CInformation : BasePage
             else//编辑
             {
                 model.ID = id.Value;
-                if (CInformationBLL.Update(model))
+                if (bll.Update(model)>0)
                 {
                     result.IsSuccess = true;
                     result.Msg = "更新成功！";
@@ -95,7 +97,7 @@ public partial class BasicData_Quanlification_CInformation : BasePage
         private void GetData()
         {
             var pilotid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-            var pilot = CInformationBLL.Get(pilotid);
+            var pilot = bll.Get(pilotid);
             var strJSON = JsonConvert.SerializeObject(pilot);
             Response.Clear();
             Response.Write(strJSON);
@@ -116,7 +118,7 @@ public partial class BasicData_Quanlification_CInformation : BasePage
             if (page < 1) return;
             string orderField = sort.Replace("JSON_", "");
             string strWhere = GetWhere();
-            var pageList = CInformationBLL.GetList(size, page, strWhere);
+            var pageList = bll.GetList(size, page, strWhere);
             //var vms = new List<UserInfo>();
             //if (pageList != null && pageList.TotalCount > 0)
             //{

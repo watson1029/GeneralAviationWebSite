@@ -1,13 +1,15 @@
 ﻿using BLL.BasicData;
-using Model.BasicData;
+using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Text;
 using Untity;
 
-public partial class BasicData_Quanlification_License : BasePage
+public partial class BasicData_Quanlification_BusinessCertificate : BasePage
 
 {
+    BusinessCertificateBLL bll = new BusinessCertificateBLL();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -39,7 +41,7 @@ public partial class BasicData_Quanlification_License : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (LicenseBLL.Delete(Request.Form["cbx_select"].ToString()))
+            if (bll.Delete(Request.Form["cbx_select"].ToString()))
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -58,28 +60,23 @@ public partial class BasicData_Quanlification_License : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var model = new License()
+        var model = new BusinessCertificate()
         {
-            CompanyCode3 = int.Parse(Request.Form["CompanyCode3"]),
-            RegisterTime = DateTime.Parse(Request.Form["LegalName"]),
-            RegisterAddress = Request.Form["JoinData"],
-            RegisteredCapital = int.Parse(Request.Form["LegalCard"]),
-            Dealline = DateTime.Parse(Request.Form["JoinAddress"]),
-            ContactPerson = Request.Form["LegalAddress"],
-            LegalPerson = Request.Form["Capital"],
-            LegalCardNo = int.Parse(Request.Form["LegalPhone"]),
-            LegalAddress = Request.Form["EffectiveData"],
-            LegalTelePhone = int.Parse(Request.Form["LegalConsignor"]),
-            LegalClientele = Request.Form["Contacts"],
-            DelegateName = Request.Form["ConsignorAddress"],
-            DelegateCardNo = int.Parse(Request.Form["DelegateCardNo"]),
-            DelegateAddress = Request.Form["DelegateAddress"],
-            DelegateTelePhone = int.Parse(Request.Form["DelegateTelePhone"]),
+            CompanyCode3 = Request.Form["CompanyCode3"],
+            LicenseNo = Request.Form["LicenseNo"],
+            BaseAirport = Request.Form["BaseAirport"],
+            ConpanyType = Request.Form["ConpanyType"],
+            RegisteredCapital = int.Parse(Request.Form["RegisteredCapital"]),
+            CapitalLimit = int.Parse(Request.Form["CapitalLimit"]),
+            Legalperson = Request.Form["Legalperson"],
+            ManageItemsScope = Request.Form["ManageItemsScope"],
+            DealLine = int.Parse (Request.Form["DealLine"]),
+            PresentationDate = DateTime.Parse(Request.Form["PresentationDate"]),
         };
         if (!id.HasValue)//新增
         {
             model.CreateTime = DateTime.Now;
-            if (LicenseBLL.Add(model))
+            if (bll.Add(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -88,7 +85,7 @@ public partial class BasicData_Quanlification_License : BasePage
         else//编辑
         {
             model.ID = id.Value;
-            if (LicenseBLL.Update(model))
+            if (bll.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -105,9 +102,9 @@ public partial class BasicData_Quanlification_License : BasePage
     /// </summary>
     private void GetData()
     {
-        var pilotid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var pilot = LicenseBLL.Get(pilotid);
-        var strJSON = JsonConvert.SerializeObject(pilot);
+        var bcertificateid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var bcertificate = bll.Get(bcertificateid);
+        var strJSON = JsonConvert.SerializeObject(bcertificate);
         Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -127,28 +124,8 @@ public partial class BasicData_Quanlification_License : BasePage
         if (page < 1) return;
         string orderField = sort.Replace("JSON_", "");
         string strWhere = GetWhere();
-        var pageList = LicenseBLL.GetList(size, page, strWhere);
-        //var vms = new List<UserInfo>();
-        //if (pageList != null && pageList.TotalCount > 0)
-        //{
-        //    vms.AddRange(pageList.Select(dto => new UserInfo
-        //    {
-        //        ID = dto.ID,
-        //        Password = dto.Password,
-        //        Status = dto.Status,
-        //        CreateTime = dto.CreateTime,
-        //        Phone = dto.Phone,
-        //        ContactPerson = dto.ContactPerson,
-        //        ContactPhone = dto.ContactPhone,
-        //        ContactEmail = dto.ContactEmail,
-        //        AreaName = dto.AreaName,
-        //        Deposit = IFPECBasicInfoFacade.GetDisp(dto.ECCode),
-        //        WillApproveStatus = IFPECDepositHistoryFacade.DepositWillApproveStatus(dto.ECCode)
-        //    }));
-
-        //}
+        var pageList = bll.GetList(size, page, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
-        //   strJSON= "{ \"rows\":[ { \"JSON_ID\":\"1\",\"JSON_UserName\":\"adads\",\"JSON_Password\":\"asdasdf\",\"JSON_Mobile\":\"sdfasdf\",\"JSON_Status\":\"0\",\"JSON_CreateTime\":\"2017-11-1\",\"JSON_IsGeneralAviation\":1,\"JSON_CompanyCode3\":\"222\"} ],\"total\":1}";
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -173,4 +150,3 @@ public partial class BasicData_Quanlification_License : BasePage
     }
 
 }
-

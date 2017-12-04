@@ -1,5 +1,6 @@
 ﻿using BLL.BasicData;
 using Model.BasicData;
+using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Text;
@@ -7,6 +8,7 @@ using Untity;
 
 public partial class BasicData_Pilot : BasePage
 {
+    PilotBLL bll = new PilotBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -38,7 +40,7 @@ public partial class BasicData_Pilot : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (PilotBLL.Delete(Request.Form["cbx_select"].ToString()))
+            if (bll.Delete(Request.Form["cbx_select"].ToString())>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -60,19 +62,19 @@ public partial class BasicData_Pilot : BasePage
         var model = new Pilot()
         {
             Pilots = Request.Form["Pilots"],
-            PilotCardNo = int.Parse(Request.Form["PilotCardNo"]),
+            PilotCardNo = Request.Form["PilotCardNo"],
             PilotDT = DateTime.Parse(Request.Form["Password"]),
-            PhoneNo = int.Parse(Request.Form["PhoneNo"]),
-            LicenseNo = int.Parse(Request.Form["LicenseNo"]),
-            Sign = byte.Parse(Request.Form["Sign"]),
-            Licensesort = byte.Parse(Request.Form["Licensesort"]),
-            CompanyName = byte.Parse(Request.Form["CompanyName"]),
+            PhoneNo = Request.Form["PhoneNo"],
+            LicenseNo = Request.Form["LicenseNo"],
+            Sign = Request.Form["Sign"],
+            Licensesort = Request.Form["Licensesort"],
+            CompanyName = Request.Form["CompanyName"],
             Sex = byte.Parse(Request.Form["Sex"] ?? "0"),
         };
         if (!id.HasValue)//新增
         {
             model.CreateTime = DateTime.Now;
-            if (PilotBLL.Add(model))
+            if (bll.Add(model)>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -81,7 +83,7 @@ public partial class BasicData_Pilot : BasePage
         else//编辑
         {
             model.ID = id.Value;
-            if (PilotBLL.Update(model))
+            if (bll.Update(model)>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -99,7 +101,7 @@ public partial class BasicData_Pilot : BasePage
     private void GetData()
     {
         var pilotid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var pilot = PilotBLL.Get(pilotid);
+        var pilot = bll.Get(pilotid);
         var strJSON = JsonConvert.SerializeObject(pilot);
         Response.Clear();
         Response.Write(strJSON);
@@ -120,7 +122,7 @@ public partial class BasicData_Pilot : BasePage
         if (page < 1) return;
         string orderField = sort.Replace("JSON_", "");
         string strWhere = GetWhere();
-        var pageList = PilotBLL.GetList(size, page, strWhere);
+        var pageList = bll.GetList(size, page, strWhere);
         //var vms = new List<UserInfo>(); 
         //if (pageList != null && pageList.TotalCount > 0)
         //{

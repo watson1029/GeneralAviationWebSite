@@ -1,5 +1,6 @@
 ﻿using BLL.BasicData;
 using Model.BasicData;
+using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Text;
@@ -7,6 +8,7 @@ using Untity;
 
 public partial class BasicData_Aircraft : BasePage
 {
+    AircraftBLL bll = new AircraftBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -38,7 +40,7 @@ public partial class BasicData_Aircraft : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (AircraftBLL.Delete(Request.Form["cbx_select"].ToString()))
+            if (bll.Delete(Request.Form["cbx_select"].ToString())>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -59,15 +61,15 @@ public partial class BasicData_Aircraft : BasePage
         { id = Convert.ToInt32(Request.Form["id"]); }
         var model = new Aircraft()
         {
-            AircraftID = Request.Form["AircraftID"],
+            AircraftID = int.Parse(Request.Form["AircraftID"]),
             FuelCapacity = int.Parse(Request.Form["FuelCapacity"]),
             AcfType = Request.Form["AcfType"],
             Range = int.Parse(Request.Form["Range"]),
-            AcfNo = Request.Form["AcfNo"],
+            AcfNo = Request.Form["AcfNo"], 
             ASdate = int.Parse(Request.Form["ASdate"]),
             AcfClass = Request.Form["AcfClass"],
             CruiseAltd = int.Parse(Request.Form["CruiseAltd"]),
-            Manufacturer = Request.Form["Manufacturer"],
+            Manufacture = Request.Form["Manufacturer"],
             CruiseSpeed = int.Parse(Request.Form["CruiseSpeed"]),
             WakeTurbulance = Request.Form["WakeTurbulance"],
             MaxSpeed = int.Parse(Request.Form["MaxSpeed"]),
@@ -77,7 +79,7 @@ public partial class BasicData_Aircraft : BasePage
         if (!id.HasValue)//新增
         {
             model.CreateTime = DateTime.Now;
-            if (AircraftBLL.Add(model))
+            if (bll.Add(model)>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -85,8 +87,8 @@ public partial class BasicData_Aircraft : BasePage
         }
         else//编辑
         {
-            model.ID = id.Value;
-            if (AircraftBLL.Update(model))
+            model.AircraftID = id.Value;
+            if (bll.Update(model)>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -104,7 +106,7 @@ public partial class BasicData_Aircraft : BasePage
     private void GetData()
     {
         var userid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var userinfo = AircraftBLL.Get(userid);
+        var userinfo = bll.Get(userid);
         var strJSON = JsonConvert.SerializeObject(userinfo);
         Response.Clear();
         Response.Write(strJSON);
@@ -125,7 +127,7 @@ public partial class BasicData_Aircraft : BasePage
         if (page < 1) return;
         string orderField = sort.Replace("JSON_", "");
         string strWhere = GetWhere();
-        var pageList = AircraftBLL.GetList(size, page, strWhere);
+        var pageList = bll.GetList(size, page, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";

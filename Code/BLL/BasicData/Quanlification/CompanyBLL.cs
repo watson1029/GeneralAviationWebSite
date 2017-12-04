@@ -1,12 +1,12 @@
 ﻿using DAL.BasicData;
-using Model.BasicData;
+using Model.EF;
 using System.Collections.Generic;
-using Untity;
 namespace BLL.BasicData
 {
-    public class CLicenceBLL
+    public class CompanyBLL
     {
-        private CLicenceDAL _dal = new CLicenceDAL();
+        private CompanyDAL _dal = new CompanyDAL();
+
         public int Delete(string ids)
         {
             return _dal.BatchDelete(ids);
@@ -14,25 +14,25 @@ namespace BLL.BasicData
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(CLicence model)
+        public int Add(Company model)
         {
             return _dal.Add(model);
         }
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public int Update(CLicence model)
+        public int Update(Company model)
         {
             return _dal.Update(model);
         }
-        public CLicence Get(int id)
+        public Company Get(int id)
         {
-            return _dal.Find(m => m.ID == id);
+            return _dal.Find(m => m.CompanyID == id);
         }
-        public List<CLicence> FindPagedList(int pageIndex, int pageSize, out int pageCount, out int rowCount, bool isAsc)
+        public List<Company> FindPagedList(int pageIndex, int pageSize, out int pageCount, out int rowCount, bool isAsc)
         {
             //参考
-            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.ID == 1, m => m.ID, true);
+            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.CompanyID == 1, m => m.CompanyID, true);
         }
     }
 }

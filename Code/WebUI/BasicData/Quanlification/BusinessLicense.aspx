@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="License.aspx.cs" Inherits="BasicData_Quanlification_License" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="BusinessLicense.aspx.cs" Inherits="BasicData_Quanlification_BusinessLicense" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" Runat="Server">
 </asp:Content>
@@ -247,7 +247,7 @@
                 }
                 var json = $.param({ "id": uid, "action": "submit" }) + '&' + $('#form_edit').serialize();
 
-                $.post("License.aspx", json, function (data) {
+                $.post("BusinessLicense.aspx", json, function (data) {
                     $.messager.alert('提示', data.msg, 'info', function () {
                         if (data.isSuccess) {
                             $("#tab_list").datagrid("reload");
@@ -263,7 +263,7 @@
                 $("#pwdrow").hide();
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
 
-                $.post("License.aspx", { "action": "queryone", "id": uid }, function (data) {
+                $.post("BusinessLicense.aspx", { "action": "queryone", "id": uid }, function (data) {
                     $("#form_edit").form('load', data);
                 });
             },
@@ -282,7 +282,7 @@
                 }
                 $.messager.confirm('提示', '确认删除该条记录？', function (r) {
                     if (r) {
-                        $.post("License.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
+                        $.post("BusinessLicense.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
 
                             if (data.isSuccess) {
                                 $("#tab_list").datagrid("reload");

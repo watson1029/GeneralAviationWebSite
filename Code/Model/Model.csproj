@@ -50,9 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicData\CBusiness.cs" />
-    <Compile Include="BasicData\CInformation.cs" />
-    <Compile Include="BasicData\CLicence.cs" />
     <Compile Include="EF\ActualSteps.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
@@ -75,9 +72,6 @@
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\FlightTask.cs">
-      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\LoginLog.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Menu.cs">
@@ -126,7 +120,6 @@
       <DependentUpon>ZHCC_GAPlan.edmx</DependentUpon>
     </Compile>
     <Compile Include="FlightPlan\WorkflowNodeInstance.cs" />
-    <Compile Include="FlightPlan\WorkflowPlan.cs" />
     <Compile Include="FlightPlan\WorkflowTemplate.cs" />
     <Compile Include="FlightPlan\WorkflowTplNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

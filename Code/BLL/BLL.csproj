@@ -45,11 +45,11 @@
   <ItemGroup>
     <Compile Include="BasicData\AircraftBLL.cs" />
     <Compile Include="BasicData\FlightTaskBLL.cs" />
+    <Compile Include="BasicData\Quanlification\BusinessCertificateBLL.cs" />
+    <Compile Include="BasicData\Quanlification\BusinessLicenseBLL.cs" />
     <Compile Include="FlightPlan\FlightPlanBLL.cs" />
     <Compile Include="BasicData\PilotBLL.cs" />
-    <Compile Include="BasicData\Quanlification\CBusinessBLL.cs" />
-    <Compile Include="BasicData\Quanlification\CInformationBLL.cs" />
-    <Compile Include="BasicData\Quanlification\CLicenceBLL.cs" />
+    <Compile Include="BasicData\Quanlification\CompanyBLL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanBLL.cs" />
     <Compile Include="FlightPlan\WorkflowTemplateBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
