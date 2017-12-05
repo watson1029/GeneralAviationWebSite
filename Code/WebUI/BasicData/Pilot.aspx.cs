@@ -1,9 +1,8 @@
 ﻿using BLL.BasicData;
-using Model.BasicData;
 using Model.EF;
 using Newtonsoft.Json;
 using System;
-using System.Text;
+using System.Linq.Expressions;
 using Untity;
 
 public partial class BasicData_Pilot : BasePage
@@ -119,31 +118,14 @@ public partial class BasicData_Pilot : BasePage
         int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
         string sort = Request.Form["sort"] ?? "";
         string order = Request.Form["order"] ?? "";
-        if (page < 1) return;
-        string orderField = sort.Replace("JSON_", "");
-        string strWhere = GetWhere();
-        var pageList = bll.GetList(size, page, strWhere);
-        //var vms = new List<UserInfo>(); 
-        //if (pageList != null && pageList.TotalCount > 0)
-        //{
-        //    vms.AddRange(pageList.Select(dto => new UserInfo
-        //    {
-        //        ID = dto.ID,
-        //        Password = dto.Password,
-        //        Status = dto.Status,
-        //        CreateTime = dto.CreateTime,
-        //        Phone = dto.Phone,
-        //        ContactPerson = dto.ContactPerson,
-        //        ContactPhone = dto.ContactPhone,
-        //        ContactEmail = dto.ContactEmail,
-        //        AreaName = dto.AreaName,
-        //        Deposit = IFPECBasicInfoFacade.GetDisp(dto.ECCode),
-        //        WillApproveStatus = IFPECDepositHistoryFacade.DepositWillApproveStatus(dto.ECCode)
-        //    }));
 
-        //}
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
-        //   strJSON= "{ \"rows\":[ { \"JSON_ID\":\"1\",\"JSON_UserName\":\"adads\",\"JSON_Password\":\"asdasdf\",\"JSON_Mobile\":\"sdfasdf\",\"JSON_Status\":\"0\",\"JSON_CreateTime\":\"2017-11-1\",\"JSON_IsGeneralAviation\":1,\"JSON_CompanyCode3\":\"222\"} ],\"total\":1}";
+        if (page < 1) return;
+        int pageCount = 0;
+        int rowCount = 0;
+        string orderField = sort.Replace("JSON_", "");
+        var strWhere = GetWhere();
+        var pageList = bll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -153,18 +135,20 @@ public partial class BasicData_Pilot : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private string GetWhere()
+    private Expression<Func<Pilot, bool>> GetWhere()
     {
-        StringBuilder sb = new StringBuilder("1=1");
+
+
+        Expression<Func<Pilot, bool>> predicate = PredicateBuilder.True<Pilot>();
+        predicate = predicate.And(m => 1 == 1);
+        //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            predicate = u => u.ID == int.Parse(Request.Form["search_value"]);
+
+            //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
-        else
-        {
-            sb.AppendFormat("");
-        }
-        return sb.ToString();
+        return predicate;
     }
 
 }

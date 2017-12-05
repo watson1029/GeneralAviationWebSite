@@ -2,6 +2,7 @@
 using Model.EF;
 using Newtonsoft.Json;
 using System;
+using System.Linq.Expressions;
 using System.Text;
 using Untity;
 
@@ -41,7 +42,7 @@ public partial class BasicData_Quanlification_BusinessCertificate : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (bll.Delete(Request.Form["cbx_select"].ToString()))
+            if (bll.Delete(Request.Form["cbx_select"].ToString())>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -76,7 +77,7 @@ public partial class BasicData_Quanlification_BusinessCertificate : BasePage
         if (!id.HasValue)//新增
         {
             model.CreateTime = DateTime.Now;
-            if (bll.Add(model))
+            if (bll.Add(model)>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -85,7 +86,7 @@ public partial class BasicData_Quanlification_BusinessCertificate : BasePage
         else//编辑
         {
             model.ID = id.Value;
-            if (bll.Update(model))
+            if (bll.Update(model)>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -121,11 +122,14 @@ public partial class BasicData_Quanlification_BusinessCertificate : BasePage
         int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
         string sort = Request.Form["sort"] ?? "";
         string order = Request.Form["order"] ?? "";
+
         if (page < 1) return;
+        int pageCount = 0;
+        int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
-        string strWhere = GetWhere();
-        var pageList = bll.GetList(size, page, strWhere);
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
+        var strWhere = GetWhere();
+        var pageList = bll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -135,18 +139,23 @@ public partial class BasicData_Quanlification_BusinessCertificate : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private string GetWhere()
+
+
+
+    private Expression<Func<BusinessCertificate, bool>> GetWhere()
     {
-        StringBuilder sb = new StringBuilder("1=1");
+
+
+        Expression<Func<BusinessCertificate, bool>> predicate = PredicateBuilder.True<BusinessCertificate>();
+        predicate = predicate.And(m => 1 == 1);
+        //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            predicate = u => u.ID == int.Parse(Request.Form["search_value"]);
+
+            //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
-        else
-        {
-            sb.AppendFormat("");
-        }
-        return sb.ToString();
+        return predicate;
     }
 
 }

@@ -55,6 +55,7 @@
     <Compile Include="BasicData\Quanlification\CompanyBLL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanBLL.cs" />
     <Compile Include="FlightPlan\WorkflowTemplateBLL.cs" />
+    <Compile Include="Log\LoginLogBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManagement\MenuBLL.cs" />
     <Compile Include="SystemManagement\RoleBLL.cs" />
