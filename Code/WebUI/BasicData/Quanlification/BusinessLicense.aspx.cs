@@ -2,6 +2,7 @@
 using Model.EF;
 using Newtonsoft.Json;
 using System;
+using System.Linq.Expressions;
 using System.Text;
 using Untity;
 
@@ -40,7 +41,7 @@ public partial class BasicData_Quanlification_BusinessLicense : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (bll.Delete(Request.Form["cbx_select"].ToString()))
+            if (bll.Delete(Request.Form["cbx_select"].ToString())>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -80,7 +81,7 @@ public partial class BasicData_Quanlification_BusinessLicense : BasePage
         if (!id.HasValue)//新增
         {
             model.CreateTime = DateTime.Now;
-            if (bll.Add(model))
+            if (bll.Add(model)>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -89,7 +90,7 @@ public partial class BasicData_Quanlification_BusinessLicense : BasePage
         else//编辑
         {
             model.ID = id.Value;
-            if (bll.Update(model))
+            if (bll.Update(model)>0)
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -106,9 +107,9 @@ public partial class BasicData_Quanlification_BusinessLicense : BasePage
     /// </summary>
     private void GetData()
     {
-        var pilotid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var pilot = bll.Get(pilotid);
-        var strJSON = JsonConvert.SerializeObject(pilot);
+        var blicenseid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var blicense = bll.Get(blicenseid);
+        var strJSON = JsonConvert.SerializeObject(blicense);
         Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -125,31 +126,14 @@ public partial class BasicData_Quanlification_BusinessLicense : BasePage
         int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
         string sort = Request.Form["sort"] ?? "";
         string order = Request.Form["order"] ?? "";
-        if (page < 1) return;
-        string orderField = sort.Replace("JSON_", "");
-        string strWhere = GetWhere();
-        var pageList = bll.GetList(size, page, strWhere);
-        //var vms = new List<UserInfo>();
-        //if (pageList != null && pageList.TotalCount > 0)
-        //{
-        //    vms.AddRange(pageList.Select(dto => new UserInfo
-        //    {
-        //        ID = dto.ID,
-        //        Password = dto.Password,
-        //        Status = dto.Status,
-        //        CreateTime = dto.CreateTime,
-        //        Phone = dto.Phone,
-        //        ContactPerson = dto.ContactPerson,
-        //        ContactPhone = dto.ContactPhone,
-        //        ContactEmail = dto.ContactEmail,
-        //        AreaName = dto.AreaName,
-        //        Deposit = IFPECBasicInfoFacade.GetDisp(dto.ECCode),
-        //        WillApproveStatus = IFPECDepositHistoryFacade.DepositWillApproveStatus(dto.ECCode)
-        //    }));
 
-        //}
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
-        //   strJSON= "{ \"rows\":[ { \"JSON_ID\":\"1\",\"JSON_UserName\":\"adads\",\"JSON_Password\":\"asdasdf\",\"JSON_Mobile\":\"sdfasdf\",\"JSON_Status\":\"0\",\"JSON_CreateTime\":\"2017-11-1\",\"JSON_IsGeneralAviation\":1,\"JSON_CompanyCode3\":\"222\"} ],\"total\":1}";
+        if (page < 1) return;
+        int pageCount = 0;
+        int rowCount = 0;
+        string orderField = sort.Replace("JSON_", "");
+        var strWhere = GetWhere();
+        var pageList = bll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -159,18 +143,23 @@ public partial class BasicData_Quanlification_BusinessLicense : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private string GetWhere()
+
+
+
+    private Expression<Func<BusinessLicense, bool>> GetWhere()
     {
-        StringBuilder sb = new StringBuilder("1=1");
+
+
+        Expression<Func<BusinessLicense, bool>> predicate = PredicateBuilder.True<BusinessLicense>();
+        predicate = predicate.And(m => 1 == 1);
+        //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            predicate = u => u.ID == int.Parse(Request.Form["search_value"]);
+
+            //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
-        else
-        {
-            sb.AppendFormat("");
-        }
-        return sb.ToString();
+        return predicate;
     }
 
 }
