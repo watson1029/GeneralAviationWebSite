@@ -7,7 +7,6 @@ using System.Web.UI.WebControls;
 using DAL.FlightPlan;
 using Model.EF;
 using DAL.SystemManagement;
-using BLL.SystemManagement;
 using System.Linq.Expressions;
 using DAL;
 using Untity;
@@ -17,8 +16,14 @@ public partial class Test : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         UserInfoDAL _userInfoDAL = new UserInfoDAL();
-        if (_userInfoDAL.Delete(new UserInfo() { ID = 25 }) == 1)
-            TextBox1.Text = "DeleteSuccess";
+
+        UserInfo user = new UserInfo() { ID = 29, UserName = "liujunbo", Password = "E10ADC3949BA59ABBE56E057F20F883E",
+            Mobile = "15913147315", Status = 0, CompanyCode3 = "TET", CreateTime = DateTime.Now, IsGeneralAviation = 1 };
+
+        if (_userInfoDAL.Update(user)==1)
+            TextBox1.Text = "UpdateSuccess";
+        else
+            TextBox1.Text = "NOT Exist";        
 
         int pCount, rCount;
 
@@ -26,7 +31,7 @@ public partial class Test : System.Web.UI.Page
         predicate = predicate.And(m => m.CreateTime < DateTime.Now);
         predicate = predicate.And(m => m.ID > 10);
         List<Model.EF.UserInfo> list0 = _userInfoDAL.FindPagedList(1, 5, out pCount, out rCount, predicate, m => m.ID, true);
-        TextBox1.Text = list0.Count.ToString();
+        //TextBox1.Text = list0.Count.ToString();
 
         //Expression<Func<UserInfo, bool>> exp1 = m => m.CreateTime < DateTime.Now;
         //Expression<Func<UserInfo, bool>> exp2 = m => m.ID >10;
