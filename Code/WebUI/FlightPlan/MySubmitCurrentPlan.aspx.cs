@@ -2,9 +2,11 @@
 using System;
 using System.Text;
 using Untity;
+using System.Linq.Expressions;
 
 public partial class FlightPlan_MySubmitCurrentPlan :BasePage
 {
+    private CurrentPlanBLL currPlanBll = new CurrentPlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -22,8 +24,6 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
     }
 
 
-
-
     /// <summary>
     /// 查询数据
     /// </summary>
@@ -34,10 +34,12 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
         string sort = Request.Form["sort"] ?? "";
         string order = Request.Form["order"] ?? "";
         if (page < 1) return;
+        int pageCount = 0;
+        int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
-        string strWhere = GetWhere();
-        var pageList = RepetitivePlanBLL.GetMyRepetitivePlanList(size, page, strWhere);
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
+        var strWhere = GetWhere();
+        var pageList = currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -47,18 +49,17 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private string GetWhere()
+    private Expression<Func<Model.EF.FlightPlan, bool>> GetWhere()
     {
-        StringBuilder sb = new StringBuilder("1=1");
-        sb.AppendFormat(" and Creator={0} and PlanState!='0'", User.ID);
+        Expression<Func<Model.EF.FlightPlan, bool>> predicate = PredicateBuilder.True<Model.EF.FlightPlan>();
+        predicate = predicate.And(m => m.PlanState == "0");
+        predicate = predicate.And(m => m.Creator == User.ID);
+
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            predicate = u => u.PlanCode == Request.Form["search_value"];
         }
-        else
-        {
-            sb.AppendFormat("");
-        }
-        return sb.ToString();
+
+        return predicate;
     }
 }
