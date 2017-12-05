@@ -24,8 +24,11 @@
                     text: '保存',
                     iconCls: 'icon-ok',
                     handler: function () {
-                        //alert('ok');
-                        submitForm();
+                        if (id ==0) {
+                            add();
+                        } else {
+                            update();
+                        }
                     }
                 }, {
                     text: '重置',
@@ -40,7 +43,6 @@
                     text: '删除',
                     iconCls: 'icon-ok',
                     handler: function () {
-                        //alert(id);
                         $.ajax({
                             url: '/Handler.ashx?action=delete&id=' + id,
                             async: false,
@@ -61,14 +63,17 @@
             });
             close1();
         });
-        function open1() {
+        function open1(id) {
+            this.id = id;
+            if (id == 0) {
+                clearForm();
+            }
             $('#dialog').dialog('open');
         }
         function close1() {
             $('#dialog').dialog('close');
         }
         function get() {
-            //alert($('#type').);
             $('#dg').datagrid({
                 url: "/Handler.ashx?action=get",
                 queryParams: { type: +$('#type option:selected').val(), status: $('#status option:selected').val() }
@@ -91,17 +96,17 @@
                 <option value="4">应急救援相关程序</option>
             </select><br />
             <a class="easyui-linkbutton" id="bt_query" onclick="get();">查询</a>
-            <a class="easyui-linkbutton" id="bt_add" onclick="open1();">新增</a>
+            <a class="easyui-linkbutton" id="bt_add" onclick="open1(0);">新增</a>
         </div>
         <div class="easyui-panel" title="资料列表">
             <div style="margin: 20px 0;"></div>
-            <table id="dg" title="通航资料" style="width: 1288px; height: 350px" data-options="pageSize:10,rownumbers:true,singleSelect:true,pagination:true,method:'post'">
+            <table id="dg" title="通航资料" style="width: 1308px; height: 350px" data-options="pageSize:10,rownumbers:true,singleSelect:true,pagination:true,method:'post'">
                 <thead>
                     <tr>
                         <th data-options="field:'Created',width:155,align:'center',formatter:formatDate">时间</th>
                         <th data-options="field:'Title',width:350,align:'center'">标题</th>
                         <th data-options="field:'DealUser',width:100,align:'center'">处理人</th>
-                        <th data-options="field:'ResourceType',width:200,align:'center',formatter:formatType">资料类别</th>
+                        <th data-options="field:'ResourceType',width:220,align:'center',formatter:formatType">资料类别</th>
                         <th data-options="field:'UsefulTime',width:150,align:'center'">有效时间</th>
                         <th data-options="field:'FilePath',width:100,align:'center',formatter:formatFile">附件</th>
                         <th data-options="field:'Status',width:100,align:'center',formatter:formatStatus">状态</th>
@@ -148,7 +153,7 @@
                 $('#dealuser').textbox('setValue', data.DealUser);
                 $('#resourcetype').combobox('select', data.ResourceType);
                 $('#usefultime').textbox('setValue', data.UsefulTime);
-                open1();
+                open1(id);
             }
             function formatOperation(val, row, rowIndex) {
                 var btn = "<a onclick='showupdate(" + val + "," + rowIndex + ");' href='javascript:void();' style='margin:5px;'>修改</a>"
@@ -173,7 +178,7 @@
                 var btn = "<a href='/Handler.ashx?action=download&filepath=" + val + "'>下载</a>";
                 return btn;
             }
-            function submitForm() {
+            function add() {
                 $('#ff').form('submit', {
                     url: 'Handler.ashx?action=add',
                     method: 'POST',
@@ -187,6 +192,21 @@
                     }
                 });
             }
+            function update() {
+                $('#ff').form('submit', {
+                    url: 'Handler.ashx?action=update&id='+id,
+                    method: 'POST',
+                    success: function (result) {
+
+                        clearForm();
+                        close1();
+                        $.messager.show({
+                            title: result
+                        });
+                    }
+                });
+            }
+
             function clearForm() {
                 $('#ff').form('clear');
             }

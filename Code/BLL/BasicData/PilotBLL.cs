@@ -4,6 +4,8 @@ using Model.EF;
 using System;
 using System.Collections.Generic;
 using Untity;
+using System.Linq.Expressions;
+
 namespace BLL.BasicData
 {
     public class PilotBLL
@@ -29,12 +31,13 @@ namespace BLL.BasicData
         }
         public Pilot Get(int id)
         {
-            return _dal.Find(m => m.pilotcardNo == id.ToString());
+            return _dal.Find(m => m.PilotCardNo == id.ToString());
         }
-        public List<Pilot> FindPagedList(int pageIndex, int pageSize, out int pageCount, out int rowCount, bool isAsc)
+        public List<Pilot> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<Pilot, bool>> where)
         {
             //参考
-            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.pilotcardNo == "1", m => m.pilotcardNo, true);
+            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.PilotCardNo == "1", m => m.PilotCardNo, true);
+            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
         }
     }
 }
