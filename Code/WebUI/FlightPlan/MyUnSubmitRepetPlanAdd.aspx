@@ -3,95 +3,87 @@
         <table class="table_edit">
 
             <tr>
-                <td class="tdal">任务类型：
-                </td>
-                <td class="tdar">
+                <th>任务类型：
+                </th>
+                <td>
                     <input id="FlightType" name="FlightType" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
                         required="true" class="easyui-combobox" />
                 </td>
-
-            </tr>
-            <tr>
-                <td class="tdal">航空器类型：
-                </td>
-                <td class="tdar">
+  <th>航空器类型：
+                </th>
+                <td>
                     <%--  <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" />--%>
                     <input id="AircraftType" name="AircraftType" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
                         required="true" class="easyui-combobox" />
                 </td>
+            </tr>
+            <tr>
+              
 
             </tr>
             <tr>
-                <td class="tdal">航线走向和飞行高度：
-                </td>
-                <td class="tdar">
+                <th>航线走向和飞行高度：
+                </th>
+                <td>
                     <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30" type="text" required="true" class="easyui-textbox" />
                 </td>
-
-            </tr>
-
-            <tr>
-                <td class="tdal">航空器呼号：
-                </td>
-                <td class="tdar">
+  <th>航空器呼号：
+                </th>
+                <td>
                     <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-textbox" />
                 </td>
+            </tr>
+
+            <tr>
+              
 
             </tr>
             <tr>
-                <td class="tdal">起飞机场：
-                </td>
-                <td class="tdar">
+                <th>起飞机场：
+                </th>
+                <td>
                     <input id="ADEP" name="ADEP" maxlength="30" type="text" required="true" class="easyui-textbox" />
                 </td>
-
-            </tr>
-            <tr>
-                <td class="tdal">降落机场：
-                </td>
-                <td class="tdar">
+ <th>降落机场：
+                </th>
+                <td>
                     <input id="ADES" name="ADES" maxlength="30" type="text" required="true" class="easyui-textbox" />
                 </td>
-
             </tr>
+           
             <tr>
-                <td class="tdal">预计开始日期：
-                </td>
-                <td class="tdar">
+                <th>预计开始日期：
+                </th>
+                <td>
                     <input id="StartDate" name="StartDate" style="width: 200px" type="text" required="true" class="easyui-datebox" />
                 </td>
-
-            </tr>
-            <tr>
-                <td class="tdal">预计结束日期：
-                </td>
-                <td class="tdar">
+                <th>预计结束日期：
+                </th>
+                <td>
                     <input id="EndDate" name="EndDate" style="width: 200px" type="text" required="true" class="easyui-datebox" validtype="md['#StartDate']" />
                 </td>
-
             </tr>
+
             <tr>
                 <td class="tdal">起飞时刻：
                 </td>
                 <td class="tdar">
                     <input id="SOBT" name="SOBT" style="width: 200px" type="text" required="true" class="easyui-timespinner" />
                 </td>
-
-            </tr>
-            <tr>
-                <td class="tdal">降落时刻：
+<td class="tdal">降落时刻：
                 </td>
                 <td class="tdar">
                     <input id="SIBT" name="SIBT" style="width: 200px" type="text" required="true" class="easyui-timespinner" />
                 </td>
 
             </tr>
+
             <tr>
-                <td class="tdal">批件：
-                </td>
-                <td class="tdar">
+                <th>批件：
+                </th>
+                <td>
 
                     <input type="hidden" name="AttchFilesInfo" id="AttchFilesInfo" />
                     <input type="file" id="AttchFiles" name="AttchFiles" />
@@ -102,23 +94,23 @@
 
             </tr>
             <tr>
-                <td class="tdal">周执行计划：
-                </td>
-                <td class="tdar">
-                    <input id="d1" type="checkbox" name="WeekSchedule" value="1" />星期一
-                             <input id="d2" type="checkbox" name="WeekSchedule" value="2" />星期二
-                             <input id="d3" type="checkbox" name="WeekSchedule" value="3" />星期三
-                             <input id="d4" type="checkbox" name="WeekSchedule" value="4" />星期四
-                             <input id="d5" type="checkbox" name="WeekSchedule" value="5" />星期五
-                             <input id="d6" type="checkbox" name="WeekSchedule" value="6" />星期六
-                             <input id="d7" type="checkbox" name="WeekSchedule" value="7" />星期七
+                <th>周执行计划：
+                </th>
+                <td  colspan="3">
+                    <input id="d1" type="checkbox" name="WeekSchedule" value="1" style="width:20px"/>星期一
+                             <input id="d2" type="checkbox" name="WeekSchedule" value="2" style="width:20px"/>星期二
+                             <input id="d3" type="checkbox" name="WeekSchedule" value="3" style="width:20px"/>星期三
+                             <input id="d4" type="checkbox" name="WeekSchedule" value="4" style="width:20px"/>星期四
+                             <input id="d5" type="checkbox" name="WeekSchedule" value="5" style="width:20px"/>星期五
+                             <input id="d6" type="checkbox" name="WeekSchedule" value="6" style="width:20px"/>星期六
+                             <input id="d7" type="checkbox" name="WeekSchedule" value="7" style="width:20px"/>星期七
                 </td>
 
             </tr>
             <tr>
-                <td class="tdal">其他需要说明的事项：
-                </td>
-                <td class="tdar">
+                <th>其他需要说明的事项：
+                </th>
+                <td colspan="3">
                     <input id="Remark" name="Remark" maxlength="200" style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                 </td>
 
