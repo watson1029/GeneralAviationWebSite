@@ -78,20 +78,10 @@
                           }
                       },
                       {
-                          title: '起飞时刻', field: 'SOBT', width: 100, formatter: function (value, rec, index) {
-
-                              var timesstamp = new Date(value);
-                              return timesstamp.toLocaleTimeString();
-
-                          }
+                          title: '起飞时刻', field: 'SOBT', width: 100
                       },
                       {
-                          title: '降落时刻', field: 'SIBT', width: 100, formatter: function (value, rec, index) {
-
-                              var timesstamp = new Date(value);
-                              return timesstamp.toLocaleTimeString();
-
-                          }
+                          title: '降落时刻', field: 'SIBT', width: 100
                       },
                       { title: '起飞机场', field: 'ADEP', width: 100 },
                       { title: '降落机场', field: 'ADES', width: 100 },
@@ -99,7 +89,7 @@
                       {
                           title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
                               var array = [];
-                              $.each(value.toCharArray(), function (i, n) {
+                              $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
 
                                   array.push("星期" + n);
                               });
@@ -110,7 +100,7 @@
                        { title: '创建人', field: 'CreatorName', width: 60 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
-                      { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 100 },
+                      { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == "end" ? '已结束' : value+'审核中' }, width: 100 },
                   ]],
                   toolbar: "#tab_toolbar",
                   queryParams: { "action": "query" },

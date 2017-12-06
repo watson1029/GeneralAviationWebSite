@@ -36,5 +36,9 @@ namespace BLL.BasicData
         {
             return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.CompanyID, true);
         }
+        public List<Company> GetList()
+        {
+            return _dal.FindList(m => m.CompanyID, false);
+        }
     }
 }

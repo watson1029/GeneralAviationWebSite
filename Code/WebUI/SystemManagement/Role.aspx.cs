@@ -70,15 +70,16 @@ public partial class SystemManage_Role : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var model = new Role()
+        Role model = null;
+        if (!id.HasValue)//新增
+        {  
+             model = new Role()
         {
             RoleName = Request.Form["RoleName"],
             Description = Request.Form["Description"],
-            IsAdmin = (Request.Form["IsAdmin"].ToString() == "1") ? true : false
+            IsAdmin = (Request.Form["IsAdmin"].ToString() == "1") ? true : false,
+            CreateTime = DateTime.Now
         };
-        if (!id.HasValue)//新增
-        {
-            model.CreateTime = DateTime.Now;
             if (bll.Add(model))
             {
                 result.IsSuccess = true;
@@ -87,11 +88,18 @@ public partial class SystemManage_Role : BasePage
         }
         else//编辑
         {
-            model.ID = id.Value;
+            model = bll.Get(id.Value);
+            if (model != null)
+            {
+                model.RoleName = Request.Form["RoleName"];
+                model.Description = Request.Form["Description"];
+                model.IsAdmin = (Request.Form["IsAdmin"].ToString() == "1") ? true : false;
+         
             if (bll.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
+            } 
             }
         }
         Response.Clear();
@@ -170,16 +178,15 @@ public partial class SystemManage_Role : BasePage
     /// <returns></returns>
     private Expression<Func<Role, bool>> GetWhere()
     {
-
-        Expression<Func<Role, bool>> exp = null;
-        //   StringBuilder sb = new StringBuilder("1=1");
+        Expression<Func<Role, bool>> predicate = PredicateBuilder.True<Role>();
+        predicate = predicate.And(m => 1 == 1);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            exp = u => u.RoleName == Request.Form["search_value"];
+            predicate = u => u.RoleName == Request.Form["search_value"];
 
             //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
-        return exp;
+        return predicate;
     }
 
 }

@@ -9,9 +9,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
-
+using Model.EF;
+using System.Linq.Expressions;
+using System.IO;
 public partial class FlightPlan_MyAuditRepetPlan : BasePage
 {
+    RepetitivePlanBLL bll = new RepetitivePlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -41,15 +44,17 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
     /// </summary>
     private void QueryData()
     {
-        int page = Request.Form["page"] != null ? Convert.ToInt32(Request.Form["page"]) : 0;
-        int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
-        string sort = Request.Form["sort"] ?? "";
-        string order = Request.Form["order"] ?? "";
+        int page = Convert.ToInt32(Request.Form["page"] ?? "0");
+        int size = Convert.ToInt32(Request.Form["rows"] ?? "0");
+       // string sort = Request.Form["sort"] ?? "";
+       // string order = Request.Form["order"] ?? "";
         if (page < 1) return;
-        string orderField = sort.Replace("JSON_", "");
-        string strWhere = GetWhere();
-        var pageList = RepetitivePlanBLL.GetMyRepetitivePlanList(size, page, strWhere);
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
+        int pageCount = 0;
+        int rowCount = 0;
+       // string orderField = sort.Replace("JSON_", "");
+        var strWhere = GetWhere();
+        var pageList = bll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -59,19 +64,19 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private string GetWhere()
+    /// 
+    private Expression<Func<RepetitivePlan, bool>> GetWhere()
     {
-        StringBuilder sb = new StringBuilder("1=1");
-        sb.AppendFormat(" and ActorID={0}", User.ID);
+
+        Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
+        predicate = predicate.And(m => m.ActorID == User.ID);
+
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
         }
-        else
-        {
-            sb.AppendFormat("");
-        }
-        return sb.ToString();
+
+        return predicate;
     }
     /// <summary>
     /// 获取指定ID的数据
@@ -79,7 +84,7 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
     private void GetData()
     {
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var plan = RepetitivePlanBLL.Get(planid);
+        var plan = bll.Get(planid);
         var strJSON = JsonConvert.SerializeObject(plan);
         Response.Clear();
         Response.Write(strJSON);
@@ -94,10 +99,10 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
         if (Request.Form["Auditresult"] == "0")
         {
-            WorkflowNodeInstanceDAL.Submit(planid, Request.Form["AuditComment"] ?? "");
+            WorkflowNodeInstanceDAL.Submit(planid, Request.Form["AuditComment"] ?? "",WorkflowNodeInstanceDAL.UpdateRepetPlan);
         }
         else {
-            WorkflowNodeInstanceDAL.Terminate(planid, Request.Form["AuditComment"] ?? "");
+            WorkflowNodeInstanceDAL.Terminate(planid, Request.Form["AuditComment"] ?? "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
         }
         result.IsSuccess = true;
         result.Msg = "提交成功！";
@@ -109,5 +114,18 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
 
 
     }
-
+    private void DownlodFile()
+    {
+        string fileName = "";
+        string filePath = Server.MapPath("~/");
+        FileStream fs = new FileStream(filePath,FileMode.Open);
+        byte[] bytes = new byte[(int)fs.Length];
+        fs.Read(bytes,0,bytes.Length);
+        fs.Close();
+        Response.ContentType = "application/octet-stream";
+        Response.AddHeader("Content-Disposition","attachment;filename="+HttpUtility.UrlEncode(fileName,System.Text.Encoding.UTF8));
+        Response.BinaryWrite(bytes);
+        Response.Flush();
+        Response.End();
+    }
 }

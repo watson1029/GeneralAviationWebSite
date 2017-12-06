@@ -19,11 +19,11 @@ namespace Model.EF
         public string CompanyCode2 { get; set; }
         public string EnglishName { get; set; }
         public string CompanyName { get; set; }
-        public Nullable<bool> DomesticFlag { get; set; }
-        public string Surname { get; set; }
-        public string SITAAddress { get; set; }
-        public string AFTNAddress { get; set; }
-        public Nullable<int> ReferSourceID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
+        public string Summary { get; set; }
+        public string SummaryCode { get; set; }
+        public Nullable<int> Catalog { get; set; }
+        public Nullable<int> ActorID { get; set; }
+        public string State { get; set; }
     }
 }

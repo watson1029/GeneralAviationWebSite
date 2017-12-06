@@ -80,7 +80,7 @@ namespace BLL.FlightPlan
         {
             try
             {
-                WorkflowNodeInstanceDAL.Terminate(planid, comment, workPlan => { return 0; });
+                WorkflowNodeInstanceDAL.Terminate(planid, comment, workPlan => { });
                 return true;
             }
             catch(Exception ex)

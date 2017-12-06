@@ -140,11 +140,31 @@ a {
     width: 80px;
     height: 30px;
 }
-.table_edit {
-    border-collapse:separate;
-    border-spacing:5px;
-}
-.easyui-linkbutton {
-width:70px;
 
+.table_edit {
+    border-collapse: separate;
+    border-spacing: 10px;
 }
+
+.easyui-linkbutton {
+    width: 70px;
+}
+
+.table_edit tr {
+    line-height: 25px;
+}
+ .table_edit tr th {
+        width: 120px;
+    }
+
+    .table_edit tr td {
+        width: 180px;
+    }
+
+        .table_edit tr td input {
+            width: 180px;
+        }
+
+    .table_edit tr th, .table_edit tr td {
+        font-size: 14px;
+    }

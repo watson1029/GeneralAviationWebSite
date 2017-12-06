@@ -35,11 +35,11 @@ namespace Model.EF
         public string ADEP { get; set; }
         public string ADES { get; set; }
         public string RadarCode { get; set; }
-        public int AircraftNum { get; set; }
+        public Nullable<int> AircraftNum { get; set; }
         public string Pilot { get; set; }
         public string ContactWay { get; set; }
         public string WeatherCondition { get; set; }
-        public int AircrewGroupNum { get; set; }
+        public Nullable<int> AircrewGroupNum { get; set; }
         public string CreatorName { get; set; }
         public string CallSign { get; set; }
         public Nullable<System.DateTime> ActualStartTime { get; set; }
