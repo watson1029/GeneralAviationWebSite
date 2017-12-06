@@ -1,7 +1,9 @@
 ﻿using DAL.BasicData;
+using Model.BasicData;
 using Model.EF;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using Untity;
 using System.Linq.Expressions;
 
 namespace BLL.BasicData
@@ -29,10 +31,12 @@ namespace BLL.BasicData
         }
         public Pilot Get(int id)
         {
-            return _dal.Find(m => m.ID == id);
+            return _dal.Find(m => m.PilotCardNo == id.ToString());
         }
         public List<Pilot> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<Pilot, bool>> where)
         {
+            //参考
+            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.PilotCardNo == "1", m => m.PilotCardNo, true);
             return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
         }
     }

@@ -5,6 +5,11 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
+   <%-- <div class="gridsearch">
+        <label>用户名：</label>
+        <input type="text" id="s_UserName" name="s_UserName" class="easyui-validatebox" />
+        <input type="button" class="searchbotton easyui-linkbutton " style="margin-left:60px" iconcls="icon-search" value="查询" onclick="Main.FunSearchData()" />
+    </div>--%>
     <%--列表 start--%>
         <table id="tab_list">
         </table>
@@ -111,13 +116,13 @@
                         <td class="tdal">周执行计划：
                         </td>
                         <td class="tdar">
-                             <input id="d1" type="checkbox" name ="WeekSchedule" value="1" disabled="disabled"/>星期一
-                             <input id="d2" type="checkbox" name ="WeekSchedule" value="2" disabled="disabled"/>星期二
-                             <input id="d3" type="checkbox" name ="WeekSchedule" value="3" disabled="disabled"/>星期三
-                             <input id="d4" type="checkbox" name ="WeekSchedule" value="4" disabled="disabled"/>星期四
-                             <input id="d5" type="checkbox" name ="WeekSchedule" value="5" disabled="disabled"/>星期五
-                             <input id="d6" type="checkbox" name ="WeekSchedule" value="6" disabled="disabled"/>星期六
-                             <input id="d7" type="checkbox" name ="WeekSchedule" value="7" disabled="disabled"/>星期七
+                             <input id="d1" type="checkbox" name ="WeekSchedule" value="1"/>星期一
+                             <input id="d2" type="checkbox" name ="WeekSchedule" value="2"/>星期二
+                             <input id="d3" type="checkbox" name ="WeekSchedule" value="3"/>星期三
+                             <input id="d4" type="checkbox" name ="WeekSchedule" value="4"/>星期四
+                             <input id="d5" type="checkbox" name ="WeekSchedule" value="5"/>星期五
+                             <input id="d6" type="checkbox" name ="WeekSchedule" value="6"/>星期六
+                             <input id="d7" type="checkbox" name ="WeekSchedule" value="7"/>星期七
                         </td>
 
                     </tr>
@@ -126,38 +131,6 @@
                         </td>
                         <td class="tdar">
                             <input id="Remark" name="Remark"  maxlength="200" style="width:300px;height:150px" type="text" data-options="multiline:true"  class="easyui-textbox" readonly="true"/>
-                        </td>
-
-                    </tr>
-                    <tr>
-                    <td class="tdal">作业区天气：
-                    </td>
-                    <td class="tdar">
-                        <input id="WeatherCondition" name="WeatherCondition"  maxlength="30" type="text"   class="easyui-textbox" runat="server"/>
-                    </td>
-
-                    </tr>
-                         <tr>
-                        <td class="tdal">作业架次：
-                        </td>
-                        <td class="tdar">
-                            <input id="AircrewGroupNum" name="AircrewGroupNum"  maxlength="30" type="text"  class="easyui-numberbox" runat="server"/>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="tdal">开始时间：
-                        </td>
-                        <td class="tdar">
-                            <input id="ActualStartTime" name="ActualStartTime" style="width:200px" type="text"  class="easyui-datebox" runat="server"/>
-                        </td>
-
-                    </tr>
-                      <tr>
-                        <td class="tdal">结束时间：
-                        </td>
-                        <td class="tdar">
-                            <input id="ActualEndTime" name="ActualEndTime"  style="width:200px"  type="text" class="easyui-datebox" runat="server"/>
                         </td>
 
                     </tr>

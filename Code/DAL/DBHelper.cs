@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Data;
 using System.Data.Entity;
+
 using System.Data.Entity.Infrastructure;
+
 public class DBHelper<T> where T : class
 {
     protected ZHCC_GAPlanEntities context;
@@ -13,10 +14,6 @@ public class DBHelper<T> where T : class
     public DBHelper()
     {
         this.context = new ZHCC_GAPlanEntities();
-    }
-    public bool IsExist(T entity)
-    {
-        return context.Set<T>().ToList().Contains(entity);
     }
     /// <summary>
     /// 新增单个实体
@@ -62,18 +59,14 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public int Delete(T entity)
     {
-        if (IsExist(entity))
-        {
-            //第一种方式
-            context.Entry<T>(entity).State = System.Data.Entity.EntityState.Deleted;
+        //第一种方式
+        context.Entry<T>(entity).State = EntityState.Deleted;
 
-            //第二种方式
-            //context.Set<T>().Attach(entity);
-            //context.Set<T>().Remove(entity);
+        //第二种方式
+        //context.Set<T>().Attach(entity);
+        //context.Set<T>().Remove(entity);
 
-            return context.SaveChanges();            
-        }
-        return 0;
+        return context.SaveChanges();
     }
     /// <summary>
     /// 按条件删除多个实体
@@ -116,12 +109,8 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public int Update(T entity)
     {
-        if (IsExist(entity))
-        {
-            context.Entry<T>(entity).State = System.Data.Entity.EntityState.Modified;
-            return context.SaveChanges();
-        }
-        return 0;
+        context.Entry<T>(entity).State = EntityState.Modified;
+        return context.SaveChanges();
     }
     /// <summary>
     /// 修改单个实体，可修改指定属性
@@ -131,17 +120,14 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public int Update(T entity, params string[] propertyNames)
     {
-        if (IsExist(entity))
+        DbEntityEntry entry = context.Entry<T>(entity);
+        entry.State = EntityState.Unchanged;
+        foreach (string propertyName in propertyNames)
         {
-            DbEntityEntry entry = context.Entry<T>(entity);
-            entry.State = EntityState.Unchanged;
-            foreach (string propertyName in propertyNames)
-            {
-                entry.Property(propertyName).IsModified = true;
-            }
-            return context.SaveChanges();
+            entry.Property(propertyName).IsModified = true;
         }
-        return 0;
+        context.Configuration.ValidateOnSaveEnabled = false;
+        return context.SaveChanges();
     }
     /// <summary>
     /// 按条件查询，返回单个实体

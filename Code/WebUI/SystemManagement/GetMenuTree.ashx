@@ -28,13 +28,12 @@ public class GetMenuTree : IHttpHandler {
     }
     private string  GetRoleTree(int roleid)
     {
-        RoleBLL bll = new RoleBLL();
-        MenuBLL menubll = new MenuBLL();
-        var model = bll.Get(roleid);
+
+        var model = RoleBLL.Get(roleid);
         var treeNodeList = new List<TreeNode>();
         if (model != null)
         {
-            treeNodeList = menubll.CreateMenuTree(null, roleid, model.IsAdmin);
+            treeNodeList = MenuBLL.CreateMenuTree(null, roleid, model.IsAdmin);
         }
         return JsonConvert.SerializeObject(treeNodeList);
 

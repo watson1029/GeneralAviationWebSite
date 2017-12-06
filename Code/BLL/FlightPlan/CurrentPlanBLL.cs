@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Untity;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace BLL.FlightPlan
@@ -52,6 +51,42 @@ namespace BLL.FlightPlan
             {
                 throw ex;
             }            
+        }
+        /// <summary>
+        /// 审核通过
+        /// </summary>
+        /// <param name="planid"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public bool Audit(int planid,string comment)
+        {
+            try
+            {
+                WorkflowNodeInstanceDAL.Submit(planid, comment, workPlan => { });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// 审核不通过
+        /// </summary>
+        /// <param name="planid"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public bool Terminate(int planid, string comment)
+        {
+            try
+            {
+                WorkflowNodeInstanceDAL.Terminate(planid, comment, workPlan => { });
+                return true;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
         /// <summary>
         /// 按分页获取记录

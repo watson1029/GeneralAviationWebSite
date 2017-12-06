@@ -1,5 +1,4 @@
-﻿//基础库--zyb
-(function (j) {
+﻿(function (j) {
     var noop = function () { },
         guid = 0,
         index = 1989;

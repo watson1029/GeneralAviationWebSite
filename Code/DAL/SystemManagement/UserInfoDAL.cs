@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Model.SystemManagement;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using Untity.DB;
+using Untity;
 using Model.EF;
-using System.Data.Entity;
 
 namespace DAL.SystemManagement
-{
+{    
     public class UserInfoDAL : DBHelper<UserInfo>
     {
 
@@ -18,21 +20,21 @@ namespace DAL.SystemManagement
         //    var sql = string.Format("delete from UserInfo WHERE  (ID IN ({0}))", ids);
         //    return dao.ExecNonQuery(sql) > 0;
         //}
-        //        public  bool Add(UserInfo model)
-        //        {
-        //            SqlDbHelper dao = new SqlDbHelper();
-        //            var sql = @"insert into UserInfo(UserName,Password,Mobile,Status,CreateTime,IsGeneralAviation)
-        //                          values (@UserName,@Password,@Mobile,@Status,@CreateTime,@IsGeneralAviation)";
-        //            SqlParameter[] parameters = {
-        //                    new SqlParameter("@UserName",  model.UserName),
-        //                    new SqlParameter("@Password", model.Password),
-        //                    new SqlParameter("@Mobile", model.Mobile),
-        //                    new SqlParameter("@Status", model.Status),
-        //                    new SqlParameter("@CreateTime", model.CreateTime),
-        //                    new SqlParameter("@IsGeneralAviation", model.IsGeneralAviation),};
-        //            return dao.ExecNonQuery(sql, parameters) > 0;
+//        public  bool Add(UserInfo model)
+//        {
+//            SqlDbHelper dao = new SqlDbHelper();
+//            var sql = @"insert into UserInfo(UserName,Password,Mobile,Status,CreateTime,IsGeneralAviation)
+//                          values (@UserName,@Password,@Mobile,@Status,@CreateTime,@IsGeneralAviation)";
+//            SqlParameter[] parameters = {
+//                    new SqlParameter("@UserName",  model.UserName),
+//                    new SqlParameter("@Password", model.Password),
+//                    new SqlParameter("@Mobile", model.Mobile),
+//                    new SqlParameter("@Status", model.Status),
+//                    new SqlParameter("@CreateTime", model.CreateTime),
+//                    new SqlParameter("@IsGeneralAviation", model.IsGeneralAviation),};
+//            return dao.ExecNonQuery(sql, parameters) > 0;
 
-        //        }
+//        }
         //public  bool Update(UserInfo model)
         //{
         //    var sql = @"update UserInfo set UserName=@UserName,Password=@Password,Mobile=@Mobile,Status=@Status,IsGeneralAviation=@IsGeneralAviation where ID=@ID";
@@ -102,29 +104,6 @@ namespace DAL.SystemManagement
 					new SqlParameter("@UserID", userID)};
 
             return Convert.ToInt32(dao.ExecScalar(sql, parameters)) > 0;
-        }
-
-        public bool SetUserRole(int userID, IEnumerable<int> addUserRoleList, IEnumerable<int> removeUserRoleList)
-        {
-            foreach (var rmp in removeUserRoleList)
-            {
-                var temp = context.Set<UserRole>().Where(u => u.UserID == userID && u.RoleID == rmp).FirstOrDefault();
-                if (temp != null)
-                {
-                    context.Entry<UserRole>(temp).State = EntityState.Deleted;
-                }
-            }
-            foreach (var amp in addUserRoleList)
-            {
-                var entity = new UserRole()
-                {
-                    UserID = userID,
-                    RoleID = amp
-                };
-                context.Entry<UserRole>(entity).State = System.Data.Entity.EntityState.Added;
-            }
-            return context.SaveChanges()>0;
-
         }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using DAL.BasicData;
-using Model.EF;
-using System;
+using Model.BasicData;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-
+using Untity;
 namespace BLL.BasicData
 {
-    public class BusinessLicenseBLL
+    public class CBusinessBLL
     {
-        private BusinessLicenseDAL _dal = new BusinessLicenseDAL();
+        private CBusinessDAL _dal = new CBusinessDAL();
 
         public int Delete(string ids)
         {
@@ -17,24 +16,24 @@ namespace BLL.BasicData
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(BusinessLicense model)
+        public int Add(CBusiness model)
         {
             return _dal.Add(model);
         }
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public int Update(BusinessLicense model)
+        public int Update(CBusiness model)
         {
             return _dal.Update(model);
-        }
-        public BusinessLicense Get(int id)
+        }        public CBusiness Get(int id)
         {
             return _dal.Find(m => m.ID == id);
         }
-        public List<BusinessLicense> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<BusinessLicense, bool>> where)
+        public List<CBusiness> FindPagedList(int pageIndex, int pageSize, out int pageCount, out int rowCount, bool isAsc)
         {
-            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
+            //参考
+            return _dal.FindPagedList(pageIndex, pageSize,out pageCount,out rowCount, m => m.ID == 1,m=>m.ID, true);
         }
     }
 }

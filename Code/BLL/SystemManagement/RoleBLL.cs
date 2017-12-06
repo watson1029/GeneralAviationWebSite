@@ -11,10 +11,8 @@ using Untity;
 
 namespace BLL.SystemManagement
 {
-    
     public class RoleBLL
     {
-        ZHCC_GAPlanEntities context=new ZHCC_GAPlanEntities();
         RoleDAL roledal = new RoleDAL();
         public  bool Delete(string ids)
         {
@@ -45,9 +43,9 @@ namespace BLL.SystemManagement
        /// </summary>
        /// <param name="strWhere"></param>
        /// <returns></returns>
-        public  List<int> GetRoleMenuList(string strWhere)
+        public  List<int?> GetRoleMenuList(string strWhere)
         {
-            var list= (roledal.GetRoleMenuList(strWhere)??new List<RoleMenu>()).Select(t => t.MenuID.Value).ToList();
+            var list= (roledal.GetRoleMenuList(strWhere)??new List<RoleMenu>()).Select(t => t.MenuID).ToList();
             return list;
         }
         public  Role Get(int id)
@@ -57,27 +55,6 @@ namespace BLL.SystemManagement
         public  bool SetRoleMenu(int roleID, IEnumerable<int> addRoleMenuList, IEnumerable<int> removeRoleMenuList)
         {
             return roledal.SetRoleMenu(roleID, addRoleMenuList, removeRoleMenuList);
-        }
-
-        public List<TreeNode> CreateRoleTree(int userID)
-        {
-            List<Role> rolelist = roledal.FindList(u=>u.ID,true);
-
-            var treeList = new List<TreeNode>();
-            if (rolelist != null && rolelist.Any())
-            {
-                foreach (var item in rolelist)
-                {
-                    var node = new TreeNode();
-                    node.id = item.ID;
-                    node.text = item.RoleName;
-                    if (context.UserRole.Any(p => p.UserID == userID && p.RoleID == item.ID))
-                    { node.@checked = true;}
-                  
-                    treeList.Add(node);
-                }
-            }
-            return treeList;
         }
     }
 }

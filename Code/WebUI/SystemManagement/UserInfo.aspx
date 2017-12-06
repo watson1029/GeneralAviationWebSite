@@ -77,12 +77,11 @@
            
                         </td>
 </tr>
-                    <tr> <td class="tdar">公司三字码：
+                    <tr id="trcompanyCode3" ">
+                         <td class="tdar">公司名称：
                         </td>
                         <td class="tdar">
-
-                               <input type="text" id="CompanyCode3" name="CompanyCode3" class="easyui-validatebox" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200" style="width:100%;"/>
+                               <input type="text" id="CompanyCode3"  name="CompanyCode3"   class="easyui-combobox" data-options="url:'<%=Page.ResolveUrl("~/FlightPlan/GetComboboxData.ashx?type=3")%>',method:'get',valueField:'id',textField:'text',panelHeight:'auto',panelMaxHeight:200" style="width:100%;"/>
            
                         </td>
                     </tr>
@@ -113,7 +112,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            var depId = $('#IsGeneralAviation').combobox({
+         $('#IsGeneralAviation').combobox({
                 valueField: 'id',
                 panelHeight: 'auto',
                 textField: 'text',
@@ -125,10 +124,12 @@
                 {
                     id: 1,
                     text: "是"
-                },
+                }
                 ],
                 onSelect: function (record) {
-                }    
+                    record.id == 1 ? $("#trcompanyCode3").show() : $("#trcompanyCode3").hide();
+                }
+            });
         });
         Main = {
             //初始化表格
@@ -189,8 +190,9 @@
             //打开添加窗口
             OpenWin: function () {
                 $("#edit").dialog("open").dialog('setTitle', '新增');
-                $("#pwdrow").show();
                 $("#form_edit").form('clear');
+                $("#pwdrow").show();
+                $("#trcompanyCode3").hide();
                 $("#btn_add").attr("onclick", "Main.Save();")
             },
             //提交按钮事件
@@ -243,10 +245,13 @@
             EditData: function (uid) {
                 $("#edit").dialog("open").dialog('setTitle', '编辑');
                 $("#pwdrow").hide();
+                $("#trcompanyCode3").hide();
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
-
                 $.post("UserInfo.aspx", { "action": "queryone", "id": uid }, function (data) {
                     $("#form_edit").form('load', data);
+                    if (data.IsGeneralAviation == 1)
+                    { $("#trcompanyCode3").show(); }
+
                 });
             },
 

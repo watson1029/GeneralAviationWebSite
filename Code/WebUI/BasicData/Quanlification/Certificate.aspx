@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" 
-    CodeFile="BusinessCertificate.aspx.cs" Inherits="BasicData_Quanlification_BusinessCertificate" %>
+    CodeFile="Certificate.aspx.cs" Inherits="BasicData_Quanlification_Certificate" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" Runat="Server">
 </asp:Content>
@@ -231,7 +231,7 @@
                 }
                 var json = $.param({ "id": uid, "action": "submit" }) + '&' + $('#form_edit').serialize();
 
-                $.post("BusinessCertificate.aspx", json, function (data) {
+                $.post("Certificate.aspx", json, function (data) {
                     $.messager.alert('提示', data.msg, 'info', function () {
                         if (data.isSuccess) {
                             $("#tab_list").datagrid("reload");
@@ -246,7 +246,7 @@
                 $("#edit").dialog("open").dialog('setTitle', '编辑营业执照信息');
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
 
-                $.post("BusinessCertificate.aspx", { "action": "queryone", "id": uid }, function (data) {
+                $.post("Certificate.aspx", { "action": "queryone", "id": uid }, function (data) {
                     $("#form_edit").form('load', data);
                 });
             },
@@ -265,7 +265,7 @@
                 }
                 $.messager.confirm('提示', '确认删除该条记录？', function (r) {
                     if (r) {
-                        $.post("BusinessCertificate.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
+                        $.post("Certificate.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
 
                             if (data.isSuccess) {
                                 $("#tab_list").datagrid("reload");

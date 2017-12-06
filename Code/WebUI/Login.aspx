@@ -70,11 +70,11 @@
                     <input type="hidden" name="htxtPassword" />
                     <div style="padding: 5px 0;">
                         <label for="login">用户名:</label>
-                        <input type="text" name="txtUserName" maxlength="20" style="width: 260px;" />
+                        <input type="text" name="txtUserName" maxlength="20" style="width: 260px;"  />
                     </div>
                     <div style="padding: 5px 0;">
                         <label for="password">密&nbsp;&nbsp;&nbsp;码:</label>
-                        <input type="password" name="txtPassword" maxlength="20"  style="width: 260px;" />
+                        <input type="password" name="txtPassword" maxlength="20"  style="width: 260px;"  />
                     </div>
                     <div style="padding: 5px 0; text-align: center; color: red;" id="showMsg"></div>
                 </form>
