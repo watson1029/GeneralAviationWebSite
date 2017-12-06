@@ -1,6 +1,9 @@
 ﻿using DAL.BasicData;
 using Model.EF;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+
 namespace BLL.BasicData
 {
     public class CompanyBLL
@@ -29,10 +32,9 @@ namespace BLL.BasicData
         {
             return _dal.Find(m => m.CompanyID == id);
         }
-        public List<Company> FindPagedList(int pageIndex, int pageSize, out int pageCount, out int rowCount, bool isAsc)
+        public List<Company> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<Company, bool>> where)
         {
-            //参考
-            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.CompanyID == 1, m => m.CompanyID, true);
+            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.CompanyID, true);
         }
         public List<Company> GetList()
         {
