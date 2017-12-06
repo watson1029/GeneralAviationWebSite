@@ -59,7 +59,7 @@ public class DBHelper<T> where T : class
     public int Delete(T entity)
     {
         //第一种方式
-        context.Entry<T>(entity).State = System.Data.Entity.EntityState.Deleted;
+        context.Entry<T>(entity).State = EntityState.Deleted;
 
         //第二种方式
         //context.Set<T>().Attach(entity);
@@ -108,7 +108,7 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public int Update(T entity)
     {
-        context.Entry<T>(entity).State = System.Data.Entity.EntityState.Modified;
+        context.Entry<T>(entity).State = EntityState.Modified;
         return context.SaveChanges();
     }
     /// <summary>
@@ -125,6 +125,7 @@ public class DBHelper<T> where T : class
         {
             entry.Property(propertyName).IsModified = true;
         }
+        context.Configuration.ValidateOnSaveEnabled = false;
         return context.SaveChanges();
     }
     /// <summary>
