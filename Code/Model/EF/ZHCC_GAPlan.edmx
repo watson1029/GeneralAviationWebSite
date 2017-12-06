@@ -62,18 +62,6 @@
           <Property Name="LicensedSeal" Type="nvarchar" MaxLength="50" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
-        <EntityType Name="BusinessIntroduction">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Creator" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreateTime" Type="datetime" />
-          <Property Name="Introduction" Type="nvarchar(max)" />
-          <Property Name="Status" Type="tinyint" />
-          <Property Name="Catalog" Type="tinyint" />
-          <Property Name="BIContent" Type="nvarchar(max)" />
-        </EntityType>
         <EntityType Name="BusinessLicense">
           <Key>
             <PropertyRef Name="ID" />
@@ -312,7 +300,6 @@
           <EntitySet Name="ActualSteps" EntityType="Self.ActualSteps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Aircraft" EntityType="Self.Aircraft" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusinessCertificate" EntityType="Self.BusinessCertificate" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BusinessIntroduction" EntityType="Self.BusinessIntroduction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BusinessLicense" EntityType="Self.BusinessLicense" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightPlan" EntityType="Self.FlightPlan" Schema="dbo" store:Type="Tables" />
@@ -336,7 +323,6 @@
         <EntityContainer Name="ZHCC_GAPlanEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ActualSteps" EntityType="ZHCC_GAPlanModel.ActualSteps" />
           <EntitySet Name="BusinessCertificate" EntityType="ZHCC_GAPlanModel.BusinessCertificate" />
-          <EntitySet Name="BusinessIntroduction" EntityType="ZHCC_GAPlanModel.BusinessIntroduction" />
           <EntitySet Name="BusinessLicense" EntityType="ZHCC_GAPlanModel.BusinessLicense" />
           <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Company" />
           <EntitySet Name="FlightPlan" EntityType="ZHCC_GAPlanModel.FlightPlan" />
@@ -389,18 +375,6 @@
           <Property Name="PresentationDate" Type="DateTime" Precision="3" />
           <Property Name="LicensedSeal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="BusinessIntroduction">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="Introduction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Byte" />
-          <Property Name="Catalog" Type="Byte" />
-          <Property Name="BIContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="BusinessLicense">
           <Key>
@@ -697,19 +671,6 @@
                 <ScalarProperty Name="BaseAirport" ColumnName="BaseAirport" />
                 <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
                 <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BusinessIntroduction">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.BusinessIntroduction">
-              <MappingFragment StoreEntitySet="BusinessIntroduction">
-                <ScalarProperty Name="BIContent" ColumnName="BIContent" />
-                <ScalarProperty Name="Catalog" ColumnName="Catalog" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Introduction" ColumnName="Introduction" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
