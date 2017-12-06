@@ -73,7 +73,9 @@
     <Compile Include="EF\FlightTask.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\LoginLog.cs" />
+    <Compile Include="EF\LoginLog.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\Menu.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>

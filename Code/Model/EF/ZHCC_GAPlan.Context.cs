@@ -29,7 +29,6 @@ namespace Model.EF
         public virtual DbSet<BusinessCertificate> BusinessCertificate { get; set; }
         public virtual DbSet<BusinessIntroduction> BusinessIntroduction { get; set; }
         public virtual DbSet<BusinessLicense> BusinessLicense { get; set; }
-        public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<FlightPlan> FlightPlan { get; set; }
         public virtual DbSet<FlightTask> FlightTask { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
@@ -44,5 +43,6 @@ namespace Model.EF
         public virtual DbSet<Pilot> Pilot { get; set; }
         public virtual DbSet<LoginLog> LoginLog { get; set; }
         public virtual DbSet<Aircraft> Aircraft { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
     }
 }

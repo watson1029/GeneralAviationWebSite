@@ -3,9 +3,10 @@ using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Linq.Expressions;
+using System.Web.UI;
 using Untity;
 
-public partial class BasicData_Aircraft : BasePage
+public partial class BasicData_Aircraft : Page
 {
     AircraftBLL bll = new AircraftBLL();
     protected void Page_Load(object sender, EventArgs e)
@@ -60,7 +61,7 @@ public partial class BasicData_Aircraft : BasePage
         { id = Convert.ToInt32(Request.Form["id"]); }
         var model = new Aircraft()
         {
-            AircraftID = int.Parse(Request.Form["AircraftID"]),
+            AircraftSign = int.Parse(Request.Form["AircraftSign"]),
             FuelCapacity = int.Parse(Request.Form["FuelCapacity"]),
             AcfType = Request.Form["AcfType"],
             Range = int.Parse(Request.Form["Range"]),

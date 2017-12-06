@@ -4,9 +4,10 @@ using Newtonsoft.Json;
 using System;
 using System.Linq.Expressions;
 using System.Text;
+using System.Web.UI;
 using Untity;
 
-public partial class BasicData_Quanlification_Company : BasePage
+public partial class BasicData_Quanlification_Company : Page
 
 {
 

@@ -19,11 +19,6 @@ namespace Model.EF
         public string CompanyCode2 { get; set; }
         public string EnglishName { get; set; }
         public string CompanyName { get; set; }
-        public Nullable<bool> DomesticFlag { get; set; }
-        public string Surname { get; set; }
-        public string SITAAddress { get; set; }
-        public string AFTNAddress { get; set; }
-        public Nullable<int> ReferSourceID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }

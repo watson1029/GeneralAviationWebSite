@@ -46,7 +46,6 @@ namespace BLL.SystemManagement
 
         public UserInfo Get(int id)
         {
-            return userinfodal.Find(u=>u.ID==id);
             return userinfodal.Find(u => u.ID == id);
         }
         public UserInfo Get(string userName)
