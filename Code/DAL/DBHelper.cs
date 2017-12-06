@@ -116,11 +116,12 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public int Update(T entity)
     {
-        if (IsExist(entity))
-        {
+        //if (IsExist(entity))
+        //{
+            context.Set<T>().Attach(entity);
             context.Entry<T>(entity).State = System.Data.Entity.EntityState.Modified;
             return context.SaveChanges();
-        }
+        //}
         return 0;
     }
     /// <summary>

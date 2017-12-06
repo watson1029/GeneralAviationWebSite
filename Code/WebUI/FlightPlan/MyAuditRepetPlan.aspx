@@ -71,7 +71,7 @@
                         {
                             title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
                                 var array = [];
-                                $.each(value.toCharArray(), function (i, n) {
+                                $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
 
                                     array.push("星期" + n);
                                 });
@@ -124,16 +124,16 @@
                     $("#ADES").html(data.ADES);
                     $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
                     $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
-                    $("#SOBT").html(new Date(data.SOBT).toLocaleTimeString());
-                    $("#SIBT").html(new Date(data.SIBT).toLocaleTimeString());
+                    $("#SOBT").html(data.SOBT);
+                    $("#SIBT").html(data.SIBT);
                     $("#Remark").html(data.Remark);
                     var fileArray = data.AttchFile.split('|');
                     for (var i = 0; i < fileArray.length; i++) {
                         var info = fileArray[i].split(','),
-                        filepath = dj.root + "/" + info[0];
+                        filepath = dj.root + info[0];
                         $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
                     }
-                    $.each(data.WeekSchedule.toCharArray(), function (i, n) {
+                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
                         $("#d" + n).attr("checked", true);
                     });
 

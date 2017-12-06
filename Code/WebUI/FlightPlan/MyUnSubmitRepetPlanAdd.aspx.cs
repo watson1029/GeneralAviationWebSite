@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 
 public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
 {
+    RepetitivePlanBLL bll = new RepetitivePlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -30,7 +31,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
     private void GetData()
     {
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var plan = RepetitivePlanBLL.Get(planid);
+        var plan = bll.Get(planid);
         var strJSON = "";
         if (plan != null)
         {

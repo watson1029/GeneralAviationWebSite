@@ -63,29 +63,29 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        string fileInfo = Request.Params["AttchFilesInfo"];
-        var model = new RepetitivePlan()
-        {
-            PlanCode = OrderHelper.GenerateId(""),
-            FlightType = Request.Form["FlightType"],
-            AircraftType = Request.Form["AircraftType"],
-            FlightDirHeight = Request.Form["FlightDirHeight"],
-            StartDate = DateTime.Parse(Request.Form["StartDate"]),
-            EndDate = DateTime.Parse(Request.Form["EndDate"]),
-            ModifyTime = DateTime.Now,
-            AttchFile = Request.Params["AttchFilesInfo"],
-            Remark = Request.Form["Remark"],
-            ADES = Request.Form["ADES"],
-            ADEP = Request.Form["ADEP"],
-            WeekSchedule = Request.Form["qx"],
-            SIBT = DateTime.Parse(Request.Form["SIBT"]),
-            SOBT = DateTime.Parse(Request.Form["SOBT"]),
-            CallSign = Request.Form["CallSign"]
-        };
+        RepetitivePlan model = null;
         if (!id.HasValue)//新增
         {
+             model = new RepetitivePlan()
+            {
+                PlanCode = OrderHelper.GenerateId(User.CompanyCode3),
+                FlightType = Request.Form["FlightType"],
+                AircraftType = Request.Form["AircraftType"],
+                FlightDirHeight = Request.Form["FlightDirHeight"],
+                StartDate = DateTime.Parse(Request.Form["StartDate"]),
+                EndDate = DateTime.Parse(Request.Form["EndDate"]),
+                ModifyTime = DateTime.Now,
+                AttchFile = Request.Params["AttchFilesInfo"],
+                Remark = Request.Form["Remark"],
+                ADES = Request.Form["ADES"],
+                ADEP = Request.Form["ADEP"],
+                WeekSchedule = Request.Form["qx"],
+                SIBT = TimeSpan.Parse(Request.Form["SIBT"]),
+                SOBT = TimeSpan.Parse(Request.Form["SOBT"]),
+                CallSign = Request.Form["CallSign"]
+            };
             model.PlanState = "0";
-            model.CompanyCode3 = "";
+            model.CompanyCode3 = User.CompanyCode3??"";
             model.Creator = User.ID;
             model.CreatorName = User.UserName;
             model.ActorID = User.ID;
@@ -98,13 +98,31 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         }
         else//编辑
         {
-            model.RepetPlanID = id.Value;
+          model=  bll.Get(id.Value);
+          if (model!=null)
+            {
+                   model.FlightType = Request.Form["FlightType"];
+                    model.AircraftType = Request.Form["AircraftType"];
+                    model.FlightDirHeight = Request.Form["FlightDirHeight"];
+                    model.StartDate = DateTime.Parse(Request.Form["StartDate"]);
+                    model.EndDate = DateTime.Parse(Request.Form["EndDate"]);
+                    model.ModifyTime = DateTime.Now;
+                    model.AttchFile = Request.Params["AttchFilesInfo"];
+                    model.Remark = Request.Form["Remark"];
+                    model.ADES = Request.Form["ADES"];
+                    model.ADEP = Request.Form["ADEP"];
+                    model.WeekSchedule = Request.Form["qx"];
+                    model.SIBT = TimeSpan.Parse(Request.Form["SIBT"]);
+                    model.SOBT = TimeSpan.Parse(Request.Form["SOBT"]);
+                    model.CallSign = Request.Form["CallSign"];
+            
             if (bll.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
             }
-        }
+            }
+            };
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
@@ -117,7 +135,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         result.Msg = "提交失败！";
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
         WorkflowTemplateBLL.CreateWorkflowInstance(1, planid, User.ID, User.UserName);
-        WorkflowNodeInstanceDAL.Submit(planid, "");
+        WorkflowNodeInstanceDAL.Submit(planid, "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
 
         result.IsSuccess = true;
         result.Msg = "提交成功！";
@@ -157,12 +175,12 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     {
         int page = Request.Form["page"] != null ? Convert.ToInt32(Request.Form["page"]) : 0;
         int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
-        string sort = Request.Form["sort"] ?? "";
-        string order = Request.Form["order"] ?? "";
+     //   string sort = Request.Form["sort"] ?? "";
+     //   string order = Request.Form["order"] ?? "";
         if (page < 1) return;
         int pageCount = 0;
         int rowCount = 0;
-        string orderField = sort.Replace("JSON_", "");
+    //    string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
         var pageList = bll.GetList(page, size, out pageCount, out rowCount, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
@@ -184,7 +202,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = u => u.PlanCode == Request.Form["search_value"];
+            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
         }
 
         return predicate;

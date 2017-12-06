@@ -5,28 +5,30 @@ using System.Web;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
-using Model.BasicData;
 using BLL.BasicData;
 using Model.EF;
 public class GetComboboxData : IHttpHandler {
+    
     FlightTaskBLL bll = new FlightTaskBLL();
+    CompanyBLL cbll = new CompanyBLL();
     public void ProcessRequest (HttpContext context) {
         if (context.Request.Params["type"] != null)
         {
-            switch (context.Request.Form["type"])
+            var strJSON = "";
+            switch (context.Request.Params["type"])
             {
                 case "1":
-                    GetAllFlightTask();
+                   strJSON= GetAllFlightTask();
                     break;
                 case "2":
-                    GetAllAircraftType();
+                    strJSON = GetAllAircraftType();
                     break;
                 case "3":
-                    
+                    strJSON = GetAllCompany();
+                    break;
                 default:
                     break;
             }
-            var strJSON = GetAllFlightTask();
             context.Response.Clear();
             context.Response.Write(strJSON);
             context.Response.ContentType = "application/json";
@@ -49,16 +51,16 @@ public class GetComboboxData : IHttpHandler {
         }
         return JsonConvert.SerializeObject(arr);
     }
-    //private string GetAllCompany()
-    //{
-    //    List<Company> list = bll.GetList();
-    //    ArrayList arr = new ArrayList();
-    //    foreach (var item in list)
-    //    {
-    //        arr.Add(new { id = item.TaskCode, text = item.Abbreviation });
-    //    }
-    //    return JsonConvert.SerializeObject(arr);
-    //}
+    private string GetAllCompany()
+    {
+        List<Company> list = cbll.GetList();
+        ArrayList arr = new ArrayList();
+        foreach (var item in list)
+        {
+            arr.Add(new { id = item.CompanyCode3, text = item.CompanyName });
+        }
+        return JsonConvert.SerializeObject(arr);
+    }
     private string GetAllAircraftType()
     {
 

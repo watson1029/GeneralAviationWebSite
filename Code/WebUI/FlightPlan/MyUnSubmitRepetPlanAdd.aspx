@@ -137,7 +137,7 @@
             if (id) {
                 $.post(location.href, { "action": "queryone", "id": id }, function (data) {
                     $("#form_edit").form('load', data);
-                    $.each(data.WeekSchedule.toCharArray(), function (i, n) {
+                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
                         $("#d" + n).prop({ checked: true });
                     });
                     new dj.upload({
