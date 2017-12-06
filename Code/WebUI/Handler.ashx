@@ -40,7 +40,7 @@ public class Handler : IHttpHandler
     /// <param name="context"></param>
     public void download(HttpContext context)
     {
-        string file = context.Server.MapPath("~/UploadFile/") + context.Request["filepath"];
+        string file = context.Server.MapPath("~/File/") + context.Request["filepath"];
         if (System.IO.File.Exists(file))
         {
             FileStream fs = new FileStream(file, FileMode.Open);
@@ -98,10 +98,9 @@ public class Handler : IHttpHandler
         string resourcetype = context.Request["resourcetype"];
         string usefultime = context.Request["usefultime"];
         string filepath = "";
-        HttpFileCollection files = context.Request.Files;
-        if (files.Count > 0 && !context.Request.Files["file"].FileName.Equals(""))
+        if (context.Request.Files["file"].ContentLength>0)
         {
-            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/UploadFile/") + context.Request.Files["file"].FileName);
+            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/") + context.Request.Files["file"].FileName);
             filepath = context.Request.Files["file"].FileName;
 
             Resource resource = new Resource();
@@ -111,6 +110,9 @@ public class Handler : IHttpHandler
             resource.UsefulTime = usefultime;
             resource.SenderId = 123;
             resource.FilePath = filepath;
+            resource.Created = DateTime.Now;
+            resource.IsDeleted = 0;
+            resource.Status = 1;
             dao.Add(resource);
 
             context.Response.ContentType = "text/plain";
@@ -131,24 +133,21 @@ public class Handler : IHttpHandler
         int id = Convert.ToInt16(context.Request["id"]);
         string title = context.Request["title"];
         string dealuser = context.Request["dealuser"];
-        string resourcetype = context.Request["resourcetype"];
+        int resourcetype = Convert.ToInt16(context.Request["resourcetype"]);
         string usefultime = context.Request["usefultime"];
         Resource resource = new Resource();
-        HttpFileCollection files = context.Request.Files;
-        if (files.Count > 0 && !context.Request.Files["file"].FileName.Equals(""))
+        if (context.Request.Files["file"].ContentLength>0)
         {
-            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/UploadFile/") + context.Request.Files["file"].FileName);
+            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/") + context.Request.Files["file"].FileName);
             resource.FilePath = context.Request.Files["file"].FileName;
         }
 
         resource.ID = id;
         resource.Title = title;
         resource.DealUser = dealuser;
-        resource.ResourceType = Convert.ToInt16(resourcetype);
+        resource.ResourceType = resourcetype;
         resource.UsefulTime = usefultime;
-        resource.SenderId = 123;
         dao.Update(resource);
-
         context.Response.ContentType = "text/plain";
         context.Response.Write("更新资料成功");
     }

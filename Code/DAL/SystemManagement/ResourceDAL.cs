@@ -17,12 +17,34 @@ namespace DAL.SystemManagement
         //删除资料
         public int Delete(int ID)
         {
-            return Delete(new Resource() { ID = ID });
+            return base.Delete(new Resource() { ID = ID });
         }
         //新增资料
         public int Add(Resource res)
         {
-            return Add(res);
+            return base.Add(res);
+        }
+        /// <summary>
+        /// 更新资料
+        /// </summary>
+        /// <param name="res"></param>
+        /// <returns></returns>
+        public int Update(Resource res)
+        {
+            string[] paramters;
+            if (res.FilePath == null || res.FilePath.Equals(""))
+            {
+                paramters = new string[]{
+                "Title","DealUser","ResourceType","UsefulTime"
+                };
+            }
+            else
+            {
+                paramters = new string[]{
+                "Title","DealUser","ResourceType","UsefulTime","FilePath"
+                };
+            }
+            return base.Update(res, paramters);
         }
         //   //更新资料信息
         //   public static bool Update(Resource resource)
@@ -45,14 +67,14 @@ namespace DAL.SystemManagement
             Expression<Func<Resource, bool>> predicate = PredicateBuilder.True<Resource>();
             if (resourceType != 0)
             {
-                predicate = predicate.And(m => m.ResourceType==resourceType);
+                predicate = predicate.And(m => m.ResourceType == resourceType);
             }
             if (status != 0)
             {
                 predicate = predicate.And(m => m.Status == status);
             }
             predicate = predicate.And(m => m.IsDeleted == 0);
-            List<Model.EF.Resource> list = FindPagedList(pageIndex, pageSize,out pageIndex,out pageSize, predicate, m => m.ID, true);
+            List<Model.EF.Resource> list = FindPagedList(pageIndex, pageSize, out pageIndex, out pageSize, predicate, m => m.Created, false);
             return list;
         }
         //   public static List<Resource> GetList(int resourceType,int status,int pageIndex,int pageSize)
@@ -70,22 +92,22 @@ namespace DAL.SystemManagement
         //       var sql = string.Format("select * from Resource where {0}", sb.ToString());
         //       return dao.ExecSelectCmd(ExecReader, sql).ToPagedList<Resource>(pageIndex, pageSize); 
         //   }
-           //根据条件查询资料总数
-           public int GetCount(int resourceType,int status)
-           {
-               Expression<Func<Resource, bool>> predicate = PredicateBuilder.True<Resource>();
-               if (resourceType != 0)
-               {
-                   predicate = predicate.And(m => m.ResourceType == resourceType);
-               }
-               if (status != 0)
-               {
-                   predicate = predicate.And(m => m.Status == status);
-               }
-               predicate = predicate.And(m => m.IsDeleted == 0);
-               List<Model.EF.Resource> list = FindList(predicate, m => m.ID, true);
-               return list.Count;
-           }
+        //根据条件查询资料总数
+        public int GetCount(int resourceType, int status)
+        {
+            Expression<Func<Resource, bool>> predicate = PredicateBuilder.True<Resource>();
+            if (resourceType != 0)
+            {
+                predicate = predicate.And(m => m.ResourceType == resourceType);
+            }
+            if (status != 0)
+            {
+                predicate = predicate.And(m => m.Status == status);
+            }
+            predicate = predicate.And(m => m.IsDeleted == 0);
+            List<Model.EF.Resource> list = FindList(predicate, m => m.ID, true);
+            return list.Count;
+        }
         //   //将数据库返回的数据转换成Resource对象
         //   private static Resource ExecReader(SqlDataReader dr)
         //   {

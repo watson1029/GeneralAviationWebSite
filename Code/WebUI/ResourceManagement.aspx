@@ -123,18 +123,18 @@
 
     <div title="新增通航资料" class="easyui-dialog" id="dialog" style="width: 400px; height: auto; padding: 10px 20px;">
         <div style="margin-bottom: 20px">
-            <form runat="server" method="post" id="ff" action="Handler.ashx?action=add">
+            <form runat="server" method="post" id="ff" action="Handler.ashx?action=add" enctype="multipart/form-data">
                 <input id="id" type="hidden" />
                 <input id="title" class="easyui-textbox" name="title" style="width: 100%" data-options="label:'标题:',required:true" />
                 <input id="dealuser" class="easyui-textbox" name="dealuser" style="width: 100%" data-options="label:'处理人:',required:true" />
-                <select id="resourcetype" class="easyui-combobox" name="resourcetype" style="width: 100%" data-options="label:'处理类别:'">
+                <select id="resourcetype" class="easyui-combobox" name="resourcetype" style="width: 100%" data-options="label:'处理类别:',required:true">
                     <option value="1">国家和民航相关通航政策、管理规定</option>
                     <option value="2">中南地区通航管理规定</option>
                     <option value="3">河南空管通航管理相关程序</option>
                     <option value="4">应急救援相关程序</option>
                 </select>
                 <input id="usefultime" class="easyui-textbox" name="usefultime" style="width: 100%" data-options="label:'有效时间:',required:true" />
-                附件：<asp:FileUpload ID="file" runat="server" Visible="true" />
+                附件：<input id="file" name="file" type="file" data-options="prompt:'Choose a file...'" style="width:90%;" />
             </form>
         </div>
         <script>
