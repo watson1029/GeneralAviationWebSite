@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -50,7 +51,7 @@ public partial class SystemManage_Role : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (RoleBLL.Delete(Request.Form["cbx_select"].ToString()))
+            if (bll.Delete(Request.Form["cbx_select"].ToString()))
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -69,16 +70,17 @@ public partial class SystemManage_Role : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var model = new Role()
+        Role model = null;
+        if (!id.HasValue)//新增
+        {  
+             model = new Role()
         {
             RoleName = Request.Form["RoleName"],
             Description = Request.Form["Description"],
-            IsAdmin = (Request.Form["IsAdmin"].ToString() == "1") ? true : false
+            IsAdmin = (Request.Form["IsAdmin"].ToString() == "1") ? true : false,
+            CreateTime = DateTime.Now
         };
-        if (!id.HasValue)//新增
-        {
-            model.CreateTime = DateTime.Now;
-            if (RoleBLL.Add(model))
+            if (bll.Add(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -86,11 +88,18 @@ public partial class SystemManage_Role : BasePage
         }
         else//编辑
         {
-            model.ID = id.Value;
-            if (RoleBLL.Update(model))
+            model = bll.Get(id.Value);
+            if (model != null)
+            {
+                model.RoleName = Request.Form["RoleName"];
+                model.Description = Request.Form["Description"];
+                model.IsAdmin = (Request.Form["IsAdmin"].ToString() == "1") ? true : false;
+         
+            if (bll.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
+            } 
             }
         }
         Response.Clear();
@@ -132,7 +141,7 @@ public partial class SystemManage_Role : BasePage
     private void GetData()
     {
         var roleid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var role = RoleBLL.Get(roleid);
+        var role = bll.Get(roleid);
         var strJSON = JsonConvert.SerializeObject(role);
         Response.Clear();
         Response.Write(strJSON);
@@ -150,12 +159,14 @@ public partial class SystemManage_Role : BasePage
         int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
         string sort = Request.Form["sort"] ?? "";
         string order = Request.Form["order"] ?? "";
+        int pageCount = 0;
+        int rowCount = 0;
         if (page < 1) return;
         string orderField = sort.Replace("JSON_", "");
-        string strWhere = GetWhere();
-        var pageList = RoleBLL.GetList(size, page, strWhere);
+        var strWhere = GetWhere();
+        var pageList = bll.GetList(page, size, out pageCount, out rowCount, strWhere);
 
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -165,18 +176,17 @@ public partial class SystemManage_Role : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private string GetWhere()
+    private Expression<Func<Role, bool>> GetWhere()
     {
-        StringBuilder sb = new StringBuilder("1=1");
+        Expression<Func<Role, bool>> predicate = PredicateBuilder.True<Role>();
+        predicate = predicate.And(m => 1 == 1);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            predicate = u => u.RoleName == Request.Form["search_value"];
+
+            //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
-        else
-        {
-            sb.AppendFormat("");
-        }
-        return sb.ToString();
+        return predicate;
     }
 
 }

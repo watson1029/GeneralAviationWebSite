@@ -75,27 +75,15 @@
                             }
                         },
                         {
-                            title: '起飞时刻', field: 'SOBT', width: 100, formatter: function (value, rec, index) {
-
-                                var timesstamp = new Date(value);
-                                return timesstamp.toLocaleTimeString();
-
-                            }
-                        },
-                        { title: '降落时刻', field: 'SIBT', width: 100 , formatter: function (value, rec, index) {
-
-                            var timesstamp = new Date(value);
-                            return timesstamp.toLocaleTimeString();
-
-                        }},
+                            title: '起飞时刻', field: 'SOBT', width: 100 },
+                        { title: '降落时刻', field: 'SIBT', width: 100},
                         { title: '起飞机场', field: 'ADEP', width: 80 },
                         { title: '降落机场', field: 'ADES', width: 80 },
 
                         {
                             title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
                                 var array = [];
-                                $.each(value.toCharArray(), function (i, n) {
-
+                                $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
                                     array.push("星期" + n);
                                 });
                               return  array.join(',');

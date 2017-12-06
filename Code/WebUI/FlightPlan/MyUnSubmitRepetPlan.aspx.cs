@@ -3,11 +3,13 @@ using DAL.FlightPlan;
 using Model.EF;
 using Newtonsoft.Json;
 using System;
+using System.Linq.Expressions;
 using System.Text;
 using Untity;
 
 public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
 {
+    RepetitivePlanBLL bll = new RepetitivePlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -42,7 +44,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (RepetitivePlanBLL.Delete(Request.Form["cbx_select"].ToString()))
+            if (bll.Delete(Request.Form["cbx_select"].ToString()))
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -61,34 +63,34 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        string fileInfo = Request.Params["AttchFilesInfo"];
-        var model = new RepetitivePlan()
-        {
-            PlanCode = OrderHelper.GenerateId(""),
-            FlightType = Request.Form["FlightType"],
-            AircraftType = Request.Form["AircraftType"],
-            FlightDirHeight = Request.Form["FlightDirHeight"],
-            StartDate = DateTime.Parse(Request.Form["StartDate"]),
-            EndDate = DateTime.Parse(Request.Form["EndDate"]),
-            ModifyTime = DateTime.Now,
-            AttchFile = Request.Params["AttchFilesInfo"],
-            Remark = Request.Form["Remark"],
-            ADES = Request.Form["ADES"],
-            ADEP = Request.Form["ADEP"],
-            WeekSchedule = Request.Form["qx"],
-            SIBT = DateTime.Parse(Request.Form["SIBT"]),
-            SOBT = DateTime.Parse(Request.Form["SOBT"]),
-            CallSign = Request.Form["CallSign"]
-        };
+        RepetitivePlan model = null;
         if (!id.HasValue)//新增
         {
+             model = new RepetitivePlan()
+            {
+                PlanCode = OrderHelper.GenerateId(User.CompanyCode3),
+                FlightType = Request.Form["FlightType"],
+                AircraftType = Request.Form["AircraftType"],
+                FlightDirHeight = Request.Form["FlightDirHeight"],
+                StartDate = DateTime.Parse(Request.Form["StartDate"]),
+                EndDate = DateTime.Parse(Request.Form["EndDate"]),
+                ModifyTime = DateTime.Now,
+                AttchFile = Request.Params["AttchFilesInfo"],
+                Remark = Request.Form["Remark"],
+                ADES = Request.Form["ADES"],
+                ADEP = Request.Form["ADEP"],
+                WeekSchedule = Request.Form["qx"],
+                SIBT = TimeSpan.Parse(Request.Form["SIBT"]),
+                SOBT = TimeSpan.Parse(Request.Form["SOBT"]),
+                CallSign = Request.Form["CallSign"]
+            };
             model.PlanState = "0";
-            model.CompanyCode3 = "";
+            model.CompanyCode3 = User.CompanyCode3??"";
             model.Creator = User.ID;
             model.CreatorName = User.UserName;
             model.ActorID = User.ID;
             model.CreateTime = DateTime.Now;
-            if (RepetitivePlanBLL.Add(model))
+            if (bll.Add(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -96,13 +98,31 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         }
         else//编辑
         {
-            model.RepetPlanID = id.Value;
-            if (RepetitivePlanBLL.Update(model))
+          model=  bll.Get(id.Value);
+          if (model!=null)
+            {
+                   model.FlightType = Request.Form["FlightType"];
+                    model.AircraftType = Request.Form["AircraftType"];
+                    model.FlightDirHeight = Request.Form["FlightDirHeight"];
+                    model.StartDate = DateTime.Parse(Request.Form["StartDate"]);
+                    model.EndDate = DateTime.Parse(Request.Form["EndDate"]);
+                    model.ModifyTime = DateTime.Now;
+                    model.AttchFile = Request.Params["AttchFilesInfo"];
+                    model.Remark = Request.Form["Remark"];
+                    model.ADES = Request.Form["ADES"];
+                    model.ADEP = Request.Form["ADEP"];
+                    model.WeekSchedule = Request.Form["qx"];
+                    model.SIBT = TimeSpan.Parse(Request.Form["SIBT"]);
+                    model.SOBT = TimeSpan.Parse(Request.Form["SOBT"]);
+                    model.CallSign = Request.Form["CallSign"];
+            
+            if (bll.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
             }
-        }
+            }
+            };
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
@@ -115,7 +135,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         result.Msg = "提交失败！";
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
         WorkflowTemplateBLL.CreateWorkflowInstance(1, planid, User.ID, User.UserName);
-        WorkflowNodeInstanceDAL.Submit(planid, "");
+        WorkflowNodeInstanceDAL.Submit(planid, "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
 
         result.IsSuccess = true;
         result.Msg = "提交成功！";
@@ -134,7 +154,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     private void GetData()
     {
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var plan = RepetitivePlanBLL.Get(planid);
+        var plan = bll.Get(planid);
         var strJSON = "";
         if (plan != null)
         {
@@ -155,13 +175,15 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     {
         int page = Request.Form["page"] != null ? Convert.ToInt32(Request.Form["page"]) : 0;
         int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
-        string sort = Request.Form["sort"] ?? "";
-        string order = Request.Form["order"] ?? "";
+     //   string sort = Request.Form["sort"] ?? "";
+     //   string order = Request.Form["order"] ?? "";
         if (page < 1) return;
-        string orderField = sort.Replace("JSON_", "");
-        string strWhere = GetWhere();
-        var pageList = RepetitivePlanBLL.GetMyRepetitivePlanList(size, page, strWhere);
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
+        int pageCount = 0;
+        int rowCount = 0;
+    //    string orderField = sort.Replace("JSON_", "");
+        var strWhere = GetWhere();
+        var pageList = bll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -171,18 +193,20 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private string GetWhere()
+    private Expression<Func<RepetitivePlan, bool>> GetWhere()
     {
-        StringBuilder sb = new StringBuilder("1=1");
-        sb.AppendFormat(" and Creator={0} and PlanState='0'", User.ID);
+
+        Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
+        predicate = predicate.And(m => m.PlanState=="0");
+        predicate = predicate.And(m => m.Creator == User.ID);
+
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
         }
-        else
-        {
-            sb.AppendFormat("");
-        }
-        return sb.ToString();
+
+        return predicate;
     }
+
+
 }

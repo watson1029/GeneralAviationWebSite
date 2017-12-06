@@ -72,12 +72,19 @@
                         <td class="tdar">是否通航用户：
                         </td>
                         <td class="tdar">
-                            <select class="easyui-combobox" editable="false"  name="IsGeneralAviation" required="true"   panelheight="auto" style="width:100%;">   
-                                <option value="0">否</option>
-                                <option value="1">是</option>
-                            </select>
+
+                               <input type="text" id="IsGeneralAviation" name="IsGeneralAviation" class="easyui-validatebox" required="true" style="width:100%;"/>
+           
                         </td>
 </tr>
+                    <tr id="trcompanyCode3" ">
+                         <td class="tdar">公司名称：
+                        </td>
+                        <td class="tdar">
+                               <input type="text" id="CompanyCode3"  name="CompanyCode3"   class="easyui-combobox" data-options="url:'<%=Page.ResolveUrl("~/FlightPlan/GetComboboxData.ashx?type=3")%>',method:'get',valueField:'id',textField:'text',panelHeight:'auto',panelMaxHeight:200" style="width:100%;"/>
+           
+                        </td>
+                    </tr>
                 </table>
 
         </form>
@@ -87,11 +94,42 @@
             class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
     <%--添加 修改 end--%>
+
+        <%--设置角色 start--%>
+
+    <div id="setrole" class="easyui-dialog" style="width: 500px; height: 350px;"
+        modal="true" closed="true" buttons="#setrole-buttons">
+
+            <ul id="tt" class="easyui-tree"></ul>
+    </div>
+    <div id="setrole-buttons">
+        <a id="btn_set" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
+            class="easyui-linkbutton" onclick="$('#setrole').dialog('close');return false;">取消</a>
+    </div>
+    <%--设置菜单 end--%>
     <script type="text/javascript">
 
         $(function () {
             Main.InitGird();
             Main.InitSearch();
+         $('#IsGeneralAviation').combobox({
+                valueField: 'id',
+                panelHeight: 'auto',
+                textField: 'text',
+                data: [{
+                    id: 0,
+                    text: "否"
+                    
+                },
+                {
+                    id: 1,
+                    text: "是"
+                }
+                ],
+                onSelect: function (record) {
+                    record.id == 1 ? $("#trcompanyCode3").show() : $("#trcompanyCode3").hide();
+                }
+            });
         });
         Main = {
             //初始化表格
@@ -121,7 +159,9 @@
                         { title: '是否通航用户', field: 'IsGeneralAviation', formatter: function (value, rec, index) { return value == 0 ? '否' : '是' }, width: 150 },
                         {
                             title: '操作', field: 'ID', width: 150, formatter: function (value, rec) {
-                                return '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>';
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
+                                str += '<a style="color:red" href="javascript:;" onclick="Main.SetRole(' + value + ');$(this).parent().click();return false;">角色设置</a>';
+                                return str;
                             }
                         }
                     ]],
@@ -150,8 +190,9 @@
             //打开添加窗口
             OpenWin: function () {
                 $("#edit").dialog("open").dialog('setTitle', '新增');
-                $("#pwdrow").show();
                 $("#form_edit").form('clear');
+                $("#pwdrow").show();
+                $("#trcompanyCode3").hide();
                 $("#btn_add").attr("onclick", "Main.Save();")
             },
             //提交按钮事件
@@ -170,15 +211,47 @@
                     });
                 });
             },
+            SetRole: function (uid) {
+                $("#setrole").dialog("open").dialog('setTitle', '角色设置');
+                $("#btn_set").attr("onclick", "Main.SaveUserRole(" + uid + ");")
+                $('#tt').tree({
+                    url: 'GetRoleTree.ashx?id=' + uid,
+                    method: 'get',
+                    animate: true,
+                    checkbox: true,
+                    cascadeCheck: true,
+                    lines: true
+                })
 
+            },
+            SaveUserRole: function (uid) {
+                var nodes = $('#tt').tree('getChecked');
+
+                var idarray = new Array();
+                nodes.forEach(function (i) {
+                    idarray.push(i.id);
+                });
+                var json = { id: uid, action: "setrole", newUserRoles: idarray.join() };
+
+                $.post("UserInfo.aspx", json, function (data) {
+                    $.messager.alert('提示', data.msg, 'info', function () {
+                        if (data.isSuccess) {
+                            $("#setrole").dialog("close");
+                        }
+                    });
+                });
+            },
             //修改链接 事件
             EditData: function (uid) {
                 $("#edit").dialog("open").dialog('setTitle', '编辑');
                 $("#pwdrow").hide();
+                $("#trcompanyCode3").hide();
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
-
                 $.post("UserInfo.aspx", { "action": "queryone", "id": uid }, function (data) {
                     $("#form_edit").form('load', data);
+                    if (data.IsGeneralAviation == 1)
+                    { $("#trcompanyCode3").show(); }
+
                 });
             },
 

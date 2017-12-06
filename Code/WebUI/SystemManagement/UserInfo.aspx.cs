@@ -59,17 +59,19 @@ public partial class SystemManage_UserInfo : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var model = new UserInfo()
+        UserInfo model = null;
+        if (!id.HasValue)//新增
+        { 
+             model = new UserInfo()
         {
             UserName = Request.Form["UserName"],
             Password = CryptTools.HashPassword(Request.Form["Password"]),
             Mobile = Request.Form["Mobile"],
             Status = byte.Parse(Request.Form["Status"] ?? "0"),
-            IsGeneralAviation = byte.Parse(Request.Form["IsGeneralAviation"] ?? "0")
+            IsGeneralAviation = byte.Parse(Request.Form["IsGeneralAviation"] ?? "0"),
+            CompanyCode3 =model.IsGeneralAviation==1?Request.Form["CompanyCode3"]:"",
+            CreateTime = DateTime.Now
         };
-        if (!id.HasValue)//新增
-        {
-            model.CreateTime = DateTime.Now;
             if (userBll.Add(model))
             {
                 result.IsSuccess = true;
@@ -78,13 +80,25 @@ public partial class SystemManage_UserInfo : BasePage
         }
         else//编辑
         {
-            model.ID = id.Value;
-            if (userBll.Update(model))
+            model=userBll.Get(id.Value);
+            if (model != null)
             {
-                result.IsSuccess = true;
-                result.Msg = "更新成功！";
+                model.UserName = Request.Form["UserName"];
+                 //  model.Password = CryptTools.HashPassword(Request.Form["Password"]);
+                    model.Mobile = Request.Form["Mobile"];
+                    model.Status = byte.Parse(Request.Form["Status"] ?? "0");
+                    model.IsGeneralAviation = byte.Parse(Request.Form["IsGeneralAviation"] ?? "0");
+                    model.CompanyCode3 = model.IsGeneralAviation == 1 ? Request.Form["CompanyCode3"] : "";
+             
+                if (userBll.Update(model))
+                {
+                    result.IsSuccess = true;
+                    result.Msg = "更新成功！";
+                }  
             }
-        }
+
+            }
+        
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";

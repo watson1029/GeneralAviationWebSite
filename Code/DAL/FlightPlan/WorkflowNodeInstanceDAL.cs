@@ -195,13 +195,20 @@ namespace DAL.FlightPlan
             return nextInst;
         }
 
+        public static void UpdateRepetPlan(WorkflowPlan plan)
+        {
+            var model = new RepetitivePlan() { ActorID = plan.Actor, PlanState = plan.PlanState, RepetPlanID = plan.PlanID };
+            new DBHelper<RepetitivePlan>().Update(model, "Actor", "PlanState");
+        }
+       
+
         /// <summary>
         /// 审核不通过
         /// </summary>
         /// <param name="planId"></param>
         /// <param name="comments"></param>
         /// <returns></returns>
-        public static int Terminate(int planId, string comments,Func<WorkflowPlan,int> func)
+        public static int Terminate(int planId, string comments,Action<WorkflowPlan> func)
         {
             #region 没用ef
             /*
@@ -232,7 +239,7 @@ namespace DAL.FlightPlan
             result = dbHelper.Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Deserted, Comments = comments, ID = currInst.Id }, "State", "Comments");
             if (result > 0)
             {
-                result += func(new WorkflowPlan {Actor=null,PlanState=WorkflowNodeInstance.StepStateType.Deserted.ToString(),PlanID=planId});
+               func(new WorkflowPlan {Actor=null,PlanState=WorkflowNodeInstance.StepStateType.Deserted.ToString(),PlanID=planId});
             }
             return result;
         }

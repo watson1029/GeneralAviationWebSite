@@ -9,9 +9,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
+using System.Linq.Expressions;
 
 public partial class FlightPlan_MyAuditCurrentPlan : BasePage
 {
+    private CurrentPlanBLL currPlanBll = new CurrentPlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -33,9 +35,6 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
         }
     }
 
-
-
-
     /// <summary>
     /// 查询数据
     /// </summary>
@@ -46,10 +45,12 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
         string sort = Request.Form["sort"] ?? "";
         string order = Request.Form["order"] ?? "";
         if (page < 1) return;
+        int pageCount = 0;
+        int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
-        string strWhere = GetWhere();
-        var pageList = RepetitivePlanBLL.GetMyRepetitivePlanList(size, page, strWhere);
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = pageList.TotalCount });
+        var strWhere = GetWhere();
+        var pageList = currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -59,19 +60,18 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private string GetWhere()
+    private Expression<Func<Model.EF.FlightPlan, bool>> GetWhere()
     {
-        StringBuilder sb = new StringBuilder("1=1");
-        sb.AppendFormat(" and ActorID={0}", User.ID);
+        Expression<Func<Model.EF.FlightPlan, bool>> predicate = PredicateBuilder.True<Model.EF.FlightPlan>();
+        predicate = predicate.And(m => m.PlanState == "0");
+        predicate = predicate.And(m => m.Creator == User.ID);
+
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            predicate = u => u.PlanCode == Request.Form["search_value"];
         }
-        else
-        {
-            sb.AppendFormat("");
-        }
-        return sb.ToString();
+
+        return predicate;
     }
     /// <summary>
     /// 获取指定ID的数据
@@ -79,8 +79,14 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
     private void GetData()
     {
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var plan = RepetitivePlanBLL.Get(planid);
-        var strJSON = JsonConvert.SerializeObject(plan);
+        var plan = currPlanBll.Get(planid);
+        var strJSON = "";
+        if (plan != null)
+        {
+            plan.WeekSchedule = plan.WeekSchedule.Replace("*", "");
+            strJSON = JsonConvert.SerializeObject(plan);
+        }
+
         Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -88,26 +94,31 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
     }
     private void AuditSubmit()
     {
-        AjaxResult result = new AjaxResult();
-        result.IsSuccess = false;
-        result.Msg = "提交失败！";
+        AjaxResult result = new AjaxResult();        
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        if (Request.Form["Auditresult"] == "0")
+
+        try
         {
-            WorkflowNodeInstanceDAL.Submit(planid, Request.Form["AuditComment"] ?? "");
+            if (Request.Form["Auditresult"] == "0")
+            {
+                currPlanBll.Audit(planid, Request.Form["AuditComment"] ?? "");
+            }
+            else
+            {
+                currPlanBll.Terminate(planid, Request.Form["AuditComment"] ?? "");
+            }
+            result.IsSuccess = true;
+            result.Msg = "提交成功！";
         }
-        else {
-            WorkflowNodeInstanceDAL.Terminate(planid, Request.Form["AuditComment"] ?? "");
+        catch
+        {
+            result.IsSuccess = false;
+            result.Msg = "提交失败！";
         }
-        result.IsSuccess = true;
-        result.Msg = "提交成功！";
 
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
         Response.End();
-
-
     }
-
 }
