@@ -98,7 +98,7 @@
                       { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                       {
                           title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                              var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
+                              var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>';
                               return str;
                           }
                       }
@@ -146,7 +146,8 @@
           //修改链接 事件
           EditData: function (uid) {
               $("#edit").dialog("open").dialog('setTitle', '编辑');
-              $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
+              $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
+              $("#btn_submit").attr("onclick", "Main.Submit(" + uid + ");");
           },
 
           //删除按钮事件
@@ -197,132 +198,61 @@
         <table class="table_edit">
 
             <tr>
-                <td class="tdal">任务类型：
+                <td class="tdal">航空器架数：
                 </td>
                 <td class="tdar">
-                    <input id="FlightType" name="FlightType" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200"
-                        required="true" class="easyui-combobox" />
+                    <input id="AircraftNum" name="AircraftNum" maxlength="30" type="text" required="true" class="easyui-textbox" />
                 </td>
 
             </tr>
             <tr>
-                <td class="tdal">航空器类型：
+                <td class="tdal">机长（飞行员）姓名：
                 </td>
                 <td class="tdar">
-                    <%--  <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" />--%>
-                    <input id="AircraftType" name="AircraftType" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200"
-                        required="true" class="easyui-combobox" />
+                    <input id="Pilot" name="Pilot" maxlength="30" type="text" required="true" class="easyui-textbox" />
                 </td>
 
             </tr>
             <tr>
-                <td class="tdal">航线走向和飞行高度：
+                <td class="tdal">通信联络方法：
                 </td>
                 <td class="tdar">
-                    <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30" type="text" required="true" class="easyui-textbox" />
-                </td>
-
-            </tr>
-
-            <tr>
-                <td class="tdal">航空器呼号：
-                </td>
-                <td class="tdar">
-                    <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="ContactWay" name="ContactWay" maxlength="30" type="text" required="true" class="easyui-textbox" />
                 </td>
 
             </tr>
             <tr>
-                <td class="tdal">起飞机场：
+                <td class="tdal">飞行气象条件：
                 </td>
                 <td class="tdar">
-                    <input id="ADEP" name="ADEP" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="WeatherCondition" name="WeatherCondition" style="width: 200px" type="text" required="true" class="easyui-textbox" />
                 </td>
 
             </tr>
             <tr>
-                <td class="tdal">降落机场：
+                <td class="tdal">空勤组人数：
                 </td>
                 <td class="tdar">
-                    <input id="ADES" name="ADES" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="AircrewGroupNum" name="AircrewGroupNum" style="width: 200px" type="text" required="true" class="easyui-textbox"  />
                 </td>
 
             </tr>
             <tr>
-                <td class="tdal">预计开始日期：
+                <td class="tdal">二次雷达应答机代码：
                 </td>
                 <td class="tdar">
-                    <input id="StartDate" name="StartDate" style="width: 200px" type="text" required="true" class="easyui-datebox" />
+                    <input id="RadarCode" name="RadarCode" style="width: 200px" type="text" required="true" class="easyui-textbox" />
                 </td>
 
             </tr>
-            <tr>
-                <td class="tdal">预计结束日期：
-                </td>
-                <td class="tdar">
-                    <input id="EndDate" name="EndDate" style="width: 200px" type="text" required="true" class="easyui-datebox" validtype="md['#StartDate']" />
-                </td>
 
-            </tr>
-            <tr>
-                <td class="tdal">起飞时刻：
-                </td>
-                <td class="tdar">
-                    <input id="SOBT" name="SOBT" style="width: 200px" type="text" required="true" class="easyui-timespinner" />
-                </td>
-
-            </tr>
-            <tr>
-                <td class="tdal">降落时刻：
-                </td>
-                <td class="tdar">
-                    <input id="SIBT" name="SIBT" style="width: 200px" type="text" required="true" class="easyui-timespinner" />
-                </td>
-
-            </tr>
-            <tr>
-                <td class="tdal">批件：
-                </td>
-                <td class="tdar">
-
-                    <input type="hidden" name="AttchFilesInfo" id="AttchFilesInfo" />
-                    <input type="file" id="AttchFiles" name="AttchFiles" />
-                    <a id="btn_upload" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('AttchFiles').uploadFiles()">上传</a>
-                    <div id="AttchFiles-fileQueue"></div>
-                    <div id="AttchFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
-                </td>
-
-            </tr>
-            <tr>
-                <td class="tdal">周执行计划：
-                </td>
-                <td class="tdar">
-                    <input id="d1" type="checkbox" name="WeekSchedule" value="1" />星期一
-                             <input id="d2" type="checkbox" name="WeekSchedule" value="2" />星期二
-                             <input id="d3" type="checkbox" name="WeekSchedule" value="3" />星期三
-                             <input id="d4" type="checkbox" name="WeekSchedule" value="4" />星期四
-                             <input id="d5" type="checkbox" name="WeekSchedule" value="5" />星期五
-                             <input id="d6" type="checkbox" name="WeekSchedule" value="6" />星期六
-                             <input id="d7" type="checkbox" name="WeekSchedule" value="7" />星期七
-                </td>
-
-            </tr>
-            <tr>
-                <td class="tdal">其他需要说明的事项：
-                </td>
-                <td class="tdar">
-                    <input id="Remark" name="Remark" maxlength="200" style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
-                </td>
-
-            </tr>
+   
         </table>
 
     </form>
     </div>
     <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
+        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a id="btn_submit" href="javascript:;"  class="easyui-linkbutton">保存并提交</a><a href="javascript:;"
             class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
         <%--添加 修改 end--%>

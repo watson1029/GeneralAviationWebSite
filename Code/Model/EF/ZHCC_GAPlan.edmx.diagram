@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusinessCertificate" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusinessIntroduction" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusinessLicense" Width="1.5" PointX="2.75" PointY="5.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightTask" Width="1.5" PointX="8.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Menu" Width="1.5" PointX="8.75" PointY="3.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.RepetitivePlan" Width="1.5" PointX="8.75" PointY="7.75" />
@@ -23,7 +22,8 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Pilot" Width="1.5" PointX="13.375" PointY="3.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.LoginLog" Width="1.5" PointX="5.375" PointY="9.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aircraft" Width="1.5" PointX="5.375" PointY="12.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Company" Width="1.5" PointX="7.375" PointY="13.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="13.375" PointY="8.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Company" Width="1.5" PointX="5.375" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
