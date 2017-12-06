@@ -1,8 +1,9 @@
 ﻿using DAL.BasicData;
-using Model.BasicData;
 using Model.EF;
 using System.Collections.Generic;
-using Untity;
+using System;
+using System.Linq.Expressions;
+
 namespace BLL.BasicData
 {
     public class AircraftBLL
@@ -31,10 +32,10 @@ namespace BLL.BasicData
         {
             return _dal.Find(m => m.AircraftID == id);
         }
-        public List<Aircraft> FindPagedList(int pageIndex, int pageSize, out int pageCount, out int rowCount, bool isAsc)
+        public List<Aircraft> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<Aircraft, bool>> where)
         {
-            //参考
-            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, m => m.AircraftID == 1, m => m.AircraftID, true);
+            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.AircraftID, true);
         }
+
     }
 }

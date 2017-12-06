@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\Lib\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\Newtonsoft.Json.dll</HintPath>
@@ -45,13 +48,15 @@
   <ItemGroup>
     <Compile Include="BasicData\AircraftBLL.cs" />
     <Compile Include="BasicData\FlightTaskBLL.cs" />
+    <Compile Include="BasicData\Quanlification\BusinessCertificateBLL.cs" />
+    <Compile Include="BasicData\Quanlification\BusinessLicenseBLL.cs" />
+    <Compile Include="FlightPlan\CurrentPlanBLL.cs" />
     <Compile Include="FlightPlan\FlightPlanBLL.cs" />
     <Compile Include="BasicData\PilotBLL.cs" />
-    <Compile Include="BasicData\Quanlification\CBusinessBLL.cs" />
-    <Compile Include="BasicData\Quanlification\CInformationBLL.cs" />
-    <Compile Include="BasicData\Quanlification\CLicenceBLL.cs" />
+    <Compile Include="BasicData\Quanlification\CompanyBLL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanBLL.cs" />
     <Compile Include="FlightPlan\WorkflowTemplateBLL.cs" />
+    <Compile Include="Log\LoginLogBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManagement\MenuBLL.cs" />
     <Compile Include="SystemManagement\RoleBLL.cs" />

@@ -3,11 +3,13 @@ using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Linq.Expressions;
+using System.Text;
 using Untity;
 
-public partial class BasicData_Pilot : BasePage
+public partial class BasicData_Quanlification_BusinessLicense : BasePage
+
 {
-    PilotBLL bll = new PilotBLL();
+    BusinessLicenseBLL bll = new BusinessLicenseBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -58,17 +60,23 @@ public partial class BasicData_Pilot : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var model = new Pilot()
+        var model = new BusinessLicense()
         {
-            Pilots = Request.Form["Pilots"],
-            PilotCardNo = Request.Form["PilotCardNo"],
-            PilotDT = DateTime.Parse(Request.Form["Password"]),
-            PhoneNo = Request.Form["PhoneNo"],
-            LicenseNo = Request.Form["LicenseNo"],
-            Sign = Request.Form["Sign"],
-            Licensesort = Request.Form["Licensesort"],
-            CompanyName = Request.Form["CompanyName"],
-            Sex = byte.Parse(Request.Form["Sex"] ?? "0"),
+            CompanyCode3 = Request.Form["CompanyCode3"],
+            RegisterTime = DateTime.Parse(Request.Form["LegalName"]),
+            RegisterAddress = Request.Form["JoinData"],
+            RegisteredCapital = int.Parse(Request.Form["LegalCard"]),
+            Dealline = int.Parse(Request.Form["Dealline"]),
+            ContactPerson = Request.Form["LegalAddress"],
+            LegalPerson = Request.Form["Capital"],
+            LegalCardNo = Request.Form["LegalPhone"],
+            LegalAddress = Request.Form["EffectiveData"],
+            LegalTelePhone = Request.Form["LegalConsignor"],
+            LegalClientele = Request.Form["Contacts"],
+            DelegateName = Request.Form["ConsignorAddress"],
+            DelegateCardNo = Request.Form["DelegateCardNo"],
+            DelegateAddress = Request.Form["DelegateAddress"],
+            DelegateTelePhone = Request.Form["DelegateTelePhone"],
         };
         if (!id.HasValue)//新增
         {
@@ -99,9 +107,9 @@ public partial class BasicData_Pilot : BasePage
     /// </summary>
     private void GetData()
     {
-        var pilotid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var pilot = bll.Get(pilotid);
-        var strJSON = JsonConvert.SerializeObject(pilot);
+        var blicenseid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var blicense = bll.Get(blicenseid);
+        var strJSON = JsonConvert.SerializeObject(blicense);
         Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -135,11 +143,14 @@ public partial class BasicData_Pilot : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<Pilot, bool>> GetWhere()
+
+
+
+    private Expression<Func<BusinessLicense, bool>> GetWhere()
     {
 
 
-        Expression<Func<Pilot, bool>> predicate = PredicateBuilder.True<Pilot>();
+        Expression<Func<BusinessLicense, bool>> predicate = PredicateBuilder.True<BusinessLicense>();
         predicate = predicate.And(m => 1 == 1);
         //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))

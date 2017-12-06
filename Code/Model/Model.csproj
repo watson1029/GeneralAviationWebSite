@@ -30,12 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework">
       <HintPath>..\Lib\EntityFramework.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\Lib\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -50,9 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicData\CBusiness.cs" />
-    <Compile Include="BasicData\CInformation.cs" />
-    <Compile Include="BasicData\CLicence.cs" />
     <Compile Include="EF\ActualSteps.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
@@ -77,9 +73,7 @@
     <Compile Include="EF\FlightTask.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\LoginLog.cs">
-      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
-    </Compile>
+    <Compile Include="EF\LoginLog.cs" />
     <Compile Include="EF\Menu.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
@@ -125,11 +119,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ZHCC_GAPlan.edmx</DependentUpon>
     </Compile>
+    <Compile Include="FlightPlan\TWFPlan.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstance.cs" />
     <Compile Include="FlightPlan\WorkflowPlan.cs" />
     <Compile Include="FlightPlan\WorkflowTemplate.cs" />
     <Compile Include="FlightPlan\WorkflowTplNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemManagement\KeyValueModel.cs" />
     <Compile Include="SystemManagement\MenuModel.cs" />
     <Compile Include="SystemManagement\TreeNode.cs" />
   </ItemGroup>

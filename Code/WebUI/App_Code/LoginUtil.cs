@@ -48,7 +48,10 @@ public class LoginUtil
                 ID = user.ID,
                 UserName = user.UserName,
                 CreateTime = user.CreateTime,
-                Status = user.Status
+                Status = user.Status,
+                IsGeneralAviation=user.IsGeneralAviation,
+                CompanyCode3=user.CompanyCode3
+
             };
 
             if (!UserLoginService.Instance.InsertOrUpdateLoginInfo(userInfoCookie))

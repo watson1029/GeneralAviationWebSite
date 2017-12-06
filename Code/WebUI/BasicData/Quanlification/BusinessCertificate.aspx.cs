@@ -3,11 +3,14 @@ using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Linq.Expressions;
+using System.Text;
 using Untity;
 
-public partial class BasicData_Pilot : BasePage
+public partial class BasicData_Quanlification_BusinessCertificate : BasePage
+
 {
-    PilotBLL bll = new PilotBLL();
+    BusinessCertificateBLL bll = new BusinessCertificateBLL();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -58,17 +61,18 @@ public partial class BasicData_Pilot : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var model = new Pilot()
+        var model = new BusinessCertificate()
         {
-            Pilots = Request.Form["Pilots"],
-            PilotCardNo = Request.Form["PilotCardNo"],
-            PilotDT = DateTime.Parse(Request.Form["Password"]),
-            PhoneNo = Request.Form["PhoneNo"],
+            CompanyCode3 = Request.Form["CompanyCode3"],
             LicenseNo = Request.Form["LicenseNo"],
-            Sign = Request.Form["Sign"],
-            Licensesort = Request.Form["Licensesort"],
-            CompanyName = Request.Form["CompanyName"],
-            Sex = byte.Parse(Request.Form["Sex"] ?? "0"),
+            BaseAirport = Request.Form["BaseAirport"],
+            ConpanyType = Request.Form["ConpanyType"],
+            RegisteredCapital = int.Parse(Request.Form["RegisteredCapital"]),
+            CapitalLimit = int.Parse(Request.Form["CapitalLimit"]),
+            Legalperson = Request.Form["Legalperson"],
+            ManageItemsScope = Request.Form["ManageItemsScope"],
+            DealLine = int.Parse (Request.Form["DealLine"]),
+            PresentationDate = DateTime.Parse(Request.Form["PresentationDate"]),
         };
         if (!id.HasValue)//新增
         {
@@ -99,9 +103,9 @@ public partial class BasicData_Pilot : BasePage
     /// </summary>
     private void GetData()
     {
-        var pilotid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var pilot = bll.Get(pilotid);
-        var strJSON = JsonConvert.SerializeObject(pilot);
+        var bcertificateid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var bcertificate = bll.Get(bcertificateid);
+        var strJSON = JsonConvert.SerializeObject(bcertificate);
         Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -135,11 +139,14 @@ public partial class BasicData_Pilot : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<Pilot, bool>> GetWhere()
+
+
+
+    private Expression<Func<BusinessCertificate, bool>> GetWhere()
     {
 
 
-        Expression<Func<Pilot, bool>> predicate = PredicateBuilder.True<Pilot>();
+        Expression<Func<BusinessCertificate, bool>> predicate = PredicateBuilder.True<BusinessCertificate>();
         predicate = predicate.And(m => 1 == 1);
         //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
@@ -152,4 +159,3 @@ public partial class BasicData_Pilot : BasePage
     }
 
 }
-

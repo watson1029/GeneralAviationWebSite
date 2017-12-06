@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using Untity.DB;
-using Untity;
-using Model.BasicData;
+﻿using Model.EF;
 
 namespace DAL.BasicData
 {
 
-    public class CInformationDAL:DBHelper<CInformation>
+    public class CompanyDAL : DBHelper<Company>
     {
 
         //private static SqlDbHelper dao = new SqlDbHelper();

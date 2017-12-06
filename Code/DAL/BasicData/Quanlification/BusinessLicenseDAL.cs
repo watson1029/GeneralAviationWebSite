@@ -1,14 +1,10 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
-using Untity.DB;
-using Untity;
-using Model.BasicData;
+﻿
+using Model.EF;
 
 namespace DAL.BasicData
 {
 
-    public class CLicenceDAL:DBHelper<CLicence>
+    public class BusinessLicenseDAL : DBHelper<BusinessLicense>
     {
 
         //private static SqlDbHelper dao = new SqlDbHelper();

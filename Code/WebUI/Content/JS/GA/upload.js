@@ -1,4 +1,5 @@
-﻿; (function (dj, j) {
+﻿//封装上传控件--zyb
+; (function (dj, j) {
     dj.upload = function (options) {
         var cmp = dj.getCmp(options.id);
         //if (!!cmp) {

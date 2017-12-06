@@ -2,9 +2,11 @@
 using Model.EF;
 using Newtonsoft.Json;
 using System;
-using System.Linq.Expressions;
+using System.Linq;
 using System.Text;
 using Untity;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 public partial class SystemManage_UserInfo : BasePage
 {
@@ -26,6 +28,9 @@ public partial class SystemManage_UserInfo : BasePage
                     break;
                 case "del":
                     Delete();
+                    break;
+                case "setrole":
+                    SaveUserRole();
                     break;
                 default:
                     break;
@@ -129,13 +134,14 @@ public partial class SystemManage_UserInfo : BasePage
         int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
         string sort = Request.Form["sort"] ?? "";
         string order = Request.Form["order"] ?? "";
+  
+        if (page < 1) return;
         int pageCount=0;
         int rowCount=0;
-        if (page < 1) return;
         string orderField = sort.Replace("JSON_", "");
-        string strWhere = GetWhere();
-        Expression<System.Func<UserInfo, bool>> exp = u => u.UserName == "admin";
-        var pageList = userBll.GetList(page,size, out pageCount, out rowCount, exp);
+        var strWhere = GetWhere();
+
+        var pageList = userBll.GetList(page, size, out pageCount, out rowCount, strWhere);
        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -146,22 +152,47 @@ public partial class SystemManage_UserInfo : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private string GetWhere()
+    private Expression<Func<UserInfo, bool>> GetWhere()
     {
 
-        Expression<System.Func<UserInfo, bool>> exp;
-        StringBuilder sb = new StringBuilder("1=1");
+
+        Expression<Func<UserInfo, bool>> predicate = PredicateBuilder.True<UserInfo>();
+        predicate = predicate.And(m =>1 == 1);
+     //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            exp = u => u.UserName == Request.Form["search_value"];
+            predicate = u => u.UserName == Request.Form["search_value"];
 
           //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
-        else
+        return predicate;
+    }
+    private void SaveUserRole()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "保存失败！";
+        var userid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var oldUserRoleList = userBll.GetUserRoleList(userid);
+        List<int> newUserRoleList = new List<int>();
+        var array = (Request.Form["newUserRoles"] ?? "").Split(',');
+        foreach (var item in array)
         {
-            sb.AppendFormat("");
+            newUserRoleList.Add(int.Parse(item));
         }
-        return sb.ToString();
+        var sameUserRoleList = oldUserRoleList.Intersect(newUserRoleList);
+        var addUserRoleList = newUserRoleList.Except(sameUserRoleList);
+        var removeUserRoleList = oldUserRoleList.Except(sameUserRoleList);
+        if (userBll.SetUserRole(userid, addUserRoleList, removeUserRoleList))
+        {
+            result.IsSuccess = true;
+            result.Msg = "保存成功！";
+        }
+
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
     }
 
 }

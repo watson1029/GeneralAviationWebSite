@@ -1,20 +1,16 @@
-﻿<%@ WebHandler Language="C#" Class="GetMenuTree" %>
+﻿<%@ WebHandler Language="C#" Class="GetRoleTree" %>
 
+using System;
+using System.Web;
 using BLL.SystemManagement;
 using Model.SystemManagement;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using Untity;
-public class GetMenuTree : IHttpHandler {
+using Newtonsoft.Json;
+public class GetRoleTree : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
-        
-        var roleid = context.Request.QueryString["id"] != null ? Convert.ToInt32(context.Request.QueryString["id"]) : 0;
-       var strJSON= GetRoleTree(roleid);
+        var userid = context.Request.QueryString["id"] != null ? Convert.ToInt32(context.Request.QueryString["id"]) : 0;
+        var strJSON = GetRole(userid);
         context.Response.Clear();
         context.Response.Write(strJSON);
         context.Response.ContentType = "application/json";
@@ -26,18 +22,17 @@ public class GetMenuTree : IHttpHandler {
             return false;
         }
     }
-    private string  GetRoleTree(int roleid)
+    private string GetRole(int userid)
     {
+        UserInfoBLL ubll=new UserInfoBLL();
         RoleBLL bll = new RoleBLL();
-        MenuBLL menubll = new MenuBLL();
-        var model = bll.Get(roleid);
+        var model = ubll.Get(userid);
         var treeNodeList = new List<TreeNode>();
         if (model != null)
         {
-            treeNodeList = menubll.CreateMenuTree(null, roleid, model.IsAdmin);
+            treeNodeList = bll.CreateRoleTree(userid);
         }
         return JsonConvert.SerializeObject(treeNodeList);
 
     }
-
 }

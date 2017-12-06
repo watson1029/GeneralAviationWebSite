@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActualSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -109,6 +109,11 @@
           <Property Name="CompanyCode2" Type="nchar" MaxLength="2" />
           <Property Name="EnglishName" Type="nvarchar" MaxLength="64" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="32" />
+          <Property Name="DomesticFlag" Type="bit" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="512" />
+          <Property Name="SITAAddress" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="AFTNAddress" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="ReferSourceID" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="FlightPlan">
@@ -333,6 +338,7 @@
           <EntitySet Name="BusinessCertificate" EntityType="ZHCC_GAPlanModel.BusinessCertificate" />
           <EntitySet Name="BusinessIntroduction" EntityType="ZHCC_GAPlanModel.BusinessIntroduction" />
           <EntitySet Name="BusinessLicense" EntityType="ZHCC_GAPlanModel.BusinessLicense" />
+          <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Company" />
           <EntitySet Name="FlightPlan" EntityType="ZHCC_GAPlanModel.FlightPlan" />
           <EntitySet Name="FlightTask" EntityType="ZHCC_GAPlanModel.FlightTask" />
           <EntitySet Name="Menu" EntityType="ZHCC_GAPlanModel.Menu" />
@@ -347,7 +353,6 @@
           <EntitySet Name="Pilot" EntityType="ZHCC_GAPlanModel.Pilot" />
           <EntitySet Name="LoginLog" EntityType="ZHCC_GAPlanModel.LoginLog" />
           <EntitySet Name="Aircraft" EntityType="ZHCC_GAPlanModel.Aircraft" />
-          <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Company" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -421,6 +426,22 @@
           <Property Name="DelegateAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DelegateTelePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DelegateCardImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyCode3" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="CompanyCode2" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="EnglishName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="DomesticFlag" Type="Boolean" />
+          <Property Name="Surname" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="SITAAddress" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="AFTNAddress" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ReferSourceID" Type="Int32" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="FlightPlan">
@@ -636,17 +657,6 @@
           <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="Company">
-          <Key>
-            <PropertyRef Name="CompanyID" />
-          </Key>
-          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyCode3" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="CompanyCode2" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="EnglishName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyName" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -728,6 +738,23 @@
                 <ScalarProperty Name="RegisterTime" ColumnName="RegisterTime" />
                 <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Company">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ReferSourceID" ColumnName="ReferSourceID" />
+                <ScalarProperty Name="AFTNAddress" ColumnName="AFTNAddress" />
+                <ScalarProperty Name="SITAAddress" ColumnName="SITAAddress" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="DomesticFlag" ColumnName="DomesticFlag" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="CompanyCode2" ColumnName="CompanyCode2" />
+                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -955,18 +982,6 @@
                 <ScalarProperty Name="AcfNo" ColumnName="AcfNo" />
                 <ScalarProperty Name="AcfType" ColumnName="AcfType" />
                 <ScalarProperty Name="AircraftID" ColumnName="AircraftID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Company">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Company">
-              <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
-                <ScalarProperty Name="CompanyCode2" ColumnName="CompanyCode2" />
-                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
