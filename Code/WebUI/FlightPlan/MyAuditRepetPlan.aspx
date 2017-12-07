@@ -122,11 +122,16 @@
                     $("#SOBT").html(data.SOBT);
                     $("#SIBT").html(data.SIBT);
                     $("#Remark").html(data.Remark);
-                    var fileArray = data.AttchFile.split('|');
-                    for (var i = 0; i < fileArray.length; i++) {
-                        var info = fileArray[i].split(','),
-                        filepath = dj.root + info[0];
-                        $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
+                    if (!!data.AttchFile) {
+                        var fileArray = data.AttchFile.split('|');
+                        for (var i = 0; i < fileArray.length; i++) {
+                            var info = fileArray[i].split(','),
+                            filepath = dj.root + info[0];
+                            $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
+                        }
+                    }
+                    else {
+                        $("#AttchFile").html('');
                     }
                     var arr=[];
                     $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
