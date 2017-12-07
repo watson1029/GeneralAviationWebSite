@@ -27,7 +27,6 @@ namespace Model.EF
     
         public virtual DbSet<ActualSteps> ActualSteps { get; set; }
         public virtual DbSet<BusinessCertificate> BusinessCertificate { get; set; }
-        public virtual DbSet<BusinessIntroduction> BusinessIntroduction { get; set; }
         public virtual DbSet<BusinessLicense> BusinessLicense { get; set; }
         public virtual DbSet<FlightTask> FlightTask { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }

@@ -7,7 +7,6 @@
       <Diagram DiagramId="cee278f8a6fb48aeadf30f9b32aca78e" Name="Diagram1">
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.ActualSteps" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusinessCertificate" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusinessIntroduction" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusinessLicense" Width="1.5" PointX="2.75" PointY="5.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightTask" Width="1.5" PointX="8.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Menu" Width="1.5" PointX="8.75" PointY="3.75" />

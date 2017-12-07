@@ -58,9 +58,6 @@
     <Compile Include="EF\BusinessCertificate.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\BusinessIntroduction.cs">
-      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
-    </Compile>
     <Compile Include="EF\BusinessLicense.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
