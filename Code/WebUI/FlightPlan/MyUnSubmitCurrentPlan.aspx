@@ -2,176 +2,27 @@
     CodeFile="MyUnSubmitCurrentPlan.aspx.cs" Inherits="FlightPlan_MyUnSubmitCurrentPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+
 </asp:Content>
-
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <%--列表 start--%>
-        <table id="tab_list">
-        </table>
-        <div id="tab_toolbar" style="padding: 2px 2px;">
-            <div style="float:right">
-                <input id="ipt_search" menu="#search_menu"/>
-                <div id="search_menu" style="width: 200px">
-                    <div name="PlanCode">
-                        申请单号
-                    </div>
+    <table id="tab_list">
+    </table>
+    <div id="tab_toolbar" style="padding: 2px 2px;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>
+
+        <div style="float: right">
+            <input id="ipt_search" menu="#search_menu" />
+            <div id="search_menu" style="width: 200px">
+                <div name="PlanCode">
+                    申请单号
                 </div>
-            </div> 
+            </div>
         </div>
+
+    </div>
     <%--列表 end--%>
-    <%--添加 修改 start--%>
-   <div id="edit" class="easyui-dialog" style="width: 600px; height:600px;"
-        modal="true" closed="true" buttons="#edit-buttons">
-        <form id="form_edit"  method="post">
-                <table class="table_edit">
-      
-                    <tr>
-                        <td class="tdal">任务类型：
-                        </td>
-                        <td class="tdar">
-                            <input id="FlightType" name="FlightType" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200" class="easyui-combobox" readonly="true"/>
-                        </td>
 
-                    </tr>
-                      <tr>
-                        <td class="tdal">航空器类型：
-                        </td>
-                        <td class="tdar">
-                            <input id="AircraftType" name="AircraftType" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200" class="easyui-combobox" readonly="true"/>
-                        </td>
-
-                    </tr>
-                       <tr>
-                        <td class="tdal">航线走向和飞行高度：
-                        </td>
-                        <td class="tdar">
-                            <input id="FlightDirHeight" name="FlightDirHeight"  maxlength="30" type="text" class="easyui-textbox" readonly="true"/>
-                        </td>
-
-                    </tr>
-                      <tr>
-                        <td class="tdal">起飞机场：
-                        </td>
-                        <td class="tdar">
-                            <input id="ADEP" name="ADEP"  maxlength="30" type="text"   class="easyui-textbox" readonly="true"/>
-                        </td>
-
-                    </tr>
-                         <tr>
-                        <td class="tdal">降落机场：
-                        </td>
-                        <td class="tdar">
-                            <input id="ADES" name="ADES"  maxlength="30" type="text"  class="easyui-textbox" readonly="true"/>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="tdal">预计开始日期：
-                        </td>
-                        <td class="tdar">
-                            <input id="StartDate" name="StartDate" style="width:200px" type="text"  class="easyui-datebox" readonly="true"/>
-                        </td>
-
-                    </tr>
-                      <tr>
-                        <td class="tdal">预计结束日期：
-                        </td>
-                        <td class="tdar">
-                            <input id="EndDate" name="EndDate"  style="width:200px"  type="text" class="easyui-datebox" readonly="true"/>
-                        </td>
-
-                    </tr>
-                       <tr>
-                        <td class="tdal">起飞时刻：
-                        </td>
-                        <td class="tdar">
-                            <input id="SOBT" name="SOBT" style="width:200px" type="text"  readonly="true" class="easyui-timespinner" />
-                        </td>
-
-                    </tr>
-                       <tr>
-                        <td class="tdal">降落时刻：
-                        </td>
-                        <td class="tdar">
-                            <input id="SIBT" name="SIBT" style="width:200px" type="text"  readonly="true"class="easyui-timespinner"/>
-                        </td>
-
-                    </tr>
-                          <tr>
-                        <td class="tdal">批件：
-                        </td>
-                        <td class="tdar">
-                                 <input id="AttchFile" name="AttchFile"  maxlength="30" type="text"  readonly="true" class="easyui-textbox" />
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="tdal">周执行计划：
-                        </td>
-                        <td class="tdar">
-                             <input id="d1" type="checkbox" name ="WeekSchedule" value="1" disabled="disabled"/>星期一
-                             <input id="d2" type="checkbox" name ="WeekSchedule" value="2" disabled="disabled"/>星期二
-                             <input id="d3" type="checkbox" name ="WeekSchedule" value="3" disabled="disabled"/>星期三
-                             <input id="d4" type="checkbox" name ="WeekSchedule" value="4" disabled="disabled"/>星期四
-                             <input id="d5" type="checkbox" name ="WeekSchedule" value="5" disabled="disabled"/>星期五
-                             <input id="d6" type="checkbox" name ="WeekSchedule" value="6" disabled="disabled"/>星期六
-                             <input id="d7" type="checkbox" name ="WeekSchedule" value="7" disabled="disabled"/>星期七
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="tdal">其他需要说明的事项：
-                        </td>
-                        <td class="tdar">
-                            <input id="Remark" name="Remark"  maxlength="200" style="width:300px;height:150px" type="text" data-options="multiline:true"  class="easyui-textbox" readonly="true"/>
-                        </td>
-
-                    </tr>
-                    <tr>
-                    <td class="tdal">作业区天气：
-                    </td>
-                    <td class="tdar">
-                        <input id="WeatherCondition" name="WeatherCondition"  maxlength="30" type="text"   class="easyui-textbox" runat="server"/>
-                    </td>
-
-                    </tr>
-                         <tr>
-                        <td class="tdal">作业架次：
-                        </td>
-                        <td class="tdar">
-                            <input id="AircrewGroupNum" name="AircrewGroupNum"  maxlength="30" type="text"  class="easyui-numberbox" runat="server"/>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="tdal">开始时间：
-                        </td>
-                        <td class="tdar">
-                            <input id="ActualStartTime" name="ActualStartTime" style="width:200px" type="text"  class="easyui-datebox" runat="server"/>
-                        </td>
-
-                    </tr>
-                      <tr>
-                        <td class="tdal">结束时间：
-                        </td>
-                        <td class="tdar">
-                            <input id="ActualEndTime" name="ActualEndTime"  style="width:200px"  type="text" class="easyui-datebox" runat="server"/>
-                        </td>
-
-                    </tr>
-                </table>
-
-        </form>
-    </div>
-    <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
-            class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>
-    </div>
-    <%--添加 修改 end--%>
-  <script type="text/javascript">
-
+    <script type="text/javascript">
         $(function () {
             Main.InitGird();
             Main.InitSearch();
@@ -182,8 +33,8 @@
                 $('#tab_list').datagrid({
                     title: '列表', //表格标题
                     url: location.href, //请求数据的页面
-                    sortName: 'ID', //排序字段
-                    idField: 'ID', //标识字段,主键
+                    sortName: 'FlightPlanID', //排序字段
+                    idField: 'FlightPlanID', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
                     height: $(parent.document).find("#mainPanel").height() - 10 > 0 ? $(parent.document).find("#mainPanel").height() - 10 : 300, //高度
@@ -194,27 +45,54 @@
                     sortOrder: 'desc', //排序类型
                     remoteSort: true, //定义是否从服务器给数据排序
                     frozenColumns: [[//冻结的列，不会随横向滚动轴移动
+                        { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '申请单号', field: 'PlanCode', width: 100 },
-                        { title: '任务类型', field: 'FlightType', width: 100 },
-                        { title: '使用机型', field: 'AircraftType', width: 100 },
+                        { title: '申请单号', field: 'PlanCode', width: 180 },
+                        { title: '任务类型', field: 'FlightType', width: 60 },
+                        { title: '航空器呼号', field: 'CallSign', width: 80 },
+                        { title: '使用机型', field: 'AircraftType', width: 60 },
                         { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
-                        { title: '预计开始时间', field: 'StartDate', width: 100 },
-                        { title: '预计结束时间', field: 'EndDate', width: 100 },
-                        { title: '起飞时刻', field: 'SOBT', width: 100 },
-                        { title: '降落时刻', field: 'SIBT', width: 100 },
-                        { title: '起飞机场', field: 'ADEP', width: 100 },
-                        { title: '降落机场', field: 'ADES', width: 100 },
+                        {
+                            title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
 
-                        { title: '公司三字码', field: 'CompanyCode3', width: 100 },
-                         { title: '创建人', field: 'Creator', width: 100 },
+                                var timesstamp = new Date(value);
+                                return timesstamp.toLocaleDateString();
+
+                            }
+                        },
+                        {
+                            title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) {
+
+                                var timesstamp = new Date(value);
+                                return timesstamp.toLocaleDateString();
+
+                            }
+                        },
+                        {
+                            title: '起飞时刻', field: 'SOBT', width: 100
+                        },
+                        { title: '降落时刻', field: 'SIBT', width: 100 },
+                        { title: '起飞机场', field: 'ADEP', width: 80 },
+                        { title: '降落机场', field: 'ADES', width: 80 },
+
+                        {
+                            title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
+                                var array = [];
+                                $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
+                                    array.push("星期" + n);
+                                });
+                                return array.join(',');
+
+                            }
+                        },
+                         { title: '创建人', field: 'CreatorName', width: 60 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
-                        { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 100 },
+                        { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
-                            title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">编辑&提交</a>';
+                            title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>';
                                 return str;
                             }
                         }
@@ -246,9 +124,54 @@
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
-                $.messager.confirm('提示', '确认保存并提交该条当日飞行计划？', function (r) {
+
+                var json = $.param({ "id": uid, "action": "save" }) + '&' + $('#form_edit').serialize();
+                $.post(location.href, json, function (data) {
+                    $.messager.alert('提示', data.msg, 'info', function () {
+                        if (data.isSuccess) {
+                            $("#tab_list").datagrid("reload");
+                            $("#edit").dialog("close");
+                        }
+                    });
+                });
+            },
+
+            //修改链接 事件
+            EditData: function (uid) {
+                $("#edit").dialog("open").dialog('setTitle', '编辑');
+                $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
+                $("#btn_submit").attr("onclick", "Main.Submit(" + uid + ");");
+                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
+                    $("#form_edit").form('load', data);
+                    $("#FlightType").html(data.FlightType);
+                    $("#AircraftType").html(data.AircraftType);
+                    $("#FlightDirHeight").html(data.FlightDirHeight);
+                    $("#ADEP").html(data.ADEP);
+                    $("#ADES").html(data.ADES);
+                    $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
+                    $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
+                    $("#SOBT").html(data.SOBT);
+                    $("#SIBT").html(data.SIBT);
+                    $("#AircraftNum").html(data.AircraftNum);
+                    $("#Pilot").html(data.Pilot);
+                    $("#ContactWay").html(data.ContactWay);
+                    $("#AircrewGroupNum").html(data.AircrewGroupNum);
+                    var fileArray = data.AttchFile.split('|');
+                    for (var i = 0; i < fileArray.length; i++) {
+                        var info = fileArray[i].split(','),
+                        filepath = dj.root + info[0];
+                        $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
+                    }
+                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
+                        $("#d" + n).attr("checked", true);
+                    });
+                });
+            },
+           
+            Submit: function (uid) {
+                var json = $.param({ "id": uid, "action": "submit" }) + '&' + $('#form_edit').serialize();
+                $.messager.confirm('提示', '确认提交该条飞行计划？', function (r) {
                     if (r) {
-                        var json = $.param({ "id": uid, "action": "savesubmit", "qx": qx }) + '&' + $('#form_edit').serialize();
                         $.post(location.href, json, function (data) {
                             $.messager.alert('提示', data.msg, 'info', function () {
                                 if (data.isSuccess) {
@@ -258,33 +181,134 @@
                             });
                         });
                     }
-                });                
-            },
-
-            //修改链接 事件
-            EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑');
-                $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
-
-                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {        
-                    $("#form_edit").form('load', data);
-                    $.each(data.WeekSchedule.toCharArray(), function (i, n) {
-                        $("#d" + n).attr("checked",true);
-                    });
                 });
-            },
 
-            Submit: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑&提交');
-                $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
-
-                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
-                    $("#form_edit").form('load', data);
-                    $.each(data.WeekSchedule.toCharArray(), function (i, n) {
-                        $("#d" + n).attr("checked", true);
-                    });
-                });
             }
         };
     </script>
+
+    <%--添加 修改 start--%>
+    <div id="edit" class="easyui-dialog" style="width: 700px; height: 600px;"
+        modal="true" closed="true" buttons="#edit-buttons">
+        <form id="form_edit" method="post">
+            <table class="table_edit">
+                <tr>
+                    <th>任务类型：
+                    </th>
+                    <td id="FlightType">
+                    </td>
+                    <th>航空器类型：
+                    </th>
+                    <td id="AircraftType">
+                    </td>
+                </tr>
+                <tr>
+                    <th>航线走向和飞行高度：
+                    </th>
+                    <td id="FlightDirHeight">
+                    </td>
+                    <th>航空器呼号：
+                    </th>
+                    <td id="CallSign">
+                    </td>
+                </tr>
+                <tr>
+                    <th>起飞机场：
+                    </th>
+                    <td id="ADEP">
+                    </td>
+                    <th>降落机场：
+                    </th>
+                    <td id="ADES">
+                    </td>
+                </tr>
+                <tr>
+                    <th>预计开始日期：
+                    </th>
+                    <td id="StartDate">
+                    </td>
+                    <th>预计结束日期：
+                    </th>
+                    <td id="EndDate">
+                    </td>
+                </tr>
+                <tr>
+                    <th>起飞时刻：
+                    </th>
+                    <td id="SOBT">
+                    </td>
+                    <th>降落时刻：
+                    </th>
+                    <td id="SIBT">
+                    </td>
+                </tr>
+                <tr>
+                    <th>批件：
+                    </th>
+                    <td id="AttchFile">
+                    </td>
+                    <th>周执行计划：
+                    </th>
+                    <td id="WeekSchedule">
+                    </td>
+                </tr>
+                <tr>
+                    <th style="width:160px;">其他需要说明的事项：
+                    </th>
+                    <td id="Remark">
+                    </td>
+                </tr>
+                <tr>
+                    <th>航空器架数：
+                    </th>
+                    <td id="AircraftNum">
+                    </td>
+                    <th>机长（飞行员）姓名：
+                    </th>
+                    <td id="Pilot">
+                    </td>
+                </tr>
+                <tr>
+                    <th>通信联络方法：
+                    </th>
+                    <td id="ContactWay">
+                    </td>
+                    <th>飞行气象条件：
+                    </th>
+                    <td id="WeatherCondition">
+                    </td>
+                </tr>
+                <tr>
+                    <th>空勤组人数：
+                    </th>
+                    <td id="AircrewGroupNum">
+                    </td>
+                    <th style="width:160px;">二次雷达应答机代码：
+                    </th>
+                    <td id="RadarCode">
+                    </td>
+                </tr>
+            </table>
+            <table class="table_edit">                
+                <tr>
+                    <th>实际开始日期：
+                    </th>
+                    <td>
+                        <input id="ActualStartTime" name="ActualStartTime" type="text" required="true" class="easyui-datebox"/>
+                    </td>
+                    <th style="width:160px;">实际结束日期：
+                    </th>
+                    <td>
+                        <input id="ActualEndTime" name="ActualEndTime" type="text" required="true" class="easyui-datebox"/>
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+    <div id="edit-buttons">
+        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a id="btn_submit" href="javascript:;" class="easyui-linkbutton">保存并提交</a><a href="javascript:;"
+            class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
+    </div>
+    <%--添加 修改 end--%>
 </asp:Content>

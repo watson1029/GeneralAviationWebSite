@@ -53,7 +53,6 @@
                   sortOrder: 'desc', //排序类型
                   remoteSort: true, //定义是否从服务器给数据排序
                   frozenColumns: [[//冻结的列，不会随横向滚动轴移动
-                      { field: 'cbx', checkbox: true },
                   ]],
                   columns: [[
                       { title: '申请单号', field: 'PlanCode', width: 100 },
@@ -98,8 +97,7 @@
                       {
                           title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
                               var array = [];
-                              $.each(value.toCharArray(), function (i, n) {
-
+                              $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
                                   array.push("星期" + n);
                               });
                               return array.join(',');
@@ -107,15 +105,8 @@
                           }
                       },
                        { title: '创建人', field: 'CreatorName', width: 60 },
-                        { title: '其他需要说明的事项', field: 'Remark', width: 150 },
-
-                      { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 100 },
-                      {
-                          title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                              var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
-                              return str;
-                          }
-                      }
+                       { title: '其他需要说明的事项', field: 'Remark', width: 150 },
+                       { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 100 },                      
                   ]],
                   toolbar: "#tab_toolbar",
                   queryParams: { "action": "query" },
@@ -137,8 +128,7 @@
                   },
                   prompt: '请输入要查询的信息'
               });
-          }
-
+          },          
       };
-    </script>
+    </script>     
 </asp:Content>
