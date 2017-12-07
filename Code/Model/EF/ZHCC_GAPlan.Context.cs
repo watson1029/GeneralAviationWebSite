@@ -31,7 +31,6 @@ namespace Model.EF
         public virtual DbSet<FlightTask> FlightTask { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<RepetitivePlan> RepetitivePlan { get; set; }
-        public virtual DbSet<Resource> Resource { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<RoleMenu> RoleMenu { get; set; }
         public virtual DbSet<TWFLibrary> TWFLibrary { get; set; }
@@ -43,5 +42,6 @@ namespace Model.EF
         public virtual DbSet<Aircraft> Aircraft { get; set; }
         public virtual DbSet<FlightPlan> FlightPlan { get; set; }
         public virtual DbSet<Company> Company { get; set; }
+        public virtual DbSet<Resource> Resource { get; set; }
     }
 }

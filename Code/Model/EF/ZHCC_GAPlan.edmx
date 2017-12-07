@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActualSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -104,6 +104,9 @@
           <Property Name="Catalog" Type="int" />
           <Property Name="ActorID" Type="int" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedByName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedTime" Type="datetime" />
         </EntityType>
         <EntityType Name="FlightPlan">
           <Key>
@@ -227,7 +230,7 @@
           <Property Name="Title" Type="nchar" MaxLength="60" />
           <Property Name="DealUser" Type="nchar" MaxLength="20" />
           <Property Name="ResourceType" Type="int" />
-          <Property Name="UsefulTime" Type="nchar" MaxLength="20" />
+          <Property Name="UsefulTime" Type="nchar" MaxLength="40" />
           <Property Name="FilePath" Type="nchar" MaxLength="200" />
           <Property Name="Created" Type="datetime" />
           <Property Name="IsDeleted" Type="int" />
@@ -328,7 +331,6 @@
           <EntitySet Name="FlightTask" EntityType="ZHCC_GAPlanModel.FlightTask" />
           <EntitySet Name="Menu" EntityType="ZHCC_GAPlanModel.Menu" />
           <EntitySet Name="RepetitivePlan" EntityType="ZHCC_GAPlanModel.RepetitivePlan" />
-          <EntitySet Name="Resource" EntityType="ZHCC_GAPlanModel.Resource" />
           <EntitySet Name="Role" EntityType="ZHCC_GAPlanModel.Role" />
           <EntitySet Name="RoleMenu" EntityType="ZHCC_GAPlanModel.RoleMenu" />
           <EntitySet Name="TWFLibrary" EntityType="ZHCC_GAPlanModel.TWFLibrary" />
@@ -340,6 +342,7 @@
           <EntitySet Name="Aircraft" EntityType="ZHCC_GAPlanModel.Aircraft" />
           <EntitySet Name="FlightPlan" EntityType="ZHCC_GAPlanModel.FlightPlan" />
           <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Company" />
+          <EntitySet Name="Resource" EntityType="ZHCC_GAPlanModel.Resource" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -454,23 +457,6 @@
           <Property Name="ADES" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CallSign" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Resource">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="60" FixedLength="true" Unicode="true" />
-          <Property Name="DealUser" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="ResourceType" Type="Int32" />
-          <Property Name="UsefulTime" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="FilePath" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
-          <Property Name="Created" Type="DateTime" Precision="3" />
-          <Property Name="IsDeleted" Type="Int32" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="SenderId" Type="Int32" />
-          <Property Name="Started" Type="DateTime" Precision="0" />
-          <Property Name="Ended" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -632,6 +618,26 @@
           <Property Name="Catalog" Type="Int32" />
           <Property Name="ActorID" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedByName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Resource">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="60" FixedLength="true" Unicode="true" />
+          <Property Name="DealUser" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="ResourceType" Type="Int32" />
+          <Property Name="UsefulTime" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+          <Property Name="FilePath" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="SenderId" Type="Int32" />
+          <Property Name="Started" Type="DateTime" Precision="0" />
+          <Property Name="Ended" Type="DateTime" Precision="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -756,24 +762,6 @@
                 <ScalarProperty Name="FlightType" ColumnName="FlightType" />
                 <ScalarProperty Name="PlanCode" ColumnName="PlanCode" />
                 <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Resource">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Resource">
-              <MappingFragment StoreEntitySet="Resource">
-                <ScalarProperty Name="Ended" ColumnName="Ended" />
-                <ScalarProperty Name="Started" ColumnName="Started" />
-                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Created" ColumnName="Created" />
-                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
-                <ScalarProperty Name="UsefulTime" ColumnName="UsefulTime" />
-                <ScalarProperty Name="ResourceType" ColumnName="ResourceType" />
-                <ScalarProperty Name="DealUser" ColumnName="DealUser" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -935,6 +923,9 @@
           <EntitySetMapping Name="Company">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Company">
               <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
+                <ScalarProperty Name="ModifiedByName" ColumnName="ModifiedByName" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="ActorID" ColumnName="ActorID" />
                 <ScalarProperty Name="Catalog" ColumnName="Catalog" />
@@ -946,6 +937,24 @@
                 <ScalarProperty Name="CompanyCode2" ColumnName="CompanyCode2" />
                 <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resource">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Resource">
+              <MappingFragment StoreEntitySet="Resource">
+                <ScalarProperty Name="Ended" ColumnName="Ended" />
+                <ScalarProperty Name="Started" ColumnName="Started" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="UsefulTime" ColumnName="UsefulTime" />
+                <ScalarProperty Name="ResourceType" ColumnName="ResourceType" />
+                <ScalarProperty Name="DealUser" ColumnName="DealUser" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

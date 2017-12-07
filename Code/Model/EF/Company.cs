@@ -25,5 +25,8 @@ namespace Model.EF
         public Nullable<int> Catalog { get; set; }
         public Nullable<int> ActorID { get; set; }
         public string State { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public string ModifiedByName { get; set; }
+        public Nullable<System.DateTime> ModifiedTime { get; set; }
     }
 }
