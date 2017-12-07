@@ -100,14 +100,14 @@
         </div>
         <div class="easyui-panel" title="资料列表">
             <div style="margin: 20px 0;"></div>
-            <table id="dg" title="通航资料" style="width: 1308px; height: 350px" data-options="pageSize:10,rownumbers:true,singleSelect:true,pagination:true,method:'post'">
+            <table id="dg" title="通航资料" style="width: 1358px; height: 350px" data-options="pageSize:10,rownumbers:true,singleSelect:true,pagination:true,method:'post'">
                 <thead>
                     <tr>
-                        <th data-options="field:'Created',width:155,align:'center',formatter:formatDate">时间</th>
+                        <th data-options="field:'Created',width:155,align:'center',formatter:formatDate">发布时间</th>
                         <th data-options="field:'Title',width:350,align:'center'">标题</th>
                         <th data-options="field:'DealUser',width:100,align:'center'">处理人</th>
                         <th data-options="field:'ResourceType',width:220,align:'center',formatter:formatType">资料类别</th>
-                        <th data-options="field:'UsefulTime',width:150,align:'center'">有效时间</th>
+                        <th data-options="field:'UsefulTime',width:200,align:'center'">有效时间</th>
                         <th data-options="field:'FilePath',width:100,align:'center',formatter:formatFile">附件</th>
                         <th data-options="field:'Status',width:100,align:'center',formatter:formatStatus">状态</th>
                         <th data-options="field:'ID',width:100,align:'center',formatter:formatOperation">操作</th>
@@ -191,6 +191,7 @@
                         $.messager.show({
                             title: result
                         });
+                        setTimeout(function () { location.reload() }, 2000);
                     }
                 });
             }
@@ -205,6 +206,7 @@
                         $.messager.show({
                             title: result
                         });
+                        setTimeout(function () { location.reload() }, 2000);
                     }
                 });
             }

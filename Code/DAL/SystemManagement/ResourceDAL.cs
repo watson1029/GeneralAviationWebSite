@@ -16,12 +16,12 @@ namespace DAL.SystemManagement
     {
         //   private static SqlDbHelper dao = new SqlDbHelper();
         //删除资料
-        public int Delete(int ID)
+        public int DeleteResource(int ID)
         {
             return base.Delete(new Resource() { ID = ID });
         }
         //新增资料
-        public int Add(Resource res)
+        public int AddResource(Resource res)
         {
             return base.Add(res);
         }
@@ -30,7 +30,7 @@ namespace DAL.SystemManagement
         /// </summary>
         /// <param name="res"></param>
         /// <returns></returns>
-        public int Update(Resource res)
+        public int UpdateResource(Resource res)
         {
             string[] paramters;
             if (res.FilePath == null || res.FilePath.Equals(""))
