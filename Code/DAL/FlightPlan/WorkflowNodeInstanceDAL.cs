@@ -200,7 +200,11 @@ namespace DAL.FlightPlan
             var model = new RepetitivePlan() { ActorID = plan.Actor, PlanState = plan.PlanState, RepetPlanID = plan.PlanID };
             new DBHelper<RepetitivePlan>().Update(model, "Actor", "PlanState");
         }
-       
+        public static void UpdateFlightPlan(WorkflowPlan plan)
+        {
+            var model = new Model.EF.FlightPlan() { ActorID = plan.Actor, PlanState = plan.PlanState, FlightPlanID = plan.PlanID };
+            new DBHelper<Model.EF.FlightPlan>().Update(model, "Actor", "PlanState");
+        }
 
         /// <summary>
         /// 审核不通过

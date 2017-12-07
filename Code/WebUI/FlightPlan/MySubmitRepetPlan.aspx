@@ -41,8 +41,8 @@
               $('#tab_list').datagrid({
                   title: '列表', //表格标题
                   url: location.href, //请求数据的页面
-                  sortName: 'ID', //排序字段
-                  idField: 'ID', //标识字段,主键
+                  sortName: 'RepetPlanID', //排序字段
+                  idField: 'RepetPlanID', //标识字段,主键
                   iconCls: '', //标题左边的图标
                   width: '99%', //宽度
                   height: $(parent.document).find("#mainPanel").height() - 10 > 0 ? $(parent.document).find("#mainPanel").height() - 10 : 300, //高度
