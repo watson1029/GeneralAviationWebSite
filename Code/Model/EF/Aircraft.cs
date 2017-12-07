@@ -15,6 +15,7 @@ namespace Model.EF
     public partial class Aircraft
     {
         public int AircraftID { get; set; }
+        public string AircraftSign { get; set; }
         public string AcfType { get; set; }
         public string AcfNo { get; set; }
         public string AcfClass { get; set; }
@@ -30,6 +31,5 @@ namespace Model.EF
         public Nullable<double> MaxSpeed { get; set; }
         public string CompanyCode3 { get; set; }
         public System.DateTime CreateTime { get; set; }
-        public string AircraftSign { get; set; }
     }
 }

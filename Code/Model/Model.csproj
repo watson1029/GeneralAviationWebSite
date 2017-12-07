@@ -76,6 +76,9 @@
     <Compile Include="EF\Menu.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\OperationLog.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\Pilot.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
