@@ -11,7 +11,6 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightTask" Width="1.5" PointX="8.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Menu" Width="1.5" PointX="8.75" PointY="3.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.RepetitivePlan" Width="1.5" PointX="8.75" PointY="7.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Resource" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Role" Width="1.5" PointX="10.75" PointY="4.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.RoleMenu" Width="1.5" PointX="10.75" PointY="7.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.TWFLibrary" Width="1.5" PointX="10.75" PointY="10.75" />
@@ -20,9 +19,11 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.UserRole" Width="1.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Pilot" Width="1.5" PointX="13.375" PointY="3.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.LoginLog" Width="1.5" PointX="5.375" PointY="9.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aircraft" Width="1.5" PointX="5.375" PointY="12.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="13.375" PointY="8.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Company" Width="1.5" PointX="5.375" PointY="5.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Resource" Width="1.5" PointX="7.375" PointY="13.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aircraft" Width="1.5" PointX="9.375" PointY="13.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.OperationLog" Width="1.5" PointX="15.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
