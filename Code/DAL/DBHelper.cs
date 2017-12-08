@@ -119,6 +119,7 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public int Update(T entity, params string[] propertyNames)
     {
+        RemoveHoldingEntityInContext(entity);
         DbEntityEntry entry = context.Entry<T>(entity);
         entry.State = EntityState.Unchanged;
         foreach (string propertyName in propertyNames)
@@ -127,6 +128,20 @@ public class DBHelper<T> where T : class
         }
         context.Configuration.ValidateOnSaveEnabled = false;
         return context.SaveChanges();
+    }
+    public void RemoveHoldingEntityInContext(T entity)
+    {
+        var objContext = ((IObjectContextAdapter)context).ObjectContext;
+        var objSet = objContext.CreateObjectSet<T>();
+        var entityKey = objContext.CreateEntityKey(objSet.EntitySet.Name,entity);
+        object foundEntity;
+        var exists = objContext.TryGetObjectByKey(entityKey,out foundEntity);
+        if (exists)
+        {
+            objContext.Detach(foundEntity);
+        }
+    
+    
     }
     /// <summary>
     /// 按条件查询，返回单个实体
