@@ -47,6 +47,11 @@
   <ItemGroup>
     <Compile Include="AjaxResult.cs" />
     <Compile Include="DB\SqlDbHelper.cs" />
+    <Compile Include="EntityExtension.cs" />
+    <Compile Include="EnumerableExtension.cs" />
+    <Compile Include="FastProperty.cs" />
+    <Compile Include="FastType.cs" />
+    <Compile Include="ObjectExtension.cs" />
     <Compile Include="OrderHelper.cs" />
     <Compile Include="Pager\PagedList.cs" />
     <Compile Include="PredicateBuilder.cs" />

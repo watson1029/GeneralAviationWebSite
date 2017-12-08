@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
-
+using Newtonsoft.Json;
 public partial class FlightPlan_MySubmitFlightPlan : BasePage
 {
     FlightPlanBLL bll = new FlightPlanBLL();
@@ -21,7 +21,9 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
                 case "query"://查询数据
                     QueryData();
                     break;
-
+                case "queryone"://获取一条记录
+                    GetData();
+                    break;
                 default:
                     break;
             }
@@ -62,5 +64,18 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
             predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
         }
         return predicate;
+    }
+    /// <summary>
+    /// 获取指定ID的数据
+    /// </summary>
+    private void GetData()
+    {
+        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var plan = bll.Get(planid);
+        var strJSON = JsonConvert.SerializeObject(plan);
+        Response.Clear();
+        Response.Write(strJSON);
+        Response.ContentType = "application/json";
+        Response.End();
     }
 }

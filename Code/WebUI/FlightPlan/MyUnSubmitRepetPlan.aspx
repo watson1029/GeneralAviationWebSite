@@ -171,7 +171,7 @@
                 }
                 var idArray = [];
                 for (var i = 0; i < selRow.length; i++) {
-                    var id = selRow[i].ID;
+                    var id = selRow[i].RepetPlanID;
                     idArray.push(id);
                 }
                 $.messager.confirm('提示', '确认删除该条记录？', function (r) {
