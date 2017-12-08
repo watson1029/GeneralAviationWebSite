@@ -44,6 +44,45 @@ namespace BLL.SupplyDemandInformation
                 {
                     dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "PlanState");
                 });
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 审核通过
+        /// </summary>
+        /// <param name="planid"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public bool Audit(int id, string comment)
+        {
+            try
+            {
+                WorkflowNodeInstanceDAL.Submit(id, comment, workPlan => { });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 审核不通过
+        /// </summary>
+        /// <param name="planid"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public bool Terminate(int id, string comment)
+        {
+            try
+            {
+                WorkflowNodeInstanceDAL.Terminate(id, comment, workPlan => { });
                 return true;
             }
             catch (Exception ex)
