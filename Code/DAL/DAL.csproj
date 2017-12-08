@@ -58,6 +58,7 @@
     <Compile Include="FlightPlan\WorkflowNodeInstanceDAL.cs" />
     <Compile Include="FlightPlan\WorkflowTplNodeDAL.cs" />
     <Compile Include="Log\LoginLogDAL.cs" />
+    <Compile Include="Log\OperationLogDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManagement\MenuDAL.cs" />
     <Compile Include="SystemManagement\ResourceDAL.cs" />

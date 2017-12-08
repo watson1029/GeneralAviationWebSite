@@ -1,4 +1,4 @@
-﻿// 为模型“E:\VS2015Projects\GeneralAviationWebSite\Code\Model\EF\ZHCC_GAPlan.edmx”启用了 T4 代码生成。
+﻿// 为模型“E:\我参与的工作\郑州通航飞行计划申报系统\GeneralAviationWebSite\Code\Model\EF\ZHCC_GAPlan.edmx”启用了 T4 代码生成。
 // 要启用旧代码生成功能，请将“代码生成策略”设计器属性的值
 // 更改为“旧的 ObjectContext”。当在设计器中打开该模型时，此属性会出现在
 // “属性”窗口中。

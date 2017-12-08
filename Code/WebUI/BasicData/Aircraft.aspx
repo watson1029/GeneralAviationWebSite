@@ -15,7 +15,7 @@
             <div style="float:right">
                 <input id="ipt_search" menu="#search_menu"/>
                 <div id="search_menu" style="width: 200px">
-                    <div name="AircraftID">
+                    <div name="AircraftSign">
                         国籍和登记标志：
                     </div>
                 </div>
@@ -23,7 +23,7 @@
         </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 600px; height: 350px;"
+    <div id="edit" class="easyui-dialog" style="width: 900px; height: 500px;"
         modal="true" closed="true" buttons="#edit-buttons">
          <form id="form_edit"  method="post" >
                 <table class="table_edit">
@@ -31,26 +31,26 @@
                         <td class="tdal">国籍和登记标志：
                             </td>
                             <td class="tdar">
-                                <input id="AircraftSign" name="AircraftSign" type="text" class="easyui-textbox" maxlength="10"
+                              <input id="AircraftSign" name="AircraftSign" type="text" class="easyui-textbox"    data-options="validType:'length[1,6]'"                              
                                      required="true" />
                             </td>
-                            <td class="tdal">最大加油量:
+                            <td class="tdal">最大加油量:(L)
                             </td>
                             <td class="tdar">
-                                <input id="FuelCapacity" name="MaxCapacity" type="text" class="easyui-textbox" maxlength="10"/>
+                                <input id="FuelCapacity" name="FuelCapacity" type="text" class="easyui-numberbox"   data-options="min:0,precision:0"/>
                             </td>
                     </tr>
                     <tr>
-                            <td class="tdal">机型：
+                            <td class="tdal" style="height: 25px">机型：
                             </td>
-                            <td class="tdar">
-                                <input id="AcfType" name="AcfType" type="text" class="easyui-textbox" maxlength="10" 
+                            <td class="tdar" style="height: 25px">
+                                <input id="AcfType" name="AcfType" type="text" class="easyui-textbox" maxlength="10"  data-options="validType:'length[1,6]'"
                                      required="true"/>
                             </td>      
-                            <td class="tdal">航程：
+                            <td class="tdal" style="height: 25px">航程：(KM)
                             </td>
-                            <td class="tdar">
-                                 <input id="Range" name="Range" type="text" class="easyui-textbox"  maxlength="10"/>
+                            <td class="tdar" style="height: 25px">
+                                 <input id="Range" name="Range" type="text" class="easyui-numberbox"  maxlength="10"/>
                             </td>
                      </tr>
                     <tr>
@@ -61,7 +61,7 @@
                         </td>
                         <td class="tdal">年检日期：</td>
                         <td class="tdar">
-                            <input id="ASdate" name="ASdate" type="text" class="easyui-textbox" maxlength="10"
+                            <input id="ASdate" name="ASdate" type="text" class="easyui-datebox" maxlength="10"
                                      required="true" />
                         </td>
                     </tr>
@@ -71,47 +71,44 @@
                             <input id="AcfClass" name="AcfClass" type="text" class="easyui-textbox"  maxlength="10"
                                      required="true"/>
                         </td>
-                        <td class="tdal">巡航高度：</td>
+                        <td class="tdal">巡航高度：(M)</td>
                         <td class="tdar">
-                            <input id="CruiseAltd" name="CruiseAltd" type="text" class="easyui-textbox" maxlength="10"/>
+                            <input id="CruiseAltd" name="CruiseAltd" type="text" class="easyui-numberbox" maxlength="10"/>
                         </td>   
                     </tr>
                     <tr>
                         <td class="tdal">制造商：</td>
                         <td class="tdar"> 
-                            <input id="Manufacturer" name="Manufacturer" type="text" class="easyui-textbox" maxlength="10"
+                            <input id="Manufacture" name="Manufacture" type="text" class="easyui-textbox" maxlength="10"
                                      required="true" />
                             </td>
-                            <td class="tdal">巡航速度：</td>
+                            <td class="tdal">巡航速度：(KM/H)</td>
                             <td class="tdar">
-                                <input id="CruiseSpeed" name="CruiseSpeed" type="text" class="easyui-textbox" maxlength="10"/>
-                            </td>
-                        
+                                <input id="CruiseSpeed" name="CruiseSpeed" type="text" class="easyui-numberbox" maxlength="10" data-options="min:0,precision:0"/>
+                            </td>                       
                     </tr>
                     <tr>
-                         
-                            <td class="tdal">尾流：</td>
-                            <td class="tdar">
-                                <input id="WakeTurbulance" name="WakeTurbulance" type="text" class="easyui-textbox" maxlength="10"/>
+                        <td class="tdal">尾流：</td>
+                        <td class="tdar">
+                            <input id="WakeTurbulance" name="WakeTurbulance" type="text" class="easyui-textbox" maxlength="10" required="true"/>
                             </td>
-                            <td class="tdal">最大速度：</td>
-                            <td class="tdar">
-                                <input id="MaxSpeed" name="MaxSpeed" type="text" class="easyui-textbox" maxlength="10"/>
-                            </td>                     
+                        <td class="tdal">最大速度：(KM/H)</td>
+                        <td class="tdar">
+                            <input id="MaxSpeed" name="MaxSpeed" type="text" class="easyui-numberbox" maxlength="10"/>
+                        </td>                     
                     </tr>
                     <tr>
-                            <td class="tdal">起飞重量：</td>
-                            <td class="tdar">
-                                <input id="FueledWeight" name="FueledWeight" type="text" class="easyui-textbox" maxlength="10"/>
+                        <td class="tdal">起飞重量：(KG)</td>
+                        <td class="tdar">
+                            <input id="FueledWeight" name="FueledWeight" type="text" class="easyui-numberbox" maxlength="10" data-options="min:0,precision:0"/>
                             </td>
-                            <td class="tdal">最小速度：</td>
-                            <td class="tdar">
-                                <input id="MinSpeed" name="MinSpeed" type="text" class="easyui-textbox" maxlength="10"/>
-                            </td>
+                        <td class="tdal">最小速度：(KM/H)</td>
+                        <td class="tdar">
+                            <input id="MinSpeed" name="MinSpeed" type="text" class="easyui-numberbox" maxlength="10"/>
+                        </td>
                     </tr>
                 </table>
         </form>
-
     </div>
     <div id="edit-buttons">
         <a id="btn_add" href="javascript:;" class="easyui-linkbutton">提交</a> <a href="javascript:;"
@@ -138,14 +135,57 @@
             Main.InitGird();
             Main.InitSearch();
         });
+
+
+        $(function () {
+            $('#AircraftSign').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#FuelCapacity').numberbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#AcfType').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#Range').numberbox('textbox').attr('maxlength', 5);
+        });
+        $(function () {
+            $('#AcfNo').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#AcfClass').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#CruiseAltd').numberbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#Manufacture').textbox('textbox').attr('maxlength', 30);
+        });
+        $(function () {
+            $('#CruiseSpeed').numberbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#WakeTurbulance').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#MaxSpeed').numberbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#FueledWeight').numberbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#MinSpeed').numberbox('textbox').attr('maxlength', 10);
+        });
+
+
         Main = {
             //初始化表格
             InitGird: function () {
                 $('#tab_list').datagrid({
                     title: '飞行器列表', //表格标题
                     url: location.href, //请求数据的页面
-                    sortName: 'ID', //排序字段
-                    idField: 'ID', //标识字段,主键
+                    sortName: 'AircraftID', //排序字段
+                    idField: 'AircraftID', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
                     height: $(parent.document).find("#mainPanel").height() - 10 > 0 ? $(parent.document).find("#mainPanel").height() - 10 : 300, //高度
@@ -159,23 +199,23 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '国籍和登记标志', field: 'AircraftSign', width: 150 },
-                        { title: '最大加油量', field: 'FuelCapacity', width: 150 },
-                        { title: '机型', field: 'AcfType', width: 150 },
-                        { title: '航程', field: 'Range', width: 150 },
-                        { title: '航空器出厂序号', field: 'AcfNo', width: 150 },
+                        { title: '国籍和登记标志', field: 'AircraftSign', width: 100 },
+                        { title: '最大加油量', field: 'FuelCapacity', width: 100 },
+                        { title: '机型', field: 'AcfType', width: 50 },
+                        { title: '航程', field: 'Range', width: 50 },
+                        { title: '航空器出厂序号', field: 'AcfNo', width: 100 },
                         { title: '年检时间', field: 'ASdate', width: 150 },
-                        { title: '飞行器类别', field: 'AcfClass', width: 150 },
-                        { title: '巡航高度', field: 'CruiseAltd', width: 150 },
-                        { title: '制造商', field: 'Manufacture', width: 150 },
-                        { title: '巡航速度', field: 'CruiseSpeed', width: 150 },
-                        { title: '尾流', field: 'WakeTurbulance', width: 150 },
-                        { title: '最大速度', field: 'MaxSpeed', width: 150 },
-                        { title: '起飞重量', field: 'FueledWeight', width: 150 },
-                        { title: '最小速度', field: 'MinSpeed', width: 150 },
+                        { title: '飞行器类别', field: 'AcfClass', width: 100 },
+                        { title: '巡航高度', field: 'CruiseAltd', width: 80 },
+                        { title: '制造商', field: 'Manufacture', width: 100 },
+                        { title: '巡航速度', field: 'CruiseSpeed', width: 80 },
+                        { title: '尾流', field: 'WakeTurbulance', width: 50 },
+                        { title: '最大速度', field: 'MaxSpeed', width: 80 },
+                        { title: '起飞重量', field: 'FueledWeight', width: 80 },
+                        { title: '最小速度', field: 'MinSpeed', width: 80 },
                         { title: '创建时间', field: 'CreateTime', width: 150 },
                         {
-                            title: '操作', field: 'ID', width: 150, formatter: function (value, rec) {
+                            title: '操作', field: 'AircraftID', width: 150, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
                                 return str;
                             }
@@ -229,7 +269,7 @@
 
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑');
+                $("#edit").dialog("open").dialog('setTitle', '编辑飞行器');
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
 
                 $.post("Aircraft.aspx", { "action": "queryone", "id": uid }, function (data) {
@@ -246,7 +286,7 @@
                 }
                 var idArray = [];
                 for (var i = 0; i < selRow.length; i++) {
-                    var id = selRow[i].ID;
+                    var id = selRow[i].AircraftID;
                     idArray.push(id);
                 }
                 $.messager.confirm('提示', '确认删除该条记录？', function (r) {

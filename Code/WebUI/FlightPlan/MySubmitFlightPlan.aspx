@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true"
-    CodeFile="MySubmitRepetPlan.aspx.cs" Inherits="FlightPlan_MySubmitRepetPlan" %>
+    CodeFile="MySubmitFlightPlan.aspx.cs" Inherits="FlightPlan_MySubmitFlightPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
 
@@ -41,8 +41,8 @@
               $('#tab_list').datagrid({
                   title: '列表', //表格标题
                   url: location.href, //请求数据的页面
-                  sortName: 'RepetPlanID', //排序字段
-                  idField: 'RepetPlanID', //标识字段,主键
+                  sortName: 'FlightPlanID', //排序字段
+                  idField: 'FlightPlanID', //标识字段,主键
                   iconCls: '', //标题左边的图标
                   width: '99%', //宽度
                   height: $(parent.document).find("#mainPanel").height() - 10 > 0 ? $(parent.document).find("#mainPanel").height() - 10 : 300, //高度
@@ -56,35 +56,13 @@
                       { field: 'cbx', checkbox: true },
                   ]],
                   columns: [[
-                      { title: '申请单号', field: 'PlanCode', width: 120 },
-                      { title: '任务类型', field: 'FlightType', width: 80 },
-                      { title: '航空器呼号', field: 'CallSign', width: 80 },
-                      { title: '使用机型', field: 'AircraftType', width: 100 },
-                      { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
-                      {
-                          title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
-
-                              var timesstamp = new Date(value);
-                              return timesstamp.toLocaleDateString();
-
-                          }
-                      },
-                      {
-                          title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) {
-
-                              var timesstamp = new Date(value);
-                              return timesstamp.toLocaleDateString();
-
-                          }
-                      },
-                      {
-                          title: '起飞时刻', field: 'SOBT', width: 80
-                      },
-                      {
-                          title: '降落时刻', field: 'SIBT', width: 80
-                      },
-                      { title: '起飞机场', field: 'ADEP', width: 100 },
-                      { title: '降落机场', field: 'ADES', width: 100 },
+                      { title: '申请单号', field: 'PlanCode', width: 100 },
+                      { title: '航空器架数', field: 'AircraftNum', width: 100 },
+                      { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
+                      { title: '通信联络方法', field: 'ContactWay', width: 100 },
+                      { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
+                      { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
+                      { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
 
                       {
                           title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
@@ -100,13 +78,13 @@
                        { title: '创建人', field: 'CreatorName', width: 60 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
-                      { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == "end" ? '已结束' : value + '审核中' }, width: 80 },
-                                                   {
-                                                       title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                                           var str = '<a style="color:red" href="javascript:;" onclick="Main.Detail(' + value + ');$(this).parent().click();return false;">查看</a>';
-                                                           return str;
-                                                       }
-                                                   }
+                      { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == "end" ? '已结束' : value + '审核中' }, width: 100 },
+                          {
+                              title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
+                                  var str = '<a style="color:red" href="javascript:;" onclick="Main.Detail(' + value + ');$(this).parent().click();return false;">查看</a>';
+                                  return str;
+                              }
+                          }
                   ]],
                   toolbar: "#tab_toolbar",
                   queryParams: { "action": "query" },
@@ -130,6 +108,12 @@
                   $("#SOBT").html(data.SOBT);
                   $("#SIBT").html(data.SIBT);
                   $("#Remark").html(data.Remark);
+                  $("#AircraftNum").html(data.AircraftNum);
+                  $("#Pilot").html(data.Pilot);
+                  $("#ContactWay").html(data.ContactWay);
+                  $("#WeatherCondition").html(data.WeatherCondition);
+                  $("#AircrewGroupNum").html(data.AircrewGroupNum);
+                  $("#RadarCode").html(data.RadarCode);
                   if (!!data.AttchFile) {
                       var fileArray = data.AttchFile.split('|');
                       for (var i = 0; i < fileArray.length; i++) {
@@ -168,14 +152,14 @@
         modal="true" closed="true" buttons="#detail-buttons">
         <form id="form_detail" method="post">
             <table class="table_edit">
-                <tr>
+                             <tr>
                     <th>任务类型：</th>
                     <td id="FlightType"></td>
                     <th>航空器类型：</th>
                     <td id="AircraftType"></td>
                 </tr>
             <tr>
-                    <th style="width:140px;">航线走向和飞行高度：</th>
+                    <th style="width:176px;">航线走向和飞行高度：</th>
                     <td id="FlightDirHeight"></td>
                     <th>批件：</th>
                     <td id="AttchFile"></td>
@@ -207,8 +191,26 @@
 
               
                 <tr>
-                    <th style="width:160px;">其他需要说明的事项：</th>
+                    <th style="width:176px;">其他需要说明的事项：</th>
                     <td id="Remark"></td>
+                </tr>
+                 <tr>
+                    <th>航空器架数：</th>
+                    <td id="AircraftNum"></td>
+                    <th>机长（飞行员）姓名：</th>
+                    <td id="Pilot"></td>
+                </tr>
+                      <tr>
+                    <th>通信联络方法：</th>
+                    <td id="ContactWay"></td>
+                    <th>飞行气象条件：</th>
+                    <td id="WeatherCondition"></td>
+                </tr>
+                 <tr>
+                    <th>空勤组人数：</th>
+                    <td id="AircrewGroupNum"></td>
+                    <th>二次雷达应答机代码：</th>
+                    <td id="RadarCode"></td>
                 </tr>
                 
             </table>

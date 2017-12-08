@@ -21,7 +21,7 @@
         </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog"  style="width: 500px; height: 350px;"
+    <div id="edit" class="easyui-dialog"  style="width: 500px; height: 500px;"
         modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit" name="form_edit" method="post">
             <div>
@@ -30,7 +30,7 @@
                         <td class="tdal">飞行员姓名：                                                                           
                         </td>
                         <td class="tdar">
-                            <input id="Pilots" name="Pilots" type="text" class="easyui-textbox" maxlength="10"
+                            <input id="Pilots" name="Pilots" type="text" class="easyui-textbox"  maxlength="30"
                                 required="true" />
                         </td>
                     </tr>
@@ -46,7 +46,7 @@
                         <td class="tdal">出生日期：
                         </td>
                         <td class="tdar">
-                            <input id="PilotDT" name="PilotDT" type="text" class="easyui-textbox"  maxlength="10"
+                            <input id="PilotDT" name="PilotDT" type="text" class="easyui-datebox"  maxlength="10"  
                                 required="true"/>
                         </td>
                     </tr>
@@ -108,8 +108,8 @@
                     </tr>
                     <tr>
                         <td class="tdal">执照复印件：
-                        </td>
-                        <td class="tdar">
+                         </td>
+                    <td class="tdar">
                             <input type="hidden" name="LicenseImgInfo" id="LicenseImgInfo"  />
                             <input type="file" id="LicenseImg" name="LicenseImg" />
                             <a id="btn_upload" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LicenseImg').uploadFiles()">上传</a>
@@ -152,16 +152,7 @@
             Main.InitGird();
             Main.InitSearch();
 
-            new dj.upload({
-                id: "LicenseImg",
-                maxSize: 5,
-                multi: true,
-                queueId: "LicenseImg-fileQueue",
-                listId: "LicenseImg-fileList",
-                truncate: "18",
-                maxCount: "1",
-                uploadPath: "Files/LicenseImg/"
-            });
+            
 
         });
         Main = {
@@ -185,8 +176,8 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '飞行员姓名', field: 'Pilots', width: 150 },
-                        { title: '身份证号', field: 'PilotCardNo', width: 150 },
+                        { title: '飞行员姓名', field: 'Pilots', width: 100 },
+                        { title: '身份证号', field: 'PilotCardNo', width: 200 },
                         { title: '出生日期', field: 'PilotDT', width: 150 },
                         { title: '联系电话', field: 'PhoneNo', width: 150 },
                         { title: '执照编号', field: 'LicenseNo', width: 150 },
@@ -201,7 +192,7 @@
                             else{
                                 return '私用飞机驾照';
                             }
-                            width: 150 },},
+                            width: 200 },},
                         { title: '所属企业', field: 'CompanyName', formatter: function (value, rec, index) 
                         {
                             if (value == 1) {
@@ -213,11 +204,12 @@
                             else {
                                 return '通航3';
                             }
-                            width: 150},},
-                        { title: '性别', field: 'Sex', formatter: function (value, rec, index) { return value == 0 ? '否' : '是' }, width: 150 },
+                            width: 200},},
+                        { title: '性别', field: 'Sex', formatter: function (value, rec, index) { return value == 0 ? '男' : '女' }, width: 50 },
                         {
                             title: '操作', field: 'ID', width: 150, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改编辑</a>&nbsp;&nbsp;';
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
+
                                 return str;
                             }
                         }
@@ -249,12 +241,29 @@
                 $("#edit").dialog("open").dialog('setTitle', '新增飞行员信息');
                 $("#form_edit").form('clear');
                 $("#btn_add").attr("onclick", "Main.Save();")
+
+                new dj.upload({
+                    id: "LicenseImg",
+                    maxSize: 5,
+                    multi: true,
+                    queueId: "LicenseImg-fileQueue",
+                    listId: "LicenseImg-fileList",
+                    truncate: "18",
+                    maxCount: "1",
+                    uploadPath: "Files/LicenseImg/"
+                });
+
             },
             //提交按钮事件
             Save: function (uid) {
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
+
+                var fileInfo = dj.getCmp("LicenseImg").getUploadedFiles();
+                $("#LicenseImgInfo").val(fileInfo);
+
+
                 var json = $.param({ "id": uid, "action": "submit" }) + '&' + $('#form_edit').serialize();
 
                 $.post("Pilot.aspx", json, function (data) {
