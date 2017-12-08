@@ -100,14 +100,14 @@
         </div>
         <div class="easyui-panel" title="资料列表">
             <div style="margin: 20px 0;"></div>
-            <table id="dg" title="通航资料" style="width: 1308px; height: 350px" data-options="pageSize:10,rownumbers:true,singleSelect:true,pagination:true,method:'post'">
+            <table id="dg" title="通航资料" style="width: 1358px; height: 350px" data-options="pageSize:10,rownumbers:true,singleSelect:true,pagination:true,method:'post'">
                 <thead>
                     <tr>
-                        <th data-options="field:'Created',width:155,align:'center',formatter:formatDate">时间</th>
+                        <th data-options="field:'Created',width:155,align:'center',formatter:formatDate">发布时间</th>
                         <th data-options="field:'Title',width:350,align:'center'">标题</th>
                         <th data-options="field:'DealUser',width:100,align:'center'">处理人</th>
                         <th data-options="field:'ResourceType',width:220,align:'center',formatter:formatType">资料类别</th>
-                        <th data-options="field:'UsefulTime',width:150,align:'center'">有效时间</th>
+                        <th data-options="field:'UsefulTime',width:200,align:'center'">有效时间</th>
                         <th data-options="field:'FilePath',width:100,align:'center',formatter:formatFile">附件</th>
                         <th data-options="field:'Status',width:100,align:'center',formatter:formatStatus">状态</th>
                         <th data-options="field:'ID',width:100,align:'center',formatter:formatOperation">操作</th>
@@ -121,21 +121,65 @@
     </div>
 
 
-    <div title="新增通航资料" class="easyui-dialog" id="dialog" style="width: 400px; height: auto; padding: 10px 20px;">
+    <div title="通航资料" class="easyui-dialog" id="dialog" style="width: 400px; height: auto; padding: 10px 20px;">
         <div style="margin-bottom: 20px">
             <form runat="server" method="post" id="ff" action="Handler.ashx?action=add" enctype="multipart/form-data">
                 <input id="id" type="hidden" />
-                <input id="title" class="easyui-textbox" name="title" style="width: 100%" data-options="label:'标题:',required:true" />
-                <input id="dealuser" class="easyui-textbox" name="dealuser" style="width: 100%" data-options="label:'处理人:',required:true" />
-                <select id="resourcetype" class="easyui-combobox" name="resourcetype" style="width: 100%" data-options="label:'处理类别:',required:true">
-                    <option value="1">国家和民航相关通航政策、管理规定</option>
-                    <option value="2">中南地区通航管理规定</option>
-                    <option value="3">河南空管通航管理相关程序</option>
-                    <option value="4">应急救援相关程序</option>
-                </select>
-                <input id="started" class="easyui-datebox" name="started" label="开始时间：" style="width:100%"/>
-                <input id="ended" class="easyui-datebox" name="ended" label="截止时间：" style="width:100%"/>
-                附件：<input id="file" name="file" type="file" data-options="prompt:'Choose a file...'" style="width:90%;" />
+                <table class="table_edit">
+                    <tr>
+                        <th>标题</th>
+                        <td>
+                            <input id="title" class="easyui-textbox" name="title" style="width: 100%" data-options="required:true" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>处理人</th>
+                        <td>
+                            <input id="dealuser" class="easyui-textbox" name="dealuser" style="width: 100%" data-options="required:true" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>资料类别</th>
+                        <td>
+                            <select id="resourcetype" class="easyui-combobox" name="resourcetype" style="width: 100%" data-options="required:true">
+                                <option value="1">国家和民航相关通航政策、管理规定</option>
+                                <option value="2">中南地区通航管理规定</option>
+                                <option value="3">河南空管通航管理相关程序</option>
+                                <option value="4">应急救援相关程序</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>开始时间</th>
+                        <td>
+                            <input id="started" class="easyui-datebox" name="started" data-options="required:true" style="width: 100%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>截止时间</th>
+                        <td>
+                            <input id="ended" class="easyui-datebox" name="ended" data-options="required:true" style="width: 100%" />
+                        </td>
+                    </tr>
+                    <%--<tr>
+                        <th>附件：
+                        </th>
+                        <td>
+                            <input type="hidden" name="ResourceFilesInfo" id="ResourceFilesInfo" />
+                            <input type="file" class="dj-upload-file" id="ResourceFiles" name="ResourceFiles" />
+                            <a id="btn_upload" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('ResourceFiles').uploadFiles()">上传</a>
+                            <div id="ResourceFiles-fileQueue"></div>
+                            <div id="ResourceFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
+                        </td>
+
+                    </tr>--%>
+                    <tr>
+                        <th>附件(小于5M)</th>
+                        <td>
+                            <input id="file" name="file" type="file" value="请选择附件（不大于5M）" style="width: 80%;" />
+                        </td>
+                    </tr>
+                </table>
             </form>
         </div>
         <script>
@@ -191,6 +235,7 @@
                         $.messager.show({
                             title: result
                         });
+                        setTimeout(function () { location.reload() }, 2000);
                     }
                 });
             }
@@ -205,6 +250,7 @@
                         $.messager.show({
                             title: result
                         });
+                        setTimeout(function () { location.reload() }, 2000);
                     }
                 });
             }
@@ -212,6 +258,50 @@
             function clearForm() {
                 $('#ff').form('clear');
             }
+        </script>
+        <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
+        <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
+        <link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
+        <script src="<%=Page.ResolveUrl("~/Content/JS/GA/upload.js")%>" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function () {
+
+                var id = '<%=Request.QueryString["id"] %>';
+
+                if (id) {
+                    $.post(location.href, { "action": "queryone", "id": id }, function (data) {
+                        $("#form_edit").form('load', data);
+                        $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
+                            $("#d" + n).prop({ checked: true });
+                        });
+                        new dj.upload({
+                            id: "ResourceFiles",
+                            maxSize: 5,
+                            multi: true,
+                            queueId: "ResourceFiles-fileQueue",
+                            listId: "ResourceFiles-fileList",
+                            truncate: "30",
+                            maxCount: "1",
+                            uploadPath: "File/",
+                            uploadedFiles: data.AttchFile
+                        });
+                    });
+                }
+                else {
+                    //alert("tt");
+                    new dj.upload({
+                        id: "ResourceFiles",
+                        maxSize: 5,
+                        multi: true,
+                        queueId: "ResourceFiles-fileQueue",
+                        listId: "ResourceFiles-fileList",
+                        truncate: "30",
+                        maxCount: "1",
+                        uploadPath: "File/",
+                        uploadedFiles: ""
+                    });
+                }
+            });
         </script>
     </div>
 
