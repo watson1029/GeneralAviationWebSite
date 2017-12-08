@@ -78,7 +78,21 @@
                        { title: '创建人', field: 'CreatorName', width: 60 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
-                      { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == "end" ? '已结束' : value + '审核中' }, width: 100 },
+                      {
+                          title: '状态', field: 'PlanState', formatter: function (value, rec, index) {
+                              var str = "";
+                              if (value == "end") {
+                                  str = "审核通过";
+                              }
+                              else if (value == "Deserted") {
+                                  str = "审核不通过";
+                              }
+                              else {
+                                  str = value + '审核中';
+                              }
+                              return str;
+                          }, width: 100
+                      },
                           {
                               title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
                                   var str = '<a style="color:red" href="javascript:;" onclick="Main.Detail(' + value + ');$(this).parent().click();return false;">查看</a>';
