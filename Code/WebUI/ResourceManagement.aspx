@@ -174,7 +174,7 @@
 
                     </tr>--%>
                     <tr>
-                        <th>附件(不大于5M</th>
+                        <th>附件(小于5M)</th>
                         <td>
                             <input id="file" name="file" type="file" value="请选择附件（不大于5M）" style="width: 80%;" />
                         </td>
@@ -288,7 +288,7 @@
                     });
                 }
                 else {
-                    alert("tt");
+                    //alert("tt");
                     new dj.upload({
                         id: "ResourceFiles",
                         maxSize: 5,
