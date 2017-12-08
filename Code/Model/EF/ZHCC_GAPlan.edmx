@@ -29,11 +29,11 @@
           </Key>
           <Property Name="AircraftID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AircraftSign" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="AcfType" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="AcfType" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="AcfNo" Type="nvarchar" MaxLength="512" Nullable="false" />
-          <Property Name="AcfClass" Type="nchar" MaxLength="2" Nullable="false" />
+          <Property Name="AcfClass" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="Manufacture" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="WakeTurbulance" Type="nvarchar" MaxLength="1" />
+          <Property Name="WakeTurbulance" Type="nchar" MaxLength="10" />
           <Property Name="FueledWeight" Type="int" />
           <Property Name="FuelCapacity" Type="int" />
           <Property Name="Range" Type="int" />
@@ -60,7 +60,7 @@
           <Property Name="ManageItemsScope" Type="nvarchar" MaxLength="200" />
           <Property Name="DealLine" Type="int" />
           <Property Name="PresentationDate" Type="datetime" />
-          <Property Name="LicensedSeal" Type="nvarchar" MaxLength="50" />
+          <Property Name="LicensedSeal" Type="nvarchar" MaxLength="200" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="BusinessLicense">
@@ -71,18 +71,18 @@
           <Property Name="CompanyCode3" Type="nchar" MaxLength="3" />
           <Property Name="RegisterTime" Type="datetime" />
           <Property Name="RegisterAddress" Type="nvarchar" MaxLength="200" />
-          <Property Name="CorporateRepresentative" Type="nvarchar" MaxLength="20" />
+          <Property Name="CorporateRepresentative" Type="nvarchar" MaxLength="200" />
           <Property Name="RegisteredCapital" Type="float" />
           <Property Name="Dealline" Type="int" />
-          <Property Name="ContactPerson" Type="nvarchar" MaxLength="20" />
-          <Property Name="LegalPerson" Type="nvarchar" MaxLength="20" />
-          <Property Name="LegalCardNo" Type="varchar" MaxLength="50" />
+          <Property Name="ContactPerson" Type="nvarchar" MaxLength="200" />
+          <Property Name="LegalPerson" Type="nvarchar" MaxLength="200" />
+          <Property Name="LegalCardNo" Type="nvarchar" MaxLength="200" />
           <Property Name="LegalAddress" Type="nvarchar" MaxLength="200" />
-          <Property Name="LegalTelePhone" Type="varchar" MaxLength="50" />
+          <Property Name="LegalTelePhone" Type="nvarchar" MaxLength="200" />
           <Property Name="LegalCardImg" Type="nvarchar" MaxLength="200" />
-          <Property Name="LegalClientele" Type="nvarchar" MaxLength="20" />
+          <Property Name="LegalClientele" Type="nvarchar" MaxLength="200" />
           <Property Name="LegalDelegateImg" Type="nvarchar" MaxLength="200" />
-          <Property Name="DelegateName" Type="nvarchar" MaxLength="20" />
+          <Property Name="DelegateName" Type="nvarchar" MaxLength="200" />
           <Property Name="DelegateCardNo" Type="varchar" MaxLength="50" />
           <Property Name="DelegateAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="DelegateTelePhone" Type="varchar" MaxLength="50" />
@@ -96,8 +96,8 @@
           <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyCode3" Type="nchar" MaxLength="3" Nullable="false" />
           <Property Name="CompanyCode2" Type="nchar" MaxLength="2" />
-          <Property Name="EnglishName" Type="nvarchar" MaxLength="64" />
-          <Property Name="CompanyName" Type="nvarchar" MaxLength="32" />
+          <Property Name="EnglishName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="Summary" Type="nvarchar(max)" />
           <Property Name="SummaryCode" Type="nvarchar(max)" />
@@ -195,10 +195,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Pilots" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Pilots" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PilotCardNo" Type="varchar" MaxLength="50" />
           <Property Name="PilotDT" Type="datetime" Nullable="false" />
-          <Property Name="PhoneNo" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Licensesort" Type="nvarchar" MaxLength="100" />
           <Property Name="LicenseNo" Type="varchar" MaxLength="100" />
           <Property Name="Sign" Type="nvarchar" MaxLength="200" />
@@ -269,6 +269,22 @@
           <Property Name="MenuID" Type="int" />
           <Property Name="RoleID" Type="int" />
         </EntityType>
+        <EntityType Name="SupplyDemandInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Creator" Type="int" />
+          <Property Name="CreateName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyCode3" Type="char" MaxLength="3" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ExpiryDate" Type="datetime" />
+          <Property Name="Summary" Type="nvarchar" MaxLength="500" />
+          <Property Name="Catalog" Type="char" MaxLength="4" />
+          <Property Name="ActorID" Type="int" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="TWFLibrary">
           <Key>
             <PropertyRef Name="TWFID" />
@@ -328,6 +344,7 @@
           <EntitySet Name="Resource" EntityType="Self.Resource" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleMenu" EntityType="Self.RoleMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplyDemandInfo" EntityType="Self.SupplyDemandInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TWFLibrary" EntityType="Self.TWFLibrary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TWFSteps" EntityType="Self.TWFSteps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
@@ -357,6 +374,7 @@
           <EntitySet Name="OperationLog" EntityType="ZHCC_GAPlanModel.OperationLog" />
           <EntitySet Name="Pilot" EntityType="ZHCC_GAPlanModel.Pilot" />
           <EntitySet Name="Aircraft" EntityType="ZHCC_GAPlanModel.Aircraft" />
+          <EntitySet Name="SupplyDemandInfo" EntityType="ZHCC_GAPlanModel.SupplyDemandInfo" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -391,7 +409,7 @@
           <Property Name="ManageItemsScope" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DealLine" Type="Int32" />
           <Property Name="PresentationDate" Type="DateTime" Precision="3" />
-          <Property Name="LicensedSeal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LicensedSeal" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="BusinessLicense">
@@ -402,18 +420,18 @@
           <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="RegisterTime" Type="DateTime" Precision="3" />
           <Property Name="RegisterAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CorporateRepresentative" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CorporateRepresentative" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RegisteredCapital" Type="Double" />
           <Property Name="Dealline" Type="Int32" />
-          <Property Name="ContactPerson" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LegalPerson" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LegalCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalCardNo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LegalAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LegalTelePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LegalTelePhone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LegalCardImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LegalClientele" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LegalClientele" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LegalDelegateImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DelegateName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DelegateName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DelegateCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DelegateAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DelegateTelePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -585,8 +603,8 @@
           <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyCode3" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="CompanyCode2" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="EnglishName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyName" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="EnglishName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SummaryCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -631,10 +649,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Pilots" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Pilots" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PilotCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PilotDT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Licensesort" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LicenseNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Sign" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -649,11 +667,11 @@
           </Key>
           <Property Name="AircraftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AircraftSign" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="AcfType" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="AcfType" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="AcfNo" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="AcfClass" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="AcfClass" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="Manufacture" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="WakeTurbulance" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="WakeTurbulance" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="FueledWeight" Type="Int32" />
           <Property Name="FuelCapacity" Type="Int32" />
           <Property Name="Range" Type="Int32" />
@@ -664,6 +682,22 @@
           <Property Name="MaxSpeed" Type="Double" />
           <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="SupplyDemandInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Creator" Type="Int32" />
+          <Property Name="CreateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Catalog" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="ActorID" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -994,6 +1028,23 @@
                 <ScalarProperty Name="AcfType" ColumnName="AcfType" />
                 <ScalarProperty Name="AircraftSign" ColumnName="AircraftSign" />
                 <ScalarProperty Name="AircraftID" ColumnName="AircraftID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplyDemandInfo">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.SupplyDemandInfo">
+              <MappingFragment StoreEntitySet="SupplyDemandInfo">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
+                <ScalarProperty Name="Catalog" ColumnName="Catalog" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
+                <ScalarProperty Name="CreateName" ColumnName="CreateName" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

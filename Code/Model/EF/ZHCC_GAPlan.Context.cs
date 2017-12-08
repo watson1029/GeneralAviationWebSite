@@ -44,5 +44,6 @@ namespace Model.EF
         public virtual DbSet<OperationLog> OperationLog { get; set; }
         public virtual DbSet<Pilot> Pilot { get; set; }
         public virtual DbSet<Aircraft> Aircraft { get; set; }
+        public virtual DbSet<SupplyDemandInfo> SupplyDemandInfo { get; set; }
     }
 }

@@ -94,6 +94,9 @@
     <Compile Include="EF\RoleMenu.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\SupplyDemandInfo.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\TWFLibrary.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
