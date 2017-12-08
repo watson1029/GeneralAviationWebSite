@@ -181,7 +181,7 @@
                 }
                 var idArray = [];
                 for (var i = 0; i < selRow.length; i++) {
-                    var id = selRow[i].ID;
+                    var id = selRow[i].FlightPlanID;
                     idArray.push(id);
                 }
                 $.messager.confirm('提示', '确认删除该条记录？', function (r) {
@@ -319,7 +319,7 @@
                     <th style="width:160px;">二次雷达应答机代码：
                     </th>
                     <td>
-                        <input id="RadarCode" name="RadarCode"  maxlength="30" type="text" required="true" class="easyui-textbox" />
+                        <input id="RadarCode" name="RadarCode"  maxlength="4" type="text" required="true" class="easyui-textbox" />
                     </td>
                 </tr>
             </table>

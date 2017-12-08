@@ -1,13 +1,17 @@
 ﻿using BLL.FlightPlan;
-using System;
-using System.Text;
-using Untity;
 using Model.EF;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Untity;
 using Newtonsoft.Json;
-public partial class FlightPlan_MySubmitRepetPlan :BasePage
+public partial class FlightPlan_MySubmitFlightPlan : BasePage
 {
-    RepetitivePlanBLL bll = new RepetitivePlanBLL();
+    FlightPlanBLL bll = new FlightPlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -33,8 +37,8 @@ public partial class FlightPlan_MySubmitRepetPlan :BasePage
     {
         int page = Convert.ToInt32(Request.Form["page"] ?? "0");
         int size = Convert.ToInt32(Request.Form["rows"] ?? "0");
-       // string sort = Request.Form["sort"] ?? "";
-       // string order = Request.Form["order"] ?? "";
+        // string sort = Request.Form["sort"] ?? "";
+        // string order = Request.Form["order"] ?? "";
         if (page < 1) return;
         int pageCount = 0;
         int rowCount = 0;
@@ -51,9 +55,9 @@ public partial class FlightPlan_MySubmitRepetPlan :BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<RepetitivePlan, bool>> GetWhere()
+    private Expression<Func<FlightPlan, bool>> GetWhere()
     {
-        Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
+        Expression<Func<FlightPlan, bool>> predicate = PredicateBuilder.True<FlightPlan>();
         predicate = predicate.And(m => m.PlanState != "0" && m.Creator == User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

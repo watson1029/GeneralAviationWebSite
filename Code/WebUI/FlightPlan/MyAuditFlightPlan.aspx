@@ -53,12 +53,12 @@
 
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 180 },
-            { title: '航空器架数', field: 'AircraftNum', width: 100 },
-                             { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
-                             { title: '通信联络方法', field: 'ContactWay', width: 100 },
-                             { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
-                             { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
-                             { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
+                        { title: '航空器架数', field: 'AircraftNum', width: 100 },
+                        { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
+                        { title: '通信联络方法', field: 'ContactWay', width: 100 },
+                        { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
+                        { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
+                        { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
                         {
                             title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
                                 var array = [];
@@ -125,11 +125,16 @@
                     $("#WeatherCondition").html(data.WeatherCondition);
                     $("#AircrewGroupNum").html(data.AircrewGroupNum);
                     $("#RadarCode").html(data.RadarCode);
-                    var fileArray = data.AttchFile.split('|');
-                    for (var i = 0; i < fileArray.length; i++) {
-                        var info = fileArray[i].split(','),
-                        filepath = dj.root + info[0];
-                        $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
+                    if (!!data.AttchFile) {
+                        var fileArray = data.AttchFile.split('|');
+                        for (var i = 0; i < fileArray.length; i++) {
+                            var info = fileArray[i].split(','),
+                            filepath = dj.root + info[0];
+                            $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
+                        }
+                    }
+                    else {
+                        $("#AttchFile").html('');
                     }
                     var arr = [];
                     $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {

@@ -69,17 +69,10 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-
-
         FlightPlan model = bll.Get(id.Value);
             if (model != null)
             {
-                model.AircraftNum = Convert.ToInt32(Request.Form["AircraftNum"]);
-                model.Pilot = Request.Form["Pilot"];
-                model.ContactWay = Request.Form["ContactWay"];
-                model.WeatherCondition =Request.Form["WeatherCondition"];
-                model.AircrewGroupNum = Convert.ToInt32(Request.Form["AircrewGroupNum"]);
-                model.RadarCode = Request.Form["RadarCode"];
+                model.GetEntitySearchPars<FlightPlan>(this.Context);
                 if (bll.Update(model))
                 {
                     result.IsSuccess = true;
@@ -97,7 +90,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         result.IsSuccess = false;
         result.Msg = "提交失败！";
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        WorkflowTemplateBLL.CreateWorkflowInstance(1, planid, User.ID, User.UserName);
+        WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.FlightPlan, planid, User.ID, User.UserName);
         WorkflowNodeInstanceDAL.Submit(planid, "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
 
         result.IsSuccess = true;
