@@ -3,11 +3,12 @@ using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Linq.Expressions;
+using System.Web.UI;
 using Untity;
 
-public partial class Log_LoginLog : BasePage
+public partial class Log_OperationLog : Page
 {
-    LoginLogBLL bll = new LoginLogBLL();
+    OperationLogBLL bll = new OperationLogBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -71,16 +72,16 @@ public partial class Log_LoginLog : BasePage
 
 
 
-    private Expression<Func<LoginLog, bool>> GetWhere()
+    private Expression<Func<OperationLog, bool>> GetWhere()
     {
 
 
-        Expression<Func<LoginLog, bool>> predicate = PredicateBuilder.True<LoginLog>();
+        Expression<Func<OperationLog, bool>> predicate = PredicateBuilder.True<OperationLog>();
         predicate = predicate.And(m => 1 == 1);
         //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = u => u.ID == int.Parse(Request.Form["search_value"]);
+            predicate = predicate.And(u => u.UserName==Request.Form["search_value"].ToString());
 
             //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }

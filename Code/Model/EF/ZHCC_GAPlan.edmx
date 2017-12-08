@@ -37,7 +37,7 @@
           <Property Name="FueledWeight" Type="int" />
           <Property Name="FuelCapacity" Type="int" />
           <Property Name="Range" Type="int" />
-          <Property Name="ASdate" Type="int" Nullable="false" />
+          <Property Name="ASdate" Type="datetime" Nullable="false" />
           <Property Name="CruiseAltd" Type="float" />
           <Property Name="CruiseSpeed" Type="float" />
           <Property Name="MinSpeed" Type="float" />
@@ -194,7 +194,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Pilots" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="PilotCardNo" Type="varchar" MaxLength="50" />
           <Property Name="PilotDT" Type="datetime" Nullable="false" />
@@ -350,13 +350,13 @@
           <EntitySet Name="TWFSteps" EntityType="ZHCC_GAPlanModel.TWFSteps" />
           <EntitySet Name="UserInfo" EntityType="ZHCC_GAPlanModel.UserInfo" />
           <EntitySet Name="UserRole" EntityType="ZHCC_GAPlanModel.UserRole" />
-          <EntitySet Name="Pilot" EntityType="ZHCC_GAPlanModel.Pilot" />
           <EntitySet Name="LoginLog" EntityType="ZHCC_GAPlanModel.LoginLog" />
           <EntitySet Name="FlightPlan" EntityType="ZHCC_GAPlanModel.FlightPlan" />
           <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Company" />
           <EntitySet Name="Resource" EntityType="ZHCC_GAPlanModel.Resource" />
-          <EntitySet Name="Aircraft" EntityType="ZHCC_GAPlanModel.Aircraft" />
           <EntitySet Name="OperationLog" EntityType="ZHCC_GAPlanModel.OperationLog" />
+          <EntitySet Name="Pilot" EntityType="ZHCC_GAPlanModel.Pilot" />
+          <EntitySet Name="Aircraft" EntityType="ZHCC_GAPlanModel.Aircraft" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -533,23 +533,6 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Pilot">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Pilots" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="PilotCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PilotDT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="Licensesort" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LicenseNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Sign" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="Byte" />
-          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LicenseImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="LoginLog">
           <Key>
             <PropertyRef Name="ID" />
@@ -631,6 +614,35 @@
           <Property Name="Started" Type="DateTime" Precision="0" />
           <Property Name="Ended" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="OperationLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="IPAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AccessLinks" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OperationType" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Pilot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pilots" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PilotCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PilotDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Licensesort" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sign" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="Byte" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="Aircraft">
           <Key>
             <PropertyRef Name="AircraftID" />
@@ -645,24 +657,12 @@
           <Property Name="FueledWeight" Type="Int32" />
           <Property Name="FuelCapacity" Type="Int32" />
           <Property Name="Range" Type="Int32" />
-          <Property Name="ASdate" Type="Int32" Nullable="false" />
+          <Property Name="ASdate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CruiseAltd" Type="Double" />
           <Property Name="CruiseSpeed" Type="Double" />
           <Property Name="MinSpeed" Type="Double" />
           <Property Name="MaxSpeed" Type="Double" />
           <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="OperationLog">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="IPAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AccessLinks" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="OperationType" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
@@ -858,24 +858,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Pilot">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Pilot">
-              <MappingFragment StoreEntitySet="Pilot">
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="LicenseImg" ColumnName="LicenseImg" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="Sign" ColumnName="Sign" />
-                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
-                <ScalarProperty Name="Licensesort" ColumnName="Licensesort" />
-                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-                <ScalarProperty Name="PilotDT" ColumnName="PilotDT" />
-                <ScalarProperty Name="PilotCardNo" ColumnName="PilotCardNo" />
-                <ScalarProperty Name="Pilots" ColumnName="Pilots" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="LoginLog">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.LoginLog">
               <MappingFragment StoreEntitySet="LoginLog">
@@ -961,6 +943,37 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OperationLog">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.OperationLog">
+              <MappingFragment StoreEntitySet="OperationLog">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
+                <ScalarProperty Name="AccessLinks" ColumnName="AccessLinks" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pilot">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Pilot">
+              <MappingFragment StoreEntitySet="Pilot">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LicenseImg" ColumnName="LicenseImg" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="Licensesort" ColumnName="Licensesort" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="PilotDT" ColumnName="PilotDT" />
+                <ScalarProperty Name="PilotCardNo" ColumnName="PilotCardNo" />
+                <ScalarProperty Name="Pilots" ColumnName="Pilots" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Aircraft">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Aircraft">
               <MappingFragment StoreEntitySet="Aircraft">
@@ -981,19 +994,6 @@
                 <ScalarProperty Name="AcfType" ColumnName="AcfType" />
                 <ScalarProperty Name="AircraftSign" ColumnName="AircraftSign" />
                 <ScalarProperty Name="AircraftID" ColumnName="AircraftID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OperationLog">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.OperationLog">
-              <MappingFragment StoreEntitySet="OperationLog">
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
-                <ScalarProperty Name="AccessLinks" ColumnName="AccessLinks" />
-                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

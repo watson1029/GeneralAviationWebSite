@@ -62,12 +62,13 @@ public partial class BasicData_Pilot : BasePage
         {
             Pilots = Request.Form["Pilots"],
             PilotCardNo = Request.Form["PilotCardNo"],
-            PilotDT = DateTime.Parse(Request.Form["Password"]),
+            PilotDT = DateTime.Parse(Request.Form["PilotDT"]),
             PhoneNo = Request.Form["PhoneNo"],
             LicenseNo = Request.Form["LicenseNo"],
             Sign = Request.Form["Sign"],
             Licensesort = Request.Form["Licensesort"],
             CompanyName = Request.Form["CompanyName"],
+            LicenseImg = Request.Params["LicenseImgInfo"],
             Sex = byte.Parse(Request.Form["Sex"] ?? "0"),
         };
         if (!id.HasValue)//新增

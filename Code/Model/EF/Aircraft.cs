@@ -24,7 +24,7 @@ namespace Model.EF
         public Nullable<int> FueledWeight { get; set; }
         public Nullable<int> FuelCapacity { get; set; }
         public Nullable<int> Range { get; set; }
-        public int ASdate { get; set; }
+        public System.DateTime ASdate { get; set; }
         public Nullable<double> CruiseAltd { get; set; }
         public Nullable<double> CruiseSpeed { get; set; }
         public Nullable<double> MinSpeed { get; set; }

@@ -22,8 +22,8 @@
     <%--列表 end--%>
 
     <%--添加 修改--%>
-    <div id="edit" class="easyui-dialog" style="width:1000px; height:350px" 
-        modal="ture" closed="ture" buttons="#edit-buttons">
+    <div id="edit" class="easyui-dialog"  style="width: 700px; height: 350px;"
+        modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit" method="post">
             <table class="table_edit">
                 <tr>
@@ -45,13 +45,13 @@
                         许可证编号：
                     </td>
                     <td class="tdar">
-                        <input id="LicenseNo" name="LicenseNo" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                        <input id="LicenseNo" name="LicenseNo" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                     </td>
                     <td class="tdal">
                         经营项目与范围：
                     </td>
                     <td class="tdar">
-                        <input id="ManageItemsScope" name="ManageItemsScope" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="ManageItemsScope" name="ManageItemsScope" type="text" maxlength="30" class="easyui-textbox"  />
                     </td>
                 </tr>
                 <tr>
@@ -59,13 +59,13 @@
                         基地机场：
                     </td>
                     <td class="tdar">
-                        <input id="BaseAirport" name="BaseAirport" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                        <input id="BaseAirport" name="BaseAirport" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                     </td>
                     <td class="tdal">
                         有效期限：
                     </td>
                     <td class="tdar">
-                        <input id="DealLine" name="DealLine" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                        <input id="DealLine" name="DealLine" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                     </td>
                 </tr>
                 <tr >
@@ -73,13 +73,13 @@
                         企业类别：
                     </td>
                     <td class="tdar">
-                        <input id="CompanyType" name="CompanyType" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                        <input id="CompanyType" name="CompanyType" type="text" maxlength="30" class="easyui-textbox"  />
                     </td>
                     <td class="tdal">
                         颁发日期：
                     </td>
                     <td class="tdar">
-                        <input id="PresentationDate" name="PresentationDate" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                        <input id="PresentationDate" name="PresentationDate" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                     </td>
                 </tr>
                 <tr>
@@ -87,16 +87,18 @@
                         注册资本：
                     </td>
                     <td class="tdar">
-                        <input id="RegisteredCapital" name="RegisteredCapital" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                        <input id="RegisteredCapital" name="RegisteredCapital" type="text" maxlength="30" class="easyui-textbox"  />
                     </td>
                     <td class="tdal">
                         许可机关印章：
                     </td>
                     <td class="tdar">
-
-                        <%-- --%>
-
-                    </td>
+                            <input type="hidden" name="LicensedSealInfo" id="LicensedSealInfo" required="true" />
+                            <input type="file" id="LicensedSeal" name="LicensedSeal" />
+                            <a id="btn_upload" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LicensedSeal').uploadFiles()">上传</a>
+                            <div id="LicensedSeal-fileQueue"></div>
+                            <div id="LicensedSeal-fileList" style="margin-top: 2px; zoom: 1"></div>
+                        </td>
                 </tr>
                 <tr>
                     <td class="tdal">
@@ -114,18 +116,40 @@
         <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存 </a> 
         <a href="javascript:;" class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
+
+    <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
+    <link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
+    <script src="<%=Page.ResolveUrl("~/Content/JS/GA/upload.js")%>" type="text/javascript"></script>
+
      <%--添加 修改 end--%>
+
+     <%--设置菜单 start--%>
+
+    <div id="setrole" class="easyui-dialog" style="width: 500px; height: 350px;"
+        modal="true" closed="true" buttons="#setrole-buttons">
+
+            <ul id="tt" class="easyui-tree"></ul>
+    </div>
+    <div id="setrole-buttons">
+        <a id="btn_set" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
+            class="easyui-linkbutton" onclick="$('#setrole').dialog('close');return false;">取消</a>
+    </div>
+    <%--设置菜单 end--%>
+
     <script type="text/javascript">
 
         $(function () {
             Main.InitGird();
             Main.InitSearch();
+
+     
         });
         Main = {
             //初始化表格
             InitGird: function () {
                 $('#tab_list').datagrid({
-                    title: '用户列表', //表格标题
+                    title: '企业营业执照列表', //表格标题
                     url: location.href, //请求数据的页面
                     sortName: 'ID', //排序字段
                     idField: 'ID', //标识字段,主键
@@ -155,7 +179,9 @@
                         { title: '许可机关印章', field: 'LicensedSeal', width: 150 },
                         {
                             title: '操作', field: 'ID', width: 150, formatter: function (value, rec) {
-                                return '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>';
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
+                             
+                                return str;
                             }
                         }
                     ]],
@@ -183,10 +209,21 @@
 
             //打开添加窗口
             OpenWin: function () {
-                debugger;
-                $("#edit").dialog("open").dialog('setTitle', '营业执照信息填写');
+
+                $("#edit").dialog("open").dialog('setTitle', '新增营业执照信息');
                 $("#form_edit").form('clear');
                 $("#btn_add").attr("onclick", "Main.Save();")
+                new dj.upload({
+                    id: "LicensedSeal",
+                    maxSize: 5,
+                    multi: true,
+                    queueId: "LicensedSeal-fileQueue",
+                    listId: "LicensedSeal-fileList",
+                    truncate: "18",
+                    maxCount: "1",
+                    uploadPath: "Files/LicensedSeal/"
+                });
+
             },
             //提交按钮事件
             Save: function (uid) {
@@ -207,7 +244,7 @@
 
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑');
+                $("#edit").dialog("open").dialog('setTitle', '编辑营业执照信息');
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
 
                 $.post("BusinessCertificate.aspx", { "action": "queryone", "id": uid }, function (data) {

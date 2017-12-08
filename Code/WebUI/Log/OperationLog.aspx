@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="LoginLog.aspx.cs" Inherits="Log_LoginLog" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="OperationLog.aspx.cs" Inherits="Log_OperationLog" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
 </asp:Content>
@@ -6,7 +6,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" Runat="Server">
 
-     <%--列表 start--%>
+    <%--列表 start--%>
     <table id="tab_list">
     </table>
     <div id="tab_toolbar" style="padding: 2px 2px;">
@@ -37,7 +37,7 @@
             //初始化表格
             InitGird: function () {
                 $('#tab_list').datagrid({
-                    title: '登陆日志列表', //表格标题
+                    title: '操作日志列表', //表格标题
                     url: location.href, //请求数据的页面
                     sortName: 'ID', //排序字段
                     idField: 'ID', //标识字段,主键
@@ -55,10 +55,11 @@
                     ]],
                     columns: [[
                         { title: '用户ID', field: 'UserID', width: 150 },
-                        { title: '用户名', field: 'UserName', width: 150 },
-                        { title: '登录时间', field: 'LoginTime', width: 150 },
+                        { title: '用户名', field: 'UserName', width: 150 },                        
                         { title: '登陆IP', field: 'IPAddress', width: 150 },
-                       
+                        { title: '访问链接', field: 'AccessLinks', width: 150 },
+                        { title: '操作类别', field: 'OperationType', width: 150 },
+ 
                     ]],
                     toolbar: "#tab_toolbar",
                     queryParams: { "action": "query" },

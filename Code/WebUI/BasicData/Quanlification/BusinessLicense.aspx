@@ -7,8 +7,8 @@
         <table id="tab_list">
         </table>
         <div id="tab_toolbar" style="padding:2px 2px;">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="ture" onclick="Main.OpenWin()">+新增</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconcle="icon-remove" plain="ture" onclick="Main.Delete()">删除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="ture" onclick="Main.OpenWin()">新增</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="ture" onclick="Main.Delete()">删除</a>
             <div style="float:right">
                 <input id="ipt_search" menu="#search_mune" />
                 <div id="search_mune" style="width:250px">
@@ -22,7 +22,8 @@
     <%--列表 end--%>
 
     <%--添加 修改--%>
-    <div id="edit" class="easyui-dialog" style="width:1000px;height:500px" modal="ture" closed="ture" buttons="#edit_cb">
+    <div id="edit" class="easyui-dialog" style="width:800px;height:500px" 
+        modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit" method="post">
              <table class="table_edit">
                  <tr>
@@ -64,7 +65,7 @@
                          法人身份证地址：
                      </td>
                      <td class="tdar">
-                         <input id="LegalAddress" name="LegalAddress" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="LegalAddress" name="LegalAddress" type="text" maxlength="30" class="easyui-textbox"  />
                      </td>
                  </tr>
                  <tr>
@@ -72,7 +73,7 @@
                          注册资金：
                      </td>
                      <td class="tdar">
-                         <input id="RegisteredCapital" name="RegisteredCapital" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="RegisteredCapital" name="RegisteredCapital" type="text" maxlength="30" class="easyui-textbox" />
                      </td>
                      <td class="tdal">
                          法人有效联系电话：
@@ -86,13 +87,13 @@
                          有效期限：
                      </td>
                      <td class="tdar">
-                         <input id="Dealline" name="Dealline" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                         <input id="Dealline" name="Dealline" type="text" maxlength="30" class="easyui-textbox"  required="ture" />
                      </td>
                      <td class="tdal">
                          法人委托人：
                      </td>
                      <td class="tdar">
-                         <input id="LegalClientele" name="LegalClientele" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                         <input id="LegalClientele" name="LegalClientele" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                      </td>
                  </tr>
                  <tr>
@@ -100,13 +101,13 @@
                          指定联系人：
                      </td>
                      <td class="tdar">
-                         <input id="ContactPerson" name="ContactPerson" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                         <input id="ContactPerson" name="ContactPerson" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                      </td>
                      <td class="tdal">
                          委托人身份证地址：
                      </td>
                      <td class="tdar">
-                         <input id="DelegateAddress" name="DelegateAddress" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                         <input id="DelegateAddress" name="DelegateAddress" type="text" maxlength="30" class="easyui-textbox"  />
                      </td>
                  </tr>
                  <tr>
@@ -114,30 +115,37 @@
                          委托人姓名：
                      </td>
                      <td class="tdar">
-                         <input id="DelegateName" name="DelegateName" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                         <input id="DelegateName" name="DelegateName" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                      </td>
                      <td class ="tdal">
                          法人身份证复印件：
                      </td>
                      <td class="tdar">
 
-                         <% %>
-
-                     </td>
+                            <input type="hidden" name="LegalCardImgInfo" id="LegalCardImgInfo" required="true" />
+                            <input type="file" id="LegalCardImg" name="LegalCardImg" />
+                            <a id="btn_uploadlci" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalCardImg').uploadFiles()">上传</a>
+                            <div id="LegalCardImg-fileQueue"></div>
+                            <div id="LegalCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
+                        </td>
                  </tr>
                  <tr>
                      <td class="tdal">
                          委托人身份证号：
                      </td>
                      <td class="tdar">
-                         <input id="DelegateCardNo" name="DelegateCardNo" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                         <input id="DelegateCardNo" name="DelegateCardNo" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                      </td>
                      <td class="tdal">
                          法人委托书原件：
                      </td>
                      <td class="tdar">
 
-                         <% %>
+                         <input type="hidden" name="LegalDelegateImgInfo" id="LegalDelegateImgInfo" required="true" />
+                            <input type="file" id="LegalDelegateImg" name="LegalDelegateImg" />
+                            <a id="btn_uploadldi" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalDelegateImg').uploadFiles()">上传</a>
+                            <div id="LegalDelegateImg-fileQueue"></div>
+                            <div id="LegalDelegateImg-fileList" style="margin-top: 2px; zoom: 1"></div>
 
                      </td>
                  </tr>
@@ -146,33 +154,92 @@
                          委托人有效联系电话：
                      </td>
                      <td class="tdar">
-                         <input id="DelegateTelePhone" name="DelegateTelePhone" type="text" maxlength="30" class="esayui-textbox" required="ture" />
+                         <input id="DelegateTelePhone" name="DelegateTelePhone" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                      </td>
                      <td class="tdal">
                          委托人身份证复印件：
                      </td>
                      <td class="tdar">
 
-                         <% %>
+                         <input type="hidden" name="DelegateCardImgInfo" id="DelegateCardImgInfo" required="true" />
+                            <input type="file" id="DelegateCardImg" name="DelegateCardImg" />
+                            <a id="btn_uploaddci" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('DelegateCardImg').uploadFiles()">上传</a>
+                            <div id="DelegateCardImg-fileQueue"></div>
+                            <div id="DelegateCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
 
                      </td>
                  </tr>
              </table>
         </form>
     </div>
+    <div id="edit-buttons">
+        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">提交</a> <a href="javascript:;"
+            class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
+    </div>
+
+    <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
+    <link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
+    <script src="<%=Page.ResolveUrl("~/Content/JS/GA/upload.js")%>" type="text/javascript"></script>
+
     <%--添加 修改 end--%>
+
+     <%--设置菜单 start--%>
+
+    <div id="setrole" class="easyui-dialog" style="width: 500px; height: 350px;"
+        modal="true" closed="true" buttons="#setrole-buttons">
+
+            <ul id="tt" class="easyui-tree"></ul>
+    </div>
+    <div id="setrole-buttons">
+        <a id="btn_set" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
+            class="easyui-linkbutton" onclick="$('#setrole').dialog('close');return false;">取消</a>
+    </div>
+    <%--设置菜单 end--%>
 
     <script type="text/javascript">
 
         $(function () {
             Main.InitGird();
             Main.InitSearch();
+
+            new dj.upload({
+                id: "LegalCardImg",
+                maxSize: 5,
+                multi: true,
+                queueId: "LegalCardImg-fileQueue",
+                listId: "LegalCardImg-fileList",
+                truncate: "18",
+                maxCount: "1",
+                uploadPath: "Files/LegalCardImg/"
+            });
+            new dj.upload({
+                id: "LegalDelegateImg",
+                maxSize: 5,
+                multi: true,
+                queueId: "LegalDelegateImg-fileQueue",
+                listId: "LegalDelegateImg-fileList",
+                truncate: "18",
+                maxCount: "1",
+                uploadPath: "Files/LegalDelegateImg/"
+            });
+            new dj.upload({
+                id: "DelegateCardImg",
+                maxSize: 5,
+                multi: true,
+                queueId: "DelegateCardImg-fileQueue",
+                listId: "DelegateCardImg-fileList",
+                truncate: "18",
+                maxCount: "1",
+                uploadPath: "Files/DelegateCardImg/"
+            });
+
         });
         Main = {
             //初始化表格
             InitGird: function () {
                 $('#tab_list').datagrid({
-                    title: '用户列表', //表格标题
+                    title: '企业经营许可证列表', //表格标题
                     url: location.href, //请求数据的页面
                     sortName: 'ID', //排序字段
                     idField: 'ID', //标识字段,主键
@@ -204,10 +271,11 @@
                         { title: '委托人身份证号', field: 'DelegateCardNo', width: 150 },
                         { title: '委托人身份证地址', field: 'DelegateAddress', width: 150 },
                         { title: '委托人有效联系电话', field: 'DelegateTelePhone',width: 150 },
-                        
                         {
                             title: '操作', field: 'ID', width: 150, formatter: function (value, rec) {
-                                return '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>';
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
+                              
+                                return str;
                             }
                         }
                     ]],
@@ -235,8 +303,7 @@
 
             //打开添加窗口
             OpenWin: function () {
-                $("#edit").dialog("open").dialog('setTitle', '新增');
-                $("#pwdrow").show();
+                $("#edit").dialog("open").dialog('setTitle', '新增企业许可证信息');
                 $("#form_edit").form('clear');
                 $("#btn_add").attr("onclick", "Main.Save();")
             },
@@ -259,8 +326,7 @@
 
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑');
-                $("#pwdrow").hide();
+                $("#edit").dialog("open").dialog('setTitle', '编辑企业许可证信息');
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
 
                 $.post("BusinessLicense.aspx", { "action": "queryone", "id": uid }, function (data) {
