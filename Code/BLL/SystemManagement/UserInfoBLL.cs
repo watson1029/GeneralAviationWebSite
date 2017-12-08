@@ -1,4 +1,5 @@
-﻿using DAL.SystemManagement;
+﻿using DAL.BasicData;
+using DAL.SystemManagement;
 using Model.EF;
 using Model.SystemManagement;
 using System;
@@ -15,7 +16,7 @@ namespace BLL.SystemManagement
         private MenuDAL menudal = new MenuDAL();
         private UserInfoDAL userinfodal = new UserInfoDAL();
         private ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
-
+        private CompanyDAL companydal = new CompanyDAL();
 
         public bool Delete(string ids)
         {
@@ -46,7 +47,6 @@ namespace BLL.SystemManagement
 
         public UserInfo Get(int id)
         {
-            return userinfodal.Find(u=>u.ID==id);
             return userinfodal.Find(u => u.ID == id);
         }
         public UserInfo Get(string userName)
@@ -119,5 +119,22 @@ namespace BLL.SystemManagement
         {
             return userinfodal.SetUserRole(userID, addUserRoleList, removeUserRoleList);
         }
+
+        /// <summary>
+        /// 根据用户ID获取所在单位信息
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public Company GetUserCompany(int userID)
+        {
+            Company company = null;
+            var userinfo = userinfodal.Find(u => u.ID == userID);
+            if (userinfo != null)
+            {
+                company = companydal.Find(t => t.CompanyCode3 == userinfo.CompanyCode3);
+            }
+            return company;
+        }
+
     }
 }

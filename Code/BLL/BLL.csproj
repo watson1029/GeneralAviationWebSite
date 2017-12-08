@@ -59,6 +59,7 @@
     <Compile Include="Log\LoginLogBLL.cs" />
     <Compile Include="Log\OperationLogBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SupplyDemandInformation\SupplyDemandBLL.cs" />
     <Compile Include="SystemManagement\MenuBLL.cs" />
     <Compile Include="SystemManagement\RoleBLL.cs" />
     <Compile Include="SystemManagement\UserInfoBLL.cs" />
