@@ -55,7 +55,21 @@
                         { title: '有效期限', field: 'ExpiryDate', width: 150 },
                         { title: '供求简介', field: 'Summary', width: 400 },
                         { title: '供求条件', field: 'Catalog', width: 60 },
-                        { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 100 },
+                        {
+                            title: '状态', field: 'State', formatter: function (value, rec, index) {
+                                var str = "";
+                                if (value == "end") {
+                                    str = "审核通过";
+                                }
+                                else if (value == "Deserted") {
+                                    str = "审核不通过";
+                                }
+                                else {
+                                    str = value + '审核中';
+                                }
+                                return str;
+                            }, width: 80
+                        }
                     ]],
                     toolbar: "#tab_toolbar",
                     queryParams: { "action": "query" },

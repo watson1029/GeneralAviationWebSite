@@ -29,7 +29,7 @@
                         业务概况
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 1024px; height: 500px;"></script>
+                        <script id="editor" type="text/plain" style="width: 1000px; height: 450px;"></script>
                     </td>
                 </tr>
                 <tr>
@@ -73,7 +73,7 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '撰写人', field: 'ModifiedByName', width: 200 },
+                        { title: '单位名称', field: 'CompanyName', width: 200 },
                         { title: '录入日期', field: 'ModifiedTime', width: 150 },
                         { title: '业务概况', field: 'Summary', width: 500 },
                         { title: '状态', field: 'State', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 60 },

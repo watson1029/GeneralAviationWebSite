@@ -54,7 +54,7 @@
                         { title: '供求简介', field: 'Summary', width: 400 },
                         { title: '供求条件', field: 'Catalog', width: 60 },
                         {
-                            title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
+                            title: '操作', field: 'ID', width: 80, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.Audit(' + value + ');$(this).parent().click();return false;">审核</a>';
                                 return str;
                             }
@@ -85,12 +85,7 @@
                 $("#audit").dialog("open").dialog('setTitle', '审核');
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
-                    //$("#form_audit").form('load', data);
-                    $("#Summary").html(data.Summary);
-                    $("#CataLog").html(data.CataLog);
-                    $("#ExpiryDate").html(new Date(data.ExpiryDate).toLocaleDateString());
-                    $("#CreateTime").html(new Date(data.CreateTime).toLocaleDateString());
-                    $("#CreateName").html(data.CreateName);
+                    $("#form_audit").form('load', data);
                 });
             },
             AuditSubmit: function (uid) {
@@ -115,7 +110,7 @@
     </script>
 
     <%--添加 修改 start--%>
-    <div id="audit" class="easyui-dialog" style="width: 700px; height: 700px;"
+    <div id="audit" class="easyui-dialog" style="width: 700px; height: 570px;"
         modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
             <table class="table_edit">
@@ -123,14 +118,14 @@
                     <td style="text-align: right">供求简介
                     </td>
                     <td colspan="3">
-                        <input id="Summary" name="Summary" class="easyui-textbox" multiline="true" required="true" style="width: 450px; height: 150px" />
+                        <input id="Summary" name="Summary" class="easyui-textbox" multiline="true" required="true" style="width: 465px; height: 150px" />
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right">供求条件
                     </td>
                     <td>
-                        <select id="CataLog" class="easyui-combobox" name="CataLog" required="true" style="width: 100%;">
+                        <select id="CataLog" class="easyui-combobox" name="CataLog" required="true" style="width: 145px">
                             <option value="提供" selected>提供</option>
                             <option value="寻求">寻求</option>
                         </select>
@@ -138,32 +133,31 @@
                     <td style="text-align: right">有效期限
                     </td>
                     <td>
-                        <input id="ExpiryDate" name="ExpiryDate" style="width: 100%" type="text" required="true" class="easyui-datebox" />
+                        <input id="ExpiryDate" name="ExpiryDate" style="width: 145px" type="text" required="true" class="easyui-datebox" />
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right">撰写人</td>
                     <td>
-                        <input id="CreateName" name="CreateName" maxlength="30" type="text" readonly="true" required="true" class="easyui-textbox" /></td>
+                        <input id="CreateName" name="CreateName" style="width: 145px" type="text" readonly="true" required="true" class="easyui-textbox" /></td>
                     <td style="text-align: right">录入日期</td>
                     <td>
-                        <input id="CreateTime" name="CreateTime" style="width: 100%" type="text" readonly="true" required="true" class="easyui-datebox" /></td>
+                        <input id="CreateTime" name="CreateTime" style="width: 145px" type="text" readonly="true" required="true" class="easyui-datebox" /></td>
                 </tr>
                 <tr>
-                    <th>审核结果：</th>
-                    <td>
-                        <select class="easyui-combobox" editable="false" name="Auditresult" required="true" panelheight="auto" style="width: 200px;">
+                    <td style="text-align: right">审核结果</td>
+                    <td colspan="3">
+                        <select class="easyui-combobox" editable="false" name="Auditresult" required="true" panelheight="auto" style="width: 145px">
                             <option value="0" selected="true">通过</option>
                             <option value="1">不通过</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <th>审核意见：</th>
+                    <td style="text-align: right">审核意见</td>
                     <td colspan="3">
-                        <input id="AuditComment" name="AuditComment" required="true" maxlength="400" style="width: 400px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AuditComment" name="AuditComment" required="true" maxlength="465" style="width: 465px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
-
                 </tr>
             </table>
         </form>

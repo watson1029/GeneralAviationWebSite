@@ -63,7 +63,10 @@ namespace BLL.SupplyDemandInformation
         {
             try
             {
-                WorkflowNodeInstanceDAL.Submit(id, comment, workPlan => { });
+                WorkflowNodeInstanceDAL.Submit(id, comment ?? "", t =>
+                {
+                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
+                });
                 return true;
             }
             catch (Exception ex)
@@ -82,7 +85,10 @@ namespace BLL.SupplyDemandInformation
         {
             try
             {
-                WorkflowNodeInstanceDAL.Terminate(id, comment, workPlan => { });
+                WorkflowNodeInstanceDAL.Terminate(id, comment, t =>
+                {
+                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
+                });
                 return true;
             }
             catch (Exception ex)

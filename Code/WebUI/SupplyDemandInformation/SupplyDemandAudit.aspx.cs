@@ -61,9 +61,7 @@ public partial class SupplyDemandInformation_SupplyDemandAudit : BasePage
     private Expression<Func<Model.EF.SupplyDemandInfo, bool>> GetWhere()
     {
         Expression<Func<Model.EF.SupplyDemandInfo, bool>> predicate = PredicateBuilder.True<Model.EF.SupplyDemandInfo>();
-        predicate = predicate.And(m => m.State != "0");
-        predicate = predicate.And(m => m.Creator == User.ID);
-        predicate = predicate.And(m => m.CreateTime == DateTime.Now.AddDays(-1));
+        predicate = predicate.And(m => m.ActorID == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

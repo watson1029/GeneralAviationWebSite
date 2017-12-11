@@ -26,6 +26,10 @@ namespace Untity
         /// <summary>
         /// 供求信息审批流程
         /// </summary>
-        SupplyDemand = 4
+        SupplyDemand = 4,
+        /// <summary>
+        /// 通航公司介绍流程
+        /// </summary>
+        CompanySummary = 5
     }
 }
