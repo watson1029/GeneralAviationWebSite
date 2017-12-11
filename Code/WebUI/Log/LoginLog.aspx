@@ -25,18 +25,7 @@
     </div>
     <%--列表 end--%>
 
-    <%--设置菜单 start--%>
-
-    <div id="setrole" class="easyui-dialog" style="width: 500px; height: 350px;"
-        modal="true" closed="true" buttons="#setrole-buttons">
-
-            <ul id="tt" class="easyui-tree"></ul>
-    </div>
-    <div id="setrole-buttons">
-        <a id="btn_set" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
-            class="easyui-linkbutton" onclick="$('#setrole').dialog('close');return false;">取消</a>
-    </div>
-    <%--设置菜单 end--%>
+   
 
     <script type="text/javascript">
 

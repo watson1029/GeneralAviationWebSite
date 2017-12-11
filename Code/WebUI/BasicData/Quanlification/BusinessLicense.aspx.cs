@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Linq.Expressions;
 using System.Text;
+using System.Web.UI;
 using Untity;
 
 public partial class BasicData_Quanlification_BusinessLicense : BasePage
@@ -41,7 +42,7 @@ public partial class BasicData_Quanlification_BusinessLicense : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (bll.Delete(Request.Form["cbx_select"].ToString())>0)
+            if (bll.Delete(Request.Form["cbx_select"].ToString()) > 0)
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -81,7 +82,7 @@ public partial class BasicData_Quanlification_BusinessLicense : BasePage
         if (!id.HasValue)//新增
         {
             model.CreateTime = DateTime.Now;
-            if (bll.Add(model)>0)
+            if (bll.Add(model) > 0)
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -90,7 +91,7 @@ public partial class BasicData_Quanlification_BusinessLicense : BasePage
         else//编辑
         {
             model.ID = id.Value;
-            if (bll.Update(model)>0)
+            if (bll.Update(model) > 0)
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";

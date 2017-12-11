@@ -39,7 +39,7 @@ public partial class BasicData_Aircraft : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (bll.Delete(Request.Form["cbx_select"].ToString())>0)
+            if (bll.Delete(Request.Form["cbx_select"].ToString()) > 0)
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -60,25 +60,65 @@ public partial class BasicData_Aircraft : BasePage
         { id = Convert.ToInt32(Request.Form["id"]); }
         var model = new Aircraft()
         {
-            AircraftID = int.Parse(Request.Form["AircraftID"]),
-            FuelCapacity = int.Parse(Request.Form["FuelCapacity"]),
+            AircraftSign = Request.Form["AircraftSign"],
+            
             AcfType = Request.Form["AcfType"],
-            Range = int.Parse(Request.Form["Range"]),
-            AcfNo = Request.Form["AcfNo"], 
-            ASdate = int.Parse(Request.Form["ASdate"]),
+           
+            AcfNo = Request.Form["AcfNo"],
+            ASdate = DateTime.Parse(Request.Form["ASdate"]),
             AcfClass = Request.Form["AcfClass"],
-            CruiseAltd = int.Parse(Request.Form["CruiseAltd"]),
-            Manufacture = Request.Form["Manufacturer"],
-            CruiseSpeed = int.Parse(Request.Form["CruiseSpeed"]),
+            
+            Manufacture = Request.Form["Manufacture"],
+            
             WakeTurbulance = Request.Form["WakeTurbulance"],
-            MaxSpeed = int.Parse(Request.Form["MaxSpeed"]),
-            FueledWeight = int.Parse(Request.Form["FueledWeight"]),
-            MinSpeed = int.Parse(Request.Form["MinSpeed"]),
+            
+            
+           
         };
+
+
+        int FuelCapacity;
+        if (int.TryParse(Request.Form["FuelCapacity"], out FuelCapacity))
+        {
+            model.FuelCapacity = FuelCapacity;
+        }
+        int range;
+        if (int.TryParse(Request.Form["Range"], out range))
+        {
+            model.Range = range;
+        }
+        int CruiseAltd;
+        if (int.TryParse(Request.Form["CruiseAltd"], out CruiseAltd))
+        {
+            model.CruiseAltd = CruiseAltd;
+        }
+        int CruiseSpeed;
+        if (int.TryParse(Request.Form["CruiseSpeed"], out CruiseSpeed))
+        {
+            model.CruiseAltd = CruiseSpeed;
+        }
+        int MaxSpeed;
+        if (int.TryParse(Request.Form["MaxSpeed"], out MaxSpeed))
+        {
+            model.MaxSpeed = MaxSpeed;
+        }
+        int FueledWeight;
+        if (int.TryParse(Request.Form["FueledWeight"], out FueledWeight))
+        {
+            model.FueledWeight = FueledWeight;
+        }
+        int MinSpeed;
+        if (int.TryParse(Request.Form["MinSpeed"], out MinSpeed))
+        {
+            model.MinSpeed = MinSpeed;
+        }
+
+
+
         if (!id.HasValue)//新增
         {
             model.CreateTime = DateTime.Now;
-            if (bll.Add(model)>0)
+            if (bll.Add(model) > 0)
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -87,7 +127,7 @@ public partial class BasicData_Aircraft : BasePage
         else//编辑
         {
             model.AircraftID = id.Value;
-            if (bll.Update(model)>0)
+            if (bll.Update(model) > 0)
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -140,7 +180,7 @@ public partial class BasicData_Aircraft : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-   
+
 
 
     private Expression<Func<Aircraft, bool>> GetWhere()

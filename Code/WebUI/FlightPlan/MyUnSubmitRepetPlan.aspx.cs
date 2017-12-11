@@ -66,30 +66,18 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         RepetitivePlan model = null;
         if (!id.HasValue)//新增
         {
-             model = new RepetitivePlan()
-            {
-                PlanCode = OrderHelper.GenerateId(User.CompanyCode3),
-                FlightType = Request.Form["FlightType"],
-                AircraftType = Request.Form["AircraftType"],
-                FlightDirHeight = Request.Form["FlightDirHeight"],
-                StartDate = DateTime.Parse(Request.Form["StartDate"]),
-                EndDate = DateTime.Parse(Request.Form["EndDate"]),
-                ModifyTime = DateTime.Now,
-                AttchFile = Request.Params["AttchFilesInfo"],
-                Remark = Request.Form["Remark"],
-                ADES = Request.Form["ADES"],
-                ADEP = Request.Form["ADEP"],
-                WeekSchedule = Request.Form["qx"],
-                SIBT = TimeSpan.Parse(Request.Form["SIBT"]),
-                SOBT = TimeSpan.Parse(Request.Form["SOBT"]),
-                CallSign = Request.Form["CallSign"]
-            };
+            model = new RepetitivePlan();
+            model.GetEntitySearchPars<RepetitivePlan>(this.Context);
+            model.PlanCode = OrderHelper.GenerateId(User.CompanyCode3);
+            model.WeekSchedule = Request.Form["qx"];
+            model.AttchFile = Request.Params["AttchFilesInfo"];
             model.PlanState = "0";
-            model.CompanyCode3 = User.CompanyCode3??"";
+            model.CompanyCode3 = User.CompanyCode3 ?? "";
             model.Creator = User.ID;
             model.CreatorName = User.UserName;
             model.ActorID = User.ID;
             model.CreateTime = DateTime.Now;
+            model.ModifyTime = DateTime.Now;
             if (bll.Add(model))
             {
                 result.IsSuccess = true;
@@ -98,31 +86,20 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         }
         else//编辑
         {
-          model=  bll.Get(id.Value);
-          if (model!=null)
+            model = bll.Get(id.Value);
+            if (model != null)
             {
-                   model.FlightType = Request.Form["FlightType"];
-                    model.AircraftType = Request.Form["AircraftType"];
-                    model.FlightDirHeight = Request.Form["FlightDirHeight"];
-                    model.StartDate = DateTime.Parse(Request.Form["StartDate"]);
-                    model.EndDate = DateTime.Parse(Request.Form["EndDate"]);
-                    model.ModifyTime = DateTime.Now;
-                    model.AttchFile = Request.Params["AttchFilesInfo"];
-                    model.Remark = Request.Form["Remark"];
-                    model.ADES = Request.Form["ADES"];
-                    model.ADEP = Request.Form["ADEP"];
-                    model.WeekSchedule = Request.Form["qx"];
-                    model.SIBT = TimeSpan.Parse(Request.Form["SIBT"]);
-                    model.SOBT = TimeSpan.Parse(Request.Form["SOBT"]);
-                    model.CallSign = Request.Form["CallSign"];
-            
-            if (bll.Update(model))
-            {
-                result.IsSuccess = true;
-                result.Msg = "更新成功！";
+                model.GetEntitySearchPars<RepetitivePlan>(this.Context);
+                model.ModifyTime = DateTime.Now;
+                model.AttchFile = Request.Params["AttchFilesInfo"];
+                model.WeekSchedule = Request.Form["qx"];
+                if (bll.Update(model))
+                {
+                    result.IsSuccess = true;
+                    result.Msg = "更新成功！";
+                }
             }
-            }
-            };
+        };
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
@@ -134,7 +111,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         result.IsSuccess = false;
         result.Msg = "提交失败！";
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        WorkflowTemplateBLL.CreateWorkflowInstance(1, planid, User.ID, User.UserName);
+        WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.RepetitivePlan, planid, User.ID, User.UserName);
         WorkflowNodeInstanceDAL.Submit(planid, "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
 
         result.IsSuccess = true;
@@ -158,9 +135,9 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         var strJSON = "";
         if (plan != null)
         {
-            strJSON=JsonConvert.SerializeObject(plan);
+            strJSON = JsonConvert.SerializeObject(plan);
         }
-         
+
         Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -175,12 +152,12 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     {
         int page = Request.Form["page"] != null ? Convert.ToInt32(Request.Form["page"]) : 0;
         int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
-     //   string sort = Request.Form["sort"] ?? "";
-     //   string order = Request.Form["order"] ?? "";
+        //   string sort = Request.Form["sort"] ?? "";
+        //   string order = Request.Form["order"] ?? "";
         if (page < 1) return;
         int pageCount = 0;
         int rowCount = 0;
-    //    string orderField = sort.Replace("JSON_", "");
+        //    string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
         var pageList = bll.GetList(page, size, out pageCount, out rowCount, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
@@ -197,7 +174,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     {
 
         Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
-        predicate = predicate.And(m => m.PlanState=="0");
+        predicate = predicate.And(m => m.PlanState == "0");
         predicate = predicate.And(m => m.Creator == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))

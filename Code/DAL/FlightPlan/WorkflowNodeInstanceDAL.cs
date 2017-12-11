@@ -39,6 +39,7 @@ namespace DAL.FlightPlan
             //    throw (e);
 
             //}
+
             try
             {
                 foreach (var tempINst in nodesInstance)
@@ -68,8 +69,9 @@ namespace DAL.FlightPlan
 
             try
             {
-                dbHelper.Update(new ActualSteps { ActorID = userID, ActorName = userName, State = (byte)firstNodeInst.State, ApplyTime = DateTime.Now, ID = firstNodeInst.Id }, "ActorID", "ActorName", "State", "ApplyTime");
-                return true;
+                firstNodeInst.State = WorkflowNodeInstance.StepStateType.Processing;
+                var entity = new ActualSteps { ActorID = userID, ActorName = userName, State = (byte)firstNodeInst.State, ApplyTime = DateTime.Now, ID = firstNodeInst.Id };
+                return dbHelper.Update(entity, "ActorID", "ActorName", "State", "ApplyTime")>0;
             }
             catch (Exception ex)
             {
@@ -175,7 +177,8 @@ namespace DAL.FlightPlan
                     {
                         nextInst = GetNodeInstance(currInst.NextId);
                         WorkflowTplNode tnode = WorkflowTplNodeDAL.GetNode(nextInst.StepId);
-                        var userInfo = new UserInfoDAL().Find(u => u.ID == int.Parse(tnode.AuthorType)); //UserInfoDAL.Get(int.Parse(tnode.AuthorType));
+                        var auhtor=int.Parse(tnode.AuthorType);
+                        var userInfo = new UserInfoDAL().Find(u => u.ID == auhtor); //UserInfoDAL.Get(int.Parse(tnode.AuthorType));
                         int actor = userInfo.ID;
                         //判断节点的活动所有者类型
                         
@@ -198,12 +201,12 @@ namespace DAL.FlightPlan
         public static void UpdateRepetPlan(WorkflowPlan plan)
         {
             var model = new RepetitivePlan() { ActorID = plan.Actor, PlanState = plan.PlanState, RepetPlanID = plan.PlanID };
-            new DBHelper<RepetitivePlan>().Update(model, "Actor", "PlanState");
+            new DBHelper<RepetitivePlan>().Update(model, "ActorID", "PlanState");
         }
         public static void UpdateFlightPlan(WorkflowPlan plan)
         {
             var model = new Model.EF.FlightPlan() { ActorID = plan.Actor, PlanState = plan.PlanState, FlightPlanID = plan.PlanID };
-            new DBHelper<Model.EF.FlightPlan>().Update(model, "Actor", "PlanState");
+            new DBHelper<Model.EF.FlightPlan>().Update(model, "ActorID", "PlanState");
         }
 
         /// <summary>

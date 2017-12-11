@@ -82,7 +82,7 @@ public class Handler : IHttpHandler
     public void delete(HttpContext context)
     {
         int id = Convert.ToInt16(context.Request["id"]);
-        dao.Delete(id);
+        dao.DeleteResource(id);
         context.Response.ContentType = "text/plain";
         context.Response.Write("资料删除成功");
     }
@@ -115,7 +115,7 @@ public class Handler : IHttpHandler
             resource.Status = 1;
             resource.Started = started;
             resource.Ended = ended;
-            dao.Add(resource);
+            dao.AddResource(resource);
 
             context.Response.ContentType = "text/plain";
             context.Response.Write("新增资料成功");
@@ -152,7 +152,7 @@ public class Handler : IHttpHandler
         resource.UsefulTime = started.ToString("yyyy年MM月dd日")+"-" + ended.ToString("yyyy年MM月dd日");
         resource.Started = started;
         resource.Ended = ended;
-        dao.Update(resource);
+        dao.UpdateResource(resource);
         context.Response.ContentType = "text/plain";
         context.Response.Write("更新资料成功");
     }

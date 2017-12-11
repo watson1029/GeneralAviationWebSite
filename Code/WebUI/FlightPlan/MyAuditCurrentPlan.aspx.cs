@@ -63,8 +63,9 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
     private Expression<Func<Model.EF.FlightPlan, bool>> GetWhere()
     {
         Expression<Func<Model.EF.FlightPlan, bool>> predicate = PredicateBuilder.True<Model.EF.FlightPlan>();
-        predicate = predicate.And(m => m.PlanState == "0");
+        predicate = predicate.And(m => m.PlanState != "0");
         predicate = predicate.And(m => m.Creator == User.ID);
+        predicate = predicate.And(m => m.CreateTime == DateTime.Now.AddDays(-1));
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
