@@ -285,6 +285,7 @@
                     </td>
                 </tr>
             </table>
+            <div class="datagrid-toolbar">
             <table class="table_edit">
                 <tr>
                     <th>航空器架数：
@@ -323,7 +324,7 @@
                     </td>
                 </tr>
             </table>
-
+</div>
         </form>
     </div>
     <div id="edit-buttons">

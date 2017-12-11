@@ -69,6 +69,7 @@ namespace DAL.FlightPlan
 
             try
             {
+                DBHelper<ActualSteps> dbHelper = new DBHelper<ActualSteps>();
                 firstNodeInst.State = WorkflowNodeInstance.StepStateType.Processing;
                 var entity = new ActualSteps { ActorID = userID, ActorName = userName, State = (byte)firstNodeInst.State, ApplyTime = DateTime.Now, ID = firstNodeInst.Id };
                 return dbHelper.Update(entity, "ActorID", "ActorName", "State", "ApplyTime")>0;
@@ -79,7 +80,7 @@ namespace DAL.FlightPlan
             }
         }
 
-        public static WorkflowNodeInstance Submit(int planId, string comments,Action<WorkflowPlan> action)
+        public static WorkflowNodeInstance Submit(int planId, int twfid, string comments, Action<WorkflowPlan> action)
         {
             #region 没用EF
             /*
@@ -160,14 +161,14 @@ namespace DAL.FlightPlan
                 nextInst = null;
             }**/
             #endregion
-            List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId);
+            List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId, twfid);
             var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
             WorkflowNodeInstance nextInst = null;
 
             try
             {
                 //更新当前节点状态为完成
-                int result = dbHelper.Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processed, Comments = comments, ActorTime = DateTime.Now, ID = currInst.Id }, "State", "Comments", "ActorTime");
+                int result = dbHelper.Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processed, Comments = comments, ActorTime = DateTime.Now, ID = currInst.Id, TWFID = twfid }, "State", "Comments", "ActorTime", "TWFID");
 
                 if (result > 0)
                 {
@@ -183,11 +184,11 @@ namespace DAL.FlightPlan
                         //判断节点的活动所有者类型
                         
                         result = dbHelper.Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processing, ApplyTime = DateTime.Now, ActorID = userInfo.ID, ActorName = userInfo.UserName, ID = currInst.NextId }, "State", "ApplyTime", "ActorID","ActorName");
-                        action(new WorkflowPlan { Actor = actor, PlanState = tnode.StepName, PlanID= planId });
+                        action(new WorkflowPlan { Actor = actor, PlanState = tnode.StepName, PlanID = planId, TWFID = twfid });
                     }
                     else
                     {
-                        action(new WorkflowPlan { Actor = null, PlanState = "end", PlanID = planId });
+                        action(new WorkflowPlan { Actor = null, PlanState = "end", PlanID = planId, TWFID = twfid });
                     }
                 }
             }
@@ -215,7 +216,7 @@ namespace DAL.FlightPlan
         /// <param name="planId"></param>
         /// <param name="comments"></param>
         /// <returns></returns>
-        public static int Terminate(int planId, string comments,Action<WorkflowPlan> func)
+        public static int Terminate(int planId,int twfid, string comments,Action<WorkflowPlan> func)
         {
             #region 没用ef
             /*
@@ -240,23 +241,24 @@ namespace DAL.FlightPlan
                     result += dao.ExecNonQuery(sql, parameters1);
                 }**/
                 #endregion
-            List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId);
+            List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId, twfid);
             var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
             int result = 0;
             result = dbHelper.Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Deserted, Comments = comments, ID = currInst.Id }, "State", "Comments");
             if (result > 0)
             {
-               func(new WorkflowPlan {Actor=null,PlanState=WorkflowNodeInstance.StepStateType.Deserted.ToString(),PlanID=planId});
+                func(new WorkflowPlan { Actor = null, PlanState = WorkflowNodeInstance.StepStateType.Deserted.ToString(), PlanID = planId, TWFID = twfid });
             }
             return result;
         }
-        public static List<WorkflowNodeInstance> GetAllNodeInstance(int planId)
+        public static List<WorkflowNodeInstance> GetAllNodeInstance(int planId, int twfid)
         {
             SqlDbHelper dao = new SqlDbHelper();
-            var sql = "select * from ActualSteps where PlanID=@planId and PrevID=@prevId";
+            var sql = "select * from ActualSteps where PlanID=@planId and PrevID=@prevId and TWFID=@twfid";
             SqlParameter[] parameters = {
 					new SqlParameter("@planId",planId),
-                    new SqlParameter("@prevId",Guid.Empty)
+                    new SqlParameter("@prevId",Guid.Empty),
+                    new SqlParameter("@twfid",twfid),
 			};
             WorkflowNodeInstance wfInst = dao.ExecSelectSingleCmd<WorkflowNodeInstance>(ExecReader, sql, parameters);
             //将流程节点进行排序

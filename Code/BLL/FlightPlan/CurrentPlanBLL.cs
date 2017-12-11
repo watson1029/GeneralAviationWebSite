@@ -37,12 +37,13 @@ namespace BLL.FlightPlan
         /// <param name="userid"></param>
         /// <param name="username"></param>
         /// <returns></returns>
-        public bool Submit(int planid,int userid,string username)
+        public bool Submit(int planid,int userid, string username)
         {
             try
             {
                 WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, userid, username);
-                WorkflowNodeInstanceDAL.Submit(planid, "", workPlan => {
+                WorkflowNodeInstanceDAL.Submit(planid, (int)TWFTypeEnum.CurrentPlan, "", workPlan =>
+                {
                     dal.Update(new Model.EF.FlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, FlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
                 });
                 return true;
@@ -58,11 +59,11 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Audit(int planid,string comment)
+        public bool Audit(int planid, int twfid, string comment)
         {
             try
             {
-                WorkflowNodeInstanceDAL.Submit(planid, comment, workPlan => { });
+                WorkflowNodeInstanceDAL.Submit(planid,twfid, comment, workPlan => { });
                 return true;
             }
             catch (Exception ex)
@@ -76,11 +77,11 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Terminate(int planid, string comment)
+        public bool Terminate(int planid, int twfid,string comment)
         {
             try
             {
-                WorkflowNodeInstanceDAL.Terminate(planid, comment, workPlan => { });
+                WorkflowNodeInstanceDAL.Terminate(planid,twfid, comment, workPlan => { });
                 return true;
             }
             catch(Exception ex)

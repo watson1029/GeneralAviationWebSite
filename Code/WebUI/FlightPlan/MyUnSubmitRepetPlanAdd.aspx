@@ -1,7 +1,19 @@
 ﻿ <%@ Page Language="C#" AutoEventWireup="true" CodeFile="MyUnSubmitRepetPlanAdd.aspx.cs" Inherits="FlightPlan_MyUnSubmitRepetPlanAdd" %> 
   <form id="form_edit" method="post">
+      <input type="hidden" name="PlanCode" id="PlanCode" value=""/>
         <table class="table_edit">
-
+            <tr id="basicInfo">
+                <th>申请单号：
+                </th>
+                <td id="code">
+                
+                </td>
+                 <th>填写单位：
+                </th>
+                <td>
+                <%=User.CompanyName %>
+                </td>
+            </tr>
             <tr>
                 <th>任务类型：
                 </th>
@@ -20,10 +32,6 @@
                 </td>
             </tr>
             <tr>
-              
-
-            </tr>
-            <tr>
                 <th>航线走向和飞行高度：
                 </th>
                 <td>
@@ -34,11 +42,6 @@
                 <td>
                     <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-textbox" />
                 </td>
-            </tr>
-
-            <tr>
-              
-
             </tr>
             <tr>
                 <th>起飞机场：
@@ -51,8 +54,7 @@
                 <td>
                     <input id="ADES" name="ADES" maxlength="30" type="text" required="true" class="easyui-textbox" />
                 </td>
-            </tr>
-           
+            </tr>          
             <tr>
                 <th>预计开始日期：
                 </th>
@@ -65,16 +67,15 @@
                     <input id="EndDate" name="EndDate" style="width: 200px" type="text" required="true" class="easyui-datebox" validtype="md['#StartDate']" />
                 </td>
             </tr>
-
             <tr>
-                <td class="tdal">起飞时刻：
-                </td>
-                <td class="tdar">
+                <th >起飞时刻：
+                </th>
+                <td>
                     <input id="SOBT" name="SOBT" style="width: 200px" type="text" required="true" class="easyui-timespinner" />
                 </td>
-<td class="tdal">降落时刻：
-                </td>
-                <td class="tdar">
+<th>降落时刻：
+                </th>
+                <td >
                     <input id="SIBT" name="SIBT" style="width: 200px" type="text" required="true" class="easyui-timespinner" />
                 </td>
 
@@ -118,17 +119,23 @@
         </table>
 
     </form>
+<style type="text/css">
+    .table_edit tr#basicInfo td{
+        color:red;
+    }
+</style>
     <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
     <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
     <link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
     <script src="<%=Page.ResolveUrl("~/Content/JS/GA/upload.js")%>" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
-            var id = '<%=Request.QueryString["id"] %>';
+            var pid = '<%=Request.QueryString["id"] %>';
 
-            if (id) {
-                $.post(location.href, { "action": "queryone", "id": id }, function (data) {
+            if (pid) {
+                $.post("MyUnSubmitRepetPlanAdd.aspx", { "action": "queryone", "id": pid }, function (data) {
                     $("#form_edit").form('load', data);
+                    $("#code").html(data.PlanCode);
                     $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
                         $("#d" + n).prop({ checked: true });
                     });
@@ -146,17 +153,22 @@
                 });
             }
             else {
-                new dj.upload({
-                    id: "AttchFiles",
-                    maxSize: 5,
-                    multi: true,
-                    queueId: "AttchFiles-fileQueue",
-                    listId: "AttchFiles-fileList",
-                    truncate: "30",
-                    maxCount: "1",
-                    uploadPath: "Files/PJ/",
-                    uploadedFiles: ""
+                $.post("MyUnSubmitRepetPlanAdd.aspx", { "action": "getplancode" }, function (data) {
+                    $("#code").html(data);
+                    $("#PlanCode").val(data);
+                 
                 });
+                new dj.upload({
+                        id: "AttchFiles",
+                        maxSize: 5,
+                        multi: true,
+                        queueId: "AttchFiles-fileQueue",
+                        listId: "AttchFiles-fileList",
+                        truncate: "30",
+                        maxCount: "1",
+                        uploadPath: "Files/PJ/",
+                        uploadedFiles: ""
+                    });
             }
         });
 

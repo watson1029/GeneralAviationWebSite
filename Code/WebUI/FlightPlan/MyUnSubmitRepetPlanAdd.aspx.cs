@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Untity;
 
 public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
 {
@@ -19,7 +20,9 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
                 case "queryone"://获取一条记录
                     GetData();
                     break;
-    
+                case "getplancode":
+                    GetPlanCode();
+                    break;
                 default:
                     break;
             }
@@ -43,5 +46,11 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
-
+    private void GetPlanCode()
+    {
+        Response.Clear();
+        Response.Write(OrderHelper.GenerateId(User.CompanyCode3));
+        Response.ContentType = "text/plain";
+        Response.End();
+    }
 }

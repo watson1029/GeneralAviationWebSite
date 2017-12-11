@@ -99,10 +99,10 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
         if (Request.Form["Auditresult"] == "0")
         {
-            WorkflowNodeInstanceDAL.Submit(planid, Request.Form["AuditComment"] ?? "",WorkflowNodeInstanceDAL.UpdateRepetPlan);
+            WorkflowNodeInstanceDAL.Submit(planid,(int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "",WorkflowNodeInstanceDAL.UpdateRepetPlan);
         }
         else {
-            WorkflowNodeInstanceDAL.Terminate(planid, Request.Form["AuditComment"] ?? "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
+            WorkflowNodeInstanceDAL.Terminate(planid,(int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
         }
         result.IsSuccess = true;
         result.Msg = "提交成功！";

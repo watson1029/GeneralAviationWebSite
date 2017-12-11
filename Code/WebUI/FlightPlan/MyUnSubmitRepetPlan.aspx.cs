@@ -19,9 +19,6 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                 case "query"://查询数据
                     QueryData();
                     break;
-                case "queryone"://获取一条记录
-                    GetData();
-                    break;
                 case "save":
                     Save();
                     break;
@@ -68,7 +65,6 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         {
             model = new RepetitivePlan();
             model.GetEntitySearchPars<RepetitivePlan>(this.Context);
-            model.PlanCode = OrderHelper.GenerateId(User.CompanyCode3);
             model.WeekSchedule = Request.Form["qx"];
             model.AttchFile = Request.Params["AttchFilesInfo"];
             model.PlanState = "0";
@@ -112,7 +108,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         result.Msg = "提交失败！";
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
         WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.RepetitivePlan, planid, User.ID, User.UserName);
-        WorkflowNodeInstanceDAL.Submit(planid, "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
+        WorkflowNodeInstanceDAL.Submit(planid,(int)TWFTypeEnum.RepetitivePlan, "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
 
         result.IsSuccess = true;
         result.Msg = "提交成功！";
@@ -123,25 +119,6 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         Response.End();
 
 
-    }
-
-    /// <summary>
-    /// 获取指定ID的数据
-    /// </summary>
-    private void GetData()
-    {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var plan = bll.Get(planid);
-        var strJSON = "";
-        if (plan != null)
-        {
-            strJSON = JsonConvert.SerializeObject(plan);
-        }
-
-        Response.Clear();
-        Response.Write(strJSON);
-        Response.ContentType = "application/json";
-        Response.End();
     }
 
 
