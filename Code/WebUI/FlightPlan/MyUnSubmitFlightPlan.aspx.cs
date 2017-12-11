@@ -91,7 +91,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         result.Msg = "提交失败！";
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
         WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.FlightPlan, planid, User.ID, User.UserName);
-        WorkflowNodeInstanceDAL.Submit(planid, "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
+        WorkflowNodeInstanceDAL.Submit(planid,(int)TWFTypeEnum.FlightPlan, "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
 
         result.IsSuccess = true;
         result.Msg = "提交成功！";

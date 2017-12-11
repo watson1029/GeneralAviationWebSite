@@ -99,11 +99,11 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
         if (Request.Form["Auditresult"] == "0")
         {
-            WorkflowNodeInstanceDAL.Submit(planid, Request.Form["AuditComment"] ?? "", WorkflowNodeInstanceDAL.UpdateFlightPlan);
+            WorkflowNodeInstanceDAL.Submit(planid,(int)TWFTypeEnum.FlightPlan, Request.Form["AuditComment"] ?? "", WorkflowNodeInstanceDAL.UpdateFlightPlan);
         }
         else
         {
-            WorkflowNodeInstanceDAL.Terminate(planid, Request.Form["AuditComment"] ?? "", WorkflowNodeInstanceDAL.UpdateFlightPlan);
+            WorkflowNodeInstanceDAL.Terminate(planid,(int)TWFTypeEnum.FlightPlan, Request.Form["AuditComment"] ?? "", WorkflowNodeInstanceDAL.UpdateFlightPlan);
         }
         result.IsSuccess = true;
         result.Msg = "提交成功！";
