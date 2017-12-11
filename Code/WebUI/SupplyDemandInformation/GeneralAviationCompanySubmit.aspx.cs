@@ -55,10 +55,7 @@ public partial class SupplyDemandInformation_GeneralAviationCompanySubmit : Base
     private Expression<Func<Model.EF.Company, bool>> GetWhere()
     {
         Expression<Func<Model.EF.Company, bool>> predicate = PredicateBuilder.True<Model.EF.Company>();
-        predicate = predicate.And(m => m.Catalog == 1);
-        predicate = predicate.And(m => m.State != "0");
-        predicate = predicate.And(m => m.ModifiedBy == User.ID);
-        predicate = predicate.And(m => m.ModifiedTime == DateTime.Now.AddDays(-1));
+        predicate = predicate.And(m => m.State != "0" && m.ModifiedBy == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

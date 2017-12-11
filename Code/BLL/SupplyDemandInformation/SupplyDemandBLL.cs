@@ -40,7 +40,7 @@ namespace BLL.SupplyDemandInformation
             try
             {
                 WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
-                WorkflowNodeInstanceDAL.Submit(id, (int)TWFTypeEnum.SupplyDemand,"", t =>
+                WorkflowNodeInstanceDAL.Submit(id, "", t =>
                 {
                     dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
                 });
@@ -63,7 +63,10 @@ namespace BLL.SupplyDemandInformation
         {
             try
             {
-                WorkflowNodeInstanceDAL.Submit(id,(int)TWFTypeEnum.SupplyDemand, comment, workPlan => { });
+                WorkflowNodeInstanceDAL.Submit(id, comment ?? "", t =>
+                {
+                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
+                });
                 return true;
             }
             catch (Exception ex)
@@ -82,7 +85,10 @@ namespace BLL.SupplyDemandInformation
         {
             try
             {
-                WorkflowNodeInstanceDAL.Terminate(id, (int)TWFTypeEnum.SupplyDemand,comment, workPlan => { });
+                WorkflowNodeInstanceDAL.Terminate(id, comment, t =>
+                {
+                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
+                });
                 return true;
             }
             catch (Exception ex)

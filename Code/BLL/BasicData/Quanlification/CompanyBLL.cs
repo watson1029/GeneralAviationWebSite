@@ -49,8 +49,8 @@ namespace BLL.BasicData
         {
             try
             {
-                WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
-                WorkflowNodeInstanceDAL.Submit(id,(int)TWFTypeEnum.SupplyDemand, "", t =>
+                WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.CompanySummary, id, userid, username);
+                WorkflowNodeInstanceDAL.Submit(id, "", t =>
                 {
                     _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
                 });
@@ -73,7 +73,10 @@ namespace BLL.BasicData
         {
             try
             {
-                WorkflowNodeInstanceDAL.Submit(id,(int)TWFTypeEnum.SupplyDemand, comment, workPlan => { });
+                WorkflowNodeInstanceDAL.Submit(id, comment, t =>
+                {
+                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
+                });
                 return true;
             }
             catch (Exception ex)
@@ -92,7 +95,10 @@ namespace BLL.BasicData
         {
             try
             {
-                WorkflowNodeInstanceDAL.Terminate(id,(int)TWFTypeEnum.SupplyDemand, comment, workPlan => { });
+                WorkflowNodeInstanceDAL.Terminate(id, comment, t =>
+                {
+                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
+                });
                 return true;
             }
             catch (Exception ex)

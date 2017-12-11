@@ -46,10 +46,8 @@
 
                     columns: [[
                         { title: '单位名称', field: 'CompanyName', width: 200 },
-                        { title: '录入日期', field: 'CreateTime', width: 150 },
-                        { title: '有效期限', field: 'ExpiryDate', width: 150 },
-                        { title: '供求简介', field: 'Summary', width: 400 },
-                        { title: '供求条件', field: 'Catalog', width: 60 },
+                        { title: '录入日期', field: 'ModifiedTime', width: 150 },
+                        { title: '业务概况', field: 'Summary', width: 500 },
                         {
                             title: '操作', field: 'CompanyID', width: 80, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.Audit(' + value + ');$(this).parent().click();return false;">审核</a>';
@@ -82,9 +80,7 @@
                 $("#audit").dialog("open").dialog('setTitle', '审核');
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
-                    //$("#form_audit").form('load', data);
-                    $("#ModifiedByName").html(data.ModifiedByName);
-                    $("#ModifiedTime").html(new Date(data.ExpiryDate).toLocaleDateString());
+                    $("#form_audit").form('load', data);
                     UE.getEditor('editor').setContent(decodeURI(data.SummaryCode));
                 });
             },
