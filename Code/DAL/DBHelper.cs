@@ -22,7 +22,7 @@ public class DBHelper<T> where T : class
     public int Add(T entity)
     {
         //第一种方式
-        context.Entry<T>(entity).State = System.Data.Entity.EntityState.Added;
+        context.Entry<T>(entity).State = EntityState.Added;
         //第二种方式
         //context.Set<T>().Add(entity);
 
@@ -40,7 +40,7 @@ public class DBHelper<T> where T : class
         {
             if (entities[i] == null)
                 continue;
-            context.Entry<T>(entities[i]).State = System.Data.Entity.EntityState.Added;
+            context.Entry<T>(entities[i]).State = EntityState.Added;
             //每20个记录提交一次
             if (i != 0 && i % 20 == 0)
             {
@@ -145,9 +145,9 @@ public class DBHelper<T> where T : class
     public List<T> FindList<S>(Expression<Func<T, S>> orderBy,bool isAsc)
     {
         if(isAsc)
-            return context.Set<T>().OrderBy(orderBy).ToList();
+            return context.Set<T>().OrderBy(orderBy).AsNoTracking().ToList();
         else
-            return context.Set<T>().OrderByDescending(orderBy).ToList();
+            return context.Set<T>().OrderByDescending(orderBy).AsNoTracking().ToList();
     }
     /// <summary>
     /// 按条件查询，排序
@@ -157,9 +157,9 @@ public class DBHelper<T> where T : class
     public List<T> FindList<S>(Expression<Func<T, bool>> where,Expression<Func<T, S>> orderBy, bool isAsc)
     {
         if (isAsc)
-            return context.Set<T>().Where(where).OrderBy(orderBy).ToList();
+            return context.Set<T>().Where(where).OrderBy(orderBy).AsNoTracking().ToList();
         else
-            return context.Set<T>().Where(where).OrderByDescending(orderBy).ToList();
+            return context.Set<T>().Where(where).OrderByDescending(orderBy).AsNoTracking().ToList();
     }
     /// <summary>
     /// 分页，排序
@@ -184,7 +184,7 @@ public class DBHelper<T> where T : class
             list = list.OrderBy<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         else
             list = list.OrderByDescending<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
-        return list.ToList();
+        return list.AsNoTracking().ToList();
     }
     /// <summary>
     /// 按条件查询，分页，排序
@@ -211,6 +211,6 @@ public class DBHelper<T> where T : class
             list = list.OrderBy<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         else
             list = list.OrderByDescending<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
-        return list.ToList();
+        return list.AsNoTracking().ToList();
     }
 }
