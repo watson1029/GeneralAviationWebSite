@@ -1,8 +1,11 @@
-﻿using DAL.BasicData;
+﻿using BLL.FlightPlan;
+using DAL.BasicData;
+using DAL.FlightPlan;
 using Model.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Untity;
 
 namespace BLL.BasicData
 {
@@ -40,5 +43,63 @@ namespace BLL.BasicData
         {
             return _dal.FindList(m => m.CompanyID, false);
         }
+
+        #region 审核流程
+        public bool Submit(int id, int userid, string username)
+        {
+            try
+            {
+                WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
+                WorkflowNodeInstanceDAL.Submit(id, "", t =>
+                {
+                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "PlanState");
+                });
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 审核通过
+        /// </summary>
+        /// <param name="planid"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public bool Audit(int id, string comment)
+        {
+            try
+            {
+                WorkflowNodeInstanceDAL.Submit(id, comment, workPlan => { });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 审核不通过
+        /// </summary>
+        /// <param name="planid"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public bool Terminate(int id, string comment)
+        {
+            try
+            {
+                WorkflowNodeInstanceDAL.Terminate(id, comment, workPlan => { });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
     }
 }
