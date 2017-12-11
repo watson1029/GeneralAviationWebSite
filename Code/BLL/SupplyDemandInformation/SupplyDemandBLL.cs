@@ -42,7 +42,7 @@ namespace BLL.SupplyDemandInformation
                 WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
                 WorkflowNodeInstanceDAL.Submit(id, "", t =>
                 {
-                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "PlanState");
+                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
                 });
 
                 return true;
