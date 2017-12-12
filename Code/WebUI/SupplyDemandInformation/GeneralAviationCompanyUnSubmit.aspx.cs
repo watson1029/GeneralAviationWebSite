@@ -10,7 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class SupplyDemandInformation_GeneralAviationCompany : BasePage
+public partial class SupplyDemandInformation_GeneralAviationCompanyUnSubmit : BasePage
 {
     CompanyBLL bll = new CompanyBLL();
     protected void Page_Load(object sender, EventArgs e)

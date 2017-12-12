@@ -16,6 +16,8 @@ using Untity;
 public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
 {
     FlightPlanBLL bll = new FlightPlanBLL();
+    WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+    WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -90,8 +92,8 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         result.IsSuccess = false;
         result.Msg = "提交失败！";
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.FlightPlan, planid, User.ID, User.UserName);
-        WorkflowNodeInstanceDAL.Submit(planid, "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
+        wftbll.CreateWorkflowInstance((int)TWFTypeEnum.FlightPlan, planid, User.ID, User.UserName);
+        insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan, "", insdal.UpdateRepetPlan);
 
         result.IsSuccess = true;
         result.Msg = "提交成功！";

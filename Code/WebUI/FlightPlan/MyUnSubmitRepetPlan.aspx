@@ -125,7 +125,7 @@
 
             //打开添加窗口
             OpenWin: function () {
-                $("#edit").dialog("open").dialog('setTitle', '新增').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx');
+                $("#edit").dialog("open").dialog('setTitle', '新增长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx');
                 $("#btn_add").attr("onclick", "Main.Save();")
             },
             //提交按钮事件
@@ -158,7 +158,7 @@
 
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx?id='+uid);
+                $("#edit").dialog("open").dialog('setTitle', '编辑长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx?id=' + uid);
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
             },
 

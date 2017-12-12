@@ -53,6 +53,10 @@ namespace BLL.SystemManagement
         {
             return userinfodal.Find(u => u.UserName == userName);
         }
+        public Company GetCompany(string code3)
+        {
+            return companydal.Find(u => u.CompanyCode3 == code3);
+        }
         /// <summary>
         /// 获取用户的menucode
         /// </summary>

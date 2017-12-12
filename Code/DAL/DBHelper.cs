@@ -119,7 +119,7 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public int Update(T entity, params string[] propertyNames)
     {
-        RemoveHoldingEntityInContext(entity);
+    //    RemoveHoldingEntityInContext(entity);
         DbEntityEntry entry = context.Entry<T>(entity);
         entry.State = EntityState.Unchanged;
         foreach (string propertyName in propertyNames)

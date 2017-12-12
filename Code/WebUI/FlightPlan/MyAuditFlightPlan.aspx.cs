@@ -15,6 +15,8 @@ using Untity;
 public partial class FlightPlan_MyAuditFlightPlan : BasePage
 {
     FlightPlanBLL bll = new FlightPlanBLL();
+    WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
+    WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -99,11 +101,11 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
         if (Request.Form["Auditresult"] == "0")
         {
-            WorkflowNodeInstanceDAL.Submit(planid, Request.Form["AuditComment"] ?? "", WorkflowNodeInstanceDAL.UpdateFlightPlan);
+            insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan, Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan);
         }
         else
         {
-            WorkflowNodeInstanceDAL.Terminate(planid, Request.Form["AuditComment"] ?? "", WorkflowNodeInstanceDAL.UpdateFlightPlan);
+            insdal.Terminate(planid, (int)TWFTypeEnum.FlightPlan, Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan);
         }
         result.IsSuccess = true;
         result.Msg = "提交成功！";

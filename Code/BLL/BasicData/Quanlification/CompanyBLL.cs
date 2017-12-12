@@ -1,15 +1,19 @@
-﻿using DAL.BasicData;
+﻿using BLL.FlightPlan;
+using DAL.BasicData;
+using DAL.FlightPlan;
 using Model.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Untity;
 
 namespace BLL.BasicData
 {
     public class CompanyBLL
     {
         private CompanyDAL _dal = new CompanyDAL();
-
+        WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
+        WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
         public int Delete(string ids)
         {
             return _dal.BatchDelete(ids);
@@ -40,5 +44,69 @@ namespace BLL.BasicData
         {
             return _dal.FindList(m => m.CompanyID, false);
         }
+
+        #region 审核流程
+        public bool Submit(int id, int userid, string username)
+        {
+            try
+            {
+                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CompanySummary, id, userid, username);
+                insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, "", t =>
+                {
+                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
+                });
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 审核通过
+        /// </summary>
+        /// <param name="planid"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public bool Audit(int id, string comment)
+        {
+            try
+            {
+                insdal.Submit(id, (int)TWFTypeEnum.CompanySummary, comment, t =>
+                {
+                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// 审核不通过
+        /// </summary>
+        /// <param name="planid"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public bool Terminate(int id, string comment)
+        {
+            try
+            {
+                insdal.Terminate(id, (int)TWFTypeEnum.CompanySummary, comment, t =>
+                {
+                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
     }
 }

@@ -13,8 +13,8 @@
     <%--列表 start--%>
     <table id="tab_list">
     </table>
-    <div id="tab_toolbar" style="padding: 2px 2px; height: 22px;">
-        <a href="javascript:void(0)" class="easyui-button" plain="true"></a>
+    <div id="tab_toolbar" style="padding: 2px 2px;">
+       <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">

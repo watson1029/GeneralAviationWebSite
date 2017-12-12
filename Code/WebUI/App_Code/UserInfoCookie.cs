@@ -29,4 +29,8 @@ public class UserInfoCookie
     ///通航企业三字码
     /// </summary>
     public string CompanyCode3 { get; set; }
+    /// <summary>
+    /// 通航企业
+    /// </summary>
+    public string CompanyName{ get; set; }
 }

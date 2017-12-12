@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true"
-    CodeFile="GeneralAviationCompany.aspx.cs" Inherits="SupplyDemandInformation_GeneralAviationCompany" %>
+    CodeFile="GeneralAviationCompanyUnSubmit.aspx.cs" Inherits="SupplyDemandInformation_GeneralAviationCompanyUnSubmit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
 </asp:Content>
@@ -7,6 +7,17 @@
     <%--列表 start--%>
     <table id="tab_list">
     </table>
+    <div id="tab_toolbar" style="padding: 2px 2px; height: 22px;">
+        <a href="javascript:void(0)" class="easyui-button" plain="true"></a>
+        <div style="float: right">
+            <input id="ipt_search" menu="#search_menu" />
+            <div id="search_menu" style="width: 200px">
+                <div name="CompanyName">
+                    通航公司
+                </div>
+            </div>
+        </div>
+    </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
     <div id="edit" class="easyui-dialog" style="width: 1111px; height: 725px;"
@@ -62,7 +73,7 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '撰写人', field: 'ModifiedByName', width: 200 },
+                        { title: '单位名称', field: 'CompanyName', width: 200 },
                         { title: '录入日期', field: 'ModifiedTime', width: 150 },
                         { title: '业务概况', field: 'Summary', width: 500 },
                         { title: '状态', field: 'State', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 60 },

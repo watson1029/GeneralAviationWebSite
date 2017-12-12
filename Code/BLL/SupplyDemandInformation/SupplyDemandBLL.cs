@@ -14,6 +14,8 @@ namespace BLL.SupplyDemandInformation
 {
     public class SupplyDemandBLL
     {
+        WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+        WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
         SupplyDemandDAL dal = new SupplyDemandDAL();
         public bool Delete(string ids)
         {
@@ -39,10 +41,10 @@ namespace BLL.SupplyDemandInformation
         {
             try
             {
-                WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
-                WorkflowNodeInstanceDAL.Submit(id, "", t =>
+                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
+                insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, "", t =>
                 {
-                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "PlanState");
+                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
                 });
 
                 return true;
@@ -63,7 +65,10 @@ namespace BLL.SupplyDemandInformation
         {
             try
             {
-                WorkflowNodeInstanceDAL.Submit(id, comment, workPlan => { });
+                insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, comment ?? "", t =>
+                {
+                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
+                });
                 return true;
             }
             catch (Exception ex)
@@ -82,7 +87,10 @@ namespace BLL.SupplyDemandInformation
         {
             try
             {
-                WorkflowNodeInstanceDAL.Terminate(id, comment, workPlan => { });
+                insdal.Terminate(id, (int)TWFTypeEnum.SupplyDemand, comment, t =>
+                {
+                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
+                });
                 return true;
             }
             catch (Exception ex)

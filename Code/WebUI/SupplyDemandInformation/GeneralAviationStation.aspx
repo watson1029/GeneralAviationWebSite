@@ -18,7 +18,7 @@
                         业务概况
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 1024px; height: 500px;"></script>
+                        <script id="editor" type="text/plain" style="width: 1000px; height: 450px;"></script>
                     </td>
                 </tr>
                 <tr>

@@ -1,4 +1,5 @@
-﻿using BLL.BasicData;
+﻿using BLL.SupplyDemandInformation;
+using BLL.SystemManagement;
 using Model.EF;
 using Newtonsoft.Json;
 using System;
@@ -10,9 +11,10 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class SupplyDemandInformation_GeneralAviationCompany : BasePage
+public partial class SupplyDemandInformation_SupplyDemandUnSubmit : BasePage
 {
-    CompanyBLL bll = new CompanyBLL();
+    SupplyDemandBLL bll = new SupplyDemandBLL();
+    UserInfoBLL userInfoBLL = new UserInfoBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -31,10 +33,35 @@ public partial class SupplyDemandInformation_GeneralAviationCompany : BasePage
                 case "submit":
                     Submit();
                     break;
+                case "del":
+                    Delete();
+                    break;
+                case "init":
+                    Init();
+                    break;
                 default:
                     break;
             }
         }
+    }
+
+    private void Delete()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "删除失败！";
+        if (Request.Form["cbx_select"] != null)
+        {
+            if (bll.Delete(Request.Form["cbx_select"].ToString()))
+            {
+                result.IsSuccess = true;
+                result.Msg = "删除成功！";
+            }
+        }
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
     }
 
     private void Save()
@@ -47,13 +74,11 @@ public partial class SupplyDemandInformation_GeneralAviationCompany : BasePage
         {
             id = Convert.ToInt32(Request.Form["id"]);
             var model = bll.Get(id);
-            model.ModifiedTime = DateTime.Parse(Request.Form["ModifiedTime"]);
-            model.Summary = Server.HtmlDecode(Request.Form["Summary"]);
-            model.SummaryCode = Server.HtmlDecode(Request.Form["SummaryCode"]);
-            model.ModifiedBy = User.ID;
-            model.ModifiedByName = User.UserName;
-            model.State = "0";
-            if (bll.Update(model) > 0)
+            model.CreateTime = DateTime.Parse(Request.Form["CreateTime"]);
+            model.ExpiryDate = DateTime.Parse(Request.Form["ExpiryDate"]);
+            model.Summary = Request.Form["Summary"];
+            model.Catalog = Request.Form["CataLog"];
+            if (bll.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -61,8 +86,23 @@ public partial class SupplyDemandInformation_GeneralAviationCompany : BasePage
         }
         else
         {
-            result.IsSuccess = false;
-            result.Msg = "没有找到相关记录！";
+            var model = new SupplyDemandInfo();
+            model.CreateTime = DateTime.Parse(Request.Form["CreateTime"]);
+            model.ExpiryDate = DateTime.Parse(Request.Form["ExpiryDate"]);
+            model.Summary = Request.Form["Summary"];
+            model.Catalog = Request.Form["CataLog"];
+            model.State = "0";
+            model.CompanyCode3 = User.CompanyCode3;
+            model.CompanyName = Request.Form["CompanyName"];
+            model.Creator = User.ID;
+            model.CreateName = User.UserName;
+            model.ActorID = User.ID;
+            model.CreateTime = DateTime.Now;
+            if (bll.Add(model))
+            {
+                result.IsSuccess = true;
+                result.Msg = "增加成功！";
+            }
         }
         Response.Clear();
         Response.Write(result.ToJsonString());
@@ -93,14 +133,11 @@ public partial class SupplyDemandInformation_GeneralAviationCompany : BasePage
     private void GetData()
     {
         var id = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var company = bll.Get(id);
+        var supplyDemandInfo = bll.Get(id);
         var strJSON = "";
-        if (company != null)
+        if (supplyDemandInfo != null)
         {
-            company.ModifiedBy = User.ID;
-            company.ModifiedByName = User.UserName;
-            company.ModifiedTime = DateTime.Now;
-            strJSON = JsonConvert.SerializeObject(company);
+            strJSON = JsonConvert.SerializeObject(supplyDemandInfo);
         }
         Response.Clear();
         Response.Write(strJSON);
@@ -133,10 +170,11 @@ public partial class SupplyDemandInformation_GeneralAviationCompany : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<Company, bool>> GetWhere()
+    private Expression<Func<SupplyDemandInfo, bool>> GetWhere()
     {
-        Expression<Func<Company, bool>> predicate = PredicateBuilder.True<Company>();
-        predicate = predicate.And(m => m.Catalog == 1);
+        Expression<Func<SupplyDemandInfo, bool>> predicate = PredicateBuilder.True<SupplyDemandInfo>();
+        predicate = predicate.And(m => m.State == "0");
+        predicate = predicate.And(m => m.Creator == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -145,9 +183,35 @@ public partial class SupplyDemandInformation_GeneralAviationCompany : BasePage
             {
                 predicate = u => u.CompanyName.Contains(strValue);
             }
+            else if (Request.Form["search_type"].ToString() == "Catalog")
+            {
+                predicate = u => u.Catalog.Contains(strValue);
+            }
         }
 
         return predicate;
+    }
+
+    private void Init()
+    {
+        SupplyDemandInfo sdi = new SupplyDemandInfo
+        {
+            Creator = User.ID,
+            CreateName = User.UserName,
+            CreateTime = DateTime.Today
+        };
+        var company = userInfoBLL.GetUserCompany(User.ID);
+        if (company != null)
+        {
+            sdi.CompanyCode3 = company.CompanyCode3;
+            sdi.CompanyName = company.CompanyName;
+        }
+        var strJSON = string.Empty;
+        strJSON = JsonConvert.SerializeObject(sdi);
+        Response.Clear();
+        Response.Write(strJSON);
+        Response.ContentType = "application/json";
+        Response.End();
     }
 
 }
