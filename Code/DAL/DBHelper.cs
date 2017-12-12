@@ -119,6 +119,7 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public int Update(T entity, params string[] propertyNames)
     {
+        //除去上下午管理
         RemoveHoldingEntityInContext(entity);
         DbEntityEntry entry = context.Entry<T>(entity);
         entry.State = EntityState.Unchanged;
@@ -139,9 +140,7 @@ public class DBHelper<T> where T : class
         if (exists)
         {
             objContext.Detach(foundEntity);
-        }
-    
-    
+        }    
     }
     /// <summary>
     /// 按条件查询，返回单个实体
