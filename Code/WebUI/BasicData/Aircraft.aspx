@@ -205,9 +205,9 @@
                         { title: '航程', field: 'Range', width: 50 },
                         { title: '航空器出厂序号', field: 'AcfNo', width: 100 },
                         { title: '年检时间', field: 'ASdate', width: 150 },
-                        { title: '飞行器类别', field: 'AcfClass', width: 100 },
+                        { title: '飞行器类别', field: 'AcfClass', width: 150 },
                         { title: '巡航高度', field: 'CruiseAltd', width: 80 },
-                        { title: '制造商', field: 'Manufacture', width: 100 },
+                        { title: '制造商', field: 'Manufacture', width: 250 },
                         { title: '巡航速度', field: 'CruiseSpeed', width: 80 },
                         { title: '尾流', field: 'WakeTurbulance', width: 50 },
                         { title: '最大速度', field: 'MaxSpeed', width: 80 },
@@ -215,7 +215,7 @@
                         { title: '最小速度', field: 'MinSpeed', width: 80 },
                         { title: '创建时间', field: 'CreateTime', width: 150 },
                         {
-                            title: '操作', field: 'AircraftID', width: 150, formatter: function (value, rec) {
+                            title: '操作', field: 'AircraftID', width: 50, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
                                 return str;
                             }

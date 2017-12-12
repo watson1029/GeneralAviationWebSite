@@ -44,5 +44,6 @@ namespace Model.EF
         public string CallSign { get; set; }
         public Nullable<System.DateTime> ActualStartTime { get; set; }
         public Nullable<System.DateTime> ActualEndTime { get; set; }
+        public string CompanyName { get; set; }
     }
 }

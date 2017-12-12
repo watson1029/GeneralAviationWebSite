@@ -25,38 +25,38 @@
     </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 660px; height: 450px; padding: 30px 60px;" modal="true" closed="true" buttons="#edit-buttons">
+    <div id="edit" class="easyui-dialog" style="width: 720px; height: 450px; padding: 30px 60px;" modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit" method="post">
             <table class="table_edit">
                 <tr>
-                    <td style="text-align: right">供求简介
+                    <td style="text-align: right;">供求简介
                     </td>
                     <td colspan="3">
-                        <input id="Summary" name="Summary" class="easyui-textbox" multiline="true" required="true" style="width: 450px; height: 150px" />
+                        <input id="Summary" name="Summary" class="easyui-textbox" multiline="true" required="true" style="width: 465px; height: 150px" />
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: right">供求条件
+                    <td style="text-align: right;">供求条件
                     </td>
                     <td>
-                        <select id="CataLog" class="easyui-combobox" name="CataLog" required="true" style="width: 100%;">
-                            <option value="提供" selected>提供</option>
-                            <option value="寻求">寻求</option>
+                        <select id="CataLog" class="easyui-combobox" name="CataLog" required="true" style="width: 145px;">
+                            <option value="提供">提供</option>
+                            <option value="寻求" selected="true">寻求</option>
                         </select>
                     </td>
-                    <td style="text-align: right">有效期限
+                    <td style="text-align: right; width:25%">有效期限
                     </td>
                     <td>
-                        <input id="ExpiryDate" name="ExpiryDate" style="width: 100%" type="text" required="true" class="easyui-datebox" />
+                        <input id="ExpiryDate" name="ExpiryDate" style="width: 145px" type="text" required="true" class="easyui-datebox" />
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: right">撰写人</td>
+                    <td style="text-align: right;">撰写人</td>
                     <td>
-                        <input id="CreateName" name="CreateName" maxlength="30" type="text" readonly="true" required="true" class="easyui-textbox" /></td>
-                    <td style="text-align: right">录入日期</td>
+                        <input id="CreateName" name="CreateName" style="width: 145px" type="text" readonly="true" required="true" class="easyui-textbox" /></td>
+                    <td style="text-align: right; width:25%">录入日期</td>
                     <td>
-                        <input id="CreateTime" name="CreateTime" style="width: 100%" type="text" readonly="true" required="true" class="easyui-datebox" /></td>
+                        <input id="CreateTime" name="CreateTime" style="width: 145px" type="text" readonly="true" required="true" class="easyui-datebox" /></td>
                 </tr>
             </table>
             <input id="Creator" name="Creator" style="display:none" type="text"/>

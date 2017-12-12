@@ -1,4 +1,5 @@
-﻿using BLL.SystemManagement;
+﻿using BLL.BasicData;
+using BLL.SystemManagement;
 using Model;
 using Model.EF;
 using Model.SystemManagement;
@@ -53,6 +54,15 @@ public class LoginUtil
                 CompanyCode3=user.CompanyCode3
 
             };
+            if(!string.IsNullOrEmpty(user.CompanyCode3))
+            {
+                var com=bll.GetCompany(user.CompanyCode3);
+                if(com!=null)
+                {
+                    userInfoCookie.CompanyName = com.CompanyName;
+                } 
+            }
+
 
             if (!UserLoginService.Instance.InsertOrUpdateLoginInfo(userInfoCookie))
             {

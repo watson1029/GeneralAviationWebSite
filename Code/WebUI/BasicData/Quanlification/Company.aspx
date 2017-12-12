@@ -70,190 +70,198 @@
             </form>
         </div>
         
-        <div title="通航企业营业许可证信息填写" style="padding:10px">
+        <div title="通航企业工商营业执照信息填写" style="padding:10px">
             <form id="form_edit2"  method="post" > 
              <table class="table_edit">
-                 <tr>
-                     <td class="tdal">
-                         法人姓名：
-                     </td>
-                     <td class="tdar">
-                         <input id="LegalPerson" name="LegalPerson" type="text" maxlength="30" class="easyui-textbox" required="ture" />
-                     </td>
-                 </tr>
-                 <tr>
-                     <td class="tdal">
-                         注册时间：
+                <tr>
+                    <td class="tdal">注册时间：
                      </td>
                      <td class="tdar">
                          <input id="RegisterTime" name="RegisterTime" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                      </td>
-                     <td class="tdal">
-                         法人身份证号：
-                     </td>
-                     <td class="tdar">
-                         <input id="LegalCardNo" name="LegalCardNo" type="text" maxlength="30" class="easyui-textbox" required="ture" />
-                     </td>
-                 </tr>
-                 <tr>
-                     <td class="tdal">
-                         注册地址：
+                    <td class="tdal">注册地址：
                      </td>
                      <td class="tdar">
                          <input id="RegisterAddress" name="RegisterAddress" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                      </td>
-                     <td class="tdal">
-                         法人身份证地址：
-                     </td>
-                     <td class="tdar">
-                         <input id="LegalAddress" name="LegalAddress" type="text" maxlength="30" class="easyui-textbox"  />
-                     </td>
-                 </tr>
+                </tr>
                  <tr>
-                     <td class="tdal">
-                         注册资金：
+                     <td class="tdal">注册资金：
                      </td>
                      <td class="tdar">
                          <input id="RegisteredCapital" name="RegisteredCapital" type="text" maxlength="30" class="easyui-textbox" />
                      </td>
-                     <td class="tdal">
-                         法人有效联系电话：
-                     </td>
-                     <td class="tdar">
-                         <input id="LegalTelePhone" name="LegalTelePhone" type="text" maxlength="30" class="easyui-textbox" required="ture" />
-                     </td>
-                 </tr>
-                 <tr>
-                     <td class="tdal">
-                         有效期限：
+                     <td class="tdal">有效期限：
                      </td>
                      <td class="tdar">
                          <input id="Dealline" name="Dealline" type="text" maxlength="30" class="easyui-textbox"  required="ture" />
                      </td>
-                     <td class="tdal">
-                         法人委托人：
+                </tr>
+                 <tr>
+                     <td class="tdal">法人姓名：
                      </td>
                      <td class="tdar">
-                         <input id="LegalClientele" name="LegalClientele" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="LegalPerson" name="LegalPerson" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                      </td>
-                 </tr>
-                 <tr>
-                     <td class="tdal">
-                         指定联系人：
+                     <td class="tdal">指定联系人：
                      </td>
                      <td class="tdar">
                          <input id="ContactPerson" name="ContactPerson" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                      </td>
-                     <td class="tdal">
-                         委托人身份证地址：
+                </tr>
+                 <tr>
+                     <td class="tdal"> 法人身份证号：
+                     </td>
+                     <td class="tdar">
+                         <input id="LegalCardNo" name="LegalCardNo" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                     </td>
+                     <td class="tdal"> 法人身份证地址：
+                     </td>
+                     <td class="tdar">
+                         <input id="LegalAddress" name="LegalAddress" type="text" maxlength="30" class="easyui-textbox"  />
+                     </td>
+                </tr>
+                  <tr>
+                     <td class="tdal">法人有效联系电话：
+                     </td>
+                     <td class="tdar">
+                         <input id="LegalTelePhone" name="LegalTelePhone" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                     </td>
+                    <td class="tdal">法人委托人：
+                     </td>
+                     <td class="tdar">
+                         <input id="LegalClientele" name="LegalClientele" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                     </td>
+                </tr>
+                  <tr>
+                     <td class="tdal">委托人身份证号：
+                     </td>
+                     <td class="tdar">
+                         <input id="DelegateCardNo" name="DelegateCardNo" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                     </td>
+                    <td class="tdal">委托人身份证地址：
                      </td>
                      <td class="tdar">
                          <input id="DelegateAddress" name="DelegateAddress" type="text" maxlength="30" class="easyui-textbox"  />
                      </td>
-                 </tr>
-                 <tr>
-                     <td class="tdal">
-                         委托人姓名：
+                </tr>
+                  <tr>
+                     <td class="tdal">委托人有效联系电话：
                      </td>
                      <td class="tdar">
-                         <input id="DelegateName" name="DelegateName" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="DelegateTelePhone" name="DelegateTelePhone" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                      </td>
+                </tr>
+                 <tr>
                      <td class ="tdal">
                          法人身份证复印件：
                      </td>
                      <td class="tdar">
-
                             <input type="hidden" name="LegalCardImgInfo" id="LegalCardImgInfo" required="true" />
                             <input type="file" id="LegalCardImg" name="LegalCardImg" />
                             <a id="btn_uploadlci" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalCardImg').uploadFiles()">上传</a>
                             <div id="LegalCardImg-fileQueue"></div>
                             <div id="LegalCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
-                        </td>
-                 </tr>
+                        </td>          
+                </tr>
                  <tr>
-                     <td class="tdal">
-                         委托人身份证号：
-                     </td>
-                     <td class="tdar">
-                         <input id="DelegateCardNo" name="DelegateCardNo" type="text" maxlength="30" class="easyui-textbox" required="ture" />
-                     </td>
-                     <td class="tdal">
+                    <td class="tdal">
                          法人委托书原件：
                      </td>
                      <td class="tdar">
-
                          <input type="hidden" name="LegalDelegateImgInfo" id="LegalDelegateImgInfo" required="true" />
                             <input type="file" id="LegalDelegateImg" name="LegalDelegateImg" />
                             <a id="btn_uploadldi" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalDelegateImg').uploadFiles()">上传</a>
                             <div id="LegalDelegateImg-fileQueue"></div>
                             <div id="LegalDelegateImg-fileList" style="margin-top: 2px; zoom: 1"></div>
-
                      </td>
-                 </tr>
-                 <tr >
-                     <td class="tdal">
-                         委托人有效联系电话：
-                     </td>
-                     <td class="tdar">
-                         <input id="DelegateTelePhone" name="DelegateTelePhone" type="text" maxlength="30" class="easyui-textbox" required="ture" />
-                     </td>
+                     </tr>
+                 <tr>
                      <td class="tdal">
                          委托人身份证复印件：
                      </td>
                      <td class="tdar">
-
                          <input type="hidden" name="DelegateCardImgInfo" id="DelegateCardImgInfo" required="true" />
                             <input type="file" id="DelegateCardImg" name="DelegateCardImg" />
                             <a id="btn_uploaddci" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('DelegateCardImg').uploadFiles()">上传</a>
                             <div id="DelegateCardImg-fileQueue"></div>
                             <div id="DelegateCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
-
-                     </td>
-                 </tr>
+                     </td>        
+                </tr>
              </table>
             </form>
         </div>
 
-        <div title="通航企业营业执照信息填写" style="padding:10px">
+        <div title="通航企业营业许可证信息填写" style="padding:10px">
             <form id="form_edit3"  method="post" > 
             <table class="table_edit">
                 <tr>
-                    <td class="tadl">
-                        许可证编号：
+                    <td class="tadl">许可证编号：
                     </td>
                     <td class="tdar">
                         <input id="LicenseNo" name="LicenseNo" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                     </td>
-                    <td class="tdal">
-                        经营项目与范围：
+                     <td class="tadl">企业名称：
+                    </td>
+                    <td class="tdar">
+                        <input id="FirmName" name="FirmName" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                    </td>
+                </tr>
+                 <tr>
+                    <td class="tadl">企业代码：
+                    </td>
+                    <td class="tdar">
+                        <input id="FirmCode" name="FirmCode" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                    </td>
+                     <td class="tadl">企业地址：
+                    </td>
+                    <td class="tdar">
+                        <input id="FirmAddress" name="FirmAddress" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tadl">基地机场：
+                    </td>
+                    <td class="tdar">
+                        <input id="BaseAirport" name="BaseAirport"  type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                    </td>
+                     <td class="tadl">基地机场代码：
+                    </td>
+                    <td class="tdar">
+                        <input id="BaseAirportCode" name="BaseAirportCode" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdal">企业类别：
+                    </td>
+                    <td class="tdar">
+                        <input id="CompanyType" name="CompanyType" type="text" maxlength="30" class="easyui-textbox" required="ture"  />
+                    </td>
+                     <td class="tadl">注册资本：
+                    </td>
+                    <td class="tdar">
+                        <input id="RegisteredFund" name="RegisteredFund" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdal">法定代表人：
+                    </td>
+                    <td class="tdar">
+                        <input id="Legalperson1" name="Legalperson1" type="text" maxlength="30" class="easyui-textbox" required="ture"  />
+                    </td>
+                     <td class="tdal">经营项目与范围：
                     </td>
                     <td class="tdar">
                         <input id="ManageItemsScope" name="ManageItemsScope" type="text" maxlength="30" class="easyui-textbox"  />
                     </td>
                 </tr>
                 <tr>
-                    <td class="tdal">
-                        基地机场：
+                    <td class="tdal">有效期限：
                     </td>
                     <td class="tdar">
-                        <input id="BaseAirport" name="BaseAirport" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="DealLine1" name="DealLine1" type="text" maxlength="30" class="easyui-textbox" required="ture"  />
                     </td>
-                    <td class="tdal">
-                        有效期限：
-                    </td>
-                    <td class="tdar">
-                        <input id="DealLine" name="DealLine" type="text" maxlength="30" class="easyui-textbox" required="ture"  />
-                    </td>
-                </tr>
-                <tr >
-                    <td class="tdal">
-                        企业类别：
-                    </td>
-                    <td class="tdar">
-                        <input id="CompanyType" name="CompanyType" type="text" maxlength="30" class="easyui-textbox" required="ture"  />
-                    </td>
-                    <td class="tdal">
-                        颁发日期：
+                     <td class="tdal">颁发日期：
                     </td>
                     <td class="tdar">
                         <input id="PresentationDate" name="PresentationDate" type="text" maxlength="30" class="easyui-textbox" required="ture" />
@@ -267,6 +275,13 @@
                     <td class="tdar">
                         <input id="CapitalLimit" name="CapitalLimit" type="text" maxlength="30" class="easyui-textbox" required="ture" />
                     </td>
+                     <td class="tdal">许可证颁发机关：
+                    </td>
+                    <td class="tdar">
+                        <input id="LicensingAuthority" name="LicensingAuthority" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                    </td>
+                </tr>
+                <tr>
                     <td class="tdal">
                         许可机关印章：
                     </td>
@@ -276,16 +291,11 @@
                             <a id="btn_upload" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LicensedSeal').uploadFiles()">上传</a>
                             <div id="LicensedSeal-fileQueue"></div>
                             <div id="LicensedSeal-fileList" style="margin-top: 2px; zoom: 1"></div>
-                        </td>
+                    </td>
                 </tr>
             </table>
-                </form>
-
-            
-       
-            </div>
-        </div>
-         
+            </form>
+        </div>        
     </div>
     <div id="edit-buttons">
         <a id="btn_add" href="javascript:;" class="easyui-linkbutton">提交</a> 
@@ -318,10 +328,6 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-
-            
-
-
         });
         Main = {
             //初始化表格

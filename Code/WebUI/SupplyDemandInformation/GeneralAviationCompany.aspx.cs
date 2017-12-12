@@ -76,11 +76,11 @@ public partial class SupplyDemandInformation_GeneralAviationCompany : BasePage
         result.IsSuccess = false;
         result.Msg = "提交失败！";
         var id = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        //if (bll.Submit(id, User.ID, User.UserName))
-        //{
-        //    result.IsSuccess = true;
-        //    result.Msg = "提交成功！";
-        //}
+        if (bll.Submit(id, User.ID, User.UserName))
+        {
+            result.IsSuccess = true;
+            result.Msg = "提交成功！";
+        }
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";

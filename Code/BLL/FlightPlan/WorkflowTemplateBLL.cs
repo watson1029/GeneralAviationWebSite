@@ -10,7 +10,8 @@ namespace BLL.FlightPlan
 {
    public class WorkflowTemplateBLL
     {
-        public static Guid CreateWorkflowInstance(int twfId, int planId,int userID, string userName)
+       WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+        public  Guid CreateWorkflowInstance(int twfId, int planId,int userID, string userName)
         {
             Guid firstStepId = Guid.Empty;
             List<WorkflowNodeInstance> tempNodesInst = new List<WorkflowNodeInstance>();
@@ -35,7 +36,7 @@ namespace BLL.FlightPlan
             else
             {
                 firstTnode = query1.First();
-                firstNodeInst = tempNodesInst.First(item => item.StepId == firstTnode.StepId && item.PlanID == planId);
+                firstNodeInst = tempNodesInst.First(item => item.StepId == firstTnode.StepId && item.PlanID == planId && item.TWFID == twfId);
                 firstStepId = firstNodeInst.Id;
             }
             var query2 = from c in tnodeList where c.NextId == 0 select c;
@@ -48,7 +49,7 @@ namespace BLL.FlightPlan
             while (prevTnode.NextId != 0)
             {
                 var nextTnode = tnodeList.First(item => item.PrevId == prevTnode.StepId);
-                var nextNodeInst = tempNodesInst.First(item => item.StepId == nextTnode.StepId && item.PlanID == planId);
+                var nextNodeInst = tempNodesInst.First(item => item.StepId == nextTnode.StepId && item.PlanID == planId && item.TWFID == twfId);
                 nextNodeInst.PrevId = prevNodeInst.Id;
                 prevNodeInst.NextId = nextNodeInst.Id;
                 if (nodesInstance.Count <= 0)
@@ -61,10 +62,10 @@ namespace BLL.FlightPlan
             }
 
             //完成流程节点实例的串联工作，更新到数据库
-            WorkflowNodeInstanceDAL.UpdateNodeInstance(nodesInstance);
+            insdal.UpdateNodeInstance(nodesInstance);
 
             // 将第一个节点的状态改为Processing，并设置活动所有者
-            WorkflowNodeInstanceDAL.UpdateFirstNode(firstNodeInst,userID,userName);
+            insdal.UpdateFirstNode(firstNodeInst, userID, userName);
             return firstStepId;
         }
 

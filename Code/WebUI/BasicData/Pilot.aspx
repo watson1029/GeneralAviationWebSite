@@ -30,48 +30,42 @@
                         <td class="tdal">飞行员姓名：                                                                           
                         </td>
                         <td class="tdar">
-                            <input id="Pilots" name="Pilots" type="text" class="easyui-textbox"  maxlength="30"
-                                required="true" />
+                            <input id="Pilots" name="Pilots" type="text" class="easyui-textbox" required="true" />
                         </td>
                     </tr>
                     <tr>
                         <td class="tdal">身份证号：
                         </td>
                         <td class="tdar">
-                            <input id="PilotCardNo" name="PilotCardNo" class="easyui-textbox"  maxlength="10"
-                                required="true" />
+                            <input id="PilotCardNo" name="PilotCardNo" class="easyui-textbox"   required="true" />
                         </td>
                     </tr>
                     <tr>
                         <td class="tdal">出生日期：
                         </td>
                         <td class="tdar">
-                            <input id="PilotDT" name="PilotDT" type="text" class="easyui-datebox"  maxlength="10"  
-                                required="true"/>
+                            <input id="PilotDT" name="PilotDT" type="text" class="easyui-datebox"   required="true"/>
                         </td>
                     </tr>
                     <tr>
                         <td class="tdal">联系电话：
                         </td>
                         <td class="tdar">
-                            <input id="PhoneNo" name="PhoneNo" class="easyui-textbox"   maxlength="15"
-                                required="true"/>
+                            <input id="PhoneNo" name="PhoneNo" class="easyui-numberbox"   required="true"/>
                         </td>
                     </tr>
                     <tr>
                         <td class="tdal">执照编号：
                         </td>
                         <td class="tdar">
-                            <input id="LicenseNo" name="LicenseNo" type="text" class="easyui-textbox"  maxlength="30"
-                                required="true" />
+                            <input id="LicenseNo" name="LicenseNo" type="text" class="easyui-textbox"   required="true" />
                         </td>
                     </tr>
                     <tr>
                         <td class="tdal">签发单位：
                         </td>
                         <td class="tdar">
-                            <input id="Sign" name="Sign" type="text" class="easyui-textbox" maxlength="30"
-                                required="true" />
+                            <input id="Sign" name="Sign" type="text" class="easyui-textbox" required="true" />
                         </td>
                     </tr>
                     <tr>
@@ -152,6 +146,23 @@
             Main.InitGird();
             Main.InitSearch();
 
+            $(function () {
+                $('#Pilots').textbox('textbox').attr('maxlength', 10);
+            });
+            $(function () {
+                $('#PilotCardNo').textbox('textbox').attr('maxlength', 18);
+            });
+            $(function () {
+                $('#PhoneNo').numberbox('textbox').attr('maxlength', 11);
+            });
+            $(function () {
+                $('#LicenseNo').textbox('textbox').attr('maxlength', 30);
+            });
+            $(function () {
+                $('#Sign').textbox('textbox').attr('maxlength', 30);
+            });
+            
+
             
 
         });
@@ -180,31 +191,38 @@
                         { title: '身份证号', field: 'PilotCardNo', width: 200 },
                         { title: '出生日期', field: 'PilotDT', width: 150 },
                         { title: '联系电话', field: 'PhoneNo', width: 150 },
-                        { title: '执照编号', field: 'LicenseNo', width: 150 },
+                        { title: '执照编号', field: 'LicenseNo', width: 250 },
                         { title: '签发单位', field: 'Sign', width: 150 },
+
                         { title: '执照类别', field: 'Licensesort',formatter: function (value, rec, index) { 
-                            if(value == 1){
+                            if(value == 0){
                                 return '航线运输驾驶执照';
                             }
-                            else if(value ==2){
+                            else if(value ==1){
                                 return '商用飞机驾照';
                             }
                             else{
                                 return '私用飞机驾照';
                             }
-                            width: 200 },},
+                            width: 250
+                        },
+                        },
+
                         { title: '所属企业', field: 'CompanyName', formatter: function (value, rec, index) 
                         {
-                            if (value == 1) {
+                            if (value == 0) {
                                 return '通航1';
                             }
-                            else if (value = 2) {
+                            else if (value == 1) {
                                 return '通航2';
                             }
                             else {
                                 return '通航3';
                             }
-                            width: 200},},
+                            width: 200
+                        },
+                        },
+
                         { title: '性别', field: 'Sex', formatter: function (value, rec, index) { return value == 0 ? '男' : '女' }, width: 50 },
                         {
                             title: '操作', field: 'ID', width: 150, formatter: function (value, rec) {

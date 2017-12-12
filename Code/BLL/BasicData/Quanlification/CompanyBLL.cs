@@ -12,7 +12,8 @@ namespace BLL.BasicData
     public class CompanyBLL
     {
         private CompanyDAL _dal = new CompanyDAL();
-
+        WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
+        WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
         public int Delete(string ids)
         {
             return _dal.BatchDelete(ids);
@@ -49,10 +50,15 @@ namespace BLL.BasicData
         {
             try
             {
-                WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
-                WorkflowNodeInstanceDAL.Submit(id, "", t =>
+
+                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CompanySummary, id, userid, username);
+                insdal.Submit(id, (int)TWFTypeEnum.CompanySummary, "", t =>
+
+                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CompanySummary, id, userid, username));
+                insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, "", t =>
+
                 {
-                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "PlanState");
+                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
                 });
 
                 return true;
@@ -73,7 +79,10 @@ namespace BLL.BasicData
         {
             try
             {
-                WorkflowNodeInstanceDAL.Submit(id, comment, workPlan => { });
+                insdal.Submit(id, (int)TWFTypeEnum.CompanySummary, comment, t =>
+                {
+                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
+                });
                 return true;
             }
             catch (Exception ex)
@@ -92,7 +101,10 @@ namespace BLL.BasicData
         {
             try
             {
-                WorkflowNodeInstanceDAL.Terminate(id, comment, workPlan => { });
+                insdal.Terminate(id, (int)TWFTypeEnum.CompanySummary, comment, t =>
+                {
+                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
+                });
                 return true;
             }
             catch (Exception ex)

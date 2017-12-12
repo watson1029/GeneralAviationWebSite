@@ -11,5 +11,6 @@ namespace Model.FlightPlan
         public int? Actor { get; set; }
         public string PlanState { get; set; }
         public int PlanID { get; set; }
+        public int TWFID { get; set; }
     }
 }

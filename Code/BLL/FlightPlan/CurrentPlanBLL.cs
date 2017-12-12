@@ -11,8 +11,9 @@ namespace BLL.FlightPlan
 { 
     public class CurrentPlanBLL
     {
-        FlightPlanDAL dal = new FlightPlanDAL(); 
-
+        FlightPlanDAL dal = new FlightPlanDAL();
+        WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
+        WorkflowNodeInstanceDAL instal = new WorkflowNodeInstanceDAL();
         /// <summary>
         /// 更新一条数据
         /// </summary>
@@ -37,12 +38,13 @@ namespace BLL.FlightPlan
         /// <param name="userid"></param>
         /// <param name="username"></param>
         /// <returns></returns>
-        public bool Submit(int planid,int userid,string username)
+        public bool Submit(int planid,int userid, string username)
         {
             try
             {
-                WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, userid, username);
-                WorkflowNodeInstanceDAL.Submit(planid, "", workPlan => {
+                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, userid, username);
+                instal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, "", workPlan =>
+                {
                     dal.Update(new Model.EF.FlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, FlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
                 });
                 return true;
@@ -58,11 +60,11 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Audit(int planid,string comment)
+        public bool Audit(int planid, int twfid, string comment)
         {
             try
             {
-                WorkflowNodeInstanceDAL.Submit(planid, comment, workPlan => { });
+                instal.Submit(planid, twfid, comment, workPlan => { });
                 return true;
             }
             catch (Exception ex)
@@ -76,11 +78,11 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Terminate(int planid, string comment)
+        public bool Terminate(int planid, int twfid,string comment)
         {
             try
             {
-                WorkflowNodeInstanceDAL.Terminate(planid, comment, workPlan => { });
+                instal.Terminate(planid, twfid, comment, workPlan => { });
                 return true;
             }
             catch(Exception ex)

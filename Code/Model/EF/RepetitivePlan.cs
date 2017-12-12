@@ -36,5 +36,6 @@ namespace Model.EF
         public string ADES { get; set; }
         public string CreatorName { get; set; }
         public string CallSign { get; set; }
+        public string CompanyName { get; set; }
     }
 }
