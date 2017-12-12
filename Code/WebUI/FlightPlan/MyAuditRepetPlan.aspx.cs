@@ -15,6 +15,7 @@ using System.IO;
 public partial class FlightPlan_MyAuditRepetPlan : BasePage
 {
     RepetitivePlanBLL bll = new RepetitivePlanBLL();
+    WorkflowNodeInstanceDAL insdal=new WorkflowNodeInstanceDAL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -99,10 +100,10 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
         if (Request.Form["Auditresult"] == "0")
         {
-            WorkflowNodeInstanceDAL.Submit(planid,(int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "",WorkflowNodeInstanceDAL.UpdateRepetPlan);
+            insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
         }
         else {
-            WorkflowNodeInstanceDAL.Terminate(planid,(int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "", WorkflowNodeInstanceDAL.UpdateRepetPlan);
+            insdal.Terminate(planid, (int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
         }
         result.IsSuccess = true;
         result.Msg = "提交成功！";

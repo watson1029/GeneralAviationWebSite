@@ -10,7 +10,8 @@ namespace BLL.FlightPlan
 {
    public class WorkflowTemplateBLL
     {
-        public static Guid CreateWorkflowInstance(int twfId, int planId,int userID, string userName)
+       WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+        public  Guid CreateWorkflowInstance(int twfId, int planId,int userID, string userName)
         {
             Guid firstStepId = Guid.Empty;
             List<WorkflowNodeInstance> tempNodesInst = new List<WorkflowNodeInstance>();
@@ -61,10 +62,10 @@ namespace BLL.FlightPlan
             }
 
             //完成流程节点实例的串联工作，更新到数据库
-            WorkflowNodeInstanceDAL.UpdateNodeInstance(nodesInstance);
+            insdal.UpdateNodeInstance(nodesInstance);
 
             // 将第一个节点的状态改为Processing，并设置活动所有者
-            WorkflowNodeInstanceDAL.UpdateFirstNode(firstNodeInst,userID,userName);
+            insdal.UpdateFirstNode(firstNodeInst, userID, userName);
             return firstStepId;
         }
 
