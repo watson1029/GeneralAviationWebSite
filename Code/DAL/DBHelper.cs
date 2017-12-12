@@ -119,7 +119,7 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public int Update(T entity, params string[] propertyNames)
     {
-        //除去上下午管理
+        //除去上下文管理
         RemoveHoldingEntityInContext(entity);
         DbEntityEntry entry = context.Entry<T>(entity);
         entry.State = EntityState.Unchanged;
