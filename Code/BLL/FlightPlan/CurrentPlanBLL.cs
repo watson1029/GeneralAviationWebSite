@@ -11,9 +11,8 @@ namespace BLL.FlightPlan
 { 
     public class CurrentPlanBLL
     {
-        WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
-        FlightPlanDAL dal = new FlightPlanDAL();
-        WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+        FlightPlanDAL dal = new FlightPlanDAL(); 
+
         /// <summary>
         /// 更新一条数据
         /// </summary>
@@ -42,8 +41,8 @@ namespace BLL.FlightPlan
         {
             try
             {
-                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, userid, username);
-                insdal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, "", workPlan =>
+                WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, userid, username);
+                WorkflowNodeInstanceDAL.Submit(planid, (int)TWFTypeEnum.CurrentPlan, "", workPlan =>
                 {
                     dal.Update(new Model.EF.FlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, FlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
                 });
@@ -64,7 +63,7 @@ namespace BLL.FlightPlan
         {
             try
             {
-                insdal.Submit(planid, twfid, comment, workPlan => { });
+                WorkflowNodeInstanceDAL.Submit(planid,twfid, comment, workPlan => { });
                 return true;
             }
             catch (Exception ex)
@@ -82,7 +81,7 @@ namespace BLL.FlightPlan
         {
             try
             {
-                insdal.Terminate(planid, twfid, comment, workPlan => { });
+                WorkflowNodeInstanceDAL.Terminate(planid,twfid, comment, workPlan => { });
                 return true;
             }
             catch(Exception ex)

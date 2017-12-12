@@ -14,8 +14,6 @@ namespace BLL.SupplyDemandInformation
 {
     public class SupplyDemandBLL
     {
-        WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
-        WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
         SupplyDemandDAL dal = new SupplyDemandDAL();
         public bool Delete(string ids)
         {
@@ -41,8 +39,8 @@ namespace BLL.SupplyDemandInformation
         {
             try
             {
-                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
-                insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, "", t =>
+                WorkflowTemplateBLL.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
+                WorkflowNodeInstanceDAL.Submit(id,(int)TWFTypeEnum.SupplyDemand, "", t =>
                 {
                     dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
                 });
@@ -65,7 +63,7 @@ namespace BLL.SupplyDemandInformation
         {
             try
             {
-                insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, comment ?? "", t =>
+                WorkflowNodeInstanceDAL.Submit(id, (int)TWFTypeEnum.SupplyDemand,comment ?? "", t =>
                 {
                     dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
                 });
@@ -87,7 +85,7 @@ namespace BLL.SupplyDemandInformation
         {
             try
             {
-                insdal.Terminate(id, (int)TWFTypeEnum.SupplyDemand, comment, t =>
+                WorkflowNodeInstanceDAL.Terminate(id,(int)TWFTypeEnum.SupplyDemand, comment, t =>
                 {
                     dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
                 });

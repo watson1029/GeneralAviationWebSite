@@ -102,11 +102,11 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
         {
             if (Request.Form["Auditresult"] == "0")
             {
-                currPlanBll.Audit(planid,(int)TWFTypeEnum.CurrentPlan,Request.Form["AuditComment"] ?? "");
+                currPlanBll.Audit(planid, Request.Form["AuditComment"] ?? "");
             }
             else
             {
-                currPlanBll.Terminate(planid,(int)TWFTypeEnum.CurrentPlan, Request.Form["AuditComment"] ?? "");
+                currPlanBll.Terminate(planid, Request.Form["AuditComment"] ?? "");
             }
             result.IsSuccess = true;
             result.Msg = "提交成功！";
