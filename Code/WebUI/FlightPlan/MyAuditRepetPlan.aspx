@@ -14,7 +14,7 @@
     <table id="tab_list">
     </table>
     <div id="tab_toolbar" style="padding: 2px 2px;">
-       <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
+       <a href="javascript:void(0)" class="easyui-linkbutton" style="width:78px;" iconcls="icon-save" plain="true" onclick="Main.BatchAudit()">批量审核</a>
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
@@ -106,6 +106,10 @@
                     prompt: '请输入要查询的信息'
                 });
             },
+            //批量审核
+            BatchAudit: function (uid) {
+                $("#batchaudit").dialog("open").dialog('setTitle', '批量审核');
+            },
             //审核
             Audit: function (uid) {
                 $("#audit").dialog("open").dialog('setTitle', '审核');
@@ -157,12 +161,35 @@
                     });
                 });
 
-            }
+            },
+            BatchAuditSubmit: function (uid) {
+                var selRow = $('#tab_list').datagrid('getSelections');
+                if (selRow.length == 0) {
+                    $.messager.alert('提示', '请选择一条记录！', 'info');
+                    return;
+                }
+                var idArray = [];
+                for (var i = 0; i < selRow.length; i++) {
+                    var id = selRow[i].RepetPlanID;
+                    idArray.push(id);
+                }
+                $.messager.confirm('提示', '确认要提交审核结果吗？', function (r) {
+                    if (r) {
+                        $.post(location.href, { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
+                            $.messager.alert('提示', data.msg, 'info');
+                            if (data.isSuccess) {
+                                $("#tab_list").datagrid("reload");
+                                selRow.length = 0;
+                            }
+                        });
+                    }
+                });
+
+        }
 
         };
     </script>
 
-    <%--添加 修改 start--%>
     <div id="audit" class="easyui-dialog" style="width: 700px; height: 700px;"
         modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
@@ -232,5 +259,31 @@
         <a id="btn_audit" href="javascript:;" class="easyui-linkbutton">提交</a> <a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#audit').dialog('close');return false;">取消</a>
     </div>
+        <div id="batchaudit" class="easyui-dialog" style="width: 600px; height:300px;"
+        modal="true" closed="true" buttons="#batchaudit-buttons">
+        <form id="form_batchaudit" method="post">
+            <table class="table_edit">
+                <tr>
+                    <th>审核结果：</th>
+                    <td >
+                        <select class="easyui-combobox" editable="false" name="BatchAuditresult" required="true" panelheight="auto" style="width: 200px;">
+                            <option value="0" selected="true">通过</option>
+                            <option value="1">不通过</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>审核意见：</th>
+                    <td colspan="3">
+                        <input id="BatchAuditComment" name="BatchAuditComment" required="true"  maxlength="400" style="width: 400px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                    </td>
 
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div id="batchaudit-buttons">
+        <a id="btn_batchaudit" href="javascript:;" class="easyui-linkbutton" onclick="Main.BatchAuditSubmit()">提交</a> <a href="javascript:;"
+            class="easyui-linkbutton" onclick="$('#batchaudit').dialog('close');return false;">取消</a>
+    </div>
 </asp:Content>

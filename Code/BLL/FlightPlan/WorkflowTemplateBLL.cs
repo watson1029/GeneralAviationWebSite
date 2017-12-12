@@ -36,7 +36,7 @@ namespace BLL.FlightPlan
             else
             {
                 firstTnode = query1.First();
-                firstNodeInst = tempNodesInst.First(item => item.StepId == firstTnode.StepId && item.PlanID == planId);
+                firstNodeInst = tempNodesInst.First(item => item.StepId == firstTnode.StepId && item.PlanID == planId && item.TWFID == twfId);
                 firstStepId = firstNodeInst.Id;
             }
             var query2 = from c in tnodeList where c.NextId == 0 select c;
@@ -49,7 +49,7 @@ namespace BLL.FlightPlan
             while (prevTnode.NextId != 0)
             {
                 var nextTnode = tnodeList.First(item => item.PrevId == prevTnode.StepId);
-                var nextNodeInst = tempNodesInst.First(item => item.StepId == nextTnode.StepId && item.PlanID == planId);
+                var nextNodeInst = tempNodesInst.First(item => item.StepId == nextTnode.StepId && item.PlanID == planId && item.TWFID == twfId);
                 nextNodeInst.PrevId = prevNodeInst.Id;
                 prevNodeInst.NextId = nextNodeInst.Id;
                 if (nodesInstance.Count <= 0)

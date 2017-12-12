@@ -109,12 +109,19 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         result.IsSuccess = false;
         result.Msg = "提交失败！";
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        wftbll.CreateWorkflowInstance((int)TWFTypeEnum.RepetitivePlan, planid, User.ID, User.UserName);
-        insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, "", insdal.UpdateRepetPlan);
 
-        result.IsSuccess = true;
-        result.Msg = "提交成功！";
+        if (insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.RepetitivePlan).Count > 0)
+        {
+            result.Msg = "一条长期计划无法创建两条申请流程，请联系管理员！";
+        }
+        else
+        {
+            wftbll.CreateWorkflowInstance((int)TWFTypeEnum.RepetitivePlan, planid, User.ID, User.UserName);
+            insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, "", insdal.UpdateRepetPlan);
 
+            result.IsSuccess = true;
+            result.Msg = "提交成功！";
+        }
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
