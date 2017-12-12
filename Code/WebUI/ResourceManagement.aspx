@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>资料录入管理</title>
+    <title>通航资料录入管理</title>
     <script src="<%=Page.ResolveUrl("~/")%>Content/JS/easyUI/jquery.min.js" type="text/javascript"></script>
     <script src="<%=Page.ResolveUrl("~/")%>Content/JS/easyUI/jquery.easyui.min.js" type="text/javascript"></script>
     <script src="<%=Page.ResolveUrl("~/")%>Content/JS/easyUI/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
@@ -25,12 +25,23 @@
                     iconCls: 'icon-ok',
                     handler: function () {
                         if (id == 0) {
-                            add();
+                            add(1);
                         } else {
-                            update();
+                            update(1);
                         }
                     }
                 }, {
+                    text: '保存并提交',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        if (id == 0) {
+                            add(2);
+                        } else {
+                            update(2);
+                        }
+                    }
+                },
+                {
                     text: '重置',
                     handler: function () {
                         clearForm();
@@ -85,11 +96,14 @@
 
     <div data-options="region:'center',title:'Center'" style="margin-left: 150px; margin-right: 150px;">
         <div class="easyui-panel" title="通航资料">
-            <select class="easyui-combobox" id="status" name="status" label="资料状态:" labelposition="left" style="width: 200px; margin: 20px;">
+            <select class="easyui-combobox" id="status" name="status" label="资料状态:" labelposition="left" style="width: 230px; margin: 20px;">
                 <option value="1">草稿中</option>
                 <option value="2">已提交</option>
+                <option value="3">已通过</option>
+                <option value="3">已拒绝</option>
             </select><br />
-            <select class="easyui-combobox" id="type" name="type" label="资料类别:" labelposition="left" style="width: 300px; margin: 20px;">
+            <select class="easyui-combobox" id="type" name="type" label="资料类别:" labelposition="left" style="width: 320px; margin: 20px;">
+                <option value="0">所有</option>
                 <option value="1">国家和民航相关通航政策、管理规定</option>
                 <option value="2">中南地区通航管理规定</option>
                 <option value="3">河南空管通航管理相关程序</option>
@@ -98,23 +112,20 @@
             <a class="easyui-linkbutton" id="bt_query" onclick="get();">查询</a>
             <a class="easyui-linkbutton" id="bt_add" onclick="open1(0);">新增</a>
         </div>
-        <div class="easyui-panel" title="资料列表">
-            <div style="margin: 20px 0;"></div>
-            <table id="dg" title="通航资料" style="width: 1358px; height: 350px" data-options="pageSize:10,rownumbers:true,singleSelect:true,pagination:true,method:'post'">
-                <thead>
-                    <tr>
-                        <th data-options="field:'Created',width:155,align:'center',formatter:formatDate">发布时间</th>
-                        <th data-options="field:'Title',width:350,align:'center'">标题</th>
-                        <th data-options="field:'DealUser',width:100,align:'center'">处理人</th>
-                        <th data-options="field:'ResourceType',width:220,align:'center',formatter:formatType">资料类别</th>
-                        <th data-options="field:'UsefulTime',width:200,align:'center'">有效时间</th>
-                        <th data-options="field:'FilePath',width:100,align:'center',formatter:formatFile">附件</th>
-                        <th data-options="field:'Status',width:100,align:'center',formatter:formatStatus">状态</th>
-                        <th data-options="field:'ID',width:100,align:'center',formatter:formatOperation">操作</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+        <table id="dg" title="通航资料" style="width: 1358px; height: 350px" data-options="pageSize:10,rownumbers:true,singleSelect:true,pagination:true,method:'post',striped:true">
+            <thead>
+                <tr>
+                    <th data-options="field:'Title',width:350,align:'center'">标题</th>
+                    <th data-options="field:'DealUser',width:100,align:'center'">处理人</th>
+                    <th data-options="field:'ResourceType',width:220,align:'center',formatter:formatType">资料类别</th>
+                    <th data-options="field:'UsefulTime',width:200,align:'center'">有效时间</th>
+                    <th data-options="field:'Created',width:155,align:'center',formatter:formatDate">发布时间</th>
+                    <th data-options="field:'FilePath',width:100,align:'center',formatter:formatFile">附件</th>
+                    <th data-options="field:'Status',width:100,align:'center',formatter:formatStatus">状态</th>
+                    <th data-options="field:'ID',width:100,align:'center',formatter:formatOperation">操作</th>
+                </tr>
+            </thead>
+        </table>
     </div>
     <div title="确定删除？" closed="true" class="easyui-dialog" id="hint" style="width: 300px; height: auto;">
         <h3>确定删除这条资料信息吗？</h3>
@@ -174,9 +185,9 @@
 
                     </tr>--%>
                     <tr>
-                        <th>附件(小于5M)</th>
+                        <th>附件(小于50M)</th>
                         <td>
-                            <input id="file" name="file" type="file" value="请选择附件（不大于5M）" style="width: 80%;" />
+                            <input id="file" name="file" type="file" value="请选择附件（不大于50M）" style="width: 80%;" />
                         </td>
                     </tr>
                 </table>
@@ -202,9 +213,17 @@
                 open1(id);
             }
             function formatOperation(val, row, rowIndex) {
-                var btn = "<a onclick='showupdate(" + val + "," + rowIndex + ");' href='javascript:void();' style='margin:5px;'>修改</a>"
-                + "<a onclick='delete1(" + val + ");' href='javascript:void();' style='margin:5px;'>删除</a>";
-                return btn;
+                var row = $('#dg').datagrid('getData');
+                var data = row.rows[rowIndex];
+                var status = data.Status;
+                var bb;
+                if (status < 2) {
+                    bb = "<a onclick='showupdate(" + val + "," + rowIndex + ");' href='javascript:void();' style='margin:5px;'>修改</a>"
+                    + "<a onclick='delete1(" + val + ");' href='javascript:void();' style='margin:5px;'>删除</a>";
+                } else {
+                    bb = "--";
+                }
+                return bb;
             }
             function formatDate(val, row, index) {
                 var value = val.substring(6, val.length - 2);
@@ -213,7 +232,7 @@
                 return date.toLocaleDateString() + " " + date.toLocaleTimeString();
             }
             function formatStatus(val, row) {
-                var status = new Array('草稿中', '已提交');
+                var status = new Array('草稿中', '已提交', '已通过','已拒绝');
                 return status[val - 1];
             }
             function formatType(val, row) {
@@ -224,9 +243,9 @@
                 var btn = "<a href='/Handler.ashx?action=download&filepath=" + val + "'>下载</a>";
                 return btn;
             }
-            function add() {
+            function add(status) {
                 $('#ff').form('submit', {
-                    url: 'Handler.ashx?action=add',
+                    url: 'Handler.ashx?action=add&status=' + status,
                     method: 'POST',
                     success: function (result) {
 
@@ -239,9 +258,9 @@
                     }
                 });
             }
-            function update() {
+            function update(status) {
                 $('#ff').form('submit', {
-                    url: 'Handler.ashx?action=update&id=' + id,
+                    url: 'Handler.ashx?action=update&id=' + id + '&status=' + status,
                     method: 'POST',
                     success: function (result) {
 

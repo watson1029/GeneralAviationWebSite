@@ -94,7 +94,8 @@ public class Handler : IHttpHandler
     {
         string title = context.Request["title"];
         string dealuser = context.Request["dealuser"];
-        string resourcetype = context.Request["resourcetype"];
+        int resourcetype = Convert.ToInt16(context.Request["resourcetype"]);
+        int status = Convert.ToInt16(context.Request["status"]);
         DateTime started = DateTime.Parse(context.Request["started"]);
         DateTime ended = DateTime.Parse(context.Request["ended"]);
         string filepath = "";
@@ -106,13 +107,13 @@ public class Handler : IHttpHandler
             Resource resource = new Resource();
             resource.Title = title;
             resource.DealUser = dealuser;
-            resource.ResourceType = Convert.ToInt16(resourcetype);
+            resource.ResourceType = resourcetype;
             resource.UsefulTime = started.ToString("yyyy年MM月dd日") +"-"+ ended.ToString("yyyy年MM月dd日");
             resource.SenderId = 123;
             resource.FilePath = filepath;
             resource.Created = DateTime.Now;
             resource.IsDeleted = 0;
-            resource.Status = 1;
+            resource.Status = status;
             resource.Started = started;
             resource.Ended = ended;
             dao.AddResource(resource);
@@ -136,6 +137,7 @@ public class Handler : IHttpHandler
         string title = context.Request["title"];
         string dealuser = context.Request["dealuser"];
         int resourcetype = Convert.ToInt16(context.Request["resourcetype"]);
+        int status = Convert.ToInt16(context.Request["status"]);
         DateTime started = DateTime.Parse(context.Request["started"]);
         DateTime ended = DateTime.Parse(context.Request["ended"]);
         Resource resource = new Resource();
@@ -149,6 +151,7 @@ public class Handler : IHttpHandler
         resource.Title = title;
         resource.DealUser = dealuser;
         resource.ResourceType = resourcetype;
+        resource.Status = status;
         resource.UsefulTime = started.ToString("yyyy年MM月dd日")+"-" + ended.ToString("yyyy年MM月dd日");
         resource.Started = started;
         resource.Ended = ended;

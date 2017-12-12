@@ -36,13 +36,13 @@ namespace DAL.SystemManagement
             if (res.FilePath == null || res.FilePath.Equals(""))
             {
                 paramters = new string[]{
-                "Title","DealUser","ResourceType","UsefulTime"
+                "Title","DealUser","ResourceType","UsefulTime","Status"
                 };
             }
             else
             {
                 paramters = new string[]{
-                "Title","DealUser","ResourceType","UsefulTime","FilePath"
+                "Title","DealUser","ResourceType","UsefulTime","FilePath","Status"
                 };
             }
             return base.Update(res, paramters);
