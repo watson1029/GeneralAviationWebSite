@@ -325,5 +325,21 @@ namespace DAL.FlightPlan
             return ninst;
         }
 
+        /// <summary>
+        /// 删除流程实例，20171213 modified by seczhou
+        /// </summary>
+        /// <param name="planId"></param>
+        /// <param name="twfid"></param>
+        /// <returns></returns>
+        public int DeleteActualSteps(int planId, int twfid)
+        {
+            SqlDbHelper dao = new SqlDbHelper();
+            var sql = "delete from ActualSteps where PlanID=@planId and TWFID=@twfid";
+            SqlParameter[] parameters = {
+					new SqlParameter("@planId",planId),
+                    new SqlParameter("@twfid",twfid),
+			};
+            return dao.ExecNonQuery(sql, parameters);
+        }
     }
 }
