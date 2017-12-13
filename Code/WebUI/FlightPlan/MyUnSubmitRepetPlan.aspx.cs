@@ -71,11 +71,13 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
             model.AttchFile = Request.Params["AttchFilesInfo"];
             model.PlanState = "0";
             model.CompanyCode3 = User.CompanyCode3 ?? "";
+            model.CompanyName = User.CompanyName;
             model.Creator = User.ID;
             model.CreatorName = User.UserName;
             model.ActorID = User.ID;
             model.CreateTime = DateTime.Now;
             model.ModifyTime = DateTime.Now;
+
             if (bll.Add(model))
             {
                 result.IsSuccess = true;

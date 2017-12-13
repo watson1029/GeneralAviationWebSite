@@ -50,7 +50,9 @@
                     collapsible: false, //可折叠
                     sortOrder: 'desc', //排序类型
                     remoteSort: true, //定义是否从服务器给数据排序
-
+                    frozenColumns: [[//冻结的列，不会随横向滚动轴移动
+    { field: 'cbx', checkbox: true },
+                    ]],
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 60 },
@@ -59,8 +61,8 @@
                         { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
                         { title: '预计开始时间', field: 'StartDate', width: 100 },
                         { title: '预计结束时间', field: 'EndDate', width: 100 },
-                        { title: '起飞时刻', field: 'SOBT', width: 100 },
-                        { title: '降落时刻', field: 'SIBT', width: 100 },
+                        { title: '起飞时刻', field: 'SOBT', width: 80 },
+                        { title: '降落时刻', field: 'SIBT', width: 80 },
                         { title: '起飞机场', field: 'ADEP', width: 80 },
                         { title: '降落机场', field: 'ADES', width: 80 },
                         {
@@ -108,6 +110,11 @@
             },
             //批量审核
             BatchAudit: function (uid) {
+                var selRow = $('#tab_list').datagrid('getSelections');
+                if (selRow.length == 0) {
+                    $.messager.alert('提示', '请选择一条记录！', 'info');
+                    return;
+                }
                 $("#batchaudit").dialog("open").dialog('setTitle', '批量审核');
             },
             //审核
@@ -163,6 +170,9 @@
 
             },
             BatchAuditSubmit: function (uid) {
+                if (!$("#form_batchaudit").form("validate")) {
+                    return;
+                }
                 var selRow = $('#tab_list').datagrid('getSelections');
                 if (selRow.length == 0) {
                     $.messager.alert('提示', '请选择一条记录！', 'info');
@@ -175,7 +185,8 @@
                 }
                 $.messager.confirm('提示', '确认要提交审核结果吗？', function (r) {
                     if (r) {
-                        $.post(location.href, { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
+                        var json = $.param({ "cbx_select": idArray.join(','), "action": "batchaudit" }) + '&' + $('#form_batchaudit').serialize();
+                        $.post(location.href, json, function (data) {
                             $.messager.alert('提示', data.msg, 'info');
                             if (data.isSuccess) {
                                 $("#tab_list").datagrid("reload");
@@ -190,7 +201,7 @@
         };
     </script>
 
-    <div id="audit" class="easyui-dialog" style="width: 700px; height: 700px;"
+    <div id="audit" class="easyui-dialog" style="width: 700px; height: 560px;"
         modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
             <table class="table_edit">

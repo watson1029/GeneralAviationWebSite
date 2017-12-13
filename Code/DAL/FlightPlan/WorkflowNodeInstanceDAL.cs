@@ -8,51 +8,32 @@ using System.Text;
 using System.Threading.Tasks;
 using Untity.DB;
 using Model.EF;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 
 namespace DAL.FlightPlan
 {
-    public class WorkflowNodeInstanceDAL
+    public class WorkflowNodeInstanceDAL : DBHelper<ActualSteps>
     {
-        private DBHelper<ActualSteps> dbHelper = new DBHelper<ActualSteps>();
- 
 
         public bool UpdateNodeInstance(List<WorkflowNodeInstance> nodesInstance)
         {
-            //SqlDbHelper dao = new SqlDbHelper();
-            //try
-            //{
-            //    dao.BeginTran();
-            //    var sql = "update ActualSteps set PrevID=@prevId, NextID=@nextId where ID=@id";
-            //    foreach (var tempInst in nodesInstance)
-            //    {
-            //        SqlParameter[] parameters = {
-            //        new SqlParameter("@prevId", tempInst.PrevId),
-            //        new SqlParameter("@nextId", tempInst.NextId),
-            //         new SqlParameter("@id", tempInst.Id)};
-            //        dao.ExecNonQuery(sql, parameters);
-            //    }
-            //    dao.CommitTran();
-            //    return true;
-
-            //}
-            //catch (Exception e)
-            //{
-            //    dao.RollBackTran();
-            //    throw (e);
-
-            //}
-
-            try
+            using (var dbContextTransaction = context.Database.BeginTransaction())
             {
-                foreach (var tempINst in nodesInstance)
+                try
                 {
-                    dbHelper.Update(new ActualSteps { PrevID = tempINst.PrevId, NextID = tempINst.NextId, ID = tempINst.Id }, "PrevID", "NextID");
+                    foreach (var tempINst in nodesInstance)
+                    {
+                        Update(new ActualSteps { PrevID = tempINst.PrevId, NextID = tempINst.NextId, ID = tempINst.Id }, "PrevID", "NextID");
+                    }
+                    dbContextTransaction.Commit();
+                    return true;
                 }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+                    throw ex;
+                }
             }
         }
         public bool UpdateFirstNode(WorkflowNodeInstance firstNodeInst, int userID, string userName)
@@ -73,7 +54,7 @@ namespace DAL.FlightPlan
             {
                 firstNodeInst.State = WorkflowNodeInstance.StepStateType.Processing;
                 var entity = new ActualSteps { ActorID = userID, ActorName = userName, State = (byte)firstNodeInst.State, ApplyTime = DateTime.Now, ID = firstNodeInst.Id };
-                return dbHelper.Update(entity, "ActorID", "ActorName", "State", "ApplyTime") > 0;
+                return Update(entity, "ActorID", "ActorName", "State", "ApplyTime") > 0;
             }
             catch (Exception ex)
             {
@@ -83,96 +64,14 @@ namespace DAL.FlightPlan
 
         public WorkflowNodeInstance Submit(int planId, int twfid, string comments, Action<WorkflowPlan> action)
         {
-            #region 没用EF
-            /*
-            SqlDbHelper dao = new SqlDbHelper();
-            List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId);
-            var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
-            WorkflowNodeInstance nextInst = null;
-            var sql = "update ActualSteps set State=@state, Comments=@comment, ActorTime=@actTime where ID=@id";
-
-            try
-            {
-                dao.BeginTran();
-                //更新当前节点状态为完成
-                SqlParameter[] parameters = {
-                    new SqlParameter("@state", (byte)WorkflowNodeInstance.StepStateType.Processed),
-                    new SqlParameter("@comment", comments),
-                    new SqlParameter("@actTime", DateTime.Now),
-                    new SqlParameter("@id", currInst.Id)};
-                int result = dao.ExecNonQuery(sql, parameters);
-                if (result > 0)
-                {
-                    currInst.State = WorkflowNodeInstance.StepStateType.Processed;
-                    //更新下一个节点状态为处理中
-                    if (currInst.NextId != Guid.Empty)
-                    {
-                        nextInst = GetNodeInstance(currInst.NextId);
-                        WorkflowTplNode tnode = WorkflowTplNodeDAL.GetNode(nextInst.StepId);
-                        sql = "update ActualSteps set State=@state, ActorID=@gid, ActorName=@actName, ApplyTime=@applyTime where ID=@id";
-
-
-<<<<<<< HEAD
-                        var userInfo = UserInfoDAL.Get(int.Parse(tnode.AuthorType));
-                        int actor = userInfo.ID;
-=======
-                        var userInfo = new UserInfoDAL().Find(m=>m.ID==int.Parse(tnode.AuthorType));
-                        int? actor = null;
->>>>>>> 24d7ba9c6f493d76125a74f83a1b23461ab56ef2
-                        //判断节点的活动所有者类型
-
-                        SqlParameter[] parameters1 = {
-					        new SqlParameter("@state", (byte)WorkflowNodeInstance.StepStateType.Processing),
-					        new SqlParameter("@applyTime", DateTime.Now),
-                            new SqlParameter("@id", currInst.NextId),
-                            new SqlParameter("@gid", userInfo.ID),
-                            new SqlParameter("@actName", userInfo.UserName) };
-
-                        result = dao.ExecNonQuery(sql, parameters1);
-
-                        //更新申请单的状态
-                        //sql = "update RepetitivePlan set ActorID=@actor, PlanState=@planState where RepetPlanID=@planId";
-                        //SqlParameter[] parameters3 = {
-                        //    new SqlParameter("@planState",tnode.StepName),
-                        //    new SqlParameter("@actor", actor),
-                        //    new SqlParameter("@planId", planId)};
-                        //dao.ExecNonQuery(sql, parameters3);
-                        //调用委托
-                        action(new WorkflowPlan { Actor = actor, PlanState = tnode.StepName, PlanID= planId });
-                    }
-                    else
-                    {
-
-                        //已经是最后一个节点了，流程结束
-                        //更新申请单的状态
-                        //sql = "update RepetitivePlan set ActorID=@actor, PlanState=@planState where RepetPlanID=@planId";
-                        //SqlParameter[] parameters2 = {
-                        //    new SqlParameter("@actor", DBNull.Value),
-                        //    new SqlParameter("@planState", "end"),
-                        //    new SqlParameter("@planId", planId)};
-                        //dao.ExecNonQuery(sql, parameters2);
-                        action(new WorkflowPlan { Actor = null, PlanState = "end", PlanID = planId });
-                    }
-                }
-                dao.CommitTran();
-            }
-            catch (Exception)
-            {
-                dao.RollBackTran();
-                nextInst = null;
-            }**/
-            #endregion
             List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId, twfid);
             var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
             WorkflowNodeInstance nextInst = null;
-
-            try
+            using (var dbContextTransaction = context.Database.BeginTransaction())
             {
-                //更新当前节点状态为完成
-                int result = dbHelper.Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processed, Comments = comments, ActorTime = DateTime.Now, ID = currInst.Id, TWFID = twfid }, "State", "Comments", "ActorTime", "TWFID");
-
-                if (result > 0)
+                try
                 {
+                    Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processed, Comments = comments, ActorTime = DateTime.Now, ID = currInst.Id }, "State", "Comments", "ActorName");
                     currInst.State = WorkflowNodeInstance.StepStateType.Processed;
                     //更新下一个节点状态为处理中
                     if (currInst.NextId != Guid.Empty)
@@ -180,35 +79,54 @@ namespace DAL.FlightPlan
                         nextInst = GetNodeInstance(currInst.NextId);
                         WorkflowTplNode tnode = WorkflowTplNodeDAL.GetNode(nextInst.StepId);
                         var auhtor = int.Parse(tnode.AuthorType);
-                        var userInfo = new UserInfoDAL().Find(u => u.ID == auhtor); //UserInfoDAL.Get(int.Parse(tnode.AuthorType));
+                        var userInfo = context.Set<UserInfo>().Where(u => u.ID == auhtor).FirstOrDefault();
                         int actor = userInfo.ID;
                         //判断节点的活动所有者类型
 
-                        result = dbHelper.Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processing, ApplyTime = DateTime.Now, ActorID = userInfo.ID, ActorName = userInfo.UserName, ID = currInst.NextId }, "State", "ApplyTime", "ActorID", "ActorName");
-                        action(new WorkflowPlan { Actor = actor, PlanState = tnode.StepName, PlanID = planId, TWFID = twfid });
+                        Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processing, ApplyTime = DateTime.Now, ActorID = userInfo.ID, ActorName = userInfo.UserName, ID = currInst.NextId }, "State", "ApplyTime", "ActorID", "ActorName");
+
+                        action(new WorkflowPlan { Actor = actor, PlanState = tnode.StepName, PlanID = planId });
                     }
                     else
                     {
-                        action(new WorkflowPlan { Actor = null, PlanState = "end", PlanID = planId, TWFID = twfid });
+                        action(new WorkflowPlan { Actor = null, PlanState = "end", PlanID = planId });
                     }
+                    dbContextTransaction.Commit();
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+                    throw ex;
+                }
             }
             return nextInst;
         }
 
         public void UpdateRepetPlan(WorkflowPlan plan)
         {
-            var model = new RepetitivePlan() { ActorID = plan.Actor, PlanState = plan.PlanState, RepetPlanID = plan.PlanID };
-            new DBHelper<RepetitivePlan>().Update(model, "ActorID", "PlanState");
+            //  context.Database.UseTransaction(plan.CurrentTransaction);
+            var entity = new RepetitivePlan() { ActorID = plan.Actor, PlanState = plan.PlanState, RepetPlanID = plan.PlanID };
+            var entry = context.Entry(entity);
+            entry.State = EntityState.Unchanged;
+            foreach (string propertyName in new string[] { "ActorID", "PlanState" })
+            {
+                entry.Property(propertyName).IsModified = true;
+            }
+            context.Configuration.ValidateOnSaveEnabled = false;
+            context.SaveChanges();
         }
         public void UpdateFlightPlan(WorkflowPlan plan)
         {
-            var model = new Model.EF.FlightPlan() { ActorID = plan.Actor, PlanState = plan.PlanState, FlightPlanID = plan.PlanID };
-            new DBHelper<Model.EF.FlightPlan>().Update(model, "ActorID", "PlanState");
+            var entity = new Model.EF.FlightPlan() { ActorID = plan.Actor, PlanState = plan.PlanState, FlightPlanID = plan.PlanID };
+
+            var entry = context.Entry(entity);
+            entry.State = EntityState.Unchanged;
+            foreach (string propertyName in new string[] { "ActorID", "PlanState" })
+            {
+                entry.Property(propertyName).IsModified = true;
+            }
+            context.Configuration.ValidateOnSaveEnabled = false;
+            context.SaveChanges();
         }
 
         /// <summary>
@@ -246,10 +164,20 @@ namespace DAL.FlightPlan
             List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId, twfid);
             var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
             int result = 0;
-            result = dbHelper.Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Deserted, Comments = comments, ID = currInst.Id }, "State", "Comments");
-            if (result > 0)
+            using (var dbContextTransaction = context.Database.BeginTransaction())
             {
-                func(new WorkflowPlan { Actor = null, PlanState = WorkflowNodeInstance.StepStateType.Deserted.ToString(), PlanID = planId, TWFID = twfid });
+                try
+                {
+                    Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Deserted, Comments = comments, ID = currInst.Id }, "State", "Comments");
+                    func(new WorkflowPlan { Actor = null, PlanState = WorkflowNodeInstance.StepStateType.Deserted.ToString(), PlanID = planId });
+                    dbContextTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+                    throw ex;
+
+                }
             }
             return result;
         }

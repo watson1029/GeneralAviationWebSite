@@ -187,11 +187,10 @@
                 });
             },
             Submit: function (uid) {
-
                 $.messager.confirm('提示', '确认提交该条长期计划？', function (r) {
                     if (r) {
                         $.post(location.href, { "action": "submit", "id": uid }, function (data) {
-
+                            $.messager.alert('提示', data.msg, 'info');
                             if (data.isSuccess) {
                                 $("#tab_list").datagrid("reload");
                             }
