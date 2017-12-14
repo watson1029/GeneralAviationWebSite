@@ -16,15 +16,15 @@ namespace DAL.SystemManagement
     {
        public  int GetRoleMenuCount(int roleID, int menuID)
        {
-     //      SqlDbHelper dao = new SqlDbHelper();
-     //      var sql = string.Format("select count(1) from RoleMenu where MenuID=@MenuID and RoleID=@RoleID ", menuID, roleID);
-     //      SqlParameter[] parameters = {
-					//new SqlParameter("@RoleID",roleID),
-					//new SqlParameter("@MenuID", menuID)};
-     //      return Convert.ToInt32(dao.ExecScalar(sql, parameters));
+            SqlDbHelper dao = new SqlDbHelper();
+            var sql = string.Format("select count(1) from RoleMenu where MenuID=@MenuID and RoleID=@RoleID ", menuID, roleID);
+            SqlParameter[] parameters = {
+                    new SqlParameter("@RoleID",roleID),
+                    new SqlParameter("@MenuID", menuID)};
+            return Convert.ToInt32(dao.ExecScalar(sql, parameters));
 
 
-            return 0;
+            //return 0;
        }
        public  List<RoleMenu> GetRoleMenuList(string strWhere)
        {
