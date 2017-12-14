@@ -55,6 +55,7 @@
     <Compile Include="OrderHelper.cs" />
     <Compile Include="Pager\PagedList.cs" />
     <Compile Include="PredicateBuilder.cs" />
+    <Compile Include="TemplateClass4StatisticResult.cs" />
     <Compile Include="TWFType.cs" />
     <Compile Include="PasswordCheckResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

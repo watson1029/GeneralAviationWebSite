@@ -33,23 +33,6 @@ namespace DAL.SystemManagement
             return temp.Count() > 0;
         }
 
-        public Dictionary<string,int> GetGroupCount()
-        {
-            var result = (from a in context.RepetitivePlan
-                          group a by a.CompanyCode3 into g
-                          select new { name = g.Key, count = g.Count() })
-                         .ToDictionary(a => a.name, a => a.count);
-            return result;
-        }
-
-        public dynamic GetGroupCount1()
-        {
-            var result = from a in context.RepetitivePlan
-                          group a by a.CompanyCode3 into g
-                          select new { name = g.Key, count = g.Count() };
-            return result;
-        }
-
         public bool SetUserRole(int userID, IEnumerable<int> addUserRoleList, IEnumerable<int> removeUserRoleList)
         {
             foreach (var rmp in removeUserRoleList)
