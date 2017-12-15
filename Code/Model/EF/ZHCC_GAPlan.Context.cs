@@ -26,8 +26,6 @@ namespace Model.EF
         }
     
         public virtual DbSet<ActualSteps> ActualSteps { get; set; }
-        public virtual DbSet<BusinessCertificate> BusinessCertificate { get; set; }
-        public virtual DbSet<BusinessLicense> BusinessLicense { get; set; }
         public virtual DbSet<FlightTask> FlightTask { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<Role> Role { get; set; }
@@ -37,7 +35,6 @@ namespace Model.EF
         public virtual DbSet<UserInfo> UserInfo { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<LoginLog> LoginLog { get; set; }
-        public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Resource> Resource { get; set; }
         public virtual DbSet<OperationLog> OperationLog { get; set; }
         public virtual DbSet<Pilot> Pilot { get; set; }
@@ -45,5 +42,7 @@ namespace Model.EF
         public virtual DbSet<SupplyDemandInfo> SupplyDemandInfo { get; set; }
         public virtual DbSet<FlightPlan> FlightPlan { get; set; }
         public virtual DbSet<RepetitivePlan> RepetitivePlan { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
+        public virtual DbSet<CurrentFlightPlan> CurrentFlightPlan { get; set; }
     }
 }
