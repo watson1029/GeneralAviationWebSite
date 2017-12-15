@@ -1,21 +1,18 @@
-﻿using DAL.SystemManagement;
-using Model.FlightPlan;
+﻿using Model.FlightPlan;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Untity.DB;
 using Model.EF;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace DAL.FlightPlan
 {
     public class WorkflowNodeInstanceDAL : DBHelper<ActualSteps>
     {
-
+        WorkflowTplNodeDAL _dal = new WorkflowTplNodeDAL();
         public bool UpdateNodeInstance(List<WorkflowNodeInstance> nodesInstance)
         {
             using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -38,18 +35,6 @@ namespace DAL.FlightPlan
         }
         public bool UpdateFirstNode(WorkflowNodeInstance firstNodeInst, int userID, string userName)
         {
-            //SqlDbHelper dao = new SqlDbHelper();
-            //firstNodeInst.State = WorkflowNodeInstance.StepStateType.Processing;
-            //var sql = "update ActualSteps set State=@state, ActorID=@actID, ActorName=@actName, ApplyTime=@applyTime where ID=@id";
-
-            //SqlParameter[] parameters = {
-            //        new SqlParameter("@actID", userID),
-            //        new SqlParameter("@actName", userName),
-            //         new SqlParameter("@state", firstNodeInst.State),
-            //        new SqlParameter("@applyTime",DateTime.Now),
-            //         new SqlParameter("@id", firstNodeInst.Id)};
-            //return dao.ExecNonQuery(sql, parameters) > 0;
-
             try
             {
                 firstNodeInst.State = WorkflowNodeInstance.StepStateType.Processing;
@@ -77,7 +62,7 @@ namespace DAL.FlightPlan
                     if (currInst.NextId != Guid.Empty)
                     {
                         nextInst = GetNodeInstance(currInst.NextId);
-                        WorkflowTplNode tnode = WorkflowTplNodeDAL.GetNode(nextInst.StepId);
+                        WorkflowTplNode tnode = _dal.GetNode(nextInst.StepId);
                         var auhtor = int.Parse(tnode.AuthorType);
                         var userInfo = context.Set<UserInfo>().Where(u => u.ID == auhtor).FirstOrDefault();
                         int actor = userInfo.ID;
@@ -137,30 +122,6 @@ namespace DAL.FlightPlan
         /// <returns></returns>
         public int Terminate(int planId, int twfid, string comments, Action<WorkflowPlan> func)
         {
-            #region 没用ef
-            /*
-            SqlDbHelper dao = new SqlDbHelper();
-            List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId);
-            var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
-            var sql = "update ActualSteps set State=@state, Comments=@comments where ID=@id";
-            int result = 0;
-            SqlParameter[] parameters = {
-					new SqlParameter("@state",  (byte)WorkflowNodeInstance.StepStateType.Deserted),
-					new SqlParameter("@comments", comments),
-                     new SqlParameter("@id",  currInst.Id)};
-               result= dao.ExecNonQuery(sql, parameters) ;
-                if (result > 0)
-                {
-                    sql = "update RepetitivePlan set ActorID=@actor, PlanState=@planstate where RepetPlanID=@planid";
-
-                    SqlParameter[] parameters1 = {
-					new SqlParameter("@actor",   DBNull.Value),
-					new SqlParameter("@planstate", WorkflowNodeInstance.StepStateType.Deserted.ToString()),
-                     new SqlParameter("@planid",  planId)};
-                    result += dao.ExecNonQuery(sql, parameters1);
-                }**/
-            #endregion
-
             List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId, twfid);
             var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
             int result = 0;
@@ -183,14 +144,9 @@ namespace DAL.FlightPlan
         }
         public List<WorkflowNodeInstance> GetAllNodeInstance(int planId, int twfid)
         {
-            SqlDbHelper dao = new SqlDbHelper();
-            var sql = "select * from ActualSteps where PlanID=@planId and PrevID=@prevId and TWFID=@twfid";
-            SqlParameter[] parameters = {
-					new SqlParameter("@planId",planId),
-                    new SqlParameter("@prevId",Guid.Empty),
-                    new SqlParameter("@twfid",twfid),
-			};
-            WorkflowNodeInstance wfInst = dao.ExecSelectSingleCmd<WorkflowNodeInstance>(ExecReader, sql, parameters);
+            ActualSteps _instance = Find(a => a.PlanID == planId && a.PrevID == Guid.Empty && a.TWFID == twfid);
+            WorkflowNodeInstance wfInst = ExecReader(_instance);
+
             //将流程节点进行排序
             List<WorkflowNodeInstance> orderInstList = new List<WorkflowNodeInstance>();
             if (wfInst != null)
@@ -216,40 +172,34 @@ namespace DAL.FlightPlan
         }
         public WorkflowNodeInstance GetNodeInstance(Guid id)
         {
-            SqlDbHelper dao = new SqlDbHelper();
-            string sql = "select * from ActualSteps where ID=@id";
-
-            SqlParameter[] parameters = {
-					new SqlParameter("@id",id)
-			};
-            parameters[0].Value = id;
-            return dao.ExecSelectSingleCmd<WorkflowNodeInstance>(ExecReader, sql, parameters);
+            ActualSteps _instance = Find(a => a.ID == id);
+            return ExecReader(_instance);
         }
 
-        private WorkflowNodeInstance ExecReader(SqlDataReader dr)
+        private WorkflowNodeInstance ExecReader(ActualSteps entity)
         {
             WorkflowNodeInstance ninst = new WorkflowNodeInstance();
-            if (!dr["Id"].Equals(DBNull.Value))
-                ninst.Id = new Guid(dr["Id"].ToString());
-            if (!dr["State"].Equals(DBNull.Value))
-                ninst.State = (WorkflowNodeInstance.StepStateType)Convert.ToByte(dr["State"]);
-            ninst.PlanID = Convert.ToInt32(dr["PlanID"]);
-            ninst.StepId = Convert.ToInt32(dr["StepId"]);
-            ninst.TWFID = Convert.ToInt32(dr["TWFID"]);
-            if (!dr["PrevID"].Equals(DBNull.Value))
-                ninst.PrevId = new Guid(dr["PrevID"].ToString());
-            if (!dr["NextID"].Equals(DBNull.Value))
-                ninst.NextId = new Guid(dr["NextID"].ToString());
-            if (!dr["ActorID"].Equals(DBNull.Value))
-                ninst.ActorID = Convert.ToInt32(dr["ActorID"]);
-            if (!dr["ActorName"].Equals(DBNull.Value))
-                ninst.ActorName = Convert.ToString(dr["ActorName"]);
-            if (!dr["ActorTime"].Equals(DBNull.Value))
-                ninst.ActorTime = Convert.ToDateTime(dr["ActorTime"]);
-            if (!dr["Comments"].Equals(DBNull.Value))
-                ninst.Comments = Convert.ToString(dr["Comments"]);
-            if (!dr["ApplyTime"].Equals(DBNull.Value))
-                ninst.ApplyTime = Convert.ToDateTime(dr["ApplyTime"]);
+            if (!entity.ID.Equals(DBNull.Value))
+                ninst.Id = new Guid(entity.ID.ToString());
+            if (!entity.State.Equals(DBNull.Value))
+                ninst.State = (WorkflowNodeInstance.StepStateType)Convert.ToByte(entity.State);
+            ninst.PlanID = Convert.ToInt32(entity.PlanID);
+            ninst.StepId = Convert.ToInt32(entity.StepID);
+            ninst.TWFID = Convert.ToInt32(entity.TWFID);
+            if (!entity.PrevID.Equals(DBNull.Value))
+                ninst.PrevId = new Guid(entity.PrevID.ToString());
+            if (!entity.NextID.Equals(DBNull.Value))
+                ninst.NextId = new Guid(entity.NextID.ToString());
+            if (!entity.ActorID.Equals(DBNull.Value))
+                ninst.ActorID = Convert.ToInt32(entity.ActorID);
+            if (!entity.ActorName.Equals(DBNull.Value))
+                ninst.ActorName = Convert.ToString(entity.ActorName);
+            if (!entity.ActorTime.Equals(DBNull.Value))
+                ninst.ActorTime = Convert.ToDateTime(entity.ActorTime);
+            if (!entity.Comments.Equals(DBNull.Value))
+                ninst.Comments = Convert.ToString(entity.Comments);
+            if (!entity.ApplyTime.Equals(DBNull.Value))
+                ninst.ApplyTime = Convert.ToDateTime(entity.ApplyTime);
             return ninst;
         }
 
@@ -261,13 +211,7 @@ namespace DAL.FlightPlan
         /// <returns></returns>
         public int DeleteActualSteps(int planId, int twfid)
         {
-            SqlDbHelper dao = new SqlDbHelper();
-            var sql = "delete from ActualSteps where PlanID=@planId and TWFID=@twfid";
-            SqlParameter[] parameters = {
-					new SqlParameter("@planId",planId),
-                    new SqlParameter("@twfid",twfid),
-			};
-            return dao.ExecNonQuery(sql, parameters);
+            return BatchDelete(a => a.PlanID == planId && a.TWFID == twfid);
         }
     }
 }

@@ -1,46 +1,49 @@
-﻿using Model.FlightPlan;
+﻿using Model.EF;
+using Model.FlightPlan;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq.Expressions;
 using Untity.DB;
 
 namespace DAL.FlightPlan
 {
-    public class WorkflowTplNodeDAL
+    public class WorkflowTplNodeDAL:DBHelper<TWFSteps>
     {
-
         /// <summary>
         /// 根据模板获取节点
         /// </summary>
         /// <param name="twfId"></param>
         /// <returns></returns>
-        public static List<WorkflowTplNode> GetNodeByTWFID(int twfId)
+        public List<WorkflowTplNode> GetNodeByTWFID(int twfId)
         {
-            SqlDbHelper dao = new SqlDbHelper();
-            var sql = "select * from TWFSteps where TWFID=@twfId";
-            SqlParameter[] parameters = {
-					new SqlParameter("@twfId",  twfId)};
-            return dao.ExecSelectCmd(ExecReader, sql, parameters);
-           
+            List<WorkflowTplNode> _WorkflowTplNodeList = new List<WorkflowTplNode>();
+
+            var _TWFStepsList = FindList(a => a.TWFID == twfId.ToString(), a => a.StepID, true);
+            foreach (var item in _TWFStepsList)
+            {
+                _WorkflowTplNodeList.Add(ExecReader(item));
+            }
+            return _WorkflowTplNodeList;
         }
 
-        private static WorkflowTplNode ExecReader(SqlDataReader dr)
+        private WorkflowTplNode ExecReader(TWFSteps entity)
         {
             WorkflowTplNode wfNode = new WorkflowTplNode();
-            if (!dr["StepId"].Equals(DBNull.Value))
-                wfNode.StepId = Convert.ToInt32(dr["StepId"]);
-            if (!dr["TWFID"].Equals(DBNull.Value))
-                wfNode.TWFID = Convert.ToInt32(dr["TWFID"]);
-            if (!dr["StepName"].Equals(DBNull.Value))
-                wfNode.StepName = Convert.ToString(dr["StepName"]);
-            if (!dr["PrevId"].Equals(DBNull.Value))
-                wfNode.PrevId = Convert.ToInt32(dr["PrevId"]);
-            if (!dr["NextId"].Equals(DBNull.Value))
-                wfNode.NextId = Convert.ToInt32(dr["NextId"]);
-            if (!dr["AuthorType"].Equals(DBNull.Value))
-                wfNode.AuthorType = Convert.ToString(dr["AuthorType"]);
+            if (!entity.StepID.Equals(DBNull.Value))
+                wfNode.StepId = Convert.ToInt32(entity.StepID);
+            if (!entity.TWFID.Equals(DBNull.Value))
+                wfNode.TWFID = Convert.ToInt32(entity.TWFID);
+            if (!entity.StepName.Equals(DBNull.Value))
+                wfNode.StepName = Convert.ToString(entity.StepName);
+            if (!entity.PrevID.Equals(DBNull.Value))
+                wfNode.PrevId = Convert.ToInt32(entity.PrevID);
+            if (!entity.NextID.Equals(DBNull.Value))
+                wfNode.NextId = Convert.ToInt32(entity.NextID);
+            if (!entity.AuthorType.Equals(DBNull.Value))
+                wfNode.AuthorType = Convert.ToString(entity.AuthorType);
             return wfNode;
         }
        /// <summary>
@@ -49,25 +52,25 @@ namespace DAL.FlightPlan
        /// <param name="tnode"></param>
        /// <param name="applyId"></param>
        /// <returns></returns>
-        public static WorkflowNodeInstance CreateNodeInstance(WorkflowTplNode tnode, int planId)
+        public WorkflowNodeInstance CreateNodeInstance(WorkflowTplNode tnode, int planId)
         {
-            SqlDbHelper dao = new SqlDbHelper();
             var guid=Guid.NewGuid();
             var date = DateTime.Now;
             WorkflowNodeInstance nodeInst = new WorkflowNodeInstance();
-            string sql = @"insert into ActualSteps (ID,PlanID,StepID,TWFID,State,PrevID,NextID,CreateTime) values (@id,@planId,@stepId,@twfId,@state,@prevId,@nextId,@createTime)";
 
-            SqlParameter[] parameters = {
-					new SqlParameter("@id", guid),
-					new SqlParameter("@planId", planId),
-					new SqlParameter("@stepId",tnode.StepId),
-					new SqlParameter("@twfId", tnode.TWFID),
-                    new SqlParameter("@state",byte.Parse("0")),
-                    new SqlParameter("@prevId",Guid.Empty),
-                    new SqlParameter("@nextId", Guid.Empty),
-                    new SqlParameter("@createTime", DateTime.Now)
-        };
-            if (dao.ExecNonQuery(sql, parameters)>0)
+            ActualSteps _instance = new ActualSteps
+            {
+                ID = guid,
+                PlanID = planId,
+                StepID = tnode.StepId,
+                TWFID = tnode.TWFID,
+                State = 0,
+                PrevID = Guid.Empty,
+                NextID = Guid.Empty,
+                CreateTime = DateTime.Now
+            };
+            context.ActualSteps.Add(_instance);
+            if (context.SaveChanges() > 0)
             {
                 nodeInst.Id = guid;
                 nodeInst.PlanID = planId;
@@ -80,16 +83,10 @@ namespace DAL.FlightPlan
             }
             return nodeInst;
         }
-
-
-        public static WorkflowTplNode GetNode(int stepId)
+        public WorkflowTplNode GetNode(int stepId)
         {
-            SqlDbHelper dao = new SqlDbHelper();
-            var sql = "select * from TWFSteps where StepID=@stepId";
-            SqlParameter[] parameters = {
-					new SqlParameter("@stepId",stepId)
-			};
-            return dao.ExecSelectSingleCmd<WorkflowTplNode>(ExecReader, sql, parameters);
+            TWFSteps _instance = Find(a => a.StepID == stepId);
+            return ExecReader(_instance);
         }
     }
 }

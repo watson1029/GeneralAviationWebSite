@@ -15,22 +15,17 @@ namespace BLL.SystemManagement
     {
         private MenuDAL menudal = new MenuDAL();
         private UserInfoDAL userinfodal = new UserInfoDAL();
-        private ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
         private CompanyDAL companydal = new CompanyDAL();
-
+        private UserRoleDAL userroledal = new UserRoleDAL();
+        public bool Add(UserInfo model)
+        {
+            return userinfodal.Add(model) > 0;
+        }
         public bool Delete(string ids)
         {
 
             return userinfodal.BatchDelete(ids) > 0;
         }
-        /// <summary>
-        /// 增加一条数据
-        /// </summary>
-        public bool Add(UserInfo model)
-        {
-            return userinfodal.Add(model) > 0;
-        }
-
         /// <summary>
         /// 更新一条数据
         /// </summary>
@@ -38,8 +33,6 @@ namespace BLL.SystemManagement
         {
             return userinfodal.Update(model) > 0;
         }
-
-
         public List<UserInfo> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<UserInfo, bool>> where)
         {
             return userinfodal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
@@ -115,9 +108,8 @@ namespace BLL.SystemManagement
         /// <param name="strWhere"></param>
         /// <returns></returns>
         public List<int> GetUserRoleList(int userID)
-        {
-            var list = context.UserRole.Where(p => p.UserID == userID).Select(t => t.RoleID).ToList();
-            return list;
+        {           
+            return userroledal.FindList(a => a.UserID == userID, a => a.ID, true).Select(b => b.RoleID).ToList();
         }
         public bool SetUserRole(int userID, IEnumerable<int> addUserRoleList, IEnumerable<int> removeUserRoleList)
         {
