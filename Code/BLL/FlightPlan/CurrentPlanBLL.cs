@@ -11,7 +11,7 @@ namespace BLL.FlightPlan
 { 
     public class CurrentPlanBLL
     {
-        FlightPlanDAL dal = new FlightPlanDAL();
+        CurrentFlightPlanDAL dal = new CurrentFlightPlanDAL();
         WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
         WorkflowNodeInstanceDAL instal = new WorkflowNodeInstanceDAL();
         /// <summary>
@@ -60,11 +60,11 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Audit(int planid, int twfid, string comment)
+        public bool Audit(int planid, string comment)
         {
             try
             {
-                instal.Submit(planid, twfid, comment, workPlan => { });
+                instal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, comment, workPlan => { });
                 return true;
             }
             catch (Exception ex)
@@ -78,11 +78,11 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Terminate(int planid, int twfid,string comment)
+        public bool Terminate(int planid,string comment)
         {
             try
             {
-                instal.Terminate(planid, twfid, comment, workPlan => { });
+                instal.Terminate(planid, (int)TWFTypeEnum.CurrentPlan, comment, workPlan => { });
                 return true;
             }
             catch(Exception ex)

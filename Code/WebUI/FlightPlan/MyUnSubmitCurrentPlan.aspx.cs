@@ -27,11 +27,11 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
                 case "queryone"://获取一条记录
                     GetData();
                     break;
-                case "save":
-                    Save();
-                    break;
+                //case "save":
+                //    Save();
+                //    break;
                 case "submit":
-                    SaveSubmit();
+                    Submit();
                     break;
                 default:
                     break;
@@ -39,7 +39,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         }
     }
 
-    private void SaveSubmit()
+    private void Submit()
     {
         AjaxResult result = new AjaxResult();        
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
@@ -66,6 +66,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
+   /**
     public void Save(){
         AjaxResult result = new AjaxResult();
         int id = 0;
@@ -93,7 +94,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
-
+    */
     /// <summary>
     /// 获取指定ID的数据
     /// </summary>
