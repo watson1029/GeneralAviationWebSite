@@ -27,12 +27,11 @@ namespace Model.EF
         public Nullable<System.DateTime> ASdate { get; set; }
         public Nullable<double> CruiseAltd { get; set; }
         public Nullable<double> CruiseSpeed { get; set; }
-        public Nullable<double> MinSpeed { get; set; }
         public Nullable<double> MaxSpeed { get; set; }
-        public string CompanyCode3 { get; set; }
-        public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> Passenger { get; set; }
         public Nullable<double> MaxEndurance { get; set; }
         public string Airworthiness { get; set; }
+        public string CompanyCode3 { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }
