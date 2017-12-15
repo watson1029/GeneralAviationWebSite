@@ -51,9 +51,7 @@
     <Compile Include="DBHelper.cs" />
     <Compile Include="FlightPlan\FlightPlanDAL.cs" />
     <Compile Include="BasicData\PilotDAL.cs" />
-    <Compile Include="BasicData\Quanlification\BusinessCertificateDAL.cs" />
     <Compile Include="BasicData\Quanlification\CompanyDAL.cs" />
-    <Compile Include="BasicData\Quanlification\BusinessLicenseDAL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanDAL.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstanceDAL.cs" />
     <Compile Include="FlightPlan\WorkflowTplNodeDAL.cs" />
