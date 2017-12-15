@@ -28,5 +28,37 @@ namespace Model.EF
         public Nullable<int> ModifiedBy { get; set; }
         public string ModifiedByName { get; set; }
         public Nullable<System.DateTime> ModifiedTime { get; set; }
+        public Nullable<System.DateTime> RegisterTime { get; set; }
+        public string RegisterAddress { get; set; }
+        public string CorporateRepresentative { get; set; }
+        public Nullable<double> RegisteredCapital { get; set; }
+        public string Dealline { get; set; }
+        public string ContactPerson { get; set; }
+        public string LegalPerson { get; set; }
+        public string LegalCardNo { get; set; }
+        public string LegalAddress { get; set; }
+        public string LegalTelePhone { get; set; }
+        public string LegalCardImg { get; set; }
+        public string LegalClientele { get; set; }
+        public string LegalDelegateImg { get; set; }
+        public string DelegateCardNo { get; set; }
+        public string DelegateAddress { get; set; }
+        public string DelegateTelePhone { get; set; }
+        public string DelegateCardImg { get; set; }
+        public string LicenseNo { get; set; }
+        public string BaseAirport { get; set; }
+        public string ConpanyType { get; set; }
+        public Nullable<double> RegisteredFund { get; set; }
+        public Nullable<double> CapitalLimit { get; set; }
+        public string Legalperson1 { get; set; }
+        public string ManageItemsScope { get; set; }
+        public string DealLine1 { get; set; }
+        public Nullable<System.DateTime> PresentationDate { get; set; }
+        public string LicensedSeal { get; set; }
+        public string FirmName { get; set; }
+        public string FirmCode { get; set; }
+        public string FirmAddress { get; set; }
+        public string BaseAirportCode { get; set; }
+        public string LicensingAuthority { get; set; }
     }
 }

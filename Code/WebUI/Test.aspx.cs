@@ -45,18 +45,11 @@ public partial class Test : System.Web.UI.Page
             //item.Key对应的是GroupBy的字段，item.Count（）返回记录数
             //TextBox1.Text += item.Key + "_" + item.Count();
         }
-
-
-        var resList = _userInfoDAL.GetGroupCount();
-        foreach (var item in resList)
+        
+        List<TemplateClass4StatisticResult> list = _repetitivePlanDAL.getStatisticResult();
+        foreach (var item in list)
         {
-            //TextBox1.Text += item.Key + "_" + item.Value;
-        }
-
-        List<resultClass> resList1 = _userInfoDAL.GetGroupCount1();
-        foreach (var item in resList1)
-        {
-            TextBox1.Text += item.fieldName + "_" + item.count;
+            TextBox1.Text += item._field1 + "_" + item._field2 + "_" + item._field3 + "_" + item._field4;
         }
 
         /*

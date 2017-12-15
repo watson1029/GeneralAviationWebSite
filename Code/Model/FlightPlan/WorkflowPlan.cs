@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Common;
 
 namespace Model.FlightPlan
 {
@@ -11,6 +7,6 @@ namespace Model.FlightPlan
         public int? Actor { get; set; }
         public string PlanState { get; set; }
         public int PlanID { get; set; }
-        public int TWFID { get; set; }
+
     }
 }

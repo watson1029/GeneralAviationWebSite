@@ -31,6 +31,9 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
                 case "auditsubmit":
                     AuditSubmit();
                     break;
+                case "batchaudit":
+                    BatchAuditSubmit();
+                    break;
                 default:
                     break;
             }
@@ -114,29 +117,40 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         Response.End();
 
     }
-    //private void AuditSubmit()
-    //{
-    //    AjaxResult result = new AjaxResult();
-    //    result.IsSuccess = false;
-    //    result.Msg = "提交失败！";
-    //    var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-    //    if (Request.Form["Auditresult"] == "0")
-    //    {
-    //        insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
-    //    }
-    //    else
-    //    {
-    //        insdal.Terminate(planid, (int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
-    //    }
-    //    result.IsSuccess = true;
-    //    result.Msg = "提交成功！";
+    private void BatchAuditSubmit()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "操作失败！";
+        if (Request.Form["cbx_select"] != null)
+        {
+          var arr=  Request.Form["cbx_select"].ToString().Split(',');
 
-    //    Response.Clear();
-    //    Response.Write(result.ToJsonString());
-    //    Response.ContentType = "application/json";
-    //    Response.End();
+          var auditComment=Request.Form["AuditComment"] ?? "";
+          if (Request.Form["Auditresult"] == "0")
+          {
+          foreach (var item in arr)
+          {
+              insdal.Submit(int.Parse(item), (int)TWFTypeEnum.RepetitivePlan, auditComment, insdal.UpdateRepetPlan);
+          }
+          }
+          else
+          {
+              foreach (var item in arr)
+              {
+                  insdal.Terminate(int.Parse(item), (int)TWFTypeEnum.RepetitivePlan, auditComment, insdal.UpdateRepetPlan);
+              }
+          }
+          result.IsSuccess =true;
+          result.Msg = "操作成功！";
 
-    //}
+        }
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
+
+    }
     private void DownlodFile()
     {
         string fileName = "";

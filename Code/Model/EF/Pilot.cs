@@ -26,5 +26,7 @@ namespace Model.EF
         public string CompanyName { get; set; }
         public string LicenseImg { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> PilotAge { get; set; }
+        public Nullable<System.DateTime> LicenseTime { get; set; }
     }
 }

@@ -10,8 +10,8 @@
                 </td>
                  <th>填写单位：
                 </th>
-                <td>
-                <%=User.CompanyName %>
+                <td id="name">
+                
                 </td>
             </tr>
             <tr>
@@ -136,6 +136,7 @@
                 $.post("MyUnSubmitRepetPlanAdd.aspx", { "action": "queryone", "id": pid }, function (data) {
                     $("#form_edit").form('load', data);
                     $("#code").html(data.PlanCode);
+                    $("#name").html(data.CompanyName);
                     $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
                         $("#d" + n).prop({ checked: true });
                     });
@@ -153,6 +154,7 @@
                 });
             }
             else {
+                $("#name").html('<%=User.CompanyName %>');
                 $.post("MyUnSubmitRepetPlanAdd.aspx", { "action": "getplancode" }, function (data) {
                     $("#code").html(data);
                     $("#PlanCode").val(data);
