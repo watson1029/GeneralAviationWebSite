@@ -22,34 +22,25 @@ public class DBHelper<T> where T : class
     public int Add(T entity)
     {
         //第一种方式
-        context.Entry<T>(entity).State = EntityState.Added;
+        context.Entry(entity).State = EntityState.Added;
         //第二种方式
         //context.Set<T>().Add(entity);
 
-        return context.SaveChanges();        
+        return context.SaveChanges();
     }
     /// <summary>
     /// 批量新增实体
     /// </summary>
     /// <param name="dbContext"></param>
     /// <returns></returns>
-    public int AddList(params T[] entities)
+    public int AddList(List<T> entities)
     {
-        int result = 0;
-        for (int i = 0; i < entities.Count(); i++)
+        foreach (var item in entities)
         {
-            if (entities[i] == null)
-                continue;
-            context.Entry<T>(entities[i]).State = EntityState.Added;
-            //每20个记录提交一次
-            if (i != 0 && i % 20 == 0)
-            {
-                result += context.SaveChanges();
-            }
+            if (item == null) continue;
+            context.Entry(item).State = EntityState.Added;
         }
-        if (entities.Count() > 0)
-            result += context.SaveChanges();
-        return result;
+        return context.SaveChanges();        
     }
     /// <summary>
     /// 删除单个实体
@@ -59,7 +50,7 @@ public class DBHelper<T> where T : class
     public int Delete(T entity)
     {
         //第一种方式
-        context.Entry<T>(entity).State = EntityState.Deleted;
+        context.Entry(entity).State = EntityState.Deleted;
 
         //第二种方式
         //context.Set<T>().Attach(entity);
@@ -77,7 +68,7 @@ public class DBHelper<T> where T : class
         var list = context.Set<T>().Where(where).AsNoTracking().ToList();
         foreach (var item in list)
         {
-            context.Entry<T>(item).State = EntityState.Deleted;
+            context.Entry(item).State = EntityState.Deleted;
         }
         return context.SaveChanges();
     }
@@ -97,7 +88,7 @@ public class DBHelper<T> where T : class
         {
             id = int.Parse(item);
             temp = context.Set<T>().Find(id);
-            if(temp!= null)context.Entry<T>(temp).State = EntityState.Deleted;
+            if(temp!= null)context.Entry(temp).State = EntityState.Deleted;
         }
         return context.SaveChanges();
     }
@@ -108,7 +99,7 @@ public class DBHelper<T> where T : class
     /// <returns></returns>
     public int Update(T entity)
     {
-        context.Entry<T>(entity).State = EntityState.Modified;
+        context.Entry(entity).State = EntityState.Modified;
         return context.SaveChanges();
     }
     /// <summary>
@@ -121,7 +112,7 @@ public class DBHelper<T> where T : class
     {
         //除去上下文管理
         RemoveHoldingEntityInContext(entity);
-        DbEntityEntry entry = context.Entry<T>(entity);
+        DbEntityEntry entry = context.Entry(entity);
         entry.State = EntityState.Unchanged;
         foreach (string propertyName in propertyNames)
         {
@@ -195,9 +186,9 @@ public class DBHelper<T> where T : class
             pageCount++;
 
         if (isAsc)
-            list = list.OrderBy<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
+            list = list.OrderBy(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         else
-            list = list.OrderByDescending<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
+            list = list.OrderByDescending(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         return list.AsNoTracking().ToList();
     }
     /// <summary>
@@ -222,9 +213,9 @@ public class DBHelper<T> where T : class
             pageCount++;
 
         if (isAsc)
-            list = list.OrderBy<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
+            list = list.OrderBy(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         else
-            list = list.OrderByDescending<T, S>(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
+            list = list.OrderByDescending(orderBy).Skip(pageSize * (pageIndex - 1)).Take(pageSize);
         return list.AsNoTracking().ToList();
     }
 }
