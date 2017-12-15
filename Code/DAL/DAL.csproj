@@ -61,11 +61,12 @@
     <Compile Include="Log\OperationLogDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SupplyDemandInformation\SupplyDemandDAL.cs" />
-    <Compile Include="SystemManagement\LoginLogDAL.cs" />
     <Compile Include="SystemManagement\MenuDAL.cs" />
     <Compile Include="SystemManagement\ResourceDAL.cs" />
     <Compile Include="SystemManagement\RoleDAL.cs" />
+    <Compile Include="SystemManagement\RoleMenuDAL.cs" />
     <Compile Include="SystemManagement\UserInfoDAL.cs" />
+    <Compile Include="SystemManagement\UserRoleDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
