@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Untity;
 using System.Linq.Expressions;
+using Model.EF;
 
 namespace BLL.FlightPlan
 { 
@@ -17,9 +18,9 @@ namespace BLL.FlightPlan
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public  bool Update(Model.EF.FlightPlan model)
+        public bool Update(CurrentFlightPlan model)
         {
-            return dal.Update(model)>0;
+            return dal.Update(model) > 0;
         }
         /// <summary>
         /// 更新某些字段
@@ -27,7 +28,7 @@ namespace BLL.FlightPlan
         /// <param name="model"></param>
         /// <param name="propertyNames"></param>
         /// <returns></returns>
-        public bool Update(Model.EF.FlightPlan model, params string[] propertyNames)
+        public bool Update(CurrentFlightPlan model, params string[] propertyNames)
         {
             return dal.Update(model, propertyNames) > 0;
         }
@@ -45,7 +46,7 @@ namespace BLL.FlightPlan
                 wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, userid, username);
                 instal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, "", workPlan =>
                 {
-                    dal.Update(new Model.EF.FlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, FlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
+                    dal.Update(new CurrentFlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, FlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
                 });
                 return true;
             }
@@ -99,7 +100,7 @@ namespace BLL.FlightPlan
         /// <param name="rowCount"></param>
         /// <param name="where"></param>
         /// <returns></returns>
-        public List<Model.EF.FlightPlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<Model.EF.FlightPlan, bool>> where)
+        public List<CurrentFlightPlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<CurrentFlightPlan, bool>> where)
         {
             return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.FlightPlanID, true);
         }
@@ -108,7 +109,7 @@ namespace BLL.FlightPlan
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Model.EF.FlightPlan Get(int id)
+        public CurrentFlightPlan Get(int id)
         {
             return dal.Find(u => u.FlightPlanID == id);
         }

@@ -2,7 +2,7 @@
 
 namespace DAL.FlightPlan
 {
-    public class CurrentFlightPlanDAL : DBHelper<CurrentFlightPlanDAL>
+    public class CurrentFlightPlanDAL : DBHelper<CurrentFlightPlan>
     {
     }
 }
