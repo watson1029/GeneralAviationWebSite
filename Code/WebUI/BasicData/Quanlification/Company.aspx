@@ -34,36 +34,28 @@
                         <td class="tdal">公司三字码：                                                                           
                         </td>
                         <td class="tdar">
-                            <input id="CompanyCode3" name="CompanyCode3" type="text" class="easyui-textbox" maxlength="10" 
-                                required="true" />
-                        </td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                            <input id="CompanyCode3" name="CompanyCode3" type="text" class="easyui-textbox"   required="true" />
+                        </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
                     </tr>
                     <tr>
                         <td class="tdal">公司二字码：
                         </td>
                         <td class="tdar">
-                            <input id="CompanyCode2" name="CompanyCode2"  class="easyui-textbox" maxlength="10" 
-                                required="true" />
+                            <input id="CompanyCode2" name="CompanyCode2" type="text"  class="easyui-textbox"  required="true" />
                         </td>
-
                     </tr>
                     <tr>
                         <td class="tdal">公司名称：
                         </td>
                         <td class="tdar">
-                            <input id="CompanyName" name="CompanyName" type="text" class="easyui-textbox" maxlength="30" 
-                                required="true" />
+                            <input id="CompanyName" name="CompanyName" type="text" class="easyui-textbox"  required="true" />
                         </td>
-
-                    </tr>
-                    
+                    </tr>                    
                     <tr>   
                         <td class="tdar">英文名称：
                         </td>
                         <td class="tdar">
-                             <input id="EnglishName" name="EnglishName" type="text" class="easyui-textbox"  maxlength="30"
-                                required="true" />
+                             <input id="EnglishName" name="EnglishName" type="text" class="easyui-textbox"   />
                         </td>
                     </tr>  
                 </table>
@@ -73,11 +65,11 @@
         <div title="通航企业工商营业执照信息填写" style="padding:10px">
             <form id="form_edit2"  method="post" > 
              <table class="table_edit">
-                <tr>
+                 <tr>
                     <td class="tdal">注册时间：
                      </td>
                      <td class="tdar">
-                         <input id="RegisterTime" name="RegisterTime" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="RegisterTime" name="RegisterTime" type="text" maxlength="30" class="easyui-datebox" required="ture" />
                      </td>
                     <td class="tdal">注册地址：
                      </td>
@@ -86,34 +78,34 @@
                      </td>
                 </tr>
                  <tr>
-                     <td class="tdal">注册资金：
+                     <td class="tdal">注册资金：（万）
                      </td>
                      <td class="tdar">
-                         <input id="RegisteredCapital" name="RegisteredCapital" type="text" maxlength="30" class="easyui-textbox" />
+                         <input id="RegisteredCapital" name="RegisteredCapital" type="text"  class="easyui-numberbox" required="ture" />
                      </td>
                      <td class="tdal">有效期限：
                      </td>
                      <td class="tdar">
-                         <input id="Dealline" name="Dealline" type="text" maxlength="30" class="easyui-textbox"  required="ture" />
+                         <input id="Dealline" name="Dealline" type="text"  class="easyui-textbox"  required="ture" />
                      </td>
                 </tr>
                  <tr>
                      <td class="tdal">法人姓名：
                      </td>
                      <td class="tdar">
-                         <input id="LegalPerson" name="LegalPerson" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="LegalPerson" name="LegalPerson" type="text" class="easyui-textbox" required="ture" />
                      </td>
                      <td class="tdal">指定联系人：
                      </td>
                      <td class="tdar">
-                         <input id="ContactPerson" name="ContactPerson" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="ContactPerson" name="ContactPerson" type="text"  class="easyui-textbox" required="ture" />
                      </td>
                 </tr>
                  <tr>
                      <td class="tdal"> 法人身份证号：
                      </td>
                      <td class="tdar">
-                         <input id="LegalCardNo" name="LegalCardNo" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="LegalCardNo" name="LegalCardNo" type="text" maxlength="18" class="easyui-textbox" required="ture" />
                      </td>
                      <td class="tdal"> 法人身份证地址：
                      </td>
@@ -121,35 +113,35 @@
                          <input id="LegalAddress" name="LegalAddress" type="text" maxlength="30" class="easyui-textbox"  />
                      </td>
                 </tr>
-                  <tr>
+                 <tr>
                      <td class="tdal">法人有效联系电话：
                      </td>
                      <td class="tdar">
-                         <input id="LegalTelePhone" name="LegalTelePhone" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="LegalTelePhone" name="LegalTelePhone" type="text"  class="easyui-numberbox" required="ture" />
                      </td>
                     <td class="tdal">法人委托人：
                      </td>
                      <td class="tdar">
-                         <input id="LegalClientele" name="LegalClientele" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="LegalClientele" name="LegalClientele" type="text"  class="easyui-textbox" required="ture" />
                      </td>
                 </tr>
-                  <tr>
+                 <tr>
                      <td class="tdal">委托人身份证号：
                      </td>
                      <td class="tdar">
-                         <input id="DelegateCardNo" name="DelegateCardNo" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="DelegateCardNo" name="DelegateCardNo" type="text"  class="easyui-textbox" required="ture" />
                      </td>
                     <td class="tdal">委托人身份证地址：
                      </td>
                      <td class="tdar">
-                         <input id="DelegateAddress" name="DelegateAddress" type="text" maxlength="30" class="easyui-textbox"  />
+                         <input id="DelegateAddress" name="DelegateAddress" type="text"  class="easyui-textbox"  />
                      </td>
                 </tr>
-                  <tr>
+                 <tr>
                      <td class="tdal">委托人有效联系电话：
                      </td>
                      <td class="tdar">
-                         <input id="DelegateTelePhone" name="DelegateTelePhone" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                         <input id="DelegateTelePhone" name="DelegateTelePhone" type="text"  class="easyui-numberbox" required="ture" />
                      </td>
                 </tr>
                  <tr>
@@ -192,79 +184,79 @@
             </form>
         </div>
 
-        <div title="通航企业营业许可证信息填写" style="padding:10px">
+        <div title="通航企业经营许可证信息填写" style="padding:10px">
             <form id="form_edit3"  method="post" > 
             <table class="table_edit">
                 <tr>
                     <td class="tadl">许可证编号：
                     </td>
                     <td class="tdar">
-                        <input id="LicenseNo" name="LicenseNo" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="LicenseNo" name="LicenseNo" type="text"  class="easyui-textbox" required="ture" />
                     </td>
                      <td class="tadl">企业名称：
                     </td>
                     <td class="tdar">
-                        <input id="FirmName" name="FirmName" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="FirmName" name="FirmName" type="text"  class="easyui-textbox" required="ture" />
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="tadl">企业代码：
                     </td>
                     <td class="tdar">
-                        <input id="FirmCode" name="FirmCode" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="FirmCode" name="FirmCode" type="text"  class="easyui-numberbox" required="ture" />
                     </td>
                      <td class="tadl">企业地址：
                     </td>
                     <td class="tdar">
-                        <input id="FirmAddress" name="FirmAddress" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="FirmAddress" name="FirmAddress" type="text"  class="easyui-textbox" required="ture" />
                     </td>
                 </tr>
                 <tr>
                     <td class="tadl">基地机场：
                     </td>
                     <td class="tdar">
-                        <input id="BaseAirport" name="BaseAirport"  type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="BaseAirport" name="BaseAirport"  type="text"  class="easyui-textbox" required="ture"  />
                     </td>
                      <td class="tadl">基地机场代码：
                     </td>
                     <td class="tdar">
-                        <input id="BaseAirportCode" name="BaseAirportCode" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="BaseAirportCode" name="BaseAirportCode" type="text"  class="easyui-textbox" />
                     </td>
                 </tr>
                 <tr>
                     <td class="tdal">企业类别：
                     </td>
                     <td class="tdar">
-                        <input id="CompanyType" name="CompanyType" type="text" maxlength="30" class="easyui-textbox" required="ture"  />
+                        <input id="CompanyType" name="CompanyType" type="text"  class="easyui-textbox" required="ture"  />
                     </td>
                      <td class="tadl">注册资本：
                     </td>
                     <td class="tdar">
-                        <input id="RegisteredFund" name="RegisteredFund" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="RegisteredFund" name="RegisteredFund" type="text"  class="easyui-numberbox" required="ture" />
                     </td>
                 </tr>
                 <tr>
                     <td class="tdal">法定代表人：
                     </td>
                     <td class="tdar">
-                        <input id="Legalperson1" name="Legalperson1" type="text" maxlength="30" class="easyui-textbox" required="ture"  />
+                        <input id="Legalperson1" name="Legalperson1" type="text"  class="easyui-textbox" required="ture"  />
                     </td>
                      <td class="tdal">经营项目与范围：
                     </td>
                     <td class="tdar">
-                        <input id="ManageItemsScope" name="ManageItemsScope" type="text" maxlength="30" class="easyui-textbox"  />
+                        <input id="ManageItemsScope" name="ManageItemsScope" type="text"  class="easyui-textbox"  />
                     </td>
                 </tr>
                 <tr>
                     <td class="tdal">有效期限：
                     </td>
                     <td class="tdar">
-                        <input id="DealLine1" name="DealLine1" type="text" maxlength="30" class="easyui-textbox" required="ture"  />
+                        <input id="DealLine1" name="DealLine1" type="text"  class="easyui-textbox" required="ture"  />
                     </td>
                      <td class="tdal">颁发日期：
                     </td>
                     <td class="tdar">
-                        <input id="PresentationDate" name="PresentationDate" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="PresentationDate" name="PresentationDate" type="text"  class="easyui-datebox" required="ture" />
                     </td>
                 </tr>
                 <tr>
@@ -273,7 +265,7 @@
                         <p>自有资金额度：</p>
                     </td>
                     <td class="tdar">
-                        <input id="CapitalLimit" name="CapitalLimit" type="text" maxlength="30" class="easyui-textbox" required="ture" />
+                        <input id="CapitalLimit" name="CapitalLimit" type="text" maxlength="10" class="easyui-numberbox" required="ture" />
                     </td>
                      <td class="tdal">许可证颁发机关：
                     </td>
@@ -329,6 +321,104 @@
             Main.InitGird();
             Main.InitSearch();
         });
+
+
+        $(function () {
+            $('#CompanyCode3').textbox('textbox').attr('maxlength', 3);
+        });
+        $(function () {
+            $('#CompanyCode2').textbox('textbox').attr('maxlength', 2);
+        });
+        $(function () {
+            $('#CompanyName').textbox('textbox').attr('maxlength', 15);
+        });
+        //$(function () {
+        //    $('#EnglishName').textbox('textbox').attr('maxlength', 30);
+        // });
+
+
+
+        $(function () {
+            $('#RegisterAddress').textbox('textbox').attr('maxlength', 30);
+        });
+        $(function () {
+            $('#RegisteredCapital').numberbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#Dealline').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#LegalPerson').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#ContactPerson').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#LegalCardNo').numberbox('textbox').attr('maxlength', 18);
+        });
+        $(function () {
+            $('#LegalAddress').textbox('textbox').attr('maxlength', 30);
+        });
+        $(function () {
+            $('#LegalTelePhone').numberbox('textbox').attr('maxlength', 11);
+        });
+        $(function () {
+            $('#LegalClientele').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#DelegateCardNo').numberbox('textbox').attr('maxlength', 18);
+        });
+        $(function () {
+            $('#DelegateAddress').textbox('textbox').attr('maxlength', 30);
+        });
+        $(function () {
+            $('#DelegateTelePhone').numberbox('textbox').attr('maxlength', 11);
+        });
+
+
+
+        $(function () {
+            $('#LicenseNo').textbox('textbox').attr('maxlength', 20);
+        });
+        $(function () {
+            $('#FirmName').textbox('textbox').attr('maxlength', 30);
+        });
+        $(function () {
+            $('#FirmCode').numberbox('textbox').attr('maxlength', 20);
+        });
+        $(function () {
+            $('#FirmAddress').textbox('textbox').attr('maxlength', 30);
+        });
+        $(function () {
+            $('#BaseAirport').textbox('textbox').attr('maxlength', 20);
+        });
+        $(function () {
+            $('#BaseAirportCode').textbox('textbox').attr('maxlength', 10);
+        });       
+        $(function () {
+            $('#CompanyType').textbox('textbox').attr('maxlength', 25);
+        });
+        $(function () {
+            $('#RegisteredFund').numberbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#Legalperson1').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#ManageItemsScope').textbox('textbox').attr('maxlength', 30);
+        });
+        $(function () {
+            $('#DealLine1').textbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#CapitalLimit').numberbox('textbox').attr('maxlength', 10);
+        });
+        $(function () {
+            $('#LicensingAuthority').textbox('textbox').attr('maxlength', 30);
+        });
+        
+
+
         Main = {
             //初始化表格
             InitGird: function () {
@@ -355,9 +445,10 @@
                         { title: '公司名称', field: 'CompanyName', width: 150 },
                         { title: '英文名称', field: 'EnglishName', width: 150 },
                         {
-                            title: '操作', field: 'ID', width: 150, formatter: function (value, rec) {
+                            title: '操作', field: 'ID', width: 500, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
-                               
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">查看公司营业执照</a>&nbsp;&nbsp;';
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">查看公司经营许可证</a>&nbsp;&nbsp;';
                                 return str;
                             }
                         }

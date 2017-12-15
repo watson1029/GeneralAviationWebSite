@@ -7,7 +7,7 @@ using Untity;
 
 public partial class BasicData_Pilot : BasePage
 {
-    PilotBLL bll = new PilotBLL();
+      PilotBLL bll = new PilotBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -58,21 +58,11 @@ public partial class BasicData_Pilot : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var model = new Pilot()
-        {
-            Pilots = Request.Form["Pilots"],
-            PilotCardNo = Request.Form["PilotCardNo"],
-            PilotDT = DateTime.Parse(Request.Form["PilotDT"]),
-            PhoneNo = Request.Form["PhoneNo"],
-            LicenseNo = Request.Form["LicenseNo"],
-            Sign = Request.Form["Sign"],
-            Licensesort = Request.Form["Licensesort"],
-            CompanyName = Request.Form["CompanyName"],
-            LicenseImg = Request.Params["LicenseImgInfo"],
-            Sex = byte.Parse(Request.Form["Sex"] ?? "0"),
-        };
+        Pilot model = null;
         if (!id.HasValue)//新增
         {
+            model = new Pilot();
+            model.GetEntitySearchPars<Pilot>(this.Context);
             model.CreateTime = DateTime.Now;
             if (bll.Add(model)>0)
             {
@@ -82,11 +72,15 @@ public partial class BasicData_Pilot : BasePage
         }
         else//编辑
         {
-            model.ID = id.Value;
-            if (bll.Update(model)>0)
+            model = bll.Get(id.Value);
+            if (model != null)
             {
-                result.IsSuccess = true;
-                result.Msg = "更新成功！";
+                model.GetEntitySearchPars<Pilot>(this.Context);
+                if (bll.Update(model) > 0)
+                {
+                    result.IsSuccess = true;
+                    result.Msg = "更新成功！";
+                }
             }
         }
         Response.Clear();
