@@ -39,7 +39,10 @@ namespace BLL.FlightPlan
          {
              return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.RepetPlanID, true);
          }
-
+        public List<RepetitivePlan> GetList(Expression<Func<RepetitivePlan, bool>> where)
+    {
+        return dal.FindList(where, m => m.RepetPlanID, true);
+    }
         public  RepetitivePlan Get(int id)
         {
             return dal.Find(u=>u.RepetPlanID==id);
