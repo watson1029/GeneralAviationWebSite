@@ -170,6 +170,8 @@
           <Property Name="ActualStartTime" Type="datetime" />
           <Property Name="ActualEndTime" Type="datetime" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="RepetPlanID" Type="int" Nullable="false" />
+          <Property Name="CreateSource" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="FlightTask">
           <Key>
@@ -599,6 +601,8 @@
           <Property Name="ActualStartTime" Type="DateTime" Precision="3" />
           <Property Name="ActualEndTime" Type="DateTime" Precision="3" />
           <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RepetPlanID" Type="Int32" Nullable="false" />
+          <Property Name="CreateSource" Type="Byte" Nullable="false" />
         </EntityType>
         <EntityType Name="RepetitivePlan">
           <Key>
@@ -940,6 +944,8 @@
           <EntitySetMapping Name="FlightPlan">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.FlightPlan">
               <MappingFragment StoreEntitySet="FlightPlan">
+                <ScalarProperty Name="CreateSource" ColumnName="CreateSource" />
+                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
                 <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
