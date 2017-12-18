@@ -335,7 +335,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                     ActorID = User.ID,
                     CreateTime = DateTime.Now,
                     ModifyTime = DateTime.Now,
-                    PlanCode=OrderHelper.GenerateId(User.CompanyCode3)
+                    PlanCode=OrderHelper.GenerateId("",User.CompanyCode3)
                 };
                 bll.Add(model);
 
@@ -434,9 +434,5 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
 
         var filePath = Path.Combine(localTargetCategory, localNewFileName);
         return filePath;
-    }
-    protected void Export_Click(object sender, EventArgs e)
-    {
-
     }
 }

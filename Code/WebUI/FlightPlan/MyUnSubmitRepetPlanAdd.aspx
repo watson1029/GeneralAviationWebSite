@@ -20,7 +20,7 @@
                 <td>
                     <input id="FlightType" name="FlightType" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
-                        required="true" class="easyui-combobox" />
+                        required="true" class="easyui-combobox" style="height:25px"/>
                 </td>
   <th>航空器类型：
                 </th>
@@ -28,55 +28,55 @@
                     <%--  <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" />--%>
                     <input id="AircraftType" name="AircraftType" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
-                        required="true" class="easyui-combobox" />
+                        required="true" class="easyui-combobox" style="height:25px"/>
                 </td>
             </tr>
             <tr>
                 <th>航线走向和飞行高度：
                 </th>
                 <td>
-                    <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30" style="height:25px;" type="text" required="true" class="easyui-validatebox textbox" />
                 </td>
   <th>航空器呼号：
                 </th>
                 <td>
-                    <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="CallSign" name="CallSign" maxlength="30" type="text" style="height:25px;"  required="true" class="easyui-validatebox textbox" />
                 </td>
             </tr>
             <tr>
                 <th>起飞机场：
                 </th>
                 <td>
-                    <input id="ADEP" name="ADEP" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="ADEP" name="ADEP" maxlength="30" type="text"  style="height:23px;"  required="true" class="easyui-validatebox textbox" />
                 </td>
  <th>降落机场：
                 </th>
                 <td>
-                    <input id="ADES" name="ADES" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="ADES" name="ADES" maxlength="30" type="text"  style="height:23px;" required="true" class="easyui-validatebox textbox" />
                 </td>
             </tr>          
             <tr>
                 <th>预计开始日期：
                 </th>
                 <td>
-                    <input id="StartDate" name="StartDate" style="width: 200px" type="text" required="true" class="easyui-datebox" />
+                    <input id="StartDate" name="StartDate"  type="text" required="true" class="easyui-datebox" style="height:25px"/>
                 </td>
                 <th>预计结束日期：
                 </th>
                 <td>
-                    <input id="EndDate" name="EndDate" style="width: 200px" type="text" required="true" class="easyui-datebox" validtype="md['#StartDate']" />
+                    <input id="EndDate" name="EndDate" type="text" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height:25px"/>
                 </td>
             </tr>
             <tr>
                 <th >起飞时刻：
                 </th>
                 <td>
-                    <input id="SOBT" name="SOBT" style="width: 200px" type="text" required="true" class="easyui-timespinner" />
+                    <input id="SOBT" name="SOBT"  type="text" required="true" class="easyui-timespinner" style="height:25px"/>
                 </td>
 <th>降落时刻：
                 </th>
                 <td >
-                    <input id="SIBT" name="SIBT" style="width: 200px" type="text" required="true" class="easyui-timespinner" />
+                    <input id="SIBT" name="SIBT"  type="text" required="true" class="easyui-timespinner" style="height:25px"/>
                 </td>
 
             </tr>
