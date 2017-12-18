@@ -108,6 +108,46 @@
                   rownumbers: true //行号
               });
           },
+          //初始化表格
+          InitGird1: function (uid) {
+              $('#tab_list1').datagrid({
+                  title: '审核记录', //表格标题
+                  url: location.href, //请求数据的页面
+                  sortName: 'ID', //排序字段
+                  idField: 'ID', //标识字段,主键
+                  iconCls: '', //标题左边的图标
+                  width: '95%', //宽度
+                  height: 150, //高度
+                  nowrap: false, //是否换行，True 就会把数据显示在一行里
+                  striped: true, //True 奇偶行使用不同背景色
+                  singleSelect: false,
+                  collapsible: false, //可折叠
+
+                  columns: [[
+                      { title: '审核人', field: 'ActorName', width: 150 },
+                      {
+                          title: '审核状态', field: 'State', formatter: function (value, rec, index) {
+                              var str = "";
+                              if (value == "1") {
+                                  str = "审核中";
+                              }
+                              else if (value == "2") {
+                                  str = "审核通过";
+                              }
+                              else if (value == "3") {
+                                  str = '审核不通过';
+                              }
+                              return str;
+                          }, width: 150
+                      },
+                      { title: '审核时间', field: 'ApplyTime', width: 150 },
+                      { title: '审核意见', field: 'Comments', width: 150 }
+                  ]],
+                  queryParams: { "action": "getinstance", "id": uid },
+                  pagination: false, //是否开启分页
+                  rownumbers: true //行号
+              });
+          },
           Detail: function (uid) {
               $("#detail").dialog("open").dialog('setTitle', '查看');
               $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
@@ -146,6 +186,7 @@
                   $("#WeekSchedule").html(arr.join(','));
 
               });
+              Main.InitGird1(uid);
           },
           //初始化搜索框
           InitSearch: function () {
@@ -229,6 +270,10 @@
                 
             </table>
         </form>
+        <div id="con" style="margin-left:15px;">
+        <div id="tab_list1">
+        </div>
+        </div>
     </div>
     <div id="detail-buttons">
  <a href="javascript:;"

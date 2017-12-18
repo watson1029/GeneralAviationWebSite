@@ -13,10 +13,11 @@
     <%--列表 start--%>
         <table id="tab_list">
         </table>
-        <div id="tab_toolbar" style="padding: 2px 2px;">
+        <div id="tab_toolbar" style="padding: 2px 2px;" >
             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>
-
+             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-redo" plain="true" onclick="Main.BatchImport()">导入</a>
+                       <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" plain="true" onclick="Main.Export()">导出</a>
             <div style="float:right">
                         <input id="ipt_search" menu="#search_menu"/>
                         <div id="search_menu" style="width: 200px">
@@ -96,7 +97,7 @@
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
                             title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" id="sub-btn' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
                                 return str;
                             }
                         }
@@ -161,7 +162,30 @@
                 $("#edit").dialog("open").dialog('setTitle', '编辑长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx?id=' + uid);
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
             },
+            BatchImport: function () {
+                $("#batchimport").dialog("open").dialog('setTitle', '文件导入').dialog('refresh', 'UnSubmitRepetPlanBatchImport.aspx');
+            },
+            Export:function(){     
+                window.open("ExportHandler.aspx?type=1");
+            },
+            BatchImportSumit: function () {
 
+                var fileInfo = dj.getCmp("PlanFiles").getUploadedFiles();
+                if (fileInfo == "") {
+                    $.messager.alert('提示', '请先上传文件！', 'info');
+                    return;
+                }
+
+                var json = $.param({ "action": "batchImport", PlanFilesPath: fileInfo });
+                $.post(location.href, json, function (data) {
+                    $.messager.alert('提示', data.msg, 'info', function () {
+                        if (data.isSuccess) {
+                            $("#tab_list").datagrid("reload");
+                            $("#batchimport").dialog("close");
+                        }
+                    });
+                });
+            },
             //删除按钮事件
             Delete: function () {
                 var selRow = $('#tab_list').datagrid('getSelections');
@@ -186,9 +210,11 @@
                     }
                 });
             },
+   
             Submit: function (uid) {
                 $.messager.confirm('提示', '确认提交该条长期计划？', function (r) {
                     if (r) {
+                      //  $("#sub-btn" + uid).removeAttr("onclick");
                         $.post(location.href, { "action": "submit", "id": uid }, function (data) {
                             $.messager.alert('提示', data.msg, 'info');
                             if (data.isSuccess) {
@@ -210,6 +236,14 @@
     <div id="edit-buttons">
         <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
             class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>
+    </div>
+     <div id="batchimport" class="easyui-dialog" style="width: 500px; height:300px;"
+        modal="true" closed="true" buttons="#batchimport-buttons">
+        
+    </div>
+    <div id="batchimport-buttons">
+        <a id="btn_batchimport" href="javascript:;" onclick="Main.BatchImportSumit()" class="easyui-linkbutton">导入</a> <a href="javascript:;"
+            class="easyui-linkbutton"  onclick="$('#batchimport').dialog('close');return false;">取消</a>
     </div>
         <%--添加 修改 end--%>
 </asp:Content>
