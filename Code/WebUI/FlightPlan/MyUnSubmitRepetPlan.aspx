@@ -57,9 +57,9 @@
                     ]],
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 180 },
-                        { title: '任务类型', field: 'FlightType', width: 60 },
+                        { title: '任务类型', field: 'FlightType', width: 70 },
                         { title: '航空器呼号', field: 'CallSign', width: 80 },   
-                        { title: '使用机型', field: 'AircraftType', width: 60 },
+                        { title: '使用机型', field: 'AircraftType', width: 70 },
                         { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
                         { title: '预计开始时间', field: 'StartDate',width: 100, formatter: function (value, rec, index) { 
                         
