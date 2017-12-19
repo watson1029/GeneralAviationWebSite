@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace BLL.FlightPlan
 {
-   public class WorkflowTemplateBLL
+    public class WorkflowTemplateBLL
     {
-       WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
-        public  Guid CreateWorkflowInstance(int twfId, int planId,int userID, string userName)
+        private WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+        private WorkflowTplNodeDAL wtndal = new WorkflowTplNodeDAL();
+
+        public Guid CreateWorkflowInstance(int twfId, int planId, int userID, string userName)
         {
             Guid firstStepId = Guid.Empty;
             List<WorkflowNodeInstance> tempNodesInst = new List<WorkflowNodeInstance>();
@@ -19,10 +21,10 @@ namespace BLL.FlightPlan
             WorkflowNodeInstance firstNodeInst = new WorkflowNodeInstance();
 
             //找出指定流程模板中所有的流程节点，并创建流程节点实例
-            List<WorkflowTplNode> tnodeList = WorkflowTplNodeDAL.GetNodeByTWFID(twfId);
+            List<WorkflowTplNode> tnodeList = wtndal.GetNodeByTWFID(twfId);
             foreach (WorkflowTplNode tnode in tnodeList)
             {
-                WorkflowNodeInstance ninst = WorkflowTplNodeDAL.CreateNodeInstance(tnode, planId);
+                WorkflowNodeInstance ninst = wtndal.CreateNodeInstance(tnode, planId);
                 tempNodesInst.Add(ninst);
             }
 

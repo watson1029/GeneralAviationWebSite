@@ -288,22 +288,7 @@
                     <td id="RadarCode">
                     </td>
                 </tr>
-            </table>
-            <table class="table_edit">                
-                <tr>
-                    <th>实际开始日期：
-                    </th>
-                    <td>
-                        <input id="ActualStartTime" name="ActualStartTime" type="text" required="true" class="easyui-datebox"/>
-                    </td>
-                    <th style="width:160px;">实际结束日期：
-                    </th>
-                    <td>
-                        <input id="ActualEndTime" name="ActualEndTime" type="text" required="true" class="easyui-datebox"/>
-                    </td>
-                </tr>
-            </table>
-
+            </table>     
         </form>
     </div>
     <div id="edit-buttons">

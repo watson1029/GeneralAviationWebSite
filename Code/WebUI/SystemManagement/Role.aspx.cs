@@ -114,7 +114,7 @@ public partial class SystemManage_Role : BasePage
         result.IsSuccess = false;
         result.Msg = "保存失败！";
         var roleid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var oldRoleMenuList = bll.GetRoleMenuList(string.Format("RoleID={0}", roleid));
+        var oldRoleMenuList = bll.GetRoleMenuList(roleid);
         List<int> newRoleMenuList = new List<int>();
         var array = (Request.Form["newRoleMenus"] ?? "").Split(',');
         foreach (var item in array)

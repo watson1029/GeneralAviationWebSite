@@ -47,21 +47,6 @@ namespace DAL.SystemManagement
             }
             return base.Update(res, paramters);
         }
-        //   //更新资料信息
-        //   public static bool Update(Resource resource)
-        //   {
-        //       var sql = @"update Resource set Title=@Title ,DealUser=@DealUser
-        //               ,ResourceType=@ResourceType,UsefulTime=@UsefulTime,FilePath=@FilePath,Status=@Status";
-        //       SqlParameter[] parameters = {
-        //new SqlParameter("@Title",  resource.Title),
-        //new SqlParameter("@DealUser", resource.DealUser),
-        //new SqlParameter("@ResourceType", resource.ResourceType),
-        //new SqlParameter("@UsefulTime", resource.UsefulTime),
-        //               new SqlParameter("@FilePath",resource.FilePath),
-        //               new SqlParameter("@Status",resource.Status),
-        //                                   };
-        //       return dao.ExecNonQuery(sql, parameters) > 0;
-        //   }
         //根据条件查询资料
         public List<Resource> GetList(int resourceType, int status, int pageIndex, int pageSize)
         {
@@ -78,21 +63,6 @@ namespace DAL.SystemManagement
             List<Model.EF.Resource> list = FindPagedList(pageIndex, pageSize, out pageIndex, out pageSize, predicate, m => m.Created, false);
             return list;
         }
-        //   public static List<Resource> GetList(int resourceType,int status,int pageIndex,int pageSize)
-        //   {
-        //       StringBuilder sb = new StringBuilder();
-        //       sb.Append("IsDeleted=0");
-        //       if (resourceType != 0)
-        //       {
-        //           sb.Append(" and ResourceType=" + resourceType);
-        //       }
-        //       if (status != 0)
-        //       {
-        //           sb.Append(" and Status="+status);
-        //       }
-        //       var sql = string.Format("select * from Resource where {0}", sb.ToString());
-        //       return dao.ExecSelectCmd(ExecReader, sql).ToPagedList<Resource>(pageIndex, pageSize); 
-        //   }
         //根据条件查询资料总数
         public int GetCount(int resourceType, int status)
         {

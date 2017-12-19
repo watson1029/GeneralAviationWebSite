@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using DAL.FlightPlan;
 using Model.EF;
 using DAL.SystemManagement;
 using System.Linq.Expressions;
-using DAL;
 using Untity;
-using DAL.BasicData;
 
 public partial class Test : System.Web.UI.Page
 {
@@ -20,16 +15,38 @@ public partial class Test : System.Web.UI.Page
         ResourceDAL _resourceDAL = new ResourceDAL();
         RepetitivePlanDAL _repetitivePlanDAL = new RepetitivePlanDAL();
 
+        List<UserInfo> userArray = new List<UserInfo>();
+        userArray.Add(new UserInfo()
+        {
+            UserName = "liujunbo3",
+            Password = "E10ADC3949BA59ABBE56E057F20F883E",
+            Mobile = "aaaaa",
+            Status = 0,
+            CreateTime = DateTime.Now,
+            IsGeneralAviation = 0,
+            CompanyCode3 = "abc"
+        });
+        userArray.Add(new UserInfo()
+        {
+            UserName = "liujunbo4",
+            Password = "E10ADC3949BA59ABBE56E057F20F883E",
+            Mobile = "bbbbbb",
+            Status = 0,
+            CreateTime = DateTime.Now,
+            IsGeneralAviation = 0,
+            CompanyCode3 = "abc"
+        });
+        _userInfoDAL.AddList(userArray);
+
         UserInfo user = new UserInfo()
         {
-            ID = 18,
             UserName = "liujunbo2",
             Password = "E10ADC3949BA59ABBE56E057F20F883E",
             Mobile = "bbbbbb"
         };
         //_userInfoDAL.Update(user, new string[] { "Mobile" });
-
         
+
         Resource res = new Resource()
         {
             ID = 4,
@@ -47,11 +64,17 @@ public partial class Test : System.Web.UI.Page
         }
         
         List<TemplateClass4StatisticResult> list = _repetitivePlanDAL.getStatisticResult();
-        foreach (var item in list)
-        {
-            TextBox1.Text += item._field1 + "_" + item._field2 + "_" + item._field3 + "_" + item._field4;
-        }
+        //foreach (var item in list)
+        //{
+        //    TextBox1.Text += item._field1 + "_" + item._field2 + "_" + item._field3 + "_" + item._field4;
+        //}
 
+        List<int> _UserIDList = new List<int>() { 33, 34, 18 };
+        List<UserInfo> userInfoList = _userInfoDAL.FindList(m=> _UserIDList.Contains(m.ID), m => m.ID, false);
+        foreach (var item in userInfoList)
+        {
+            TextBox1.Text += item.ID + "_" + item.UserName;
+        }
         /*
         测试Find单个记录（不使用AsNoTracking），然后进行更新操作，返回对象将受Context跟踪:  
         【报错】
@@ -115,7 +138,6 @@ public partial class Test : System.Web.UI.Page
         //ResourceDAL _dal = new ResourceDAL();
         //_dal.Add(res);
 
-        List<UserInfo> userInfoList = _userInfoDAL.FindList(m => m.ID, false);
         // userInfoList.GroupBy(a=>a.CompanyCode3)''
 
         //userInfoList[0].Mobile = "222222";

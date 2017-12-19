@@ -1,6 +1,5 @@
 ﻿using BLL.FlightPlan;
 using DAL.FlightPlan;
-using Model.FlightPlan;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 using System.Linq.Expressions;
+using Model.EF;
 
 public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
 {
@@ -27,11 +27,11 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
                 case "queryone"://获取一条记录
                     GetData();
                     break;
-                case "save":
-                    Save();
-                    break;
+                //case "save":
+                //    Save();
+                //    break;
                 case "submit":
-                    SaveSubmit();
+                    Submit();
                     break;
                 default:
                     break;
@@ -39,14 +39,14 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         }
     }
 
-    private void SaveSubmit()
+    private void Submit()
     {
         AjaxResult result = new AjaxResult();        
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
 
         try
         {
-            var model = new Model.EF.FlightPlan();
+            var model = new CurrentFlightPlan();
             model.FlightPlanID = planid;
             model.ActualStartTime = DateTime.Parse(Request.Form["ActualStartTime"]);
             model.ActualEndTime = DateTime.Parse(Request.Form["ActualEndTime"]);
@@ -66,6 +66,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
+   /**
     public void Save(){
         AjaxResult result = new AjaxResult();
         int id = 0;
@@ -93,7 +94,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
-
+    */
     /// <summary>
     /// 获取指定ID的数据
     /// </summary>
@@ -140,12 +141,11 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<Model.EF.FlightPlan, bool>> GetWhere()
+    private Expression<Func<CurrentFlightPlan, bool>> GetWhere()
     {
-        Expression<Func<Model.EF.FlightPlan, bool>> predicate = PredicateBuilder.True<Model.EF.FlightPlan>();
-        predicate = predicate.And(m => m.PlanState == "0");
-        predicate = predicate.And(m => m.Creator == User.ID);
-        predicate = predicate.And(m => m.CreateTime == DateTime.Now.AddDays(-1));
+        Expression<Func<CurrentFlightPlan, bool>> predicate = PredicateBuilder.True<CurrentFlightPlan>();
+        var currDate = DateTime.Now.Date;
+        predicate = predicate.And(m => m.PlanState == "0" && m.Creator == User.ID && m.EffectDate == currDate);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

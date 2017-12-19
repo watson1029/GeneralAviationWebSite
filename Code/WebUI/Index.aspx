@@ -86,7 +86,9 @@
     <div region="north" split="true" border="false" style="overflow: hidden; height: 30px;
         background: url(<%=Page.ResolveUrl("~/")%>Content/Img/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%;
         line-height: 20px; color: #fff; font-family: Verdana, 微软雅黑,黑体">
-        <span style="float: right; padding-right: 20px;" class="head">欢迎
+        <span style="float: right; padding-right: 20px;" class="head">
+                   <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-tip" plain="true" onclick="Main.Export()">消息</a>
+            欢迎
             <%=UserName%>
     <a href="javascript:void()" id="loginOut" style="cursor: pointer; text-decoration: none;">
                     退出</a></span> <span style="padding-left: 10px; font-size: 16px;">

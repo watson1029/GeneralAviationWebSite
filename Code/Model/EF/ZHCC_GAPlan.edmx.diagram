@@ -18,11 +18,11 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Resource" Width="1.5" PointX="2.75" PointY="2.25" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.OperationLog" Width="1.5" PointX="4.875" PointY="4.5" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.SupplyDemandInfo" Width="1.5" PointX="2.75" PointY="5.25" IsExpanded="false" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="4.875" PointY="3" IsExpanded="false" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="7.375" PointY="3" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.RepetitivePlan" Width="1.5" PointX="4.875" PointY="3.75" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Company" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.CurrentFlightPlan" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aircraft" Width="1.5" PointX="5.375" PointY="5.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aircraft" Width="1.5" PointX="4.875" PointY="5.25" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Pilot" Width="1.5" PointX="7.375" PointY="0.75" IsExpanded="false" />
       </Diagram>
     </edmx:Diagrams>

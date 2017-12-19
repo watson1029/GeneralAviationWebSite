@@ -36,7 +36,7 @@
                         <td class="tdal">用户名：
                         </td>
                         <td class="tdar">
-                            <input id="UserName" name="UserName" type="text" maxlength="30" class="easyui-validatebox"
+                            <input id="UserName" name="UserName" type="text" maxlength="30" class="easyui-validatebox textbox"
                                 required="true" />
                         </td>
                     </tr>
@@ -44,7 +44,7 @@
                         <td class="tdal">密码：
                         </td>
                         <td class="tdar">
-                            <input id="Password" name="Password" type="text"  maxlength="30" class="easyui-validatebox"
+                            <input id="Password" name="Password" type="text"  maxlength="30" class="easyui-validatebox textbox"
                                 required="true" />
                         </td>
 
@@ -53,7 +53,7 @@
                         <td class="tdal">手机号码：
                         </td>
                         <td class="tdar">
-                            <input id="Mobile" name="Mobile" maxlength="11" type="text" validType='mobile' required="true" class="easyui-validatebox" />
+                            <input id="Mobile" name="Mobile" maxlength="11" type="text" validType='mobile' required="true" class="easyui-validatebox textbox" />
                         </td>
 
                     </tr>
@@ -61,7 +61,7 @@
                         <td class="tdar">状态：
                         </td>
                         <td class="tdar">
-                            <select id="Status" class="easyui-combobox" editable="false" name="Status" required="true"  panelheight="auto" style="width:100%;">
+                            <select id="Status" class="easyui-combobox" editable="false" name="Status" required="true"  panelheight="auto" style="width:194px;height:25px;">
                                  <option value="0">正常</option>
                                  <option value="1" >冻结</option>
                                
@@ -73,7 +73,7 @@
                         </td>
                         <td class="tdar">
 
-                               <input type="text" id="IsGeneralAviation" name="IsGeneralAviation" class="easyui-validatebox" required="true" style="width:100%;"/>
+                               <input type="text" id="IsGeneralAviation" name="IsGeneralAviation" class="easyui-validatebox" required="true" style="height:25px;"/>
            
                         </td>
 </tr>
@@ -81,7 +81,7 @@
                          <td class="tdar">公司名称：
                         </td>
                         <td class="tdar">
-                               <input type="text" id="CompanyCode3"  name="CompanyCode3"   class="easyui-combobox" data-options="url:'<%=Page.ResolveUrl("~/FlightPlan/GetComboboxData.ashx?type=3")%>',method:'get',valueField:'id',textField:'text',panelHeight:'auto',panelMaxHeight:200" style="width:100%;"/>
+                               <input type="text" id="CompanyCode3"  name="CompanyCode3"   class="easyui-combobox" data-options="url:'<%=Page.ResolveUrl("~/FlightPlan/GetComboboxData.ashx?type=3")%>',method:'get',valueField:'id',textField:'text',panelHeight:'auto',panelMaxHeight:200" style="height:25px;"/>
            
                         </td>
                     </tr>
