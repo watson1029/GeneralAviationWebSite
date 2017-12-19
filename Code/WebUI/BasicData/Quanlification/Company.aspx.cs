@@ -3,13 +3,10 @@ using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Linq.Expressions;
-using System.Text;
 using Untity;
 
 public partial class BasicData_Quanlification_Company : BasePage
-
 {
-
     CompanyBLL bll = new CompanyBLL();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,7 +30,6 @@ public partial class BasicData_Quanlification_Company : BasePage
                         break;
                 }
             }
-
         }
         private void Delete()
         {
@@ -61,15 +57,11 @@ public partial class BasicData_Quanlification_Company : BasePage
             int? id = null;
             if (!string.IsNullOrEmpty(Request.Form["id"]))
             { id = Convert.ToInt32(Request.Form["id"]); }
-            var model = new Company()
-            {
-                CompanyCode3 = Request.Form["CompanyCode3"],
-                CompanyCode2 = Request.Form["CompanyCode2"],
-                CompanyName = Request.Form["CompanyName"],
-                EnglishName = Request.Form["EnglishName"],
-            };
+            Company model = null;
             if (!id.HasValue)//新增
             {
+                model = new Company();
+                model.GetEntitySearchPars<Company>(this.Context);
                 model.CreateTime = DateTime.Now;
                 if (bll.Add(model)>0)
                 {
@@ -78,12 +70,16 @@ public partial class BasicData_Quanlification_Company : BasePage
                 }
             }
             else//编辑
-            {
-                model.CompanyID = id.Value;
-                if (bll.Update(model)>0)
+            {               
+                model = bll.Get(id.Value);
+            if (model != null)
                 {
-                    result.IsSuccess = true;
-                    result.Msg = "更新成功！";
+                    model.GetEntitySearchPars<Company>(this.Context);
+                    if (bll.Update(model) > 0)
+                    {
+                        result.IsSuccess = true;
+                        result.Msg = "更新成功！";
+                    }
                 }
             }
             Response.Clear();
@@ -133,6 +129,12 @@ public partial class BasicData_Quanlification_Company : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
+
+
+
+    /// <summary>
+    /// 查看条件
+    /// </summary>
 
 
 
