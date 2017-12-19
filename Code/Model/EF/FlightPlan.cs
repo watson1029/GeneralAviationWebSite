@@ -45,5 +45,7 @@ namespace Model.EF
         public Nullable<System.DateTime> ActualStartTime { get; set; }
         public Nullable<System.DateTime> ActualEndTime { get; set; }
         public string CompanyName { get; set; }
+        public int RepetPlanID { get; set; }
+        public byte CreateSource { get; set; }
     }
 }

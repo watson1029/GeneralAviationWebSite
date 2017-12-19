@@ -124,10 +124,10 @@ public partial class FlightPlan_ExportHandler : BasePage
         Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
         predicate = predicate.And(m => m.PlanState == "0");
         predicate = predicate.And(m => m.Creator == User.ID);
-
-        if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
+        if (!string.IsNullOrEmpty(Request.QueryString["plancode"]))
         {
-            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
+            var val = Request.QueryString["plancode"].Trim();
+            predicate = predicate.And(m => m.PlanCode == val);
         }
 
         return predicate;

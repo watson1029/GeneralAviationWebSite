@@ -47,5 +47,9 @@ namespace BLL.FlightPlan
         {
             return dal.Find(u=>u.RepetPlanID==id);
         }
+        public RepetitivePlan Get(string code)
+        {
+            return dal.Find(u => u.PlanCode == code);
+        }
     }
 }

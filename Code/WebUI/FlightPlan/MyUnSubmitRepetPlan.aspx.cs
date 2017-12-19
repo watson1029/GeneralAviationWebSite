@@ -126,11 +126,18 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         }
         else
         {
-            wftbll.CreateWorkflowInstance((int)TWFTypeEnum.RepetitivePlan, planid, User.ID, User.UserName);
-            insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, "", insdal.UpdateRepetPlan);
-
-            result.IsSuccess = true;
-            result.Msg = "提交成功！";
+            try
+            {
+                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.RepetitivePlan, planid, User.ID, User.UserName);
+                insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, "", insdal.UpdateRepetPlan);
+                result.IsSuccess = true;
+                result.Msg = "提交成功！";
+            }
+            catch(Exception e)
+            {
+                result.IsSuccess = false;
+                result.Msg = "提交失败！";
+            }
         }
         Response.Clear();
         Response.Write(result.ToJsonString());
@@ -175,7 +182,8 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
+            var val=Request.Form["search_value"].Trim();
+            predicate = predicate.And(m => m.PlanCode == val);
         }
 
         return predicate;
@@ -335,7 +343,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                     ActorID = User.ID,
                     CreateTime = DateTime.Now,
                     ModifyTime = DateTime.Now,
-                    PlanCode=OrderHelper.GenerateId("",User.CompanyCode3)
+                    PlanCode = OrderHelper.GenerateId(OrderTypeEnum.RP, User.CompanyCode3)
                 };
                 bll.Add(model);
 
