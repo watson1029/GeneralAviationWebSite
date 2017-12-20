@@ -6,7 +6,8 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>通航服务站</title>
-    <script src="<%=Page.ResolveUrl("~/Content/JS/easyUI/jquery.min.j")%>s" type="text/javascript"></script>
+   <script src="<%=Page.ResolveUrl("~/Content/JS/easyUI/jquery.min.js")%>" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/Content/JS/GA/base.js")%>" type="text/javascript"></script>
     <link href="<%=Page.ResolveUrl("~/Content/Css/login.css")%>" rel="stylesheet" type="text/css" />         
     <script src="<%=Page.ResolveUrl("~/Content/JS/Des.js")%>" type="text/javascript"></script>
     <script type="text/javascript">
@@ -24,12 +25,15 @@
 
         });
         Main = {
-            login: function () {
+            login: function () 
+            {
+                alert($("#txtUserName").val());
                 if ($("input[name='txtUserName']").val().trim() == "" || $("input[name='txtPassword']").val().trim() == "") {
                     $("#showMsg").html("用户名或密码不能为空！");
-                    $("input[name='txtUserName']").focus();
+                  //  $("input[name='txtUserName']").focus();
 
                 } else {
+                    
                     var userName = $("input[name='txtUserName']");
                     var password = $("input[name='txtPassword']");
                     var str = encMe(password.val().trim(), userName.val().trim());
@@ -54,12 +58,12 @@
                 }
             },
             clearData: function () {
-                $("[name='txtUserName']").val('');
-                $("[name='txtPassword']").val('');
-                $("[name='htxtPassword']").val('');
+                $("input[name='txtUserName']").val('');
+                $("input[name='txtPassword']").val('');
+                $("input[name='htxtPassword']").val('');
             },
             hideErr: function () {
-                $("#showMsg").text('');
+                $("#showMsg").html('');
             }
         };
     </script>
@@ -71,11 +75,11 @@
    <div class="Container">
        <form id="loginForm" method="post">
        <div class="login-block-wrapper">
-       <input  type="text" name="txtUserName" maxlength="40" placeholder="请输入用户名"/>
-         <input  type="password" name="txtPassword" maxlength="40"  placeholder="请输入密码"/>
+       <input  type="text" id ="txtUserName" name="txtUserName" maxlength="40" placeholder="请输入用户名"/>
+         <input  type="password" id ="txtPassword" name="txtPassword" maxlength="40"  placeholder="请输入密码"/>
               <input type="hidden" name="action" />
            <input type="hidden" name="htxtPassword" />
-                  <div  id="showMsg"></div>
+                  <div id="showMsg"></div>
            <div class="forgetPassWrod-block">
                <input type="button" value="登录" onclick="Main.login()"/> 
                <input type="checkbox" id="rememberme" name="rememberme" />&nbsp;记住帐号
