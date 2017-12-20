@@ -60,6 +60,9 @@
     <Compile Include="EF\CurrentFlightPlan.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\ErrorLog.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\FlightPlan.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>

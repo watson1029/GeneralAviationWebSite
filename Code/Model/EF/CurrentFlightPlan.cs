@@ -14,37 +14,11 @@ namespace Model.EF
     
     public partial class CurrentFlightPlan
     {
-        public int FlightPlanID { get; set; }
-        public string PlanCode { get; set; }
-        public string FlightType { get; set; }
-        public string AircraftType { get; set; }
-        public string FlightDirHeight { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime EndDate { get; set; }
-        public System.DateTime CreateTime { get; set; }
-        public System.DateTime ModifyTime { get; set; }
-        public string CompanyCode3 { get; set; }
-        public string AttchFile { get; set; }
+        public int CurrentFlightPlanID { get; set; }
+        public Nullable<System.DateTime> ActuallyStartTime { get; set; }
+        public Nullable<System.DateTime> ActuallyEndTime { get; set; }
         public string PlanState { get; set; }
-        public Nullable<int> ActorID { get; set; }
-        public int Creator { get; set; }
-        public string Remark { get; set; }
-        public System.TimeSpan SOBT { get; set; }
-        public System.TimeSpan SIBT { get; set; }
-        public string WeekSchedule { get; set; }
-        public string ADEP { get; set; }
-        public string ADES { get; set; }
-        public string RadarCode { get; set; }
-        public Nullable<int> AircraftNum { get; set; }
-        public string Pilot { get; set; }
-        public string ContactWay { get; set; }
-        public string WeatherCondition { get; set; }
-        public Nullable<int> AircrewGroupNum { get; set; }
-        public string CreatorName { get; set; }
-        public string CallSign { get; set; }
-        public Nullable<System.DateTime> ActualStartTime { get; set; }
-        public Nullable<System.DateTime> ActualEndTime { get; set; }
-        public string CompanyName { get; set; }
-        public System.DateTime EffectDate { get; set; }
+        public int ActorId { get; set; }
+        public int FlightPlanID { get; set; }
     }
 }
