@@ -63,7 +63,8 @@ public partial class FlightPlan_MySubmitRepetPlan :BasePage
         predicate = predicate.And(m => m.PlanState != "0" && m.Creator == User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
+            var val = Request.Form["search_value"].Trim();
+            predicate = predicate.And(m => m.PlanCode == val);
         }
         return predicate;
     }

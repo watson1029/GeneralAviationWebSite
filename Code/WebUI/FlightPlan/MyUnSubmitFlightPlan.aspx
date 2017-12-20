@@ -14,6 +14,7 @@
     <table id="tab_list">
     </table>
     <div id="tab_toolbar" style="padding: 2px 2px;">
+          <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>
 
         <div style="float: right">
@@ -98,7 +99,7 @@
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
                             title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>';
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" id="sub-btn_' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
                                 return str;
                             }
                         }
@@ -130,26 +131,30 @@
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
-
-
                 var json = $.param({ "id": uid, "action": "save" }) + '&' + $('#form_edit').serialize();
                 $.post(location.href, json, function (data) {
                     $.messager.alert('提示', data.msg, 'info', function () {
                         if (data.isSuccess) {
                             $("#tab_list").datagrid("reload");
+                            $("#add").dialog("close");
                             $("#edit").dialog("close");
                         }
                     });
                 });
             },
-
+            //打开添加窗口
+            OpenWin: function () {
+                $("#add").dialog("open").dialog('setTitle', '新增飞行计划').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx');
+            },
             //修改链接 事件
             EditData: function (uid) {
                 $("#edit").dialog("open").dialog('setTitle', '编辑');
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
-                $("#btn_submit").attr("onclick", "Main.Submit(" + uid + ");");
+
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                     $("#form_edit").form('load', data);
+                    $("#PlanCode").html(data.PlanCode);
+                    $("#CompanyName").html(data.CompanyName);
                     $("#FlightType").html(data.FlightType);
                     $("#AircraftType").html(data.AircraftType);
                     $("#FlightDirHeight").html(data.FlightDirHeight);
@@ -197,7 +202,9 @@
                 });
             },
             Submit: function (uid) {
-
+                if (!$("#form_edit").form("validate")) {
+                    return;
+                }
                 $.messager.confirm('提示', '确认提交该条飞行计划？', function (r) {
                     if (r) {
                         $.post(location.href, { "action": "submit", "id": uid }, function (data) {
@@ -212,12 +219,28 @@
             }
         };
     </script>
-
-    <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 700px; height: 600px;"
+    <div id="add" class="easyui-dialog" style="width: 850px; height: 612px;"
+        modal="true" closed="true" buttons="#add-buttons">
+               </div>
+    <div id="add-buttons">
+        <a href="javascript:;" onclick="Main.Save();" class="easyui-linkbutton">保存</a><a href="javascript:;"
+            class="easyui-linkbutton" onclick="$('#add').dialog('close');return false;">取消</a>
+    </div>
+    <%-- 修改 start--%>
+    <div id="edit" class="easyui-dialog" style="width: 850px; height: 600px;"
         modal="true" closed="true" buttons="#edit-buttons">
-        <form id="form_edit" method="post">
+        
             <table class="table_edit">
+                   <tr>
+                    <th>申请单号：
+                    </th>
+                    <td id="PlanCode">
+                    </td>
+                    <th>填写单位：
+                    </th>
+                    <td id="CompanyName">
+                    </td>
+                </tr>
                 <tr>
                     <th>任务类型：
                     </th>
@@ -285,42 +308,43 @@
                     </td>
                 </tr>
             </table>
+<form id="form_edit" method="post">
             <div class="datagrid-toolbar">
             <table class="table_edit">
                 <tr>
                     <th>航空器架数：
                     </th>
                     <td>
-                        <input id="AircraftNum" name="AircraftNum" maxlength="4" type="text" required="true" class="easyui-numberbox" />
+                        <input id="AircraftNum" name="AircraftNum" style="height:25px" maxlength="4" type="text" required="true" class="easyui-numberbox" data-options="min:1,max:100"/>
                     </td>
                     <th>机长（飞行员）姓名：
                     </th>
                     <td>
-                        <input id="Pilot" name="Pilot" maxlength="15" type="text" required="true" class="easyui-textbox" />
+                        <input id="Pilot" name="Pilot" maxlength="15" type="text" required="true" class="easyui-validatebox textbox" />
                     </td>
                 </tr>
                 <tr>
                     <th>通信联络方法：
                     </th>
                     <td>
-                        <input id="ContactWay" name="ContactWay" maxlength="15" type="text" required="true" class="easyui-textbox" />
+                        <input id="ContactWay" name="ContactWay" maxlength="15" type="text" required="true" class="easyui-validatebox textbox" />
                     </td>
                     <th>飞行气象条件：
                     </th>
                     <td>
-                        <input id="WeatherCondition" name="WeatherCondition" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                        <input id="WeatherCondition" name="WeatherCondition" maxlength="50" type="text" required="true" class="easyui-validatebox textbox" />
                     </td>
                 </tr>
                 <tr>
                     <th>空勤组人数：
                     </th>
                     <td>
-                        <input id="AircrewGroupNum" name="AircrewGroupNum" maxlength="4" type="text" required="true" class="easyui-numberbox" />
+                        <input id="AircrewGroupNum" name="AircrewGroupNum" style="height:25px" maxlength="4" type="text" data-options="min:1,max:100" required="true" class="easyui-numberbox" />
                     </td>
                     <th style="width:160px;">二次雷达应答机代码：
                     </th>
                     <td>
-                        <input id="RadarCode" name="RadarCode"  maxlength="4" type="text" required="true" class="easyui-textbox" />
+                        <input id="RadarCode" name="RadarCode"  maxlength="4" type="text" required="true" class="easyui-validatebox textbox" />
                     </td>
                 </tr>
             </table>
@@ -328,8 +352,8 @@
         </form>
     </div>
     <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a id="btn_submit" href="javascript:;" class="easyui-linkbutton">保存并提交</a><a href="javascript:;"
+        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
-    <%--添加 修改 end--%>
+    <%-- 修改 end--%>
 </asp:Content>

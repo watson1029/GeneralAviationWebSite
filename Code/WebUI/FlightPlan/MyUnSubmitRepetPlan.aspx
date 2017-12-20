@@ -20,6 +20,7 @@
                        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" plain="true" onclick="Main.Export()">导出</a>
             <div style="float:right">
                         <input id="ipt_search" menu="#search_menu"/>
+               <input id="search_plancode" type="hidden"/>
                         <div id="search_menu" style="width: 200px">
                             <div name="PlanCode">
                                 申请单号
@@ -97,7 +98,7 @@
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
                             title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" id="sub-btn' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
+                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" id="sub-btn_' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
                                 return str;
                             }
                         }
@@ -116,6 +117,7 @@
                 $("#ipt_search").searchbox({
                     width: 250,
                     searcher: function (val, name) {
+                        $('#search_plancode').val(val);
                         $('#tab_list').datagrid('options').queryParams.search_type = name;
                         $('#tab_list').datagrid('options').queryParams.search_value = val;
                         $('#tab_list').datagrid('reload');
@@ -146,14 +148,25 @@
                           return '*';
                     }
                 }).get().join('');
+                $("#btn_add").attr("disabled", "disabled");
                 var json = $.param({ "id": uid, "action": "save", "qx": qx }) + '&' + $('#form_edit').serialize();
-                $.post(location.href, json, function (data) {
-                    $.messager.alert('提示', data.msg, 'info', function () {
-                        if (data.isSuccess) {
-                            $("#tab_list").datagrid("reload");
-                            $("#edit").dialog("close");
-                        }
-                    });
+                $.ajax({
+                    type: 'post',
+                    url: location.href,
+                    data: json,
+                    success: function (data) {
+                        $.messager.alert('提示', data.msg, 'info', function () {
+                                    if (data.isSuccess) {
+                                        $("#tab_list").datagrid("reload");
+                                        $("#edit").dialog("close");
+                                    }
+                                    $("#btn_add").removeAttr("disabled");
+                                });
+                    },
+                    error: function (xhr, err) {
+                        $("#btn_add").removeAttr("disabled");
+                        $.messager.alert('提示', '系统繁忙，请稍后再试！', 'info');
+                    }
                 });
             },
 
@@ -165,8 +178,13 @@
             BatchImport: function () {
                 $("#batchimport").dialog("open").dialog('setTitle', '文件导入').dialog('refresh', 'UnSubmitRepetPlanBatchImport.aspx');
             },
-            Export:function(){     
-                window.open("ExportHandler.aspx?type=1");
+            Export: function () {
+                var selRow = $('#tab_list').datagrid('getData');
+                if (selRow.total == 0) {
+                    $.messager.alert('提示', '无记录导出！', 'info');
+                    return;
+                }
+                window.open("ExportHandler.aspx?type=1&plancode="+$('#search_plancode').val());
             },
             BatchImportSumit: function () {
 
@@ -214,11 +232,24 @@
             Submit: function (uid) {
                 $.messager.confirm('提示', '确认提交该条长期计划？', function (r) {
                     if (r) {
-                      //  $("#sub-btn" + uid).removeAttr("onclick");
-                        $.post(location.href, { "action": "submit", "id": uid }, function (data) {
-                            $.messager.alert('提示', data.msg, 'info');
-                            if (data.isSuccess) {
-                                $("#tab_list").datagrid("reload");
+                        $("#sub-btn_" + uid).removeAttr("onclick");
+                        $.ajax({
+                            type: 'post',
+                            url: location.href,
+                            data: { "action": "submit", "id": uid },
+                            success: function (data) {
+                                $.messager.alert('提示', data.msg, 'info', function () {
+                                    if (data.isSuccess) {
+                                        $("#tab_list").datagrid("reload");
+                                    }
+                                    else {
+                                        $("#sub-btn_" + +uid).attr("onclick", "Main.Submit(" + uid + ")");
+                                    }
+                                });
+                            },
+                            error: function (xhr, err) {
+                                $("#sub-btn_" + uid).attr("onclick", "Main.Submit(" + uid + ")");
+                                $.messager.alert('提示', '系统繁忙，请稍后再试！', 'info');
                             }
                         });
                     }

@@ -182,9 +182,8 @@ public partial class SystemManage_Role : BasePage
         predicate = predicate.And(m => 1 == 1);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = u => u.RoleName == Request.Form["search_value"];
-
-            //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            var val = Request.Form["search_value"].Trim();
+            predicate = predicate.And(m => m.RoleName == val);
         }
         return predicate;
     }

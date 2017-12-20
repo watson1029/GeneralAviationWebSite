@@ -86,7 +86,7 @@
                         {
                             title: '操作', field: 'ID', width: 150, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
-
+  
                                 return str;
                             }
                         }
@@ -142,8 +142,10 @@
 
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑飞行员信息').dialog('refresh', 'PilotAdd.aspx');
+                $("#edit").dialog("open").dialog('setTitle', '编辑飞行员信息').dialog('refresh', 'PilotAdd.aspx?id=' + uid);
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
+
+                
             },
 
             //删除按钮事件
