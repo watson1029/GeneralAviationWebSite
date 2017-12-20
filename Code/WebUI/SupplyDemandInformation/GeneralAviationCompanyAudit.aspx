@@ -2,6 +2,8 @@
     CodeFile="GeneralAviationCompanyAudit.aspx.cs" Inherits="SupplyDemandInformation_GeneralAviationCompanyAudit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.config.js" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.all.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <%--列表 start--%>
