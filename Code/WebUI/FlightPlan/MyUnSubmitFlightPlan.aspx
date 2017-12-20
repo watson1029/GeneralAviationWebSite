@@ -83,16 +83,6 @@
                         { title: '起飞机场', field: 'ADEP', width: 80 },
                         { title: '降落机场', field: 'ADES', width: 80 },
 
-                        {
-                            title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
-                                var array = [];
-                                $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
-                                    array.push("星期" + n);
-                                });
-                                return array.join(',');
-
-                            }
-                        },
                          { title: '创建人', field: 'CreatorName', width: 60 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
@@ -144,37 +134,13 @@
             },
             //打开添加窗口
             OpenWin: function () {
-                $("#add").dialog("open").dialog('setTitle', '新增飞行计划').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx');
+                $("#edit").dialog("open").dialog('setTitle', '新增飞行计划').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx');
+                ("#btn_add").attr("onclick", "Main.Save();");
             },
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑');
+                $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx?id=' + uid);;
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
-
-                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
-                    $("#form_edit").form('load', data);
-                    $("#PlanCode").html(data.PlanCode);
-                    $("#CompanyName").html(data.CompanyName);
-                    $("#FlightType").html(data.FlightType);
-                    $("#AircraftType").html(data.AircraftType);
-                    $("#FlightDirHeight").html(data.FlightDirHeight);
-                    $("#ADEP").html(data.ADEP);
-                    $("#ADES").html(data.ADES);
-                    $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                    $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
-                    $("#SOBT").html(data.SOBT);
-                    $("#SIBT").html(data.SIBT);
-                    $("#Remark").html(data.Remark);
-                    var fileArray = data.AttchFile.split('|');
-                    for (var i = 0; i < fileArray.length; i++) {
-                        var info = fileArray[i].split(','),
-                        filepath = dj.root + info[0];
-                        $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
-                    }
-                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
-                        $("#d" + n).attr("checked", true);
-                    });
-                });
             },
 
             //删除按钮事件
@@ -219,141 +185,12 @@
             }
         };
     </script>
-    <div id="add" class="easyui-dialog" style="width: 850px; height: 612px;"
-        modal="true" closed="true" buttons="#add-buttons">
-               </div>
-    <div id="add-buttons">
-        <a href="javascript:;" onclick="Main.Save();" class="easyui-linkbutton">保存</a><a href="javascript:;"
-            class="easyui-linkbutton" onclick="$('#add').dialog('close');return false;">取消</a>
-    </div>
-    <%-- 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 850px; height: 600px;"
+    <div id="edit" class="easyui-dialog" style="width: 850px; height: 612px;"
         modal="true" closed="true" buttons="#edit-buttons">
-        
-            <table class="table_edit">
-                   <tr>
-                    <th>申请单号：
-                    </th>
-                    <td id="PlanCode">
-                    </td>
-                    <th>填写单位：
-                    </th>
-                    <td id="CompanyName">
-                    </td>
-                </tr>
-                <tr>
-                    <th>任务类型：
-                    </th>
-                    <td id="FlightType">
-                    </td>
-                    <th>航空器类型：
-                    </th>
-                    <td id="AircraftType">
-                    </td>
-                </tr>
-                <tr>
-                    <th>航线走向和飞行高度：
-                    </th>
-                    <td id="FlightDirHeight">
-                    </td>
-                    <th>航空器呼号：
-                    </th>
-                    <td id="CallSign">
-                    </td>
-                </tr>
-                <tr>
-                    <th>起飞机场：
-                    </th>
-                    <td id="ADEP">
-                    </td>
-                    <th>降落机场：
-                    </th>
-                    <td id="ADES">
-                    </td>
-                </tr>
-                <tr>
-                    <th>预计开始日期：
-                    </th>
-                    <td id="StartDate">
-                    </td>
-                    <th>预计结束日期：
-                    </th>
-                    <td id="EndDate">
-                    </td>
-                </tr>
-                <tr>
-                    <th>起飞时刻：
-                    </th>
-                    <td id="SOBT">
-                    </td>
-                    <th>降落时刻：
-                    </th>
-                    <td id="SIBT">
-                    </td>
-                </tr>
-                <tr>
-                    <th>批件：
-                    </th>
-                    <td id="AttchFile">
-                    </td>
-                    <th>周执行计划：
-                    </th>
-                    <td id="WeekSchedule">
-                    </td>
-                </tr>
-                <tr>
-                    <th style="width:160px;">其他需要说明的事项：
-                    </th>
-                    <td id="Remark">
-                    </td>
-                </tr>
-            </table>
-<form id="form_edit" method="post">
-            <div class="datagrid-toolbar">
-            <table class="table_edit">
-                <tr>
-                    <th>航空器架数：
-                    </th>
-                    <td>
-                        <input id="AircraftNum" name="AircraftNum" style="height:25px" maxlength="4" type="text" required="true" class="easyui-numberbox" data-options="min:1,max:100"/>
-                    </td>
-                    <th>机长（飞行员）姓名：
-                    </th>
-                    <td>
-                        <input id="Pilot" name="Pilot" maxlength="15" type="text" required="true" class="easyui-validatebox textbox" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>通信联络方法：
-                    </th>
-                    <td>
-                        <input id="ContactWay" name="ContactWay" maxlength="15" type="text" required="true" class="easyui-validatebox textbox" />
-                    </td>
-                    <th>飞行气象条件：
-                    </th>
-                    <td>
-                        <input id="WeatherCondition" name="WeatherCondition" maxlength="50" type="text" required="true" class="easyui-validatebox textbox" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>空勤组人数：
-                    </th>
-                    <td>
-                        <input id="AircrewGroupNum" name="AircrewGroupNum" style="height:25px" maxlength="4" type="text" data-options="min:1,max:100" required="true" class="easyui-numberbox" />
-                    </td>
-                    <th style="width:160px;">二次雷达应答机代码：
-                    </th>
-                    <td>
-                        <input id="RadarCode" name="RadarCode"  maxlength="4" type="text" required="true" class="easyui-validatebox textbox" />
-                    </td>
-                </tr>
-            </table>
-</div>
-        </form>
-    </div>
+               </div>
     <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
+        <a id="btn_add" href="javascript:;" onclick="Main.Save();" class="easyui-linkbutton">保存</a><a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
-    <%-- 修改 end--%>
+
 </asp:Content>

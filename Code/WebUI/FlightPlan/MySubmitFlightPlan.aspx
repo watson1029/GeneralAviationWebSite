@@ -63,18 +63,6 @@
                       { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                       { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
                       { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
-
-                      {
-                          title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
-                              var array = [];
-                              $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
-
-                                  array.push("星期" + n);
-                              });
-                              return array.join(',');
-
-                          }
-                      },
                        { title: '创建人', field: 'CreatorName', width: 60 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
@@ -179,11 +167,6 @@
                   else {
                       $("#AttchFile").html('');
                   }
-                  var arr = [];
-                  $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
-                      arr.push("星期" + n);
-                  });
-                  $("#WeekSchedule").html(arr.join(','));
 
               });
               Main.InitGird1(uid);
@@ -238,13 +221,6 @@
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
                 </tr>
-                      <tr>
-                      <th>周执行计划：</th>
-                    <td id="WeekSchedule" colspan="3">
-                    </td>
-                     </tr>
-
-              
                 <tr>
                     <th style="width:176px;">其他需要说明的事项：</th>
                     <td id="Remark"></td>

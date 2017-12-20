@@ -158,7 +158,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
     private void GetData()
     {
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var plan = bll.Get(planid);
+        var plan = bll.GetvFlightPlan(planid);
         var strJSON = "";
         if (plan != null)
         {

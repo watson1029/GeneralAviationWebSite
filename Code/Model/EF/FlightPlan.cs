@@ -31,7 +31,6 @@ namespace Model.EF
         public string Remark { get; set; }
         public System.TimeSpan SOBT { get; set; }
         public System.TimeSpan SIBT { get; set; }
-        public string WeekSchedule { get; set; }
         public string ADEP { get; set; }
         public string ADES { get; set; }
         public string RadarCode { get; set; }

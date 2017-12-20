@@ -20,7 +20,7 @@
                        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" plain="true" onclick="Main.Export()">导出</a>
             <div style="float:right">
                         <input id="ipt_search" menu="#search_menu"/>
-               <input id="search_plancode" type="hidden"/>
+               <input id="search_PlanCode" type="hidden"/>
                         <div id="search_menu" style="width: 200px">
                             <div name="PlanCode">
                                 申请单号
@@ -117,7 +117,7 @@
                 $("#ipt_search").searchbox({
                     width: 250,
                     searcher: function (val, name) {
-                        $('#search_plancode').val(val);
+                        $('#search_' + name).val(val);
                         $('#tab_list').datagrid('options').queryParams.search_type = name;
                         $('#tab_list').datagrid('options').queryParams.search_value = val;
                         $('#tab_list').datagrid('reload');
