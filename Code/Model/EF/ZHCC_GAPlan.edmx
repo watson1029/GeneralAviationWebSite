@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActualSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -106,7 +106,7 @@
           <Property Name="ActuallyStartTime" Type="datetime" />
           <Property Name="ActuallyEndTime" Type="datetime" />
           <Property Name="PlanState" Type="nvarchar" MaxLength="36" Nullable="false" />
-          <Property Name="ActorId" Type="int" Nullable="false" />
+          <Property Name="ActorID" Type="int" Nullable="false" />
           <Property Name="FlightPlanID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ErrorLog">
@@ -888,7 +888,7 @@
           <Property Name="ActuallyStartTime" Type="DateTime" Precision="3" />
           <Property Name="ActuallyEndTime" Type="DateTime" Precision="3" />
           <Property Name="PlanState" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="ActorId" Type="Int32" Nullable="false" />
+          <Property Name="ActorID" Type="Int32" Nullable="false" />
           <Property Name="FlightPlanID" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
@@ -1290,7 +1290,7 @@
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.CurrentFlightPlan">
               <MappingFragment StoreEntitySet="CurrentFlightPlan">
                 <ScalarProperty Name="FlightPlanID" ColumnName="FlightPlanID" />
-                <ScalarProperty Name="ActorId" ColumnName="ActorId" />
+                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
                 <ScalarProperty Name="PlanState" ColumnName="PlanState" />
                 <ScalarProperty Name="ActuallyEndTime" ColumnName="ActuallyEndTime" />
                 <ScalarProperty Name="ActuallyStartTime" ColumnName="ActuallyStartTime" />

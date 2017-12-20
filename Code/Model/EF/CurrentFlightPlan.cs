@@ -18,7 +18,7 @@ namespace Model.EF
         public Nullable<System.DateTime> ActuallyStartTime { get; set; }
         public Nullable<System.DateTime> ActuallyEndTime { get; set; }
         public string PlanState { get; set; }
-        public int ActorId { get; set; }
+        public int ActorID { get; set; }
         public int FlightPlanID { get; set; }
     }
 }
