@@ -54,11 +54,11 @@
     { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '申请单号', field: 'PlanCode', width: 180 },
+                        { title: '申请单号', field: 'PlanCode', width: 120 },
                         { title: '任务类型', field: 'FlightType', width: 60 },
                         { title: '使用机型', field: 'AircraftType', width: 80 },
                          { title: '航空器呼号', field: 'CallSign', width: 70 },
-                        { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
+                        { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 120 },
                         { title: '预计开始时间', field: 'StartDate', width: 100 },
                         { title: '预计结束时间', field: 'EndDate', width: 100 },
                         { title: '起飞时刻', field: 'SOBT', width: 80 },
@@ -77,6 +77,7 @@
                             }
                         },
                         { title: '公司三字码', field: 'CompanyCode3', width: 100 },
+                         { title: '公司名称', field: 'CompanyName', width: 100 },
                          { title: '创建人', field: 'CreatorName', width: 60 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
                              {
@@ -123,6 +124,8 @@
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                     //    $("#form_audit").form('load', data);
+                    $("#PlanCode").html(data.PlanCode);
+                    $("#CompanyName").html(data.CompanyName);
                     $("#FlightType").html(data.FlightType);
                     $("#AircraftType").html(data.AircraftType);
                     $("#FlightDirHeight").html(data.FlightDirHeight);
@@ -189,6 +192,7 @@
                         $.post(location.href, json, function (data) {
                             $.messager.alert('提示', data.msg, 'info');
                             if (data.isSuccess) {
+                                $("#batchaudit").dialog("close");
                                 $("#tab_list").datagrid("reload");
                                 selRow.length = 0;
                             }
@@ -201,10 +205,16 @@
         };
     </script>
 
-    <div id="audit" class="easyui-dialog" style="width: 700px; height: 560px;"
+    <div id="audit" class="easyui-dialog" style="width: 850px; height: 600px;"
         modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
             <table class="table_edit">
+                  <tr>
+                    <th>申请单号：</th>
+                    <td id="PlanCode"></td>
+                    <th>公司名称：</th>
+                    <td id="CompanyName"></td>
+                </tr>
                 <tr>
                     <th>任务类型：</th>
                     <td id="FlightType"></td>

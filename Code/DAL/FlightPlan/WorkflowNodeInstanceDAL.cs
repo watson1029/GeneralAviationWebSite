@@ -145,12 +145,14 @@ namespace DAL.FlightPlan
         public List<WorkflowNodeInstance> GetAllNodeInstance(int planId, int twfid)
         {
             ActualSteps _instance = Find(a => a.PlanID == planId && a.PrevID == Guid.Empty && a.TWFID == twfid);
-            WorkflowNodeInstance wfInst = ExecReader(_instance);
+            
 
             //将流程节点进行排序
             List<WorkflowNodeInstance> orderInstList = new List<WorkflowNodeInstance>();
-            if (wfInst != null)
+            if (_instance != null)
             {
+                
+                WorkflowNodeInstance wfInst = ExecReader(_instance);
                 orderInstList.Add(wfInst);
                 int count = 0;
                 WorkflowNodeInstance tempInst = GetNodeInstance(wfInst.NextId);
@@ -179,27 +181,23 @@ namespace DAL.FlightPlan
         private WorkflowNodeInstance ExecReader(ActualSteps entity)
         {
             WorkflowNodeInstance ninst = new WorkflowNodeInstance();
-            if (!entity.ID.Equals(DBNull.Value))
-                ninst.Id = new Guid(entity.ID.ToString());
-            if (!entity.State.Equals(DBNull.Value))
-                ninst.State = (WorkflowNodeInstance.StepStateType)Convert.ToByte(entity.State);
-            ninst.PlanID = Convert.ToInt32(entity.PlanID);
-            ninst.StepId = Convert.ToInt32(entity.StepID);
-            ninst.TWFID = Convert.ToInt32(entity.TWFID);
-            if (!entity.PrevID.Equals(DBNull.Value))
-                ninst.PrevId = new Guid(entity.PrevID.ToString());
-            if (!entity.NextID.Equals(DBNull.Value))
-                ninst.NextId = new Guid(entity.NextID.ToString());
-            if (!entity.ActorID.Equals(DBNull.Value))
-                ninst.ActorID = Convert.ToInt32(entity.ActorID);
-            if (!entity.ActorName.Equals(DBNull.Value))
-                ninst.ActorName = Convert.ToString(entity.ActorName);
-            if (!entity.ActorTime.Equals(DBNull.Value))
-                ninst.ActorTime = Convert.ToDateTime(entity.ActorTime);
-            if (!entity.Comments.Equals(DBNull.Value))
-                ninst.Comments = Convert.ToString(entity.Comments);
-            if (!entity.ApplyTime.Equals(DBNull.Value))
-                ninst.ApplyTime = Convert.ToDateTime(entity.ApplyTime);
+                ninst.Id = entity.ID;
+                ninst.State = (WorkflowNodeInstance.StepStateType)entity.State;
+            ninst.PlanID = entity.PlanID;
+            ninst.StepId =entity.StepID;
+            ninst.TWFID = entity.TWFID;
+            if (entity.PrevID.HasValue)
+                ninst.PrevId = entity.PrevID.Value;
+            if (entity.NextID.HasValue)
+                ninst.NextId = entity.NextID.Value;
+            if (entity.ActorID.HasValue)
+                ninst.ActorID = entity.ActorID.Value;
+                ninst.ActorName =entity.ActorName??"";
+            if (entity.ActorTime.HasValue)
+                ninst.ActorTime = entity.ActorTime.Value;
+                ninst.Comments =entity.Comments??"";
+            if (entity.ApplyTime.HasValue)
+                ninst.ApplyTime =entity.ApplyTime.Value;
             return ninst;
         }
 

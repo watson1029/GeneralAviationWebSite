@@ -19,6 +19,8 @@ namespace Model.EF
         public string FlightType { get; set; }
         public string AircraftType { get; set; }
         public string FlightDirHeight { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
         public System.DateTime CreateTime { get; set; }
         public System.DateTime ModifyTime { get; set; }
         public string CompanyCode3 { get; set; }
@@ -27,8 +29,8 @@ namespace Model.EF
         public Nullable<int> ActorID { get; set; }
         public int Creator { get; set; }
         public string Remark { get; set; }
-        public System.DateTime SOBT { get; set; }
-        public System.DateTime SIBT { get; set; }
+        public System.TimeSpan SOBT { get; set; }
+        public System.TimeSpan SIBT { get; set; }
         public string ADEP { get; set; }
         public string ADES { get; set; }
         public string RadarCode { get; set; }

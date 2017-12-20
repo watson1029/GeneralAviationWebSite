@@ -108,6 +108,9 @@
     <Compile Include="EF\UserRole.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\vFlightPlan.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\ZHCC_GAPlan.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
+using Model.EF;
 namespace BLL.FlightPlan
 {
     public class FlightPlanBLL
@@ -36,6 +38,11 @@ namespace BLL.FlightPlan
         public Model.EF.FlightPlan Get(int id)
         {
             return dal.Find(u => u.FlightPlanID == id);
+        }
+        public Model.EF.vFlightPlan GetvFlightPlan(int id)
+        {
+            var context = new ZHCC_GAPlanEntities();
+            return context.Set<vFlightPlan>().Where(u => u.FlightPlanID == id).FirstOrDefault();
         }
     }
 }

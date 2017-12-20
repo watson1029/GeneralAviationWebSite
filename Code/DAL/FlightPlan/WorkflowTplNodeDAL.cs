@@ -32,18 +32,15 @@ namespace DAL.FlightPlan
         private WorkflowTplNode ExecReader(TWFSteps entity)
         {
             WorkflowTplNode wfNode = new WorkflowTplNode();
-            if (!entity.StepID.Equals(DBNull.Value))
-                wfNode.StepId = Convert.ToInt32(entity.StepID);
-            if (!entity.TWFID.Equals(DBNull.Value))
+                wfNode.StepId = entity.StepID;
+            if (!string.IsNullOrEmpty(entity.TWFID))
                 wfNode.TWFID = Convert.ToInt32(entity.TWFID);
-            if (!entity.StepName.Equals(DBNull.Value))
-                wfNode.StepName = Convert.ToString(entity.StepName);
-            if (!entity.PrevID.Equals(DBNull.Value))
-                wfNode.PrevId = Convert.ToInt32(entity.PrevID);
-            if (!entity.NextID.Equals(DBNull.Value))
-                wfNode.NextId = Convert.ToInt32(entity.NextID);
-            if (!entity.AuthorType.Equals(DBNull.Value))
-                wfNode.AuthorType = Convert.ToString(entity.AuthorType);
+                wfNode.StepName =entity.StepName??"";
+            if (entity.PrevID.HasValue)
+                wfNode.PrevId = entity.PrevID.Value;
+            if (entity.NextID.HasValue)
+                wfNode.NextId = entity.NextID.Value;
+                wfNode.AuthorType = entity.AuthorType??"";
             return wfNode;
         }
        /// <summary>

@@ -15,6 +15,11 @@ namespace BLL.FlightPlan
         CurrentFlightPlanDAL dal = new CurrentFlightPlanDAL();
         WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
         WorkflowNodeInstanceDAL instal = new WorkflowNodeInstanceDAL();
+
+        public bool Add(CurrentFlightPlan model)
+        {
+            return dal.Add(model) > 0;
+        }
         /// <summary>
         /// 更新一条数据
         /// </summary>
@@ -103,6 +108,15 @@ namespace BLL.FlightPlan
         public List<CurrentFlightPlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<CurrentFlightPlan, bool>> where)
         {
             return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.FlightPlanID, true);
+        }
+        /// <summary>
+        /// 按条件获取记录
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        public List<CurrentFlightPlan> GetList(Expression<Func<CurrentFlightPlan, bool>> where)
+        {
+            return dal.FindList(where, m => m.FlightPlanID, true);
         }
         /// <summary>
         /// 获取单行记录
