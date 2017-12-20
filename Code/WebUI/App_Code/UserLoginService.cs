@@ -49,13 +49,13 @@ public class UserLoginService
     /// 登陆并记录持久化信息
     /// </summary>
     /// <returns></returns>
-    public bool InsertOrUpdateLoginInfo(UserInfoCookie userInfoCookie)
+    public bool InsertOrUpdateLoginInfo(UserInfoCookie userInfoCookie, bool createPersistentCookie)
     {
         try
         {
             var fpUserInfoCookieStr = JsonConvert.SerializeObject(userInfoCookie);
             fpUserInfoCookieStr = DES.EncryptString(fpUserInfoCookieStr);
-            FormsAuthentication.SetAuthCookie(fpUserInfoCookieStr, true);
+            FormsAuthentication.SetAuthCookie(fpUserInfoCookieStr, createPersistentCookie);
         }
         catch (Exception ex)
         {

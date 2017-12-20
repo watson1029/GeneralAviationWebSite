@@ -35,6 +35,7 @@
                     var str = encMe(password.val().trim(), userName.val().trim());
                     $("input[name='htxtPassword']").val(str);
                     $("input[name='action']").val('submit');
+                    $("#showMsg").html("登录中...");
                     $.ajax({
                         type: "POST",
                         url: location.href,
@@ -53,7 +54,9 @@
                 }
             },
             clearData: function () {
-                $('#loginForm').form('clear');
+                $("[name='txtUserName']").val('');
+                $("[name='txtPassword']").val('');
+                $("[name='htxtPassword']").val('');
             },
             hideErr: function () {
                 $("#showMsg").text('');
@@ -75,7 +78,7 @@
                   <div  id="showMsg"></div>
            <div class="forgetPassWrod-block">
                <input type="button" value="登录" onclick="Main.login()"/> 
-               <input type="checkbox" id="rememberme"/>&nbsp;记住帐号
+               <input type="checkbox" id="rememberme" name="rememberme" />&nbsp;记住帐号
             <a href="#">忘记密码？</a>   
            </div>
        </div>

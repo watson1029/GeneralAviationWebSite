@@ -44,6 +44,7 @@ height:300px;
     background-color:#ECF5FA;
     vertical-align:middle;
     color:#888888;
+    vertical-align:bottom;
     }
 .login-block-wrapper input[type="text"] {
 background:url(/Content/Img/01.png) no-repeat 10px center #ECF5FA;    
@@ -57,7 +58,8 @@ background:url(/Content/Img/02.png) no-repeat 10px center #ECF5FA;
 width:1000px;
 margin:0 auto;
 margin-top:200px;
-  color:#888888;
+  color:#c5cfd8;
+  text-align:center;
 }
 .forgetPassWrod-block {
 
