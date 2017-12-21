@@ -15,7 +15,7 @@ using Untity;
 public class LoginUtil
 {
 
-    public static LoginResultEnum GALogin(string userName, string password, out string msg)
+    public static LoginResultEnum GALogin(string userName, string password,bool rememberme, out string msg)
     {
         UserInfoBLL bll = new UserInfoBLL();
         msg = string.Empty;
@@ -64,7 +64,7 @@ public class LoginUtil
             }
 
 
-            if (!UserLoginService.Instance.InsertOrUpdateLoginInfo(userInfoCookie))
+            if (!UserLoginService.Instance.InsertOrUpdateLoginInfo(userInfoCookie, rememberme))
             {
                 throw new Exception();
             }

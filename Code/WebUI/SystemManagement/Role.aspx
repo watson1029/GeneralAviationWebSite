@@ -39,7 +39,7 @@
                     <td class="tdal">角色名称：
                     </td>
                     <td class="tdar">
-                        <input id="RoleName" name="RoleName" type="text" maxlength="30" class="easyui-validatebox"
+                        <input id="RoleName" name="RoleName" type="text" maxlength="30" class="easyui-validatebox textbox"
                             required="true" />
                     </td>
                 </tr>
@@ -48,7 +48,7 @@
                     <td class="tdal">描述：
                     </td>
                     <td class="tdar">
-                        <input id="Description" name="Description" maxlength="50" type="text" required="true" class="easyui-validatebox" />
+                        <input id="Description" name="Description" maxlength="50" type="text" required="true" class="easyui-validatebox textbox" />
                     </td>
 
                 </tr>
@@ -56,7 +56,7 @@
                     <td class="tdar">是否管理员：
                     </td>
                     <td class="tdar">
-                        <select class="easyui-combobox" editable="false" name="IsAdmin" required="true" panelheight="auto" style="width: 100%;">
+                        <select class="easyui-combobox" editable="false" name="IsAdmin" required="true" panelheight="auto" style="width:194px;height:25px;">
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>

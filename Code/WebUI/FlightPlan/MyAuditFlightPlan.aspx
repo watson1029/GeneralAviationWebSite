@@ -59,17 +59,7 @@
                         { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                         { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
                         { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
-                        {
-                            title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
-                                var array = [];
-                                $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
 
-                                    array.push("星期" + n);
-                                });
-                                return array.join(',');
-
-                            }
-                        },
                         { title: '公司三字码', field: 'CompanyCode3', width: 100 },
                          { title: '创建人', field: 'CreatorName', width: 60 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
@@ -109,15 +99,14 @@
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                     //    $("#form_audit").form('load', data);
+                    $("#PlanCode").html(data.PlanCode);
                     $("#FlightType").html(data.FlightType);
                     $("#AircraftType").html(data.AircraftType);
                     $("#FlightDirHeight").html(data.FlightDirHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
-                    $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                    $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
-                    $("#SOBT").html(data.SOBT);
-                    $("#SIBT").html(data.SIBT);
+                    $("#SOBT").html(new Date(data.SOBT).toDateString());
+                    $("#SIBT").html(new Date(data.SIBT).toDateString());
                     $("#Remark").html(data.Remark);
                     $("#AircraftNum").html(data.AircraftNum);
                     $("#Pilot").html(data.Pilot);
@@ -125,22 +114,6 @@
                     $("#WeatherCondition").html(data.WeatherCondition);
                     $("#AircrewGroupNum").html(data.AircrewGroupNum);
                     $("#RadarCode").html(data.RadarCode);
-                    if (!!data.AttchFile) {
-                        var fileArray = data.AttchFile.split('|');
-                        for (var i = 0; i < fileArray.length; i++) {
-                            var info = fileArray[i].split(','),
-                            filepath = dj.root + info[0];
-                            $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
-                        }
-                    }
-                    else {
-                        $("#AttchFile").html('');
-                    }
-                    var arr = [];
-                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
-                        arr.push("星期" + n);
-                    });
-                    $("#WeekSchedule").html(arr.join(','));
 
                 });
             },
@@ -201,11 +174,7 @@
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
                 </tr>
-                      <tr>
-                      <th>周执行计划：</th>
-                    <td id="WeekSchedule" colspan="3">
-                    </td>
-                     </tr>
+                     
 
               
                 <tr>

@@ -54,13 +54,13 @@
     <Compile Include="EF\Aircraft.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\BusinessCertificate.cs">
-      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\BusinessLicense.cs">
-      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
-    </Compile>
     <Compile Include="EF\Company.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\CurrentFlightPlan.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\ErrorLog.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\FlightPlan.cs">
@@ -106,6 +106,12 @@
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\UserRole.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\vFlightPlan.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\V_CurrentPlan.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\ZHCC_GAPlan.Context.cs">

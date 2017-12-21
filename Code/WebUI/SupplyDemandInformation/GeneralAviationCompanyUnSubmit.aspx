@@ -2,11 +2,12 @@
     CodeFile="GeneralAviationCompanyUnSubmit.aspx.cs" Inherits="SupplyDemandInformation_GeneralAviationCompanyUnSubmit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.config.js" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.all.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <%--列表 start--%>
-    <table id="tab_list">
-    </table>
+    <table id="tab_list"></table>
     <div id="tab_toolbar" style="padding: 2px 2px; height: 22px;">
         <a href="javascript:void(0)" class="easyui-button" plain="true"></a>
         <div style="float: right">
@@ -25,18 +26,19 @@
         <form id="form_edit" method="post">
             <table class="table_edit">
                 <tr>
-                    <td style="text-align:right">
-                        业务概况
+                    <td style="text-align: right">业务概况
                     </td>
                     <td colspan="3">
                         <script id="editor" type="text/plain" style="width: 1000px; height: 450px;"></script>
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align:right">撰写人</td>
-                    <td><input id="ModifiedByName" name="ModifiedByName" maxlength="30" type="text" readonly="true" required="true" class="easyui-textbox" /></td>
-                    <td style="text-align:right">录入日期</td>
-                    <td><input id="ModifiedTime" name="ModifiedTime" style="width:200px" type="text" readonly="true" required="true" class="easyui-datebox" /></td>
+                    <td style="text-align: right">撰写人</td>
+                    <td>
+                        <input id="ModifiedByName" name="ModifiedByName" maxlength="30" type="text" readonly="true" required="true" class="easyui-textbox" /></td>
+                    <td style="text-align: right">录入日期</td>
+                    <td>
+                        <input id="ModifiedTime" name="ModifiedTime" style="width: 200px" type="text" readonly="true" required="true" class="easyui-datebox" /></td>
                 </tr>
             </table>
         </form>
@@ -50,6 +52,7 @@
     <script type="text/javascript">
         $(function () {
             Main.InitGird();
+            Main.InitSearch();
             UE.getEditor('editor');
         });
         Main = {
@@ -76,7 +79,21 @@
                         { title: '单位名称', field: 'CompanyName', width: 200 },
                         { title: '录入日期', field: 'ModifiedTime', width: 150 },
                         { title: '业务概况', field: 'Summary', width: 500 },
-                        { title: '状态', field: 'State', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 60 },
+                        {
+                            title: '状态', field: 'State', formatter: function (value, rec, index) {
+                                var str = "";
+                                if (value == 0) {
+                                    str = '草稿中';
+                                }
+                                if (value == "end") {
+                                    str = "审核通过";
+                                }
+                                else if (value == "Deserted") {
+                                    str = "审核不通过";
+                                }
+                                return str;
+                            }, width: 60
+                        },
                         {
                             title: '操作', field: 'CompanyID', width: 80, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
@@ -90,6 +107,19 @@
                     pageNumber: 1, //默认索引页
                     pageSize: 10, //默认一页数据条数
                     rownumbers: true //行号
+                });
+            },
+
+            //初始化搜索框
+            InitSearch: function () {
+                $("#ipt_search").searchbox({
+                    width: 250,
+                    searcher: function (val, name) {
+                        $('#tab_list').datagrid('options').queryParams.search_type = name;
+                        $('#tab_list').datagrid('options').queryParams.search_value = val;
+                        $('#tab_list').datagrid('reload');
+                    },
+                    prompt: '请输入要查询的信息'
                 });
             },
 

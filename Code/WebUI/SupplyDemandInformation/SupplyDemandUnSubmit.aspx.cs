@@ -173,8 +173,7 @@ public partial class SupplyDemandInformation_SupplyDemandUnSubmit : BasePage
     private Expression<Func<SupplyDemandInfo, bool>> GetWhere()
     {
         Expression<Func<SupplyDemandInfo, bool>> predicate = PredicateBuilder.True<SupplyDemandInfo>();
-        predicate = predicate.And(m => m.State == "0");
-        predicate = predicate.And(m => m.Creator == User.ID);
+        predicate = predicate.And(m => m.State == "0" && m.Creator == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

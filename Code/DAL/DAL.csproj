@@ -49,11 +49,10 @@
     <Compile Include="BasicData\AircraftDAL.cs" />
     <Compile Include="BasicData\FlightTaskDAL.cs" />
     <Compile Include="DBHelper.cs" />
+    <Compile Include="FlightPlan\CurrentFlightPlanDAL.cs" />
     <Compile Include="FlightPlan\FlightPlanDAL.cs" />
     <Compile Include="BasicData\PilotDAL.cs" />
-    <Compile Include="BasicData\Quanlification\BusinessCertificateDAL.cs" />
     <Compile Include="BasicData\Quanlification\CompanyDAL.cs" />
-    <Compile Include="BasicData\Quanlification\BusinessLicenseDAL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanDAL.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstanceDAL.cs" />
     <Compile Include="FlightPlan\WorkflowTplNodeDAL.cs" />
@@ -64,7 +63,9 @@
     <Compile Include="SystemManagement\MenuDAL.cs" />
     <Compile Include="SystemManagement\ResourceDAL.cs" />
     <Compile Include="SystemManagement\RoleDAL.cs" />
+    <Compile Include="SystemManagement\RoleMenuDAL.cs" />
     <Compile Include="SystemManagement\UserInfoDAL.cs" />
+    <Compile Include="SystemManagement\UserRoleDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">

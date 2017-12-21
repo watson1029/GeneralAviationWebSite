@@ -2,6 +2,8 @@
     CodeFile="GeneralAviationCompanyAudit.aspx.cs" Inherits="SupplyDemandInformation_GeneralAviationCompanyAudit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.config.js" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.all.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <%--列表 start--%>
@@ -25,6 +27,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
+            UE.getEditor('editor');
         });
         Main = {
             //初始化表格
@@ -106,7 +109,7 @@
     </script>
 
     <%--添加 修改 start--%>
-    <div id="audit" class="easyui-dialog" style="width: 700px; height: 700px;"
+    <div id="audit" class="easyui-dialog" style="width: 1111px; height: 825px;"
         modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
             <table class="table_edit">
@@ -115,18 +118,18 @@
                         业务概况
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 1024px; height: 500px;"></script>
+                        <script id="editor" type="text/plain" style="width: 1000px; height: 450px;"></script>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align:right">撰写人</td>
-                    <td><input id="ModifiedByName" name="ModifiedByName" maxlength="30" type="text" readonly="true" required="true" class="easyui-textbox" /></td>
+                    <td><input id="ModifiedByName" name="ModifiedByName" style="width:200px" type="text" readonly="true" required="true" class="easyui-textbox" /></td>
                     <td style="text-align:right">录入日期</td>
                     <td><input id="ModifiedTime" name="ModifiedTime" style="width:200px" type="text" readonly="true" required="true" class="easyui-datebox" /></td>
                 </tr>
                 <tr>
-                    <th>审核结果：</th>
-                    <td>
+                    <td style="text-align:right">审核结果</td>
+                    <td colspan="3">
                         <select class="easyui-combobox" editable="false" name="Auditresult" required="true" panelheight="auto" style="width: 200px;">
                             <option value="0" selected="true">通过</option>
                             <option value="1">不通过</option>
@@ -134,11 +137,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>审核意见：</th>
+                    <td style="text-align:right">审核意见</td>
                     <td colspan="3">
-                        <input id="AuditComment" name="AuditComment" required="true" maxlength="400" style="width: 400px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AuditComment" name="AuditComment" required="true" maxlength="1000" style="width: 1000px;" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
-
                 </tr>
             </table>
         </form>

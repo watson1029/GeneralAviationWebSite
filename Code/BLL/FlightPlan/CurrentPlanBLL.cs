@@ -6,20 +6,26 @@ using System.Text;
 using System.Threading.Tasks;
 using Untity;
 using System.Linq.Expressions;
+using Model.EF;
 
 namespace BLL.FlightPlan
 { 
     public class CurrentPlanBLL
     {
+        CurrentFlightPlanDAL dal = new CurrentFlightPlanDAL();
         WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
-        FlightPlanDAL dal = new FlightPlanDAL();
-        WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+        WorkflowNodeInstanceDAL instal = new WorkflowNodeInstanceDAL();
+
+        public bool Add(CurrentFlightPlan model)
+        {
+            return dal.Add(model) > 0;
+        }
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public  bool Update(Model.EF.FlightPlan model)
+        public bool Update(CurrentFlightPlan model)
         {
-            return dal.Update(model)>0;
+            return dal.Update(model) > 0;
         }
         /// <summary>
         /// 更新某些字段
@@ -27,7 +33,7 @@ namespace BLL.FlightPlan
         /// <param name="model"></param>
         /// <param name="propertyNames"></param>
         /// <returns></returns>
-        public bool Update(Model.EF.FlightPlan model, params string[] propertyNames)
+        public bool Update(CurrentFlightPlan model, params string[] propertyNames)
         {
             return dal.Update(model, propertyNames) > 0;
         }
@@ -43,9 +49,9 @@ namespace BLL.FlightPlan
             try
             {
                 wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, userid, username);
-                insdal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, "", workPlan =>
+                instal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, "", workPlan =>
                 {
-                    dal.Update(new Model.EF.FlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, FlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
+                    dal.Update(new CurrentFlightPlan { ActorID = workPlan.Actor.Value, PlanState = workPlan.PlanState, FlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
                 });
                 return true;
             }
@@ -60,11 +66,11 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Audit(int planid, int twfid, string comment)
+        public bool Audit(int planid, string comment)
         {
             try
             {
-                insdal.Submit(planid, twfid, comment, workPlan => { });
+                instal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, comment, workPlan => { });
                 return true;
             }
             catch (Exception ex)
@@ -78,11 +84,11 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Terminate(int planid, int twfid,string comment)
+        public bool Terminate(int planid,string comment)
         {
             try
             {
-                insdal.Terminate(planid, twfid, comment, workPlan => { });
+                instal.Terminate(planid, (int)TWFTypeEnum.CurrentPlan, comment, workPlan => { });
                 return true;
             }
             catch(Exception ex)
@@ -99,16 +105,25 @@ namespace BLL.FlightPlan
         /// <param name="rowCount"></param>
         /// <param name="where"></param>
         /// <returns></returns>
-        public List<Model.EF.FlightPlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<Model.EF.FlightPlan, bool>> where)
+        public List<CurrentFlightPlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<CurrentFlightPlan, bool>> where)
         {
             return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.FlightPlanID, true);
+        }
+        /// <summary>
+        /// 按条件获取记录
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        public List<CurrentFlightPlan> GetList(Expression<Func<CurrentFlightPlan, bool>> where)
+        {
+            return dal.FindList(where, m => m.FlightPlanID, true);
         }
         /// <summary>
         /// 获取单行记录
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Model.EF.FlightPlan Get(int id)
+        public CurrentFlightPlan Get(int id)
         {
             return dal.Find(u => u.FlightPlanID == id);
         }

@@ -9,9 +9,11 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 using Newtonsoft.Json;
+using DAL.FlightPlan;
 public partial class FlightPlan_MySubmitFlightPlan : BasePage
 {
     FlightPlanBLL bll = new FlightPlanBLL();
+    WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -23,6 +25,9 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
                     break;
                 case "queryone"://获取一条记录
                     GetData();
+                    break;
+                case "getinstance":
+                    GetAllNodeInstance();
                     break;
                 default:
                     break;
@@ -61,7 +66,8 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
         predicate = predicate.And(m => m.PlanState != "0" && m.Creator == User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
+            var val = Request.Form["search_value"].Trim();
+            predicate = predicate.And(m => m.PlanCode == val);
         }
         return predicate;
     }
@@ -77,5 +83,15 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
+    }
+    private void GetAllNodeInstance()
+    {
+        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var list = insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.FlightPlan).Where(u => u.ActorID != User.ID).ToList();
+        var strJSON = Serializer.JsonDate(new { rows = list, total = list.Count });
+        Response.Write(strJSON);
+        Response.ContentType = "application/json";
+        Response.End();
+
     }
 }

@@ -10,8 +10,8 @@
                 </td>
                  <th>填写单位：
                 </th>
-                <td>
-                <%=User.CompanyName %>
+                <td id="name">
+                
                 </td>
             </tr>
             <tr>
@@ -20,7 +20,7 @@
                 <td>
                     <input id="FlightType" name="FlightType" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
-                        required="true" class="easyui-combobox" />
+                        required="true" class="easyui-combobox" style="height:25px"/>
                 </td>
   <th>航空器类型：
                 </th>
@@ -28,55 +28,55 @@
                     <%--  <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" />--%>
                     <input id="AircraftType" name="AircraftType" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
-                        required="true" class="easyui-combobox" />
+                        required="true" class="easyui-combobox" style="height:25px"/>
                 </td>
             </tr>
             <tr>
                 <th>航线走向和飞行高度：
                 </th>
                 <td>
-                    <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30"  type="text" required="true" class="easyui-validatebox textbox" />
                 </td>
   <th>航空器呼号：
                 </th>
                 <td>
-                    <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-validatebox textbox" />
                 </td>
             </tr>
             <tr>
                 <th>起飞机场：
                 </th>
                 <td>
-                    <input id="ADEP" name="ADEP" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="ADEP" name="ADEP" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
                 </td>
  <th>降落机场：
                 </th>
                 <td>
-                    <input id="ADES" name="ADES" maxlength="30" type="text" required="true" class="easyui-textbox" />
+                    <input id="ADES" name="ADES" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
                 </td>
             </tr>          
             <tr>
                 <th>预计开始日期：
                 </th>
                 <td>
-                    <input id="StartDate" name="StartDate" style="width: 200px" type="text" required="true" class="easyui-datebox" />
+                    <input id="StartDate" name="StartDate"  type="text" required="true"  class="easyui-datebox" style="height:25px"/>
                 </td>
                 <th>预计结束日期：
                 </th>
                 <td>
-                    <input id="EndDate" name="EndDate" style="width: 200px" type="text" required="true" class="easyui-datebox" validtype="md['#StartDate']" />
+                    <input id="EndDate" name="EndDate" type="text" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height:25px"/>
                 </td>
             </tr>
             <tr>
                 <th >起飞时刻：
                 </th>
                 <td>
-                    <input id="SOBT" name="SOBT" style="width: 200px" type="text" required="true" class="easyui-timespinner" />
+                    <input id="SOBT" name="SOBT"  type="text" required="true" class="easyui-timespinner" style="height:25px"/>
                 </td>
 <th>降落时刻：
                 </th>
                 <td >
-                    <input id="SIBT" name="SIBT" style="width: 200px" type="text" required="true" class="easyui-timespinner" />
+                    <input id="SIBT" name="SIBT"  type="text" required="true" class="easyui-timespinner" style="height:25px"/>
                 </td>
 
             </tr>
@@ -104,7 +104,7 @@
                              <input id="d4" type="checkbox" name="WeekSchedule" value="4" style="width:20px"/>星期四
                              <input id="d5" type="checkbox" name="WeekSchedule" value="5" style="width:20px"/>星期五
                              <input id="d6" type="checkbox" name="WeekSchedule" value="6" style="width:20px"/>星期六
-                             <input id="d7" type="checkbox" name="WeekSchedule" value="7" style="width:20px"/>星期七
+                             <input id="d7" type="checkbox" name="WeekSchedule" value="7" style="width:20px"/>星期日
                 </td>
 
             </tr>
@@ -112,7 +112,7 @@
                 <th>其他需要说明的事项：
                 </th>
                 <td colspan="3">
-                    <input id="Remark" name="Remark" maxlength="200" style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                    <input id="Remark" name="Remark" maxlength="200"  style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                 </td>
 
             </tr>
@@ -136,6 +136,7 @@
                 $.post("MyUnSubmitRepetPlanAdd.aspx", { "action": "queryone", "id": pid }, function (data) {
                     $("#form_edit").form('load', data);
                     $("#code").html(data.PlanCode);
+                    $("#name").html(data.CompanyName);
                     $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
                         $("#d" + n).prop({ checked: true });
                     });
@@ -153,6 +154,7 @@
                 });
             }
             else {
+                $("#name").html('<%=User.CompanyName %>');
                 $.post("MyUnSubmitRepetPlanAdd.aspx", { "action": "getplancode" }, function (data) {
                     $("#code").html(data);
                     $("#PlanCode").val(data);

@@ -50,8 +50,9 @@ namespace BLL.BasicData
         {
             try
             {
+                insdal.DeleteActualSteps(id, (int)TWFTypeEnum.CompanySummary);
                 wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CompanySummary, id, userid, username);
-                insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, "", t =>
+                insdal.Submit(id, (int)TWFTypeEnum.CompanySummary, "", t =>
                 {
                     _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
                 });

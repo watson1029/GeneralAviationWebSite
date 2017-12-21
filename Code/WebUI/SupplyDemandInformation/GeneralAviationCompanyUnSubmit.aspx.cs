@@ -136,7 +136,7 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyUnSubmit : Ba
     private Expression<Func<Company, bool>> GetWhere()
     {
         Expression<Func<Company, bool>> predicate = PredicateBuilder.True<Company>();
-        predicate = predicate.And(m => m.Catalog == 1);
+        predicate = predicate.And(m => (m.State == null || m.State == "0" || m.State == "end" || m.State == "Deserted") && m.Catalog == 1);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

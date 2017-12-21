@@ -63,18 +63,6 @@
                       { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                       { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
                       { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
-
-                      {
-                          title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
-                              var array = [];
-                              $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
-
-                                  array.push("星期" + n);
-                              });
-                              return array.join(',');
-
-                          }
-                      },
                        { title: '创建人', field: 'CreatorName', width: 60 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
@@ -108,19 +96,58 @@
                   rownumbers: true //行号
               });
           },
+          //初始化表格
+          InitGird1: function (uid) {
+              $('#tab_list1').datagrid({
+                  title: '审核记录', //表格标题
+                  url: location.href, //请求数据的页面
+                  sortName: 'ID', //排序字段
+                  idField: 'ID', //标识字段,主键
+                  iconCls: '', //标题左边的图标
+                  width: '95%', //宽度
+                  height: 150, //高度
+                  nowrap: false, //是否换行，True 就会把数据显示在一行里
+                  striped: true, //True 奇偶行使用不同背景色
+                  singleSelect: false,
+                  collapsible: false, //可折叠
+
+                  columns: [[
+                      { title: '审核人', field: 'ActorName', width: 150 },
+                      {
+                          title: '审核状态', field: 'State', formatter: function (value, rec, index) {
+                              var str = "";
+                              if (value == "1") {
+                                  str = "审核中";
+                              }
+                              else if (value == "2") {
+                                  str = "审核通过";
+                              }
+                              else if (value == "3") {
+                                  str = '审核不通过';
+                              }
+                              return str;
+                          }, width: 150
+                      },
+                      { title: '审核时间', field: 'ApplyTime', width: 150 },
+                      { title: '审核意见', field: 'Comments', width: 150 }
+                  ]],
+                  queryParams: { "action": "getinstance", "id": uid },
+                  pagination: false, //是否开启分页
+                  rownumbers: true //行号
+              });
+          },
           Detail: function (uid) {
               $("#detail").dialog("open").dialog('setTitle', '查看');
               $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                   //    $("#form_audit").form('load', data);
+                  $("#PlanCode").html(data.PlanCode); 
                   $("#FlightType").html(data.FlightType);
                   $("#AircraftType").html(data.AircraftType);
                   $("#FlightDirHeight").html(data.FlightDirHeight);
                   $("#ADEP").html(data.ADEP);
                   $("#ADES").html(data.ADES);
-                  $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                  $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
-                  $("#SOBT").html(data.SOBT);
-                  $("#SIBT").html(data.SIBT);
+                  $("#SOBT").html(new Date(data.SOBT).toDateString());
+                  $("#SIBT").html(new Date(data.SIBT).toDateString());
                   $("#Remark").html(data.Remark);
                   $("#AircraftNum").html(data.AircraftNum);
                   $("#Pilot").html(data.Pilot);
@@ -128,24 +155,8 @@
                   $("#WeatherCondition").html(data.WeatherCondition);
                   $("#AircrewGroupNum").html(data.AircrewGroupNum);
                   $("#RadarCode").html(data.RadarCode);
-                  if (!!data.AttchFile) {
-                      var fileArray = data.AttchFile.split('|');
-                      for (var i = 0; i < fileArray.length; i++) {
-                          var info = fileArray[i].split(','),
-                          filepath = dj.root + info[0];
-                          $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
-                      }
-                  }
-                  else {
-                      $("#AttchFile").html('');
-                  }
-                  var arr = [];
-                  $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
-                      arr.push("星期" + n);
-                  });
-                  $("#WeekSchedule").html(arr.join(','));
-
               });
+              Main.InitGird1(uid);
           },
           //初始化搜索框
           InitSearch: function () {
@@ -166,6 +177,8 @@
         modal="true" closed="true" buttons="#detail-buttons">
         <form id="form_detail" method="post">
             <table class="table_edit">
+                <tr>   <th>申请单编号：</th>
+                    <td id="PlanCode"></td></tr>
                              <tr>
                     <th>任务类型：</th>
                     <td id="FlightType"></td>
@@ -175,8 +188,6 @@
             <tr>
                     <th style="width:176px;">航线走向和飞行高度：</th>
                     <td id="FlightDirHeight"></td>
-                    <th>批件：</th>
-                    <td id="AttchFile"></td>
                 </tr>
                   <tr>
               <th>起飞机场：</th>
@@ -185,25 +196,13 @@
                     </th>
                     <td id="ADES"></td>
                 </tr>
-                <tr>
-                    <th>预计开始日期：</th>
-                    <td id="StartDate"></td>
-                    <th>预计结束日期：</th>
-                    <td id="EndDate"></td>
-                </tr>
+         
                 <tr>
                     <th>起飞时刻：</th>
                     <td id="SOBT"></td>
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
                 </tr>
-                      <tr>
-                      <th>周执行计划：</th>
-                    <td id="WeekSchedule" colspan="3">
-                    </td>
-                     </tr>
-
-              
                 <tr>
                     <th style="width:176px;">其他需要说明的事项：</th>
                     <td id="Remark"></td>
@@ -229,6 +228,10 @@
                 
             </table>
         </form>
+        <div id="con" style="margin-left:15px;">
+        <div id="tab_list1">
+        </div>
+        </div>
     </div>
     <div id="detail-buttons">
  <a href="javascript:;"

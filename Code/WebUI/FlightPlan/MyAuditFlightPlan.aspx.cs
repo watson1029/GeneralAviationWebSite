@@ -15,7 +15,6 @@ using Untity;
 public partial class FlightPlan_MyAuditFlightPlan : BasePage
 {
     FlightPlanBLL bll = new FlightPlanBLL();
-    WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
     WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -72,10 +71,11 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
 
         Expression<Func<FlightPlan, bool>> predicate = PredicateBuilder.True<FlightPlan>();
         predicate = predicate.And(m => m.ActorID == User.ID);
-
+        predicate = predicate.And(m => m.Creator != User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
+            var val = Request.Form["search_value"].Trim();
+          predicate = predicate.And(m => m.PlanCode == val);
         }
 
         return predicate;

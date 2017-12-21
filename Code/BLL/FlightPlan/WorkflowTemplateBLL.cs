@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace BLL.FlightPlan
 {
-   public class WorkflowTemplateBLL
+    public class WorkflowTemplateBLL
     {
-       private WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
-        public  Guid CreateWorkflowInstance(int twfId, int planId,int userID, string userName)
+        private WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+        private WorkflowTplNodeDAL wtndal = new WorkflowTplNodeDAL();
+
+        public Guid CreateWorkflowInstance(int twfId, int planId, int userID, string userName)
         {
             Guid firstStepId = Guid.Empty;
             List<WorkflowNodeInstance> tempNodesInst = new List<WorkflowNodeInstance>();
@@ -19,10 +21,10 @@ namespace BLL.FlightPlan
             WorkflowNodeInstance firstNodeInst = new WorkflowNodeInstance();
 
             //找出指定流程模板中所有的流程节点，并创建流程节点实例
-            List<WorkflowTplNode> tnodeList = WorkflowTplNodeDAL.GetNodeByTWFID(twfId);
+            List<WorkflowTplNode> tnodeList = wtndal.GetNodeByTWFID(twfId);
             foreach (WorkflowTplNode tnode in tnodeList)
             {
-                WorkflowNodeInstance ninst = WorkflowTplNodeDAL.CreateNodeInstance(tnode, planId);
+                WorkflowNodeInstance ninst = wtndal.CreateNodeInstance(tnode, planId);
                 tempNodesInst.Add(ninst);
             }
 
@@ -36,7 +38,7 @@ namespace BLL.FlightPlan
             else
             {
                 firstTnode = query1.First();
-                firstNodeInst = tempNodesInst.First(item => item.StepId == firstTnode.StepId && item.PlanID == planId);
+                firstNodeInst = tempNodesInst.First(item => item.StepId == firstTnode.StepId && item.PlanID == planId && item.TWFID == twfId);
                 firstStepId = firstNodeInst.Id;
             }
             var query2 = from c in tnodeList where c.NextId == 0 select c;
@@ -49,7 +51,7 @@ namespace BLL.FlightPlan
             while (prevTnode.NextId != 0)
             {
                 var nextTnode = tnodeList.First(item => item.PrevId == prevTnode.StepId);
-                var nextNodeInst = tempNodesInst.First(item => item.StepId == nextTnode.StepId && item.PlanID == planId);
+                var nextNodeInst = tempNodesInst.First(item => item.StepId == nextTnode.StepId && item.PlanID == planId && item.TWFID == twfId);
                 nextNodeInst.PrevId = prevNodeInst.Id;
                 prevNodeInst.NextId = nextNodeInst.Id;
                 if (nodesInstance.Count <= 0)

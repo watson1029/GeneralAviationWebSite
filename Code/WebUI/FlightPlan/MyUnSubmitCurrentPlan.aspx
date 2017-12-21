@@ -8,8 +8,9 @@
     <table id="tab_list">
     </table>
     <div id="tab_toolbar" style="padding: 2px 2px;">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>
-
+        <!--<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>-->
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-redo" plain="true" onclick="Main.BatchImport()">导入</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" plain="true" onclick="Main.Export()">导出</a>
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
@@ -183,7 +184,31 @@
                     }
                 });
 
-            }
+            },
+            BatchImport: function () {
+                $("#batchimport").dialog("open").dialog('setTitle', '文件导入').dialog('refresh', 'UnSubmitCurrentPlanBatchImport.aspx');
+            },
+            Export: function () {
+                window.open("ExportHandler.aspx?type=1");
+            },
+            BatchImportSumit: function () {
+
+                var fileInfo = dj.getCmp("PlanFiles").getUploadedFiles();
+                if (fileInfo == "") {
+                    $.messager.alert('提示', '请先上传文件！', 'info');
+                    return;
+                }
+
+                var json = $.param({ "action": "batchImport", PlanFilesPath: fileInfo });
+                $.post(location.href, json, function (data) {
+                    $.messager.alert('提示', data.msg, 'info', function () {
+                        if (data.isSuccess) {
+                            $("#tab_list").datagrid("reload");
+                            $("#batchimport").dialog("close");
+                        }
+                    });
+                });
+            },
         };
     </script>
 
@@ -288,27 +313,20 @@
                     <td id="RadarCode">
                     </td>
                 </tr>
-            </table>
-            <table class="table_edit">                
-                <tr>
-                    <th>实际开始日期：
-                    </th>
-                    <td>
-                        <input id="ActualStartTime" name="ActualStartTime" type="text" required="true" class="easyui-datebox"/>
-                    </td>
-                    <th style="width:160px;">实际结束日期：
-                    </th>
-                    <td>
-                        <input id="ActualEndTime" name="ActualEndTime" type="text" required="true" class="easyui-datebox"/>
-                    </td>
-                </tr>
-            </table>
-
+            </table>     
         </form>
     </div>
     <div id="edit-buttons">
         <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a id="btn_submit" href="javascript:;" class="easyui-linkbutton">保存并提交</a><a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
+    </div>
+     <div id="batchimport" class="easyui-dialog" style="width: 500px; height:300px;"
+        modal="true" closed="true" buttons="#batchimport-buttons">
+        
+    </div>
+    <div id="batchimport-buttons">
+        <a id="btn_batchimport" href="javascript:;" onclick="Main.BatchImportSumit()" class="easyui-linkbutton">导入</a> <a href="javascript:;"
+            class="easyui-linkbutton"  onclick="$('#batchimport').dialog('close');return false;">取消</a>
     </div>
     <%--添加 修改 end--%>
 </asp:Content>

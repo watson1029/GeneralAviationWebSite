@@ -11,8 +11,8 @@ $.fn.validatebox.defaults.rules, {
         validator: function (value, param) {
             var start = $(param[0]).datetimebox('getValue');
             
-            return value>start;
+            return value>=start;
         },
-    message:'结束时间要大于开始时间！'
+    message:'结束时间要大于等于开始时间！'
     }
 });

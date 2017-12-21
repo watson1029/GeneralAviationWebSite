@@ -157,12 +157,13 @@ a {
         width: 140px;
     }
 
-    .table_edit tr td {
-        width: 150px;
-    }
+
 
         .table_edit tr td input {
-            width: 180px;
+            width: 190px;
+            height:20px;
+            vertical-align:top;
+            padding: 2px;
         }
 
     .table_edit tr th, .table_edit tr td {

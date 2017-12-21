@@ -1,0 +1,95 @@
+﻿* {
+ margin:0;
+ padding:0;
+ list-style:none;
+ font-family:"微软雅黑";
+ font-size:16px;
+ color:#c5cfd8;
+}
+
+
+body {
+   background:url(/Content/Img/loginbg.jpg) no-repeat;
+   
+   background-size:100% 100%;
+   height:1080px;
+}
+.top
+{
+    width:145px;
+    padding:15px;
+}
+.Container {
+width:1200px;
+margin:0 auto;
+height:780px;
+position:relative;
+
+}
+.login-block-wrapper {
+position: absolute;
+left: 510px;
+top: 445px;
+width:500px;
+height:300px;
+}
+    .login-block-wrapper input[type="password"], .login-block-wrapper input[type="text"] {
+
+    border:1px solid #dbd8d8;
+    width:400px;
+    height:45px;
+    padding-top:11px;
+     padding-bottom:11px;
+    padding-left:43px;
+    box-sizing:border-box;
+    border-radius:4px;
+    background-color:#ECF5FA;
+    vertical-align:middle;
+    color:#888888;
+    vertical-align:bottom;
+    }
+.login-block-wrapper input[type="text"] {
+background:url(/Content/Img/01.png) no-repeat 10px center #ECF5FA;    
+    }
+.login-block-wrapper input[type="password"] {
+    margin-top:20px;
+background:url(/Content/Img/02.png) no-repeat 10px center #ECF5FA;    
+    }
+.bottom {
+width:1000px;
+margin:0 auto;
+margin-top:200px;
+  color:#c5cfd8;
+  text-align:center;
+}
+.forgetPassWrod-block {
+
+      color:#888888;
+
+}
+.forgetPassWrod-block input[type="button"] {
+    margin-top:30px;
+cursor:pointer;
+color:white;
+background:#3C95C8;
+border:none;
+border-radius:4px;
+outline:none;
+ width:150px;
+    height:40px;
+}
+    .forgetPassWrod-block a {
+        text-decoration:none;
+        color:#888888;
+           margin-left:10px;
+    }
+    .forgetPassWrod-block input[type="checkbox"] {
+        margin-left:50px;
+        vertical-align:middle;
+    }
+#showMsg {
+    padding: 5px 0; 
+    text-align: center;
+     color: red;
+     height:50px;
+}

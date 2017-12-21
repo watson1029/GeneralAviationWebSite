@@ -14,9 +14,9 @@ namespace BLL.SupplyDemandInformation
 {
     public class SupplyDemandBLL
     {
+        SupplyDemandDAL dal = new SupplyDemandDAL();
         WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
         WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
-        SupplyDemandDAL dal = new SupplyDemandDAL();
         public bool Delete(string ids)
         {
             return dal.BatchDelete(ids) > 0;

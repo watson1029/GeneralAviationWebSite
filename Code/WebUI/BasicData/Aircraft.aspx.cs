@@ -58,65 +58,11 @@ public partial class BasicData_Aircraft : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        var model = new Aircraft()
-        {
-            AircraftSign = Request.Form["AircraftSign"],
-            
-            AcfType = Request.Form["AcfType"],
-           
-            AcfNo = Request.Form["AcfNo"],
-            ASdate = DateTime.Parse(Request.Form["ASdate"]),
-            AcfClass = Request.Form["AcfClass"],
-            
-            Manufacture = Request.Form["Manufacture"],
-            
-            WakeTurbulance = Request.Form["WakeTurbulance"],
-            
-            
-           
-        };
-
-
-        int FuelCapacity;
-        if (int.TryParse(Request.Form["FuelCapacity"], out FuelCapacity))
-        {
-            model.FuelCapacity = FuelCapacity;
-        }
-        int range;
-        if (int.TryParse(Request.Form["Range"], out range))
-        {
-            model.Range = range;
-        }
-        int CruiseAltd;
-        if (int.TryParse(Request.Form["CruiseAltd"], out CruiseAltd))
-        {
-            model.CruiseAltd = CruiseAltd;
-        }
-        int CruiseSpeed;
-        if (int.TryParse(Request.Form["CruiseSpeed"], out CruiseSpeed))
-        {
-            model.CruiseAltd = CruiseSpeed;
-        }
-        int MaxSpeed;
-        if (int.TryParse(Request.Form["MaxSpeed"], out MaxSpeed))
-        {
-            model.MaxSpeed = MaxSpeed;
-        }
-        int FueledWeight;
-        if (int.TryParse(Request.Form["FueledWeight"], out FueledWeight))
-        {
-            model.FueledWeight = FueledWeight;
-        }
-        int MinSpeed;
-        if (int.TryParse(Request.Form["MinSpeed"], out MinSpeed))
-        {
-            model.MinSpeed = MinSpeed;
-        }
-
-
-
+        Aircraft model = null;
         if (!id.HasValue)//新增
         {
+            model = new Aircraft();
+            model.GetEntitySearchPars<Aircraft>(this.Context);
             model.CreateTime = DateTime.Now;
             if (bll.Add(model) > 0)
             {
@@ -126,11 +72,15 @@ public partial class BasicData_Aircraft : BasePage
         }
         else//编辑
         {
-            model.AircraftID = id.Value;
-            if (bll.Update(model) > 0)
+            model = bll.Get(id.Value);
+            if (model != null)
             {
-                result.IsSuccess = true;
-                result.Msg = "更新成功！";
+                model.GetEntitySearchPars<Aircraft>(this.Context);
+                if (bll.Update(model) > 0)
+                {
+                    result.IsSuccess = true;
+                    result.Msg = "更新成功！";
+                }
             }
         }
         Response.Clear();
