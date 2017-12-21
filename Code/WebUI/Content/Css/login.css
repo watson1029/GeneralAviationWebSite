@@ -38,6 +38,8 @@ height:300px;
     border:1px solid #dbd8d8;
     width:400px;
     height:45px;
+    padding-top:11px;
+     padding-bottom:11px;
     padding-left:43px;
     box-sizing:border-box;
     border-radius:4px;
@@ -48,7 +50,6 @@ height:300px;
     }
 .login-block-wrapper input[type="text"] {
 background:url(/Content/Img/01.png) no-repeat 10px center #ECF5FA;    
-
     }
 .login-block-wrapper input[type="password"] {
     margin-top:20px;
