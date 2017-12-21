@@ -27,7 +27,6 @@
         Main = {
             login: function () 
             {
-                alert($("#txtUserName").val());
                 if ($("input[name='txtUserName']").val().trim() == "" || $("input[name='txtPassword']").val().trim() == "") {
                     $("#showMsg").html("用户名或密码不能为空！");
                   //  $("input[name='txtUserName']").focus();
