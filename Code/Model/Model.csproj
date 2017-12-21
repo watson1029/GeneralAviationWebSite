@@ -131,6 +131,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManagement\KeyValueModel.cs" />
     <Compile Include="SystemManagement\MenuModel.cs" />
+    <Compile Include="SystemManagement\Series.cs" />
     <Compile Include="SystemManagement\TreeNode.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -111,6 +111,7 @@
             </select><br />
             <a class="easyui-linkbutton" id="bt_query" onclick="get();">查询</a>
             <a class="easyui-linkbutton" id="bt_add" onclick="open1(0);">新增</a>
+            <a class="easyui-linkbutton" id="A1" onclick="" href="Handler.ashx?action=test">Test</a>
         </div>
         <table id="dg" title="通航资料" style="width: 1358px; height: 350px" data-options="pageSize:10,rownumbers:true,singleSelect:true,pagination:true,method:'post',striped:true">
             <thead>

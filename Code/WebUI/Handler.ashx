@@ -5,11 +5,15 @@ using System.Web;
 using System.IO;
 using System.Collections.Generic;
 using Model.EF;
+using Model.SystemManagement;
 using DAL.SystemManagement;
+using DAL.FlightPlan;
 using Untity;
+using Newtonsoft.Json;
 public class Handler : IHttpHandler
 {
     private ResourceDAL dao = new ResourceDAL();
+    private RepetitivePlanDAL dd = new RepetitivePlanDAL();
     public void ProcessRequest(HttpContext context)
     {
         string action = context.Request["action"];
@@ -29,6 +33,35 @@ public class Handler : IHttpHandler
                 break;
             case "download":
                 download(context);
+                break;
+            case "test":
+                Dictionary<string, int> dic = dd.GetGroupCount();
+                List<string> list=new List<string>();
+                Series series = new Series();
+                series.name="数量";
+                series.type = "bar";
+                series.itemStyle = new itemStyle
+                {
+                    normal = new normal
+                    {
+                        areaStyle = new areaStyle
+                        {
+                            type = "default"
+                        }
+                    }
+                };
+                List<Series> ss = new List<Series>();
+                foreach (var item in dic)
+                {
+                    list.Add(item.Value.ToString());
+                }
+                series.data = list;
+                ss.Add(series);
+                var result =new {
+                     series=ss
+                           };
+                context.Response.ContentType = "text/plain";
+                context.Response.Write(JsonConvert.SerializeObject(result));
                 break;
         }
 
@@ -108,7 +141,7 @@ public class Handler : IHttpHandler
             resource.Title = title;
             resource.DealUser = dealuser;
             resource.ResourceType = resourcetype;
-            resource.UsefulTime = started.ToString("yyyy年MM月dd日") +"-"+ ended.ToString("yyyy年MM月dd日");
+            resource.UsefulTime = started.ToString("yyyy年MM月dd日") + "-" + ended.ToString("yyyy年MM月dd日");
             resource.SenderId = 123;
             resource.FilePath = filepath;
             resource.Created = DateTime.Now;
@@ -152,7 +185,7 @@ public class Handler : IHttpHandler
         resource.DealUser = dealuser;
         resource.ResourceType = resourcetype;
         resource.Status = status;
-        resource.UsefulTime = started.ToString("yyyy年MM月dd日")+"-" + ended.ToString("yyyy年MM月dd日");
+        resource.UsefulTime = started.ToString("yyyy年MM月dd日") + "-" + ended.ToString("yyyy年MM月dd日");
         resource.Started = started;
         resource.Ended = ended;
         dao.UpdateResource(resource);
