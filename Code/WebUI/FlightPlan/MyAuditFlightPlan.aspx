@@ -13,8 +13,8 @@
     <%--列表 start--%>
     <table id="tab_list">
     </table>
-    <div id="tab_toolbar" style="padding: 2px 2px; height: 22px;">
-        <a href="javascript:void(0)" class="easyui-button" plain="true"></a>
+    <div id="tab_toolbar" style="padding: 2px 2px;">
+       <a href="javascript:void(0)" class="easyui-linkbutton" style="width:78px;" iconcls="icon-save" plain="true" onclick="Main.BatchAudit()">批量审核</a>
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
@@ -52,16 +52,23 @@
                     remoteSort: true, //定义是否从服务器给数据排序
 
                     columns: [[
-                        { title: '申请单号', field: 'PlanCode', width: 180 },
+                        { title: '申请单号', field: 'PlanCode', width: 200 },
                         { title: '航空器架数', field: 'AircraftNum', width: 100 },
                         { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
                         { title: '通信联络方法', field: 'ContactWay', width: 100 },
+                           {
+                               title: '起飞时刻', field: 'SOBT', width: 100
+                           },
+                      {
+                          title: '降落时刻', field: 'SIBT', width: 100
+                      },
                         { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                         { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
                         { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
 
                         { title: '公司三字码', field: 'CompanyCode3', width: 100 },
-                         { title: '创建人', field: 'CreatorName', width: 60 },
+                           { title: '公司名称', field: 'CompanyName', width: 100 },
+                         { title: '创建人', field: 'CreatorName', width: 80 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
                              {
                                  title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
@@ -93,6 +100,15 @@
                     prompt: '请输入要查询的信息'
                 });
             },
+            //批量审核
+            BatchAudit: function (uid) {
+                var selRow = $('#tab_list').datagrid('getSelections');
+                if (selRow.length == 0) {
+                    $.messager.alert('提示', '请选择一条记录！', 'info');
+                    return;
+                }
+                $("#batchaudit").dialog("open").dialog('setTitle', '批量审核');
+            },
             //审核
             Audit: function (uid) {
                 $("#audit").dialog("open").dialog('setTitle', '审核');
@@ -100,13 +116,14 @@
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                     //    $("#form_audit").form('load', data);
                     $("#PlanCode").html(data.PlanCode);
+                    $("#CompanyName").html(data.CompanyName);
                     $("#FlightType").html(data.FlightType);
                     $("#AircraftType").html(data.AircraftType);
                     $("#FlightDirHeight").html(data.FlightDirHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
-                    $("#SOBT").html(new Date(data.SOBT).toDateString());
-                    $("#SIBT").html(new Date(data.SIBT).toDateString());
+                    $("#SOBT").html(data.SOBT);
+                    $("#SIBT").html(data.SIBT);
                     $("#Remark").html(data.Remark);
                     $("#AircraftNum").html(data.AircraftNum);
                     $("#Pilot").html(data.Pilot);
@@ -133,16 +150,50 @@
                     });
                 });
 
+            },
+            BatchAuditSubmit: function (uid) {
+            if (!$("#form_batchaudit").form("validate")) {
+                return;
             }
+            var selRow = $('#tab_list').datagrid('getSelections');
+            if (selRow.length == 0) {
+                $.messager.alert('提示', '请选择一条记录！', 'info');
+                return;
+            }
+            var idArray = [];
+            for (var i = 0; i < selRow.length; i++) {
+                var id = selRow[i].RepetPlanID;
+                idArray.push(id);
+            }
+            $.messager.confirm('提示', '确认要提交审核结果吗？', function (r) {
+                if (r) {
+                    var json = $.param({ "cbx_select": idArray.join(','), "action": "batchaudit" }) + '&' + $('#form_batchaudit').serialize();
+                    $.post(location.href, json, function (data) {
+                        $.messager.alert('提示', data.msg, 'info');
+                        if (data.isSuccess) {
+                            $("#batchaudit").dialog("close");
+                            $("#tab_list").datagrid("reload");
+                            selRow.length = 0;
+                        }
+                    });
+                }
+            });
 
+        }
         };
     </script>
 
     <%--添加 修改 start--%>
-    <div id="audit" class="easyui-dialog" style="width: 700px; height: 700px;"
+    <div id="audit" class="easyui-dialog" style="width: 800px; height: 700px;"
         modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
             <table class="table_edit">
+                  <tr>
+                    <th>申请单号：</th>
+                    <td id="PlanCode" style="color:red"></td>
+                    <th>公司名称：</th>
+                    <td id="CompanyName" style="color:red"></td>
+                </tr>
                 <tr>
                     <th>任务类型：</th>
                     <td id="FlightType"></td>
@@ -211,7 +262,7 @@
                 <tr>
                     <th>审核意见：</th>
                     <td colspan="3">
-                        <input id="AuditComment" name="AuditComment" required="true" maxlength="400" style="width: 400px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AuditComment" name="AuditComment" required="true" maxlength="400" style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
 
                 </tr>
@@ -222,5 +273,31 @@
         <a id="btn_audit" href="javascript:;" class="easyui-linkbutton">提交</a> <a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#audit').dialog('close');return false;">取消</a>
     </div>
+    <div id="batchaudit" class="easyui-dialog" style="width: 600px; height:300px;"
+        modal="true" closed="true" buttons="#batchaudit-buttons">
+        <form id="form_batchaudit" method="post">
+            <table class="table_edit">
+                <tr>
+                    <th>审核结果：</th>
+                    <td >
+                        <select class="easyui-combobox" editable="false" name="BatchAuditresult" required="true" panelheight="auto" style="width: 200px;">
+                            <option value="0" selected="true">通过</option>
+                            <option value="1">不通过</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>审核意见：</th>
+                    <td colspan="3">
+                        <input id="BatchAuditComment" name="BatchAuditComment" required="true"  maxlength="400" style="width: 400px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                    </td>
 
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div id="batchaudit-buttons">
+        <a id="btn_batchaudit" href="javascript:;" class="easyui-linkbutton" onclick="Main.BatchAuditSubmit()">提交</a> <a href="javascript:;"
+            class="easyui-linkbutton" onclick="$('#batchaudit').dialog('close');return false;">取消</a>
+    </div>
 </asp:Content>

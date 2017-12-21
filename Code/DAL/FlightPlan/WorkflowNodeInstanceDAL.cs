@@ -56,7 +56,7 @@ namespace DAL.FlightPlan
             {
                 try
                 {
-                    Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processed, Comments = comments, ActorTime = DateTime.Now, ID = currInst.Id }, "State", "Comments", "ActorName");
+                    Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processed, Comments = comments, ActorTime = DateTime.Now, ID = currInst.Id }, "State", "Comments", "ActorTime");
                     currInst.State = WorkflowNodeInstance.StepStateType.Processed;
                     //更新下一个节点状态为处理中
                     if (currInst.NextId != Guid.Empty)

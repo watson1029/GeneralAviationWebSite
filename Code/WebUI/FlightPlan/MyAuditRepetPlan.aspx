@@ -211,9 +211,9 @@
             <table class="table_edit">
                   <tr>
                     <th>申请单号：</th>
-                    <td id="PlanCode"></td>
+                    <td id="PlanCode" style="color:red"></td>
                     <th>公司名称：</th>
-                    <td id="CompanyName"></td>
+                    <td id="CompanyName" style="color:red"></td>
                 </tr>
                 <tr>
                     <th>任务类型：</th>
@@ -269,7 +269,7 @@
                 <tr>
                     <th>审核意见：</th>
                     <td colspan="3">
-                        <input id="AuditComment" name="AuditComment" required="true" maxlength="400" style="width: 400px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AuditComment" name="AuditComment" required="true" maxlength="400" style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
 
                 </tr>
@@ -280,7 +280,7 @@
         <a id="btn_audit" href="javascript:;" class="easyui-linkbutton">提交</a> <a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#audit').dialog('close');return false;">取消</a>
     </div>
-        <div id="batchaudit" class="easyui-dialog" style="width: 600px; height:300px;"
+    <div id="batchaudit" class="easyui-dialog" style="width: 600px; height:300px;"
         modal="true" closed="true" buttons="#batchaudit-buttons">
         <form id="form_batchaudit" method="post">
             <table class="table_edit">

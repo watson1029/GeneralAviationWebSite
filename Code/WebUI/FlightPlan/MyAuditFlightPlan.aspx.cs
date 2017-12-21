@@ -31,6 +31,9 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
                 case "auditsubmit":
                     AuditSubmit();
                     break;
+                case "batchaudit":
+                    BatchAuditSubmit();
+                    break;
                 default:
                     break;
             }
@@ -115,6 +118,49 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
         Response.ContentType = "application/json";
         Response.End();
 
+
+    }
+
+
+
+    private void BatchAuditSubmit()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "操作失败！";
+        if (Request.Form["cbx_select"] != null)
+        {
+            try
+            {
+                var arr = Request.Form["cbx_select"].ToString().Split(',');
+                var auditComment = Request.Form["BatchAuditComment"] ?? "";
+                if (Request.Form["BatchAuditresult"] == "0")
+                {
+                    foreach (var item in arr)
+                    {
+                        insdal.Submit(int.Parse(item), (int)TWFTypeEnum.FlightPlan, auditComment, insdal.UpdateRepetPlan);
+                    }
+                }
+                else
+                {
+                    foreach (var item in arr)
+                    {
+                        insdal.Terminate(int.Parse(item), (int)TWFTypeEnum.FlightPlan, auditComment, insdal.UpdateRepetPlan);
+                    }
+                }
+                result.IsSuccess = true;
+                result.Msg = "操作成功！";
+            }
+            catch (Exception)
+            {
+                result.IsSuccess = false;
+                result.Msg = "操作失败！";
+            }
+        }
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
 
     }
     private void DownlodFile()

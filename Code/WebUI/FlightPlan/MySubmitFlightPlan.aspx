@@ -52,18 +52,22 @@
                   collapsible: false, //可折叠
                   sortOrder: 'desc', //排序类型
                   remoteSort: true, //定义是否从服务器给数据排序
-                  frozenColumns: [[//冻结的列，不会随横向滚动轴移动
-                      { field: 'cbx', checkbox: true },
-                  ]],
+
                   columns: [[
-                      { title: '申请单号', field: 'PlanCode', width: 100 },
+                      { title: '申请单号', field: 'PlanCode', width: 200 },
                       { title: '航空器架数', field: 'AircraftNum', width: 100 },
                       { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
                       { title: '通信联络方法', field: 'ContactWay', width: 100 },
+                           {
+                               title: '起飞时刻', field: 'SOBT', width: 100
+                           },
+                      {
+                          title: '降落时刻', field: 'SIBT', width: 100
+                      },
                       { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                       { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
                       { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
-                       { title: '创建人', field: 'CreatorName', width: 60 },
+                       { title: '创建人', field: 'CreatorName', width: 80 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
                       {
@@ -128,7 +132,7 @@
                               return str;
                           }, width: 150
                       },
-                      { title: '审核时间', field: 'ApplyTime', width: 150 },
+                      { title: '审核时间', field: 'ActorTime', width: 150 },
                       { title: '审核意见', field: 'Comments', width: 150 }
                   ]],
                   queryParams: { "action": "getinstance", "id": uid },
@@ -146,8 +150,8 @@
                   $("#FlightDirHeight").html(data.FlightDirHeight);
                   $("#ADEP").html(data.ADEP);
                   $("#ADES").html(data.ADES);
-                  $("#SOBT").html(new Date(data.SOBT).toDateString());
-                  $("#SIBT").html(new Date(data.SIBT).toDateString());
+                  $("#SOBT").html(data.SOBT);
+                  $("#SIBT").html(data.SIBT);
                   $("#Remark").html(data.Remark);
                   $("#AircraftNum").html(data.AircraftNum);
                   $("#Pilot").html(data.Pilot);
@@ -173,12 +177,12 @@
 
       };
     </script>
-    <div id="detail" class="easyui-dialog" style="width: 600px; height:500px;"
+    <div id="detail" class="easyui-dialog" style="width: 700px; height:580px;"
         modal="true" closed="true" buttons="#detail-buttons">
         <form id="form_detail" method="post">
             <table class="table_edit">
                 <tr>   <th>申请单编号：</th>
-                    <td id="PlanCode"></td></tr>
+                    <td id="PlanCode" style="color:red" colspan="2"></td></tr>
                              <tr>
                     <th>任务类型：</th>
                     <td id="FlightType"></td>

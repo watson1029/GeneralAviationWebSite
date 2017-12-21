@@ -47,5 +47,6 @@ namespace Model.EF
         public virtual DbSet<vFlightPlan> vFlightPlan { get; set; }
         public virtual DbSet<CurrentFlightPlan> CurrentFlightPlan { get; set; }
         public virtual DbSet<V_CurrentPlan> V_CurrentPlan { get; set; }
+        public virtual DbSet<vGetRepetitivePlanNodeInstance> vGetRepetitivePlanNodeInstance { get; set; }
     }
 }
