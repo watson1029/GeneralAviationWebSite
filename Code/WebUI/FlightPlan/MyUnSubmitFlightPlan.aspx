@@ -61,25 +61,19 @@
                         { title: '使用机型', field: 'AircraftType', width: 60 },
                         { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
                         {
-                            title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
+                            title: '起飞时刻', field: 'SOBT', width: 100, formatter: function (value, rec, index) {
 
                                 var timesstamp = new Date(value);
                                 return timesstamp.toLocaleDateString();
-
                             }
                         },
                         {
-                            title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) {
+                            title: '降落时刻', field: 'SIBT', width: 100, formatter: function (value, rec, index) {
 
                                 var timesstamp = new Date(value);
                                 return timesstamp.toLocaleDateString();
-
                             }
                         },
-                        {
-                            title: '起飞时刻', field: 'SOBT', width: 100
-                        },
-                        { title: '降落时刻', field: 'SIBT', width: 100 },
                         { title: '起飞机场', field: 'ADEP', width: 80 },
                         { title: '降落机场', field: 'ADES', width: 80 },
 
@@ -139,7 +133,7 @@
             },
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx?id=' + uid);;
+                $("#edit").dialog("open").dialog('setTitle', '编辑');
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
             },
 

@@ -51,7 +51,7 @@ namespace BLL.FlightPlan
                 wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, userid, username);
                 instal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, "", workPlan =>
                 {
-                    dal.Update(new CurrentFlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, FlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
+                    dal.Update(new CurrentFlightPlan { ActorID = workPlan.Actor.Value, PlanState = workPlan.PlanState, FlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
                 });
                 return true;
             }

@@ -140,15 +140,14 @@
               $("#detail").dialog("open").dialog('setTitle', '查看');
               $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                   //    $("#form_audit").form('load', data);
+                  $("#PlanCode").html(data.PlanCode); 
                   $("#FlightType").html(data.FlightType);
                   $("#AircraftType").html(data.AircraftType);
                   $("#FlightDirHeight").html(data.FlightDirHeight);
                   $("#ADEP").html(data.ADEP);
                   $("#ADES").html(data.ADES);
-                  $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                  $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
-                  $("#SOBT").html(data.SOBT);
-                  $("#SIBT").html(data.SIBT);
+                  $("#SOBT").html(new Date(data.SOBT).toDateString());
+                  $("#SIBT").html(new Date(data.SIBT).toDateString());
                   $("#Remark").html(data.Remark);
                   $("#AircraftNum").html(data.AircraftNum);
                   $("#Pilot").html(data.Pilot);
@@ -156,18 +155,6 @@
                   $("#WeatherCondition").html(data.WeatherCondition);
                   $("#AircrewGroupNum").html(data.AircrewGroupNum);
                   $("#RadarCode").html(data.RadarCode);
-                  if (!!data.AttchFile) {
-                      var fileArray = data.AttchFile.split('|');
-                      for (var i = 0; i < fileArray.length; i++) {
-                          var info = fileArray[i].split(','),
-                          filepath = dj.root + info[0];
-                          $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
-                      }
-                  }
-                  else {
-                      $("#AttchFile").html('');
-                  }
-
               });
               Main.InitGird1(uid);
           },
@@ -190,6 +177,8 @@
         modal="true" closed="true" buttons="#detail-buttons">
         <form id="form_detail" method="post">
             <table class="table_edit">
+                <tr>   <th>申请单编号：</th>
+                    <td id="PlanCode"></td></tr>
                              <tr>
                     <th>任务类型：</th>
                     <td id="FlightType"></td>
@@ -199,8 +188,6 @@
             <tr>
                     <th style="width:176px;">航线走向和飞行高度：</th>
                     <td id="FlightDirHeight"></td>
-                    <th>批件：</th>
-                    <td id="AttchFile"></td>
                 </tr>
                   <tr>
               <th>起飞机场：</th>
@@ -209,12 +196,7 @@
                     </th>
                     <td id="ADES"></td>
                 </tr>
-                <tr>
-                    <th>预计开始日期：</th>
-                    <td id="StartDate"></td>
-                    <th>预计结束日期：</th>
-                    <td id="EndDate"></td>
-                </tr>
+         
                 <tr>
                     <th>起飞时刻：</th>
                     <td id="SOBT"></td>

@@ -32,12 +32,13 @@ public partial class Login : System.Web.UI.Page
         result.Msg = "登录失败！";
         var password = Request.Form["htxtPassword"]; //登录密码改在客户用js 的DES加密
         var userName = Request.Form["txtUserName"];
+        var remember = false;
         //解密的密码
         var PPassword = DES.uncMe(password, userName);
         string msg;
         //将明文密码转化为MD5加密
         password = CryptTools.HashPassword(PPassword);
-        LoginResultEnum loginResult = LoginUtil.GALogin(StringSafeFilter.Filter(userName), StringSafeFilter.Filter(password.ToUpper()), out msg);
+        LoginResultEnum loginResult = LoginUtil.GALogin(StringSafeFilter.Filter(userName), StringSafeFilter.Filter(password.ToUpper()),remember, out msg);
 
         // 记录用户登录操作日志
 

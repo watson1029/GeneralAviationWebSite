@@ -1,11 +1,15 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true"
-    CodeFile="Login.aspx.cs" Inherits="Login" %>
+﻿
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
-    通航服务站
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
-    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/Des.js" type="text/javascript"></script>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>通航服务站</title>
+   <script src="<%=Page.ResolveUrl("~/Content/JS/easyUI/jquery.min.js")%>" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/Content/JS/GA/base.js")%>" type="text/javascript"></script>
+    <link href="<%=Page.ResolveUrl("~/Content/Css/login.css")%>" rel="stylesheet" type="text/css" />         
+    <script src="<%=Page.ResolveUrl("~/Content/JS/Des.js")%>" type="text/javascript"></script>
     <script type="text/javascript">
         document.onkeydown = function (e) {
             var event = e || window.event;
@@ -21,17 +25,20 @@
 
         });
         Main = {
-            login: function () {
+            login: function () 
+            {
                 if ($("input[name='txtUserName']").val().trim() == "" || $("input[name='txtPassword']").val().trim() == "") {
                     $("#showMsg").html("用户名或密码不能为空！");
-                    $("input[name='txtUserName']").focus();
+                  //  $("input[name='txtUserName']").focus();
 
                 } else {
+                    
                     var userName = $("input[name='txtUserName']");
                     var password = $("input[name='txtPassword']");
                     var str = encMe(password.val().trim(), userName.val().trim());
                     $("input[name='htxtPassword']").val(str);
                     $("input[name='action']").val('submit');
+                    $("#showMsg").html("登录中...");
                     $.ajax({
                         type: "POST",
                         url: location.href,
@@ -50,39 +57,37 @@
                 }
             },
             clearData: function () {
-                $('#loginForm').form('clear');
+                $("input[name='txtUserName']").val('');
+                $("input[name='txtPassword']").val('');
+                $("input[name='htxtPassword']").val('');
             },
             hideErr: function () {
-                $("#showMsg").text('');
+                $("#showMsg").html('');
             }
-
-
         };
     </script>
-</asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <div id="loginWin" class="easyui-window" title="登录" style="width: 350px; height: 188px; padding: 5px;"
-        minimizable="false" maximizable="false" resizable="false" collapsible="false">
-        <div class="easyui-layout" fit="true">
-            <div region="center" border="false" style="padding: 5px; background: #fff; border: 1px solid #ccc;">
-                <form id="loginForm" method="post">
-                    <input type="hidden" name="action" value="" />
-                    <input type="hidden" name="htxtPassword" />
-                    <div style="padding: 5px 0;">
-                        <label for="login">用户名:</label>
-                        <input type="text" name="txtUserName" maxlength="20" style="width: 260px;"  />
-                    </div>
-                    <div style="padding: 5px 0;">
-                        <label for="password">密&nbsp;&nbsp;&nbsp;码:</label>
-                        <input type="password" name="txtPassword" maxlength="20"  style="width: 260px;"  />
-                    </div>
-                    <div style="padding: 5px 0; text-align: center; color: red;" id="showMsg"></div>
-                </form>
-            </div>
-            <div region="south" border="false" style="text-align: right; padding: 5px 0;">
-                <a class="easyui-linkbutton" iconcls="icon-ok" href="javascript:void(0)" onclick="Main.login()">登录</a>
-            </div>
-        </div>
-    </div>
+</head>
+<body>
+    <div> <div class="top">
+    欢迎登录飞行服务站
+    </div></div>
+   <div class="Container">
+       <form id="loginForm" method="post">
+       <div class="login-block-wrapper">
+       <input  type="text" id ="txtUserName" name="txtUserName" maxlength="40" placeholder="请输入用户名"/>
+         <input  type="password" id ="txtPassword" name="txtPassword" maxlength="40"  placeholder="请输入密码"/>
+              <input type="hidden" name="action" />
+           <input type="hidden" name="htxtPassword" />
+                  <div id="showMsg"></div>
+           <div class="forgetPassWrod-block">
+               <input type="button" value="登录" onclick="Main.login()"/> 
+               <input type="checkbox" id="rememberme" name="rememberme" />&nbsp;记住帐号
+            <a href="#">忘记密码？</a>   
+           </div>
+       </div>
+           </form>
+   </div>
+    <div class="bottom">Copyright © 2017 广州市中南民航空管通信网络科技有限公司.All rights reserved.</div>
 
-</asp:Content>
+</body>
+</html>

@@ -57,17 +57,6 @@
                 </td>
             </tr>          
             <tr>
-                <th>预计开始日期：
-                </th>
-                <td id="StartDate">
-
-                </td>
-                <th>预计结束日期：
-                </th>
-                <td id="EndDate">
-                </td>
-            </tr>
-            <tr>
                 <th >起飞时刻：
                 </th>
                 <td id="SOBT">
@@ -78,13 +67,6 @@
                 </td>
 
             </tr>
-            <tr>
-                <th>批件：
-                </th>
-               <td id="AttchFile"></td>
-
-            </tr>
-            
             <tr>
                 <th>其他需要说明的事项：
                 </th>
@@ -159,17 +141,9 @@
                     $("#FlightDirHeight").html(data.FlightDirHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
-                    $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                    $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
-                    $("#SOBT").html(data.SOBT);
-                    $("#SIBT").html(data.SIBT);
+                    $("#SOBT").html(new Date(data.SOBT).toDateString());
+                    $("#SIBT").html(new Date(data.SIBT).toDateString());
                     $("#Remark").html(data.Remark);
-                    var fileArray = data.AttchFile.split('|');
-                    for (var i = 0; i < fileArray.length; i++) {
-                        var info = fileArray[i].split(','),
-                        filepath = dj.root + info[0];
-                        $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
-                    }
       
                 });
             }
@@ -191,22 +165,10 @@
                             $("#FlightDirHeight").html(data.FlightDirHeight);
                             $("#ADEP").html(data.ADEP);
                             $("#ADES").html(data.ADES);
-                            $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                            $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
-                            $("#SOBT").html(data.SOBT);
-                            $("#SIBT").html(data.SIBT);
+                            $("#SOBT").html(new Date(data.SOBT).toDateString());
+                            $("#SIBT").html(new Date(data.SIBT).toDateString());
                             $("#Remark").html(data.Remark);
-                            if (!!data.AttchFile) {
-                                var fileArray = data.AttchFile.split('|');
-                                for (var i = 0; i < fileArray.length; i++) {
-                                    var info = fileArray[i].split(','),
-                                    filepath = dj.root + info[0];
-                                    $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
-                                }
-                            }
-                            else {
-                                $("#AttchFile").html('');
-                            }
+
                         })
                     }
                 });

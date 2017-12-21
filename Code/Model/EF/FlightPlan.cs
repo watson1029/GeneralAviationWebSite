@@ -22,7 +22,6 @@ namespace Model.EF
         public System.DateTime CreateTime { get; set; }
         public System.DateTime ModifyTime { get; set; }
         public string CompanyCode3 { get; set; }
-        public string AttchFile { get; set; }
         public string PlanState { get; set; }
         public Nullable<int> ActorID { get; set; }
         public int Creator { get; set; }
