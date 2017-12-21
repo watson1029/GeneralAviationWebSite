@@ -35,10 +35,10 @@ public class Handler : IHttpHandler
                 download(context);
                 break;
             case "test":
-                Dictionary<string, int> dic = dd.GetGroupCount();
+                List<TemplateClass4StatisticResult> ll = dd.getStatisticResult();
                 List<string> list=new List<string>();
                 Series series = new Series();
-                series.name="数量";
+                series.name="次数";
                 series.type = "bar";
                 series.itemStyle = new itemStyle
                 {
@@ -51,9 +51,9 @@ public class Handler : IHttpHandler
                     }
                 };
                 List<Series> ss = new List<Series>();
-                foreach (var item in dic)
+                foreach (var item in ll)
                 {
-                    list.Add(item.Value.ToString());
+                    list.Add(item._field3.ToString());
                 }
                 series.data = list;
                 ss.Add(series);
@@ -134,6 +134,11 @@ public class Handler : IHttpHandler
         string filepath = "";
         if (context.Request.Files["file"].ContentLength > 0)
         {
+            if (context.Request.Files["file"].ContentLength > 52428800)
+            {
+                context.Response.ContentType = "text/plain";
+                context.Response.Write("新增资料失败，附件太大了");
+            }
             context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/") + context.Request.Files["file"].FileName);
             filepath = context.Request.Files["file"].FileName;
 
@@ -176,6 +181,11 @@ public class Handler : IHttpHandler
         Resource resource = new Resource();
         if (context.Request.Files["file"].ContentLength > 0)
         {
+            if (context.Request.Files["file"].ContentLength > 52428800)
+            {
+                context.Response.ContentType = "text/plain";
+                context.Response.Write("更新资料失败，附件太大了");
+            }
             context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/") + context.Request.Files["file"].FileName);
             resource.FilePath = context.Request.Files["file"].FileName;
         }
