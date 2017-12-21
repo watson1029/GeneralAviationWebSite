@@ -15,8 +15,6 @@ namespace Model.EF
     public partial class CurrentFlightPlan
     {
         public int CurrentFlightPlanID { get; set; }
-        public Nullable<System.DateTime> ActuallyStartTime { get; set; }
-        public Nullable<System.DateTime> ActuallyEndTime { get; set; }
         public string PlanState { get; set; }
         public int ActorID { get; set; }
         public int FlightPlanID { get; set; }
