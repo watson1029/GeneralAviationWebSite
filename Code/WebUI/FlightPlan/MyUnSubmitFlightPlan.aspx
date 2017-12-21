@@ -55,29 +55,21 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '申请单号', field: 'PlanCode', width: 180 },
-                        { title: '任务类型', field: 'FlightType', width: 60 },
+                        { title: '申请单号', field: 'PlanCode', width: 200 },
+                        { title: '任务类型', field: 'FlightType', width: 80 },
                         { title: '航空器呼号', field: 'CallSign', width: 80 },
-                        { title: '使用机型', field: 'AircraftType', width: 60 },
+                        { title: '使用机型', field: 'AircraftType', width: 80 },
                         { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
                         {
-                            title: '起飞时刻', field: 'SOBT', width: 100, formatter: function (value, rec, index) {
-
-                                var timesstamp = new Date(value);
-                                return timesstamp.toLocaleDateString();
-                            }
+                            title: '起飞时刻', field: 'SOBT', width: 100
                         },
                         {
-                            title: '降落时刻', field: 'SIBT', width: 100, formatter: function (value, rec, index) {
-
-                                var timesstamp = new Date(value);
-                                return timesstamp.toLocaleDateString();
-                            }
+                            title: '降落时刻', field: 'SIBT', width: 100
                         },
-                        { title: '起飞机场', field: 'ADEP', width: 80 },
-                        { title: '降落机场', field: 'ADES', width: 80 },
+                        { title: '起飞机场', field: 'ADEP', width: 100 },
+                        { title: '降落机场', field: 'ADES', width: 100 },
 
-                         { title: '创建人', field: 'CreatorName', width: 60 },
+                         { title: '创建人', field: 'CreatorName', width: 80 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
@@ -133,7 +125,7 @@
             },
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑');
+                $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx?id=' + uid);
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
             },
 
@@ -168,10 +160,12 @@
                 $.messager.confirm('提示', '确认提交该条飞行计划？', function (r) {
                     if (r) {
                         $.post(location.href, { "action": "submit", "id": uid }, function (data) {
-
-                            if (data.isSuccess) {
-                                $("#tab_list").datagrid("reload");
-                            }
+                            $.messager.alert('提示', data.msg, 'info', function () {
+                                if (data.isSuccess) {
+                                    $("#tab_list").datagrid("reload");
+                                }
+                            });
+             
                         });
                     }
                 });
@@ -179,7 +173,7 @@
             }
         };
     </script>
-    <div id="edit" class="easyui-dialog" style="width: 850px; height: 612px;"
+    <div id="edit" class="easyui-dialog" style="width: 850px; height: 550px;"
         modal="true" closed="true" buttons="#edit-buttons">
                </div>
     <div id="edit-buttons">

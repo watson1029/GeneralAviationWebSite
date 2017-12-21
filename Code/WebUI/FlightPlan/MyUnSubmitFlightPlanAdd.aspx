@@ -56,17 +56,7 @@
                 <td id="ADES">
                 </td>
             </tr>          
-            <tr>
-                <th >起飞时刻：
-                </th>
-                <td id="SOBT">
-                </td>
-<th>降落时刻：
-                </th>
-                <td id="SIBT">
-                </td>
-
-            </tr>
+            
             <tr>
                 <th>其他需要说明的事项：
                 </th>
@@ -78,6 +68,18 @@
 
             <div class="datagrid-toolbar">
             <table class="table_edit">
+                <tr>
+                <th>起飞时刻：
+                </th>
+                <td>
+                    <input id="SOBT" name="SOBT"  type="text" required="true"  class="easyui-datebox" style="height:25px"/>
+                </td>
+                <th>降落时刻：
+                </th>
+                <td>
+                    <input id="SIBT" name="SIBT" type="text" required="true" class="easyui-datebox" validtype="md['#SOBT']" style="height:25px"/>
+                </td>
+            </tr>
                 <tr>
                     <th>航空器架数：
                     </th>
@@ -126,7 +128,6 @@
     <script type="text/javascript">
         var pid = '<%=Request.QueryString["id"] %>';
         $(function () {
-
             if (pid) {
                 $('#trrepcode').hide();
                 $('#RepPlanCode').show();
@@ -137,18 +138,17 @@
                     $("#form_edit").form('load', data);
                     $("#CompanyName").html(data.CompanyName);
                     $("#FlightType").html(data.FlightType);
+                    $("#CallSign").html(data.CallSign);
                     $("#AircraftType").html(data.AircraftType);
                     $("#FlightDirHeight").html(data.FlightDirHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
-                    $("#SOBT").html(new Date(data.SOBT).toDateString());
-                    $("#SIBT").html(new Date(data.SIBT).toDateString());
                     $("#Remark").html(data.Remark);
       
                 });
             }
             else {
-                $("#name").html('<%=User.CompanyName %>');
+                $("#name").html('<%=User.CompanyName%>');
                 $('#trrepcode').show();
                 $('#RepPlanCode').hide();
                 $('#RepetPlanID').combobox({
@@ -161,12 +161,11 @@
                         $.post("MyUnSubmitFlightPlanAdd.aspx", { "action": "gerrpplan", "id": record.id }, function (data) {
                             //    $("#form_audit").form('load', data);
                             $("#FlightType").html(data.FlightType);
+                            $("#CallSign").html(data.CallSign);
                             $("#AircraftType").html(data.AircraftType);
                             $("#FlightDirHeight").html(data.FlightDirHeight);
                             $("#ADEP").html(data.ADEP);
                             $("#ADES").html(data.ADES);
-                            $("#SOBT").html(new Date(data.SOBT).toDateString());
-                            $("#SIBT").html(new Date(data.SIBT).toDateString());
                             $("#Remark").html(data.Remark);
 
                         })

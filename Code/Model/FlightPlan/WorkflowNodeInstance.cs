@@ -24,7 +24,7 @@ namespace Model.FlightPlan
         public Guid NextId { get; set; }
         public int ActorID { get; set; }
         public string ActorName { get; set; }
-        public DateTime ActorTime { get; set; }
+        public DateTime? ActorTime { get; set; }
         public string Comments { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime ApplyTime { get; set; }
