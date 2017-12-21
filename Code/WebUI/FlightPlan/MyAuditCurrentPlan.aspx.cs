@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using Untity;
 using System.Linq.Expressions;
 using Model.EF;
+using System.Data.Entity;
 
 public partial class FlightPlan_MyAuditCurrentPlan : BasePage
 {
@@ -65,7 +66,7 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
     {
         Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
         var currDate = DateTime.Now.Date;
-        predicate = predicate.And(m => m.ActorID == User.ID && m.SOBT == currDate);
+        predicate = predicate.And(m => m.ActorID == User.ID && DbFunctions.TruncateTime(m.SOBT) == currDate);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -80,7 +81,7 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
     private void GetData()
     {
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var plan = currPlanBll.Get(planid);
+        var plan = currPlanBll.GetByCurrid(planid);
         var strJSON = "";
         if (plan != null)
         {
@@ -101,16 +102,16 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
         {
             if (Request.Form["Auditresult"] == "0")
             {
-                currPlanBll.Audit(planid, Request.Form["AuditComment"] ?? "");
+                currPlanBll.Audit(planid, Request.Form["AuditComment"] ?? "", User.ID);
             }
             else
             {
-                currPlanBll.Terminate(planid,Request.Form["AuditComment"] ?? "");
+                currPlanBll.Terminate(planid, Request.Form["AuditComment"] ?? "", User.ID);
             }
             result.IsSuccess = true;
             result.Msg = "提交成功！";
         }
-        catch
+        catch(Exception ex)
         {
             result.IsSuccess = false;
             result.Msg = "提交失败！";

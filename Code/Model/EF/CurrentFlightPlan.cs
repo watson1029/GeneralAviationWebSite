@@ -16,7 +16,9 @@ namespace Model.EF
     {
         public int CurrentFlightPlanID { get; set; }
         public string PlanState { get; set; }
-        public int ActorID { get; set; }
+        public Nullable<int> ActorID { get; set; }
         public int FlightPlanID { get; set; }
+        public Nullable<int> CreateUserId { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }

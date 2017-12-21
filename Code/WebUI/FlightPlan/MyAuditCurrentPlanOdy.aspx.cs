@@ -12,10 +12,12 @@ using Untity;
 using System.Linq.Expressions;
 using Model.EF;
 using Model.FlightPlan;
+using System.Data.Entity;
 
 public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
 {
     private CurrentPlanBLL currPlanBll = new CurrentPlanBLL();
+    private FlightPlanBLL flyBLL = new FlightPlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -28,8 +30,8 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
                 case "queryone"://获取一条记录
                     GetData();
                     break;
-                case "auditsubmit":
-                    AuditSubmit();
+                case "save":
+                    Save();
                     break;
                 default:
                     break;
@@ -66,9 +68,7 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
     {
         Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
         var currDate = DateTime.Now.Date;
-        predicate = predicate.And(m => m.ActorID == User.ID && m.SOBT == currDate);
-        predicate = predicate.And(m => m.PlanState == "end");
-        predicate = predicate.Or(m => m.PlanState == WorkflowNodeInstance.StepStateType.Deserted.ToString());
+        predicate = predicate.And(m => m.ActorID == null && DbFunctions.TruncateTime(m.SOBT) == currDate && m.PlanState == "end");
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -95,30 +95,31 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
-    private void AuditSubmit()
+    private void Save()
     {
-        AjaxResult result = new AjaxResult();        
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        AjaxResult result = new AjaxResult();
 
         try
         {
-            if (Request.Form["Auditresult"] == "0")
-            {
-                currPlanBll.Audit(planid, Request.Form["AuditComment"] ?? "");
-            }
-            else
-            {
-                currPlanBll.Terminate(planid,Request.Form["AuditComment"] ?? "");
-            }
+            var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+            var startTime = Request.Form["ActualStartTime"];
+            var endTime = Request.Form["ActualEndTime"];
+
+            FlightPlan model = flyBLL.Get(planid);
+            model.GetEntitySearchPars<RepetitivePlan>(this.Context);
+            model.ActualStartTime = Convert.ToDateTime(startTime);
+            model.ActualEndTime = Convert.ToDateTime(endTime);
+            model.ModifyTime = DateTime.Now;
+            flyBLL.Update(model);
+
             result.IsSuccess = true;
-            result.Msg = "提交成功！";
+            result.Msg = "更新成功！";
         }
-        catch
+        catch (Exception ex)
         {
             result.IsSuccess = false;
-            result.Msg = "提交失败！";
+            result.Msg = "更新失败！\r\n" + ex.Message;
         }
-
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";

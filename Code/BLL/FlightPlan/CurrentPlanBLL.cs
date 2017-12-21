@@ -84,11 +84,13 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Audit(int planid, string comment)
+        public bool Audit(int planid, string comment,int userid)
         {
             try
             {
-                instal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, comment, workPlan => { });
+                instal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, comment, workPlan => {
+                    dal.Update(new CurrentFlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, CurrentFlightPlanID = workPlan.PlanID, CreateUserId = userid, CreateTime = DateTime.Now }, "ActorID", "PlanState", "CreateUserId", "CreateTime");
+                });
                 return true;
             }
             catch (Exception ex)
@@ -102,11 +104,13 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Terminate(int planid,string comment)
+        public bool Terminate(int planid,string comment,int userid)
         {
             try
             {
-                instal.Terminate(planid, (int)TWFTypeEnum.CurrentPlan, comment, workPlan => { });
+                instal.Terminate(planid, (int)TWFTypeEnum.CurrentPlan, comment, workPlan => {
+                    dal.Update(new CurrentFlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, CurrentFlightPlanID = workPlan.PlanID, CreateUserId = userid, CreateTime = DateTime.Now }, "ActorID", "PlanState", "CreateUserId", "CreateTime");
+                });
                 return true;
             }
             catch(Exception ex)

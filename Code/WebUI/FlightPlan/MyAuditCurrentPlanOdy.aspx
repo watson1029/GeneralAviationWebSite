@@ -13,8 +13,7 @@
     <%--列表 start--%>
     <table id="tab_list">
     </table>
-    <div id="tab_toolbar" style="padding: 2px 2px; height: 22px;">
-        <a href="javascript:void(0)" class="easyui-button" plain="true"></a>
+    <div id="tab_toolbar" style="padding: 2px 2px;">
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
@@ -52,30 +51,33 @@
                     remoteSort: true, //定义是否从服务器给数据排序
 
                     columns: [[
-                        { title: '申请单号', field: 'PlanCode', width: 180 },
-            { title: '航空器架数', field: 'AircraftNum', width: 100 },
-                             { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
-                             { title: '通信联络方法', field: 'ContactWay', width: 100 },
-                             { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
-                             { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
-                             { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
+                        { title: '申请单号', field: 'PlanCode', width: 200 },
+                        { title: '航空器架数', field: 'AircraftNum', width: 100 },
+                        { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
+                        { title: '通信联络方法', field: 'ContactWay', width: 100 },
                         {
-                            title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
-                                var array = [];
-                                $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
-
-                                    array.push("星期" + n);
-                                });
-                                return array.join(',');
-
-                            }
+                            title: '起飞时刻', field: 'SOBT', width: 100
                         },
+                        {
+                            title: '降落时刻', field: 'SIBT', width: 100
+                        },
+                        {
+                            title: '实际开始时间', field: 'ActualStartTime', width: 100
+                        },
+                        {
+                            title: '实际结束时间', field: 'ActualEndTime', width: 100
+                        },
+                        { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
+                        { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
+                        { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
+
                         { title: '公司三字码', field: 'CompanyCode3', width: 100 },
-                         { title: '创建人', field: 'CreatorName', width: 60 },
+                           { title: '公司名称', field: 'CompanyName', width: 100 },
+                         { title: '创建人', field: 'CreatorName', width: 80 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
                              {
                                  title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
-                                     var str = '<a style="color:red" href="javascript:;" onclick="Main.Audit(' + value + ');$(this).parent().click();return false;">编辑</a>';
+                                     var str = '<a style="color:red" href="javascript:;" onclick="Main.Edit(' + value + ');$(this).parent().click();return false;">编辑</a>';
                                      return str;
                                  }
                              },
@@ -104,18 +106,17 @@
                 });
             },
             //审核
-            Audit: function (uid) {
-                $("#audit").dialog("open").dialog('setTitle', '审核');
-                $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
+            Edit: function (uid) {
+                $("#edit").dialog("open").dialog('setTitle', '编辑');
+                $("#btn_save").attr("onclick", "Main.Save(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
-                    //    $("#form_audit").form('load', data);
+                    $("#PlanCode").html(data.PlanCode);
+                    $("#CompanyName").html(data.CompanyName);
                     $("#FlightType").html(data.FlightType);
                     $("#AircraftType").html(data.AircraftType);
                     $("#FlightDirHeight").html(data.FlightDirHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
-                    $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                    $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
                     $("#SOBT").html(data.SOBT);
                     $("#SIBT").html(data.SIBT);
                     $("#Remark").html(data.Remark);
@@ -125,48 +126,40 @@
                     $("#WeatherCondition").html(data.WeatherCondition);
                     $("#AircrewGroupNum").html(data.AircrewGroupNum);
                     $("#RadarCode").html(data.RadarCode);
-                    $("#ActualStartTime").html(data.ActualStartTime);
-                    $("#ActualEndTime").html(data.ActualEndTime);
-                    var fileArray = data.AttchFile.split('|');
-                    for (var i = 0; i < fileArray.length; i++) {
-                        var info = fileArray[i].split(','),
-                        filepath = dj.root + info[0];
-                        $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
-                    }
-                    var arr = [];
-                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
-                        arr.push("星期" + n);
-                    });
-                    $("#WeekSchedule").html(arr.join(','));
 
                 });
             },
-            AuditSubmit: function (uid) {
+            Save: function (uid) {
 
-                if (!$("#form_audit").form("validate")) {
+                if (!$("#form_edit").form("validate")) {
                     return;
                 }
-                var json = $.param({ "id": uid, "action": "auditsubmit" }) + '&' + $('#form_audit').serialize();
+                var json = $.param({ "id": uid, "action": "save" }) + '&' + $('#form_edit').serialize();
 
                 $.post(location.href, json, function (data) {
                     $.messager.alert('提示', data.msg, 'info', function () {
                         if (data.isSuccess) {
                             $("#tab_list").datagrid("reload");
-                            $("#audit").dialog("close");
+                            $("#edit").dialog("close");
                         }
                     });
                 });
 
             }
-
         };
     </script>
 
     <%--添加 修改 start--%>
-    <div id="audit" class="easyui-dialog" style="width: 700px; height: 700px;"
-        modal="true" closed="true" buttons="#audit-buttons">
-        <form id="form_audit" method="post">
+    <div id="edit" class="easyui-dialog" style="width: 800px; height: 700px;"
+        modal="true" closed="true" buttons="#edit-buttons">
+        <form id="form_edit" method="post">
             <table class="table_edit">
+                  <tr>
+                    <th>申请单号：</th>
+                    <td id="PlanCode" style="color:red"></td>
+                    <th>公司名称：</th>
+                    <td id="CompanyName" style="color:red"></td>
+                </tr>
                 <tr>
                     <th>任务类型：</th>
                     <td id="FlightType"></td>
@@ -198,11 +191,7 @@
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
                 </tr>
-                      <tr>
-                      <th>周执行计划：</th>
-                    <td id="WeekSchedule" colspan="3">
-                    </td>
-                     </tr>
+                     
 
               
                 <tr>
@@ -228,33 +217,24 @@
                     <td id="RadarCode"></td>
                 </tr>
                 <tr>
-                    <th>实际开始日期：</th>
-                    <td id="ActualStartTime"></td>
-                    <th>实际结束日期：</th>
-                    <td id="ActualEndTime"></td>
-                </tr>
-                <tr>
-                    <th>审核结果：</th>
-                    <td >
-                        <select class="easyui-combobox" editable="false" name="Auditresult" required="true" panelheight="auto" style="width: 200px;">
-                            <option value="0" selected="true">通过</option>
-                            <option value="1">不通过</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>审核意见：</th>
-                    <td colspan="3">
-                        <input id="AuditComment" name="AuditComment" required="true" maxlength="400" style="width: 400px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
-                    </td>
+                <th >实际开始时间：
+                </th>
+                <td>
+                    <input id="ActualStartTime" name="ActualStartTime"  type="text" required="true" class="easyui-timespinner" style="height:25px"/>
+                </td>
+                <th>实际结束时间：
+                </th>
+                <td >
+                    <input id="ActualEndTime" name="ActualEndTime"  type="text" required="true" class="easyui-timespinner" style="height:25px"/>
+                </td>
 
-                </tr>
+            </tr>
             </table>
         </form>
     </div>
-    <div id="audit-buttons">
-        <a id="btn_audit" href="javascript:;" class="easyui-linkbutton">提交</a> <a href="javascript:;"
-            class="easyui-linkbutton" onclick="$('#audit').dialog('close');return false;">取消</a>
+    <div id="edit-buttons">
+        <a id="btn_save" href="javascript:;" class="easyui-linkbutton">保存</a> 
+        <a href="javascript:;" class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
-
 </asp:Content>
+

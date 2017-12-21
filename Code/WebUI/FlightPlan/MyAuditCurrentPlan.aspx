@@ -33,8 +33,8 @@
                 $('#tab_list').datagrid({
                     title: '列表', //表格标题
                     url: location.href, //请求数据的页面
-                    sortName: 'FlightPlanID', //排序字段
-                    idField: 'FlightPlanID', //标识字段,主键
+                    sortName: 'CurrentFlightPlanID', //排序字段
+                    idField: 'CurrentFlightPlanID', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
                     height: $(parent.document).find("#mainPanel").height() - 10 > 0 ? $(parent.document).find("#mainPanel").height() - 10 : 300, //高度
@@ -58,7 +58,7 @@
                          { title: '创建人', field: 'CreatorName', width: 60 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
                              {
-                                 title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
+                                 title: '操作', field: 'CurrentFlightPlanID', width: 80, formatter: function (value, rec) {
                                      var str = '<a style="color:red" href="javascript:;" onclick="Main.Audit(' + value + ');$(this).parent().click();return false;">审核</a>';
                                      return str;
                                  }
