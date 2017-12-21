@@ -5,12 +5,6 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <%-- <div class="gridsearch">
-        <label>用户名：</label>
-        <input type="text" id="s_UserName" name="s_UserName" class="easyui-validatebox" />
-        <input type="button" class="searchbotton easyui-linkbutton " style="margin-left:60px" iconcls="icon-search" value="查询" onclick="Main.FunSearchData()" />
-    </div>--%>
-    <%--列表 start--%>
     <table id="tab_list">
     </table>
     <div id="tab_toolbar" style="padding: 2px 2px; height: 22px;">
@@ -53,23 +47,13 @@
 
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 180 },
-            { title: '航空器架数', field: 'AircraftNum', width: 100 },
-                             { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
-                             { title: '通信联络方法', field: 'ContactWay', width: 100 },
-                             { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
-                             { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
-                             { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
-                        {
-                            title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
-                                var array = [];
-                                $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
+                        { title: '航空器架数', field: 'AircraftNum', width: 100 },
+                        { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
+                        { title: '通信联络方法', field: 'ContactWay', width: 100 },
+                        { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
+                        { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
+                        { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
 
-                                    array.push("星期" + n);
-                                });
-                                return array.join(',');
-
-                            }
-                        },
                         { title: '公司三字码', field: 'CompanyCode3', width: 100 },
                          { title: '创建人', field: 'CreatorName', width: 60 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
@@ -109,15 +93,14 @@
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                     //    $("#form_audit").form('load', data);
+                    $("#PlanCode").html(data.PlanCode);
                     $("#FlightType").html(data.FlightType);
                     $("#AircraftType").html(data.AircraftType);
                     $("#FlightDirHeight").html(data.FlightDirHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
-                    $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                    $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
-                    $("#SOBT").html(data.SOBT);
-                    $("#SIBT").html(data.SIBT);
+                    $("#SOBT").html(new Date(data.SOBT).toDateString());
+                    $("#SIBT").html(new Date(data.SIBT).toDateString());
                     $("#Remark").html(data.Remark);
                     $("#AircraftNum").html(data.AircraftNum);
                     $("#Pilot").html(data.Pilot);
@@ -125,19 +108,6 @@
                     $("#WeatherCondition").html(data.WeatherCondition);
                     $("#AircrewGroupNum").html(data.AircrewGroupNum);
                     $("#RadarCode").html(data.RadarCode);
-                    $("#ActualStartTime").html(data.ActualStartTime);
-                    $("#ActualEndTime").html(data.ActualEndTime);
-                    var fileArray = data.AttchFile.split('|');
-                    for (var i = 0; i < fileArray.length; i++) {
-                        var info = fileArray[i].split(','),
-                        filepath = dj.root + info[0];
-                        $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
-                    }
-                    var arr = [];
-                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
-                        arr.push("星期" + n);
-                    });
-                    $("#WeekSchedule").html(arr.join(','));
 
                 });
             },
@@ -198,11 +168,7 @@
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
                 </tr>
-                      <tr>
-                      <th>周执行计划：</th>
-                    <td id="WeekSchedule" colspan="3">
-                    </td>
-                     </tr>
+                     
 
               
                 <tr>
@@ -226,12 +192,6 @@
                     <td id="AircrewGroupNum"></td>
                     <th>二次雷达应答机代码：</th>
                     <td id="RadarCode"></td>
-                </tr>
-                <tr>
-                    <th>实际开始日期：</th>
-                    <td id="ActualStartTime"></td>
-                    <th>实际结束日期：</th>
-                    <td id="ActualEndTime"></td>
                 </tr>
                 <tr>
                     <th>审核结果：</th>

@@ -61,11 +61,11 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<CurrentFlightPlan, bool>> GetWhere()
+    private Expression<Func<V_CurrentPlan, bool>> GetWhere()
     {
-        Expression<Func<CurrentFlightPlan, bool>> predicate = PredicateBuilder.True<CurrentFlightPlan>();
+        Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
         var currDate = DateTime.Now.Date;
-        predicate = predicate.And(m => m.ActorID == User.ID && m.EffectDate == currDate);
+        predicate = predicate.And(m => m.ActorID == User.ID && m.SOBT == currDate);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -84,7 +84,6 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
         var strJSON = "";
         if (plan != null)
         {
-            plan.WeekSchedule = plan.WeekSchedule.Replace("*", "");
             strJSON = JsonConvert.SerializeObject(plan);
         }
 

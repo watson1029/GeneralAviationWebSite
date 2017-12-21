@@ -27,7 +27,7 @@ public partial class FlightPlan_ExportHandler : BasePage
                     MyUnSubmitFlightPlanExport();
                     break;
                 case "2":
-                    MyUnSubmitCurrentPlanExport();
+                  //  MyUnSubmitCurrentPlanExport();
                     break;
                 default:
                     break;
@@ -136,7 +136,7 @@ public partial class FlightPlan_ExportHandler : BasePage
 
         return predicate;
     }
-
+    /*
     private void MyUnSubmitCurrentPlanExport()
     {
         AjaxResult result = new AjaxResult();
@@ -219,12 +219,12 @@ public partial class FlightPlan_ExportHandler : BasePage
         file.Close();
         Response.End();
     }
-    private Expression<Func<CurrentFlightPlan, bool>> GetWhere1()
+    private Expression<Func<V_CurrentPlan, bool>> GetWhere1()
     {
-        Expression<Func<CurrentFlightPlan, bool>> predicate = PredicateBuilder.True<CurrentFlightPlan>();
+        Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
         var currDate = DateTime.Now.Date;
-        predicate = predicate.And(m => m.PlanState == "0" && m.Creator == User.ID && m.EffectDate == currDate);       
+        predicate = predicate.And(m => m.PlanState == "0" && m.Creator == User.ID && m.SOBT == currDate);       
 
         return predicate;
-    }
+    }*/
 }
