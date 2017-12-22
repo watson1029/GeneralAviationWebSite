@@ -1,0 +1,19 @@
+打开Fdp数据库，在安全性中添加“mhs”、“dbquery”、“dbmodify”三个用户，然后新建查询，执行“exec sp_change_users_login 'Auto_fix','mhs'；将三个用户轮流执行一遍。执行完成后，在FdpLog，FdpHistory，两个库重复执行上述操作。
+
+成功步骤：
+一.
+create login [060303] with password='password02';设定密码
+
+二.
+-- AUTO_FIX 需要指定密码
+exec sp_change_users_login 'AUTO_FIX','060303',null,'password';
+将修复用户 '060303' 的行，方法是将其登录名链接更新为某个已经存在的登录名。
+通过更新用户，共修复了 1 个孤立用户。
+通过添加新的登录名并更新用户，共修复了 0 个孤立用户。
+
+三.
+exec sp_change_users_login 'UPDATE_ONE','080581','080581';
+go
+
+不过密码被换成了password2
+要是可以延用以前的密码就好了

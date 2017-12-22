@@ -93,8 +93,6 @@
     </script>
 </head>
 <body class="easyui-layout">
-
-    <div data-options="region:'center',title:'Center'" style="margin-left: 150px; margin-right: 150px;">
         <div class="easyui-panel" title="通航资料">
             <select class="easyui-combobox" id="status" name="status" label="资料状态:" labelposition="left" style="width: 230px; margin: 20px;">
                 <option value="1">草稿中</option>
@@ -127,7 +125,6 @@
                 </tr>
             </thead>
         </table>
-    </div>
     <div title="确定删除？" closed="true" class="easyui-dialog" id="hint" style="width: 300px; height: auto;">
         <h3>确定删除这条资料信息吗？</h3>
     </div>
