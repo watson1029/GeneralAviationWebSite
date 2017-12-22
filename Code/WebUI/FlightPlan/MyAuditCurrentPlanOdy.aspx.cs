@@ -18,6 +18,13 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
 {
     private CurrentPlanBLL currPlanBll = new CurrentPlanBLL();
     private FlightPlanBLL flyBLL = new FlightPlanBLL();
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyAuditCurrentPlanOdyCheck";
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
