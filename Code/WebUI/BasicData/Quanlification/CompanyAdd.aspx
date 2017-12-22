@@ -245,39 +245,39 @@
                         uploadedFiles: data.LicensedSeal
                     });
 
-                    //new dj.upload({
-                    //    id: "LegalCardImg",
-                    //    maxSize: 5,
-                    //    multi: true,
-                    //    queueId: "LegalCardImg-fileQueue",
-                    //    listId: "LegalCardImg-fileList",
-                    //    truncate: "18",
-                    //    maxCount: "1",
-                    //    uploadPath: "Files/LegalCardImg/",
-                    //    uploadedFiles: data.LegalCardImg
-                    //});
-                    //new dj.upload({
-                    //    id: "LegalDelegateImg",
-                    //    maxSize: 5,
-                    //    multi: true,
-                    //    queueId: "LegalDelegateImg-fileQueue",
-                    //    listId: "LegalDelegateImg-fileList",
-                    //    truncate: "18",
-                    //    maxCount: "1",
-                    //    uploadPath: "Files/LegalDelegateImg/",
-                    //    uploadedFiles: data.LegalDelegateImg
-                    //});
-                    //new dj.upload({
-                    //    id: "DelegateCardImg",
-                    //    maxSize: 5,
-                    //    multi: true,
-                    //    queueId: "DelegateCardImg-fileQueue",
-                    //    listId: "DelegateCardImg-fileList",
-                    //    truncate: "18",
-                    //    maxCount: "1",
-                    //    uploadPath: "Files/DelegateCardImg/",
-                    //    uploadedFiles: data.DelegateCardImg
-                    //});
+                    new dj.upload({
+                        id: "LegalCardImg",
+                        maxSize: 5,
+                        multi: true,
+                        queueId: "LegalCardImg-fileQueue",
+                        listId: "LegalCardImg-fileList",
+                        truncate: "18",
+                        maxCount: "1",
+                        uploadPath: "Files/LegalCardImg/",
+                        uploadedFiles: data.LegalCardImg
+                    });
+                    new dj.upload({
+                        id: "LegalDelegateImg",
+                        maxSize: 5,
+                        multi: true,
+                        queueId: "LegalDelegateImg-fileQueue",
+                        listId: "LegalDelegateImg-fileList",
+                        truncate: "18",
+                        maxCount: "1",
+                        uploadPath: "Files/LegalDelegateImg/",
+                        uploadedFiles: data.LegalDelegateImg
+                    });
+                    new dj.upload({
+                        id: "DelegateCardImg",
+                        maxSize: 5,
+                        multi: true,
+                        queueId: "DelegateCardImg-fileQueue",
+                        listId: "DelegateCardImg-fileList",
+                        truncate: "18",
+                        maxCount: "1",
+                        uploadPath: "Files/DelegateCardImg/",
+                        uploadedFiles: data.DelegateCardImg
+                    });
                 });
             }
 
@@ -294,36 +294,36 @@
                     uploadPath: "Files/LicensedSeal/",
                     uploadedFiles: ""
                 });
-                //new dj.upload({
-                //    id: "LegalCardImg",
-                //    maxSize: 5,
-                //    multi: true,
-                //    queueId: "LegalCardImg-fileQueue",
-                //    listId: "LegalCardImg-fileList",
-                //    truncate: "18",
-                //    maxCount: "1",
-                //    uploadPath: "Files/LegalCardImg/"
-                //});
-                //new dj.upload({
-                //    id: "LegalDelegateImg",
-                //    maxSize: 5,
-                //    multi: true,
-                //    queueId: "LegalDelegateImg-fileQueue",
-                //    listId: "LegalDelegateImg-fileList",
-                //    truncate: "18",
-                //    maxCount: "1",
-                //    uploadPath: "Files/LegalDelegateImg/"
-                //});
-                //new dj.upload({
-                //    id: "DelegateCardImg",
-                //    maxSize: 5,
-                //    multi: true,
-                //    queueId: "DelegateCardImg-fileQueue",
-                //    listId: "DelegateCardImg-fileList",
-                //    truncate: "18",
-                //    maxCount: "1",
-                //    uploadPath: "Files/DelegateCardImg/"
-                //});
+                new dj.upload({
+                    id: "LegalCardImg",
+                    maxSize: 5,
+                    multi: true,
+                    queueId: "LegalCardImg-fileQueue",
+                    listId: "LegalCardImg-fileList",
+                    truncate: "18",
+                    maxCount: "1",
+                    uploadPath: "Files/LegalCardImg/"
+                });
+                new dj.upload({
+                    id: "LegalDelegateImg",
+                    maxSize: 5,
+                    multi: true,
+                    queueId: "LegalDelegateImg-fileQueue",
+                    listId: "LegalDelegateImg-fileList",
+                    truncate: "18",
+                    maxCount: "1",
+                    uploadPath: "Files/LegalDelegateImg/"
+                });
+                new dj.upload({
+                    id: "DelegateCardImg",
+                    maxSize: 5,
+                    multi: true,
+                    queueId: "DelegateCardImg-fileQueue",
+                    listId: "DelegateCardImg-fileList",
+                    truncate: "18",
+                    maxCount: "1",
+                    uploadPath: "Files/DelegateCardImg/"
+                });
             }
         });
     </script>
