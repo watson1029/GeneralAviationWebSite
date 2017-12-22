@@ -30,10 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -58,6 +60,9 @@
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\CurrentFlightPlan.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\ErrorLog.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\FlightPlan.cs">
@@ -105,6 +110,18 @@
     <Compile Include="EF\UserRole.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\vFlightPlan.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\vGetFlightPlanNodeInstance.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\vGetRepetitivePlanNodeInstance.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\V_CurrentPlan.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\ZHCC_GAPlan.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -128,6 +145,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemManagement\KeyValueModel.cs" />
     <Compile Include="SystemManagement\MenuModel.cs" />
+    <Compile Include="SystemManagement\Series.cs" />
     <Compile Include="SystemManagement\TreeNode.cs" />
   </ItemGroup>
   <ItemGroup>

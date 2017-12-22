@@ -11,10 +11,21 @@ using System.Web.UI.WebControls;
 using Untity;
 using System.Linq.Expressions;
 using Model.EF;
+using System.IO;
+using System.Data;
+using System.Data.Entity;
 
 public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
 {
     private CurrentPlanBLL currPlanBll = new CurrentPlanBLL();
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyUnSubmitCurrentPlanCheck";
+        }
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -27,9 +38,6 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
                 case "queryone"://获取一条记录
                     GetData();
                     break;
-                //case "save":
-                //    Save();
-                //    break;
                 case "submit":
                     Submit();
                     break;
@@ -46,11 +54,6 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
 
         try
         {
-            var model = new CurrentFlightPlan();
-            model.FlightPlanID = planid;
-            model.ActualStartTime = DateTime.Parse(Request.Form["ActualStartTime"]);
-            model.ActualEndTime = DateTime.Parse(Request.Form["ActualEndTime"]);
-            currPlanBll.Update(model, new string[] { "ActualStartTime", "ActualEndTime" });
             currPlanBll.Submit(planid,User.ID,User.UserName);
             result.IsSuccess = true;
             result.Msg = "提交成功！";
@@ -105,7 +108,6 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         var strJSON = "";
         if (plan != null)
         {
-            plan.WeekSchedule = plan.WeekSchedule.Replace("*", "");
             strJSON = JsonConvert.SerializeObject(plan);
         }
 
@@ -130,7 +132,16 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
-        var pageList = currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        var pageList = new List<V_CurrentPlan>();
+        try
+        {
+            pageList = currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        }
+        catch (Exception ex)
+        {
+
+        }
+        
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -141,17 +152,37 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<CurrentFlightPlan, bool>> GetWhere()
+    private Expression<Func<V_CurrentPlan, bool>> GetWhere()
     {
-        Expression<Func<CurrentFlightPlan, bool>> predicate = PredicateBuilder.True<CurrentFlightPlan>();
-        var currDate = DateTime.Now.Date;
-        predicate = predicate.And(m => m.PlanState == "0" && m.Creator == User.ID && m.EffectDate == currDate);
+        Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
+        try
+        {            
+            var currDate = DateTime.Now.Date;
+            predicate = predicate.And(m => m.CurrentFlightPlanID == null && DbFunctions.TruncateTime(m.SOBT) == currDate);
 
-        if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
+            if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
+            {
+                predicate = u => u.PlanCode == Request.Form["search_value"];
+            }
+        }
+        catch(Exception ex)
         {
-            predicate = u => u.PlanCode == Request.Form["search_value"];
+            
         }
 
         return predicate;
+    }
+
+    private string DownFile(string attachfile)
+    {
+        var localNewFileName = Path.GetFileName(attachfile);
+        var localTargetCategory = Server.MapPath("~/Files/PJ/CurrentPlanTemp");
+        if (string.IsNullOrEmpty(localNewFileName))
+            throw new ApplicationException(string.Format("获取文件路径[{0}]中的文件名为空", attachfile));
+        if (!Directory.Exists(localTargetCategory))
+            Directory.CreateDirectory(localTargetCategory);
+
+        var filePath = Path.Combine(localTargetCategory, localNewFileName);
+        return filePath;
     }
 }

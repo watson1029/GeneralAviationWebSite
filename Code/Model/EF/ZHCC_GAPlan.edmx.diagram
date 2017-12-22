@@ -18,12 +18,17 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Resource" Width="1.5" PointX="2.75" PointY="2.25" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.OperationLog" Width="1.5" PointX="4.875" PointY="4.5" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.SupplyDemandInfo" Width="1.5" PointX="2.75" PointY="5.25" IsExpanded="false" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="7.375" PointY="3" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.RepetitivePlan" Width="1.5" PointX="4.875" PointY="3.75" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Company" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="false" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.CurrentFlightPlan" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aircraft" Width="1.5" PointX="4.875" PointY="5.25" IsExpanded="false" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Pilot" Width="1.5" PointX="7.375" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.ErrorLog" Width="1.5" PointX="5.375" PointY="6.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vFlightPlan" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance" Width="1.5" PointX="5.375" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.CurrentFlightPlan" Width="1.5" PointX="7.375" PointY="2.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.V_CurrentPlan" Width="1.5" PointX="7.375" PointY="9.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" Width="1.5" PointX="9.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

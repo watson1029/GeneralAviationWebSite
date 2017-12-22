@@ -74,10 +74,11 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
 
         Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
         predicate = predicate.And(m => m.ActorID == User.ID);
-
+        predicate = predicate.And(m => m.Creator != User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
+            var val=Request.Form["search_value"].Trim();
+            predicate = predicate.And(m => m.PlanCode == val);
         }
 
         return predicate;
@@ -101,16 +102,24 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         result.IsSuccess = false;
         result.Msg = "提交失败！";
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        if (Request.Form["Auditresult"] == "0")
+        try
         {
-            insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
+            if (Request.Form["Auditresult"] == "0")
+            {
+                insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
+            }
+            else
+            {
+                insdal.Terminate(planid, (int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
+            }
+            result.IsSuccess = true;
+            result.Msg = "提交成功！";
         }
-        else {
-            insdal.Terminate(planid, (int)TWFTypeEnum.RepetitivePlan, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
+        catch (Exception)
+        {
+            result.IsSuccess = false;
+            result.Msg = "操作失败！";
         }
-        result.IsSuccess = true;
-        result.Msg = "提交成功！";
-
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
@@ -124,26 +133,32 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         result.Msg = "操作失败！";
         if (Request.Form["cbx_select"] != null)
         {
-          var arr=  Request.Form["cbx_select"].ToString().Split(',');
-
-          var auditComment=Request.Form["AuditComment"] ?? "";
-          if (Request.Form["Auditresult"] == "0")
-          {
-          foreach (var item in arr)
-          {
-              insdal.Submit(int.Parse(item), (int)TWFTypeEnum.RepetitivePlan, auditComment, insdal.UpdateRepetPlan);
-          }
-          }
-          else
-          {
-              foreach (var item in arr)
-              {
-                  insdal.Terminate(int.Parse(item), (int)TWFTypeEnum.RepetitivePlan, auditComment, insdal.UpdateRepetPlan);
-              }
-          }
-          result.IsSuccess =true;
-          result.Msg = "操作成功！";
-
+            try
+            {
+                var arr = Request.Form["cbx_select"].ToString().Split(',');
+                var auditComment = Request.Form["BatchAuditComment"] ?? "";
+                if (Request.Form["BatchAuditresult"] == "0")
+                {
+                    foreach (var item in arr)
+                    {
+                        insdal.Submit(int.Parse(item), (int)TWFTypeEnum.RepetitivePlan, auditComment, insdal.UpdateRepetPlan);
+                    }
+                }
+                else
+                {
+                    foreach (var item in arr)
+                    {
+                        insdal.Terminate(int.Parse(item), (int)TWFTypeEnum.RepetitivePlan, auditComment, insdal.UpdateRepetPlan);
+                    }
+                }
+                result.IsSuccess = true;
+                result.Msg = "操作成功！";
+            }
+            catch(Exception)
+            {
+                result.IsSuccess = false;
+                result.Msg = "操作失败！";
+            }
         }
         Response.Clear();
         Response.Write(result.ToJsonString());
@@ -165,4 +180,14 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         Response.Flush();
         Response.End();
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyAuditRepetPlanCheck";
+        }
+    }
+    #endregion
 }

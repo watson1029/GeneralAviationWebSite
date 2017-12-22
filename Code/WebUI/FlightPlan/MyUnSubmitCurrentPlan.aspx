@@ -8,8 +8,8 @@
     <table id="tab_list">
     </table>
     <div id="tab_toolbar" style="padding: 2px 2px;">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>
-
+        <!--<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>-->
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
@@ -54,45 +54,29 @@
                         { title: '使用机型', field: 'AircraftType', width: 60 },
                         { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
                         {
-                            title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
+                            title: '起飞时刻', field: 'SOBT', width: 100, formatter: function (value, rec, index) {
 
                                 var timesstamp = new Date(value);
                                 return timesstamp.toLocaleDateString();
-
                             }
                         },
                         {
-                            title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) {
+                            title: '降落时刻', field: 'SIBT', width: 100, formatter: function (value, rec, index) {
 
                                 var timesstamp = new Date(value);
                                 return timesstamp.toLocaleDateString();
-
                             }
                         },
-                        {
-                            title: '起飞时刻', field: 'SOBT', width: 100
-                        },
-                        { title: '降落时刻', field: 'SIBT', width: 100 },
                         { title: '起飞机场', field: 'ADEP', width: 80 },
                         { title: '降落机场', field: 'ADES', width: 80 },
 
-                        {
-                            title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
-                                var array = [];
-                                $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
-                                    array.push("星期" + n);
-                                });
-                                return array.join(',');
-
-                            }
-                        },
                          { title: '创建人', field: 'CreatorName', width: 60 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
                             title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>';
+                                var str = '<a style="color:red" id="sub-btn_' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
                                 return str;
                             }
                         }
@@ -124,61 +108,63 @@
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
-
                 var json = $.param({ "id": uid, "action": "save" }) + '&' + $('#form_edit').serialize();
                 $.post(location.href, json, function (data) {
                     $.messager.alert('提示', data.msg, 'info', function () {
                         if (data.isSuccess) {
                             $("#tab_list").datagrid("reload");
+                            $("#add").dialog("close");
                             $("#edit").dialog("close");
                         }
                     });
                 });
             },
-
+            //打开添加窗口
+            OpenWin: function () {
+                $("#edit").dialog("open").dialog('setTitle', '新增飞行计划').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx');
+                ("#btn_add").attr("onclick", "Main.Save();");
+            },
             //修改链接 事件
             EditData: function (uid) {
                 $("#edit").dialog("open").dialog('setTitle', '编辑');
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
-                $("#btn_submit").attr("onclick", "Main.Submit(" + uid + ");");
-                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
-                    $("#form_edit").form('load', data);
-                    $("#FlightType").html(data.FlightType);
-                    $("#AircraftType").html(data.AircraftType);
-                    $("#FlightDirHeight").html(data.FlightDirHeight);
-                    $("#ADEP").html(data.ADEP);
-                    $("#ADES").html(data.ADES);
-                    $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                    $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
-                    $("#SOBT").html(data.SOBT);
-                    $("#SIBT").html(data.SIBT);
-                    $("#AircraftNum").html(data.AircraftNum);
-                    $("#Pilot").html(data.Pilot);
-                    $("#ContactWay").html(data.ContactWay);
-                    $("#AircrewGroupNum").html(data.AircrewGroupNum);
-                    var fileArray = data.AttchFile.split('|');
-                    for (var i = 0; i < fileArray.length; i++) {
-                        var info = fileArray[i].split(','),
-                        filepath = dj.root + info[0];
-                        $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
+            },
+
+            //删除按钮事件
+            Delete: function () {
+                var selRow = $('#tab_list').datagrid('getSelections');
+                if (selRow.length == 0) {
+                    $.messager.alert('提示', '请选择一条记录！', 'info');
+                    return;
+                }
+                var idArray = [];
+                for (var i = 0; i < selRow.length; i++) {
+                    var id = selRow[i].FlightPlanID;
+                    idArray.push(id);
+                }
+                $.messager.confirm('提示', '确认删除该条记录？', function (r) {
+                    if (r) {
+                        $.post(location.href, { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
+
+                            if (data.isSuccess) {
+                                $("#tab_list").datagrid("reload");
+                                selRow.length = 0;
+                            }
+                        });
                     }
-                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
-                        $("#d" + n).attr("checked", true);
-                    });
                 });
             },
-           
             Submit: function (uid) {
-                var json = $.param({ "id": uid, "action": "submit" }) + '&' + $('#form_edit').serialize();
+                if (!$("#form_edit").form("validate")) {
+                    return;
+                }
                 $.messager.confirm('提示', '确认提交该条飞行计划？', function (r) {
                     if (r) {
-                        $.post(location.href, json, function (data) {
-                            $.messager.alert('提示', data.msg, 'info', function () {
-                                if (data.isSuccess) {
-                                    $("#tab_list").datagrid("reload");
-                                    $("#edit").dialog("close");
-                                }
-                            });
+                        $.post(location.href, { "action": "submit", "id": uid }, function (data) {
+
+                            if (data.isSuccess) {
+                                $("#tab_list").datagrid("reload");
+                            }
                         });
                     }
                 });
@@ -186,114 +172,12 @@
             }
         };
     </script>
-
-    <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 700px; height: 600px;"
+    <div id="edit" class="easyui-dialog" style="width: 850px; height: 612px;"
         modal="true" closed="true" buttons="#edit-buttons">
-        <form id="form_edit" method="post">
-            <table class="table_edit">
-                <tr>
-                    <th>任务类型：
-                    </th>
-                    <td id="FlightType">
-                    </td>
-                    <th>航空器类型：
-                    </th>
-                    <td id="AircraftType">
-                    </td>
-                </tr>
-                <tr>
-                    <th>航线走向和飞行高度：
-                    </th>
-                    <td id="FlightDirHeight">
-                    </td>
-                    <th>航空器呼号：
-                    </th>
-                    <td id="CallSign">
-                    </td>
-                </tr>
-                <tr>
-                    <th>起飞机场：
-                    </th>
-                    <td id="ADEP">
-                    </td>
-                    <th>降落机场：
-                    </th>
-                    <td id="ADES">
-                    </td>
-                </tr>
-                <tr>
-                    <th>预计开始日期：
-                    </th>
-                    <td id="StartDate">
-                    </td>
-                    <th>预计结束日期：
-                    </th>
-                    <td id="EndDate">
-                    </td>
-                </tr>
-                <tr>
-                    <th>起飞时刻：
-                    </th>
-                    <td id="SOBT">
-                    </td>
-                    <th>降落时刻：
-                    </th>
-                    <td id="SIBT">
-                    </td>
-                </tr>
-                <tr>
-                    <th>批件：
-                    </th>
-                    <td id="AttchFile">
-                    </td>
-                    <th>周执行计划：
-                    </th>
-                    <td id="WeekSchedule">
-                    </td>
-                </tr>
-                <tr>
-                    <th style="width:160px;">其他需要说明的事项：
-                    </th>
-                    <td id="Remark">
-                    </td>
-                </tr>
-                <tr>
-                    <th>航空器架数：
-                    </th>
-                    <td id="AircraftNum">
-                    </td>
-                    <th>机长（飞行员）姓名：
-                    </th>
-                    <td id="Pilot">
-                    </td>
-                </tr>
-                <tr>
-                    <th>通信联络方法：
-                    </th>
-                    <td id="ContactWay">
-                    </td>
-                    <th>飞行气象条件：
-                    </th>
-                    <td id="WeatherCondition">
-                    </td>
-                </tr>
-                <tr>
-                    <th>空勤组人数：
-                    </th>
-                    <td id="AircrewGroupNum">
-                    </td>
-                    <th style="width:160px;">二次雷达应答机代码：
-                    </th>
-                    <td id="RadarCode">
-                    </td>
-                </tr>
-            </table>     
-        </form>
-    </div>
+               </div>
     <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a id="btn_submit" href="javascript:;" class="easyui-linkbutton">保存并提交</a><a href="javascript:;"
+        <a id="btn_add" href="javascript:;" onclick="Main.Save();" class="easyui-linkbutton">保存</a><a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
-    <%--添加 修改 end--%>
+
 </asp:Content>

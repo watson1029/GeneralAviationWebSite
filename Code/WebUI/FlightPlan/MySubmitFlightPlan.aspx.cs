@@ -66,7 +66,8 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
         predicate = predicate.And(m => m.PlanState != "0" && m.Creator == User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
+            var val = Request.Form["search_value"].Trim();
+            predicate = predicate.And(m => m.PlanCode == val);
         }
         return predicate;
     }
@@ -93,4 +94,14 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
         Response.End();
 
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MySubmitFlightPlanCheck";
+        }
+    }
+    #endregion
 }

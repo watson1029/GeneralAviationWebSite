@@ -31,6 +31,9 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
                 case "auditsubmit":
                     AuditSubmit();
                     break;
+                case "batchaudit":
+                    BatchAuditSubmit();
+                    break;
                 default:
                     break;
             }
@@ -71,10 +74,11 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
 
         Expression<Func<FlightPlan, bool>> predicate = PredicateBuilder.True<FlightPlan>();
         predicate = predicate.And(m => m.ActorID == User.ID);
-
+        predicate = predicate.And(m => m.Creator != User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = predicate.And(m => m.PlanCode == Request.Form["search_value"]);
+            var val = Request.Form["search_value"].Trim();
+          predicate = predicate.And(m => m.PlanCode == val);
         }
 
         return predicate;
@@ -116,6 +120,49 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
 
 
     }
+
+
+
+    private void BatchAuditSubmit()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "操作失败！";
+        if (Request.Form["cbx_select"] != null)
+        {
+            try
+            {
+                var arr = Request.Form["cbx_select"].ToString().Split(',');
+                var auditComment = Request.Form["BatchAuditComment"] ?? "";
+                if (Request.Form["BatchAuditresult"] == "0")
+                {
+                    foreach (var item in arr)
+                    {
+                        insdal.Submit(int.Parse(item), (int)TWFTypeEnum.FlightPlan, auditComment, insdal.UpdateFlightPlan);
+                    }
+                }
+                else
+                {
+                    foreach (var item in arr)
+                    {
+                        insdal.Terminate(int.Parse(item), (int)TWFTypeEnum.FlightPlan, auditComment, insdal.UpdateFlightPlan);
+                    }
+                }
+                result.IsSuccess = true;
+                result.Msg = "操作成功！";
+            }
+            catch (Exception)
+            {
+                result.IsSuccess = false;
+                result.Msg = "操作失败！";
+            }
+        }
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
+
+    }
     private void DownlodFile()
     {
         string fileName = "";
@@ -130,4 +177,14 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
         Response.Flush();
         Response.End();
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyAuditFlightPlanCheck";
+        }
+    }
+    #endregion
 }

@@ -49,8 +49,9 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
     private void GetPlanCode()
     {
         Response.Clear();
-        Response.Write(OrderHelper.GenerateId("",User.CompanyCode3));
+        Response.Write(OrderHelper.GenerateId(OrderTypeEnum.RP, User.CompanyCode3));
         Response.ContentType = "text/plain";
         Response.End();
     }
+
 }

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
+using Model.EF;
 namespace BLL.FlightPlan
 {
     public class FlightPlanBLL
@@ -36,6 +38,17 @@ namespace BLL.FlightPlan
         public Model.EF.FlightPlan Get(int id)
         {
             return dal.Find(u => u.FlightPlanID == id);
+        }
+        public Model.EF.vFlightPlan GetvFlightPlan(int id)
+        {
+            var context = new ZHCC_GAPlanEntities();
+            return context.Set<vFlightPlan>().Where(u => u.FlightPlanID == id).FirstOrDefault();
+        }
+
+        public List<vGetFlightPlanNodeInstance> GetNodeInstanceList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<vGetFlightPlanNodeInstance, bool>> where)
+        {
+            var insdal = new DBHelper<vGetFlightPlanNodeInstance>();
+            return insdal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.PlanID, true);
         }
     }
 }

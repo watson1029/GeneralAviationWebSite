@@ -2,9 +2,6 @@
     CodeFile="MySubmitRepetPlan.aspx.cs" Inherits="FlightPlan_MySubmitRepetPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
-
-
-    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
    <%-- <div class="gridsearch">
@@ -49,9 +46,7 @@
                   collapsible: false, //可折叠
                   sortOrder: 'desc', //排序类型
                   remoteSort: true, //定义是否从服务器给数据排序
-                  frozenColumns: [[//冻结的列，不会随横向滚动轴移动
-                      { field: 'cbx', checkbox: true },
-                  ]],
+        
                   columns: [[
                       { title: '申请单号', field: 'PlanCode', width: 120 },
                       { title: '任务类型', field: 'FlightType', width: 80 },
@@ -160,7 +155,7 @@
                           }
                           return str;
                       }, width: 150 },
-                      { title: '审核时间', field: 'ApplyTime', width: 150 },
+                      { title: '审核时间', field: 'ActorTime', width: 150 },
                       { title: '审核意见', field: 'Comments', width: 150 }
                   ]],
                   queryParams: { "action": "getinstance","id":uid },
@@ -172,6 +167,7 @@
               $("#detail").dialog("open").dialog('setTitle', '查看');
               $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                   //    $("#form_audit").form('load', data);
+                  $("#PlanCode").html(data.PlanCode);
                   $("#FlightType").html(data.FlightType);
                   $("#AircraftType").html(data.AircraftType);
                   $("#FlightDirHeight").html(data.FlightDirHeight);
@@ -217,10 +213,13 @@
 
       };
     </script>
-    <div id="detail" class="easyui-dialog" style="width: 700px; height:500px;"
+    <div id="detail" class="easyui-dialog" style="width: 700px; height:580px;"
         modal="true" closed="true" buttons="#detail-buttons">
         <form id="form_detail" method="post">          
             <table class="table_edit">
+                 <tr>   <th>申请单号：</th>
+                    <td  id="PlanCode" style="color:red" colspan="2"></td>
+                     </tr>
                 <tr>
                     <th>任务类型：</th>
                     <td id="FlightType"></td>

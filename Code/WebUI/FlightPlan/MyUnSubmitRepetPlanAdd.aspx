@@ -35,31 +35,31 @@
                 <th>航线走向和飞行高度：
                 </th>
                 <td>
-                    <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30" style="height:25px;" type="text" required="true" class="easyui-validatebox textbox" />
+                    <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30"  type="text" required="true" class="easyui-validatebox textbox" />
                 </td>
   <th>航空器呼号：
                 </th>
                 <td>
-                    <input id="CallSign" name="CallSign" maxlength="30" type="text" style="height:25px;"  required="true" class="easyui-validatebox textbox" />
+                    <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-validatebox textbox" />
                 </td>
             </tr>
             <tr>
                 <th>起飞机场：
                 </th>
                 <td>
-                    <input id="ADEP" name="ADEP" maxlength="30" type="text"  style="height:23px;"  required="true" class="easyui-validatebox textbox" />
+                    <input id="ADEP" name="ADEP" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
                 </td>
  <th>降落机场：
                 </th>
                 <td>
-                    <input id="ADES" name="ADES" maxlength="30" type="text"  style="height:23px;" required="true" class="easyui-validatebox textbox" />
+                    <input id="ADES" name="ADES" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
                 </td>
             </tr>          
             <tr>
                 <th>预计开始日期：
                 </th>
                 <td>
-                    <input id="StartDate" name="StartDate"  type="text" required="true" class="easyui-datebox" style="height:25px"/>
+                    <input id="StartDate" name="StartDate"  type="text" required="true"  class="easyui-datebox" style="height:25px"/>
                 </td>
                 <th>预计结束日期：
                 </th>
@@ -104,7 +104,7 @@
                              <input id="d4" type="checkbox" name="WeekSchedule" value="4" style="width:20px"/>星期四
                              <input id="d5" type="checkbox" name="WeekSchedule" value="5" style="width:20px"/>星期五
                              <input id="d6" type="checkbox" name="WeekSchedule" value="6" style="width:20px"/>星期六
-                             <input id="d7" type="checkbox" name="WeekSchedule" value="7" style="width:20px"/>星期七
+                             <input id="d7" type="checkbox" name="WeekSchedule" value="7" style="width:20px"/>星期日
                 </td>
 
             </tr>
@@ -112,7 +112,7 @@
                 <th>其他需要说明的事项：
                 </th>
                 <td colspan="3">
-                    <input id="Remark" name="Remark" maxlength="200" style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                    <input id="Remark" name="Remark" maxlength="200"  style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                 </td>
 
             </tr>

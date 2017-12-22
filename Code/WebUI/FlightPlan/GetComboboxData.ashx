@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BLL.BasicData;
 using Model.EF;
+using BLL.FlightPlan;
 public class GetComboboxData : IHttpHandler {
     
     FlightTaskBLL bll = new FlightTaskBLL();
@@ -25,8 +26,6 @@ public class GetComboboxData : IHttpHandler {
                     break;
                 case "3":
                     strJSON = GetAllCompany();
-                    break;
-                default:
                     break;
             }
             context.Response.Clear();
@@ -72,4 +71,5 @@ public class GetComboboxData : IHttpHandler {
         }
         return JsonConvert.SerializeObject(arr);
     }
+
 }

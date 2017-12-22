@@ -52,30 +52,22 @@
                   collapsible: false, //可折叠
                   sortOrder: 'desc', //排序类型
                   remoteSort: true, //定义是否从服务器给数据排序
-                  frozenColumns: [[//冻结的列，不会随横向滚动轴移动
-                      { field: 'cbx', checkbox: true },
-                  ]],
+
                   columns: [[
-                      { title: '申请单号', field: 'PlanCode', width: 100 },
+                      { title: '申请单号', field: 'PlanCode', width: 200 },
                       { title: '航空器架数', field: 'AircraftNum', width: 100 },
                       { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
                       { title: '通信联络方法', field: 'ContactWay', width: 100 },
+                           {
+                               title: '起飞时刻', field: 'SOBT', width: 100
+                           },
+                      {
+                          title: '降落时刻', field: 'SIBT', width: 100
+                      },
                       { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                       { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
                       { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
-
-                      {
-                          title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
-                              var array = [];
-                              $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
-
-                                  array.push("星期" + n);
-                              });
-                              return array.join(',');
-
-                          }
-                      },
-                       { title: '创建人', field: 'CreatorName', width: 60 },
+                       { title: '创建人', field: 'CreatorName', width: 80 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
                       {
@@ -140,7 +132,7 @@
                               return str;
                           }, width: 150
                       },
-                      { title: '审核时间', field: 'ApplyTime', width: 150 },
+                      { title: '审核时间', field: 'ActorTime', width: 150 },
                       { title: '审核意见', field: 'Comments', width: 150 }
                   ]],
                   queryParams: { "action": "getinstance", "id": uid },
@@ -152,13 +144,12 @@
               $("#detail").dialog("open").dialog('setTitle', '查看');
               $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                   //    $("#form_audit").form('load', data);
+                  $("#PlanCode").html(data.PlanCode); 
                   $("#FlightType").html(data.FlightType);
                   $("#AircraftType").html(data.AircraftType);
                   $("#FlightDirHeight").html(data.FlightDirHeight);
                   $("#ADEP").html(data.ADEP);
                   $("#ADES").html(data.ADES);
-                  $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                  $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
                   $("#SOBT").html(data.SOBT);
                   $("#SIBT").html(data.SIBT);
                   $("#Remark").html(data.Remark);
@@ -168,23 +159,6 @@
                   $("#WeatherCondition").html(data.WeatherCondition);
                   $("#AircrewGroupNum").html(data.AircrewGroupNum);
                   $("#RadarCode").html(data.RadarCode);
-                  if (!!data.AttchFile) {
-                      var fileArray = data.AttchFile.split('|');
-                      for (var i = 0; i < fileArray.length; i++) {
-                          var info = fileArray[i].split(','),
-                          filepath = dj.root + info[0];
-                          $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
-                      }
-                  }
-                  else {
-                      $("#AttchFile").html('');
-                  }
-                  var arr = [];
-                  $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
-                      arr.push("星期" + n);
-                  });
-                  $("#WeekSchedule").html(arr.join(','));
-
               });
               Main.InitGird1(uid);
           },
@@ -203,10 +177,12 @@
 
       };
     </script>
-    <div id="detail" class="easyui-dialog" style="width: 600px; height:500px;"
+    <div id="detail" class="easyui-dialog" style="width: 700px; height:580px;"
         modal="true" closed="true" buttons="#detail-buttons">
         <form id="form_detail" method="post">
             <table class="table_edit">
+                <tr>   <th>申请单编号：</th>
+                    <td id="PlanCode" style="color:red" colspan="2"></td></tr>
                              <tr>
                     <th>任务类型：</th>
                     <td id="FlightType"></td>
@@ -216,8 +192,6 @@
             <tr>
                     <th style="width:176px;">航线走向和飞行高度：</th>
                     <td id="FlightDirHeight"></td>
-                    <th>批件：</th>
-                    <td id="AttchFile"></td>
                 </tr>
                   <tr>
               <th>起飞机场：</th>
@@ -226,25 +200,13 @@
                     </th>
                     <td id="ADES"></td>
                 </tr>
-                <tr>
-                    <th>预计开始日期：</th>
-                    <td id="StartDate"></td>
-                    <th>预计结束日期：</th>
-                    <td id="EndDate"></td>
-                </tr>
+         
                 <tr>
                     <th>起飞时刻：</th>
                     <td id="SOBT"></td>
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
                 </tr>
-                      <tr>
-                      <th>周执行计划：</th>
-                    <td id="WeekSchedule" colspan="3">
-                    </td>
-                     </tr>
-
-              
                 <tr>
                     <th style="width:176px;">其他需要说明的事项：</th>
                     <td id="Remark"></td>
