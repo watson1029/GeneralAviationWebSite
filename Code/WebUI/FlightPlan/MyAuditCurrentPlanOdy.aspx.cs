@@ -67,8 +67,9 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
     private Expression<Func<V_CurrentPlan, bool>> GetWhere()
     {
         Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
-        var currDate = DateTime.Now.Date;
-        predicate = predicate.And(m => m.ActorID == null && DbFunctions.TruncateTime(m.SOBT) == currDate && m.PlanState == "end");
+        //var currDate = DateTime.Now.Date;
+        //&& DbFunctions.TruncateTime(m.SOBT) == currDate
+        predicate = predicate.And(m => m.ActorID == null && m.PlanState == "end");
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
