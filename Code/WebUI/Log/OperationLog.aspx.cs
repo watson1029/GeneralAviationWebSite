@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Web.UI;
 using Untity;
 
-public partial class Log_OperationLog : Page
+public partial class Log_OperationLog : BasePage
 {
     OperationLogBLL bll = new OperationLogBLL();
     protected void Page_Load(object sender, EventArgs e)
@@ -81,11 +81,21 @@ public partial class Log_OperationLog : Page
         //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = predicate.And(u => u.UserName==Request.Form["search_value"].ToString());
+            var val=Request.Form["search_value"].ToString();
+            predicate = u => u.UserName == val;
+           
 
             //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
         return predicate;
+    }
+
+    public override string PageRightCode
+    {
+        get
+        {
+            return "OperationLogCheck";
+        }
     }
 
 }

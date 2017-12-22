@@ -269,6 +269,7 @@
         <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
             class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
+
      <div id="batchimport" class="easyui-dialog" style="width: 500px; height:300px;"
         modal="true" closed="true" buttons="#batchimport-buttons">
         

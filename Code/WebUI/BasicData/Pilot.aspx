@@ -10,6 +10,8 @@
         <div id="tab_toolbar" style="padding: 2px 2px;">
             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-redo" plain="true" onclick="Main.BatchImport()">导入</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" plain="true" onclick="Main.Export()">导出</a>
             <div style="float:right">
                 <input id="ipt_search" menu="#search_menu"/>
                 <div id="search_menu" style="width: 200px">
@@ -29,6 +31,16 @@
         <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
             class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
+
+    <div id="batchimport" class="easyui-dialog" style="width: 500px; height:300px;"
+        modal="true" closed="true" buttons="#batchimport-buttons">       
+    </div>
+    <div id="batchimport-buttons">
+        <a id="btn_batchimport" href="javascript:;" onclick="Main.BatchImportSumit()" class="easyui-linkbutton">导入</a> <a href="javascript:;"
+            class="easyui-linkbutton"  onclick="$('#batchimport').dialog('close');return false;">取消</a>
+    </div>
+
+
     <%--添加 修改 end--%>
 
 
@@ -143,10 +155,35 @@
             //修改链接 事件
             EditData: function (uid) {
                 $("#edit").dialog("open").dialog('setTitle', '编辑飞行员信息').dialog('refresh', 'PilotAdd.aspx?id=' + uid);
-                $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
-
-                
+                $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");     
             },
+
+
+            BatchImport: function () {
+                $("#batchimport").dialog("open").dialog('setTitle', '文件导入').dialog('refresh', 'PilotBatchImport.aspx');
+            },
+            Export: function () {
+                window.open("PilotExportHandler.aspx?type=1");
+            },
+            BatchImportSumit: function () {
+
+                var fileInfo = dj.getCmp("PilotFiles").getUploadedFiles();
+                if (fileInfo == "") {
+                    $.messager.alert('提示', '请先上传文件！', 'info');
+                    return;
+                }
+
+                var json = $.param({ "action": "batchImport", PlanFilesPath: fileInfo });
+                $.post(location.href, json, function (data) {
+                    $.messager.alert('提示', data.msg, 'info', function () {
+                        if (data.isSuccess) {
+                            $("#tab_list").datagrid("reload");
+                            $("#batchimport").dialog("close");
+                        }
+                    });
+                });
+            },
+
 
             //删除按钮事件
             Delete: function () {

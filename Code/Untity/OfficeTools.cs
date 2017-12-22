@@ -14,9 +14,14 @@ namespace Untity
             IWorkbook workbook;
             using (FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
-
+                try
+                {
                     workbook = new XSSFWorkbook(file);
-
+                }
+                catch (Exception)
+                {
+                    workbook = new HSSFWorkbook(file);
+                }
             }
 
             //获取excel的第一个sheet
