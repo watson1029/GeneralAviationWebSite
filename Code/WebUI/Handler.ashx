@@ -35,7 +35,9 @@ public class Handler : IHttpHandler
                 download(context);
                 break;
             case "test":
-                List<TemplateClass4StatisticResult> ll = dd.getStatisticResult();
+                DateTime started = Convert.ToDateTime("2017/01/01");
+                DateTime ended = DateTime.Now;
+                List<TemplateClass4StatisticResult> ll = dd.getStatisticResult(started,ended);
                 List<string> list=new List<string>();
                 Series series = new Series();
                 series.name="次数";
