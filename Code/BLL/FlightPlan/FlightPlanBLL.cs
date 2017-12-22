@@ -44,5 +44,11 @@ namespace BLL.FlightPlan
             var context = new ZHCC_GAPlanEntities();
             return context.Set<vFlightPlan>().Where(u => u.FlightPlanID == id).FirstOrDefault();
         }
+
+        public List<vGetFlightPlanNodeInstance> GetNodeInstanceList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<vGetFlightPlanNodeInstance, bool>> where)
+        {
+            var insdal = new DBHelper<vGetFlightPlanNodeInstance>();
+            return insdal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.PlanID, true);
+        }
     }
 }

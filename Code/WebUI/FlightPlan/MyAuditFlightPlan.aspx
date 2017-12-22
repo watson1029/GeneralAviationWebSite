@@ -50,7 +50,9 @@
                     collapsible: false, //可折叠
                     sortOrder: 'desc', //排序类型
                     remoteSort: true, //定义是否从服务器给数据排序
-
+                    frozenColumns: [[//冻结的列，不会随横向滚动轴移动
+    { field: 'cbx', checkbox: true },
+                    ]],
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 200 },
                         { title: '航空器架数', field: 'AircraftNum', width: 100 },
@@ -162,7 +164,7 @@
             }
             var idArray = [];
             for (var i = 0; i < selRow.length; i++) {
-                var id = selRow[i].RepetPlanID;
+                var id = selRow[i].FlightPlanID;
                 idArray.push(id);
             }
             $.messager.confirm('提示', '确认要提交审核结果吗？', function (r) {

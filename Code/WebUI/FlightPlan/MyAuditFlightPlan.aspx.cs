@@ -138,14 +138,14 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
                 {
                     foreach (var item in arr)
                     {
-                        insdal.Submit(int.Parse(item), (int)TWFTypeEnum.FlightPlan, auditComment, insdal.UpdateRepetPlan);
+                        insdal.Submit(int.Parse(item), (int)TWFTypeEnum.FlightPlan, auditComment, insdal.UpdateFlightPlan);
                     }
                 }
                 else
                 {
                     foreach (var item in arr)
                     {
-                        insdal.Terminate(int.Parse(item), (int)TWFTypeEnum.FlightPlan, auditComment, insdal.UpdateRepetPlan);
+                        insdal.Terminate(int.Parse(item), (int)TWFTypeEnum.FlightPlan, auditComment, insdal.UpdateFlightPlan);
                     }
                 }
                 result.IsSuccess = true;

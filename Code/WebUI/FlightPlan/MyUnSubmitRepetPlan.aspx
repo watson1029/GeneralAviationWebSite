@@ -72,6 +72,7 @@
                             title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) { 
                         
                                 var timesstamp = new Date(value);
+    
                                 return timesstamp.toLocaleDateString();
                         
                             }
