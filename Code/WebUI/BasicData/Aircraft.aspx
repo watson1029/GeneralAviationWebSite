@@ -25,7 +25,7 @@
         </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 900px; height: 500px;"
+    <div id="edit" class="easyui-dialog" style="width: 800px; height: 450px;"
         modal="true" closed="true" buttons="#edit-buttons">
          <form id="form_edit"  method="post" >
                 <table class="table_edit">
@@ -33,19 +33,19 @@
                         <td class="tdal">国籍和登记标志：
                         </td>
                         <td class="tdar">
-                            <input id="AircraftSign" name="AircraftSign" type="text"  maxlength="10"  class="easyui-validatebox textbox" data-options="required:true" style="height:25px"/>
+                            <input id="AircraftSign" name="AircraftSign"  style="height:20px" maxlength="10"  class="easyui-validatebox textbox" data-options="required:true" />
                         </td>
                         <td class="tdal">最大加油量:(L)
                         </td>
                         <td class="tdar">
-                            <input id="FuelCapacity" name="FuelCapacity" type="text" class="easyui-numberbox" data-options="min:1,max:9999,precision:0,validType:'length[1,4]'" style="height:25px"/>
+                            <input id="FuelCapacity" name="FuelCapacity"  class="easyui-numberbox" data-options="min:1,max:9999,precision:0,validType:'length[1,4]'" style="height:25px"/>
                         </td>
                     </tr>
                     <tr>
                         <td class="tdal">机型：
                         </td>
                         <td class="tdar">
-                            <input id="AcfType" name="AcfType" type="text" maxlength="20" class="easyui-validatebox textbox" data-options="required:true" style="height:25px"/>
+                            <input id="AcfType" name="AcfType" type="text" style="height:20px" maxlength="20" class="easyui-validatebox textbox" data-options="required:true" />
                         </td>
                         <td class="tdal" >最大航程：(KM)
                         </td>
@@ -56,17 +56,17 @@
                     <tr>
                         <td class="tdal">航空器出厂序号：</td>
                         <td class="tdar">
-                            <input id="AcfNo" name="AcfNo" type="text" class="easyui-validatebox textbox" maxlength="10"  data-options="required:true" style="height:25px" />
+                            <input id="AcfNo" name="AcfNo" style="height:20px"  class="easyui-validatebox textbox" maxlength="10"  data-options="required:true"  />
                         </td>
                         <td class="tdal">年检日期：</td>
                         <td class="tdar">
-                            <input id="ASdate" name="ASdate" type="text" class="easyui-datebox" data-options="required:true" style="height:25px" />
+                            <input id="ASdate" name="ASdate"  class="easyui-datebox" data-options="required:true" style="height:25px" />
                         </td>
                     </tr>
                     <tr>
                         <td class="tdal">飞行器类别：</td>
                         <td class="tdar">
-                            <input id="AcfClass" name="AcfClass" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true" style="height:25px"/>
+                            <input id="AcfClass" name="AcfClass" style="height:20px" class="easyui-validatebox textbox" maxlength="30" data-options="required:true"/>
                         </td>
                         <td class="tdal">巡航高度：(M)</td>
                         <td class="tdar">
@@ -76,7 +76,7 @@
                     <tr>
                         <td class="tdal">制造商：</td>
                         <td class="tdar"> 
-                            <input id="Manufacture" name="Manufacture" type="text"  class="easyui-validatebox textbox" maxlength="30" data-options="required:true" style="height:25px" />
+                            <input id="Manufacture" name="Manufacture" style="height:20px"  class="easyui-validatebox textbox" maxlength="30" data-options="required:true"  />
                         </td>
                         <td class="tdal">巡航速度：(KM/H)</td>
                         <td class="tdar">
@@ -106,8 +106,16 @@
                     <tr>
                         <td class="tdal">适航证颁发单位：</td>
                         <td class="tdar">
-                            <input id="Airworthiness" name="Airworthiness" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true" style="height:25px"/>
+                            <input id="Airworthiness" name="Airworthiness" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true" style="height:20px"/>
                         </td>
+
+                         <td class="tdal">公司名称：</td>
+                         <td class="tdar">
+                                           <input id="CompanyCode3" name="CompanyCode3" data-options="url:'/FlightPlan/GetComboboxData.ashx?type=3',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                                ,panelMaxHeight:200"
+                        required="true" class="easyui-combobox" style="height:25px"/>
+
+                         </td>
                     </tr>
                 </table>
         </form>
@@ -175,6 +183,7 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
+                              { title: '公司三字码', field: 'CompanyCode3', width: 100 },
                         { title: '国籍和登记标志', field: 'AircraftSign', width: 120 },
                         { title: '最大加油量', field: 'FuelCapacity', width: 80 },
                         { title: '机型', field: 'AcfType', width: 120 },
@@ -190,6 +199,7 @@
                         { title: '最大续航时间', field: 'MaxEndurance', width: 100 },
                         { title: '乘客人数', field: 'Passenger', width: 80 },
                         { title: '适航证颁发单位', field: 'Airworthiness', width: 150 },
+                    
                         {
                             title: '操作', field: 'AircraftID', width: 50, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';

@@ -285,7 +285,7 @@ public partial class BasicData_Pilot : BasePage
                     LicenseTime = DateTime.Parse(rowobj.ItemArray[7].ToString()),
                     Licensesort = rowobj.ItemArray[8].ToString() ==  "航线运输驾驶执照" ? "0" : (rowobj.ItemArray[8].ToString() == "商用飞机驾照" ? "1" : "2"),
                     Sex = byte.Parse(rowobj.ItemArray[9].ToString()=="男"?"0":"1"),
-                    CompanyName = User.CompanyName,
+             //       CompanyCode3 = CompanyCode3,
                     CreateTime = DateTime.Now,
                    
                 };

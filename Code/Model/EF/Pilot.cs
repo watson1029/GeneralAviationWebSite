@@ -23,7 +23,7 @@ namespace Model.EF
         public string LicenseNo { get; set; }
         public string Sign { get; set; }
         public Nullable<byte> Sex { get; set; }
-        public string CompanyName { get; set; }
+        public string CompanyCode3 { get; set; }
         public string LicenseImg { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> PilotAge { get; set; }
