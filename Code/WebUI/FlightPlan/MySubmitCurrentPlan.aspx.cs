@@ -13,6 +13,13 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
 {
     private CurrentPlanBLL currPlanBll = new CurrentPlanBLL();
     private WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MySubmitCurrentPlanCheck";
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)

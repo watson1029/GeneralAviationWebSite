@@ -16,6 +16,13 @@ using System.Data.Entity;
 public partial class FlightPlan_MyAuditCurrentPlan : BasePage
 {
     private CurrentPlanBLL currPlanBll = new CurrentPlanBLL();
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyAuditCurrentPlanCheck";
+        }
+    }
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
