@@ -443,4 +443,17 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         var filePath = Path.Combine(localTargetCategory, localNewFileName);
         return filePath;
     }
+
+
+
+
+#region 权限编码
+  public override string PageRightCode
+    {
+        get
+        {
+            return "MyUnSubmitRepetPlanCheck";
+        }
+    } 
+#endregion
 }

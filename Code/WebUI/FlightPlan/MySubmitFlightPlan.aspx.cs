@@ -94,4 +94,14 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
         Response.End();
 
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MySubmitFlightPlanCheck";
+        }
+    }
+    #endregion
 }

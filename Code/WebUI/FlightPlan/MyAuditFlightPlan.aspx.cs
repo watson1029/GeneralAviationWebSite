@@ -177,4 +177,14 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
         Response.Flush();
         Response.End();
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyAuditFlightPlanCheck";
+        }
+    }
+    #endregion
 }

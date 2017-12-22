@@ -89,4 +89,15 @@ public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
+
+        #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyFinishAuditFlightPlanCheck";
+        }
+    }
+    #endregion
+
 }

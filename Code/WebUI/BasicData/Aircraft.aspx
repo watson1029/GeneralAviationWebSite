@@ -12,6 +12,8 @@
         <div id="tab_toolbar" style="padding: 2px 2px;">
             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-redo" plain="true" onclick="Main.BatchImport()">导入</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" plain="true" onclick="Main.Export()">导出</a>
             <div style="float:right">
                 <input id="ipt_search" menu="#search_menu"/>
                 <div id="search_menu" style="width: 200px">
@@ -31,93 +33,104 @@
                         <td class="tdal">国籍和登记标志：
                         </td>
                         <td class="tdar">
-                            <input id="AircraftSign" name="AircraftSign" type="text"  maxlength="10"  class="easyui-validatebox textbox" data-options="required:true"/>
+                            <input id="AircraftSign" name="AircraftSign" type="text"  maxlength="10"  class="easyui-validatebox textbox" data-options="required:true" style="height:25px"/>
                         </td>
                         <td class="tdal">最大加油量:(L)
                         </td>
                         <td class="tdar">
-                            <input id="FuelCapacity" name="FuelCapacity" type="text" class="easyui-numberbox" data-options="min:1,max:9999,precision:0,validType:'length[1,4]'" />
+                            <input id="FuelCapacity" name="FuelCapacity" type="text" class="easyui-numberbox" data-options="min:1,max:9999,precision:0,validType:'length[1,4]'" style="height:25px"/>
                         </td>
                     </tr>
                     <tr>
                         <td class="tdal">机型：
                         </td>
                         <td class="tdar">
-                            <input id="AcfType" name="AcfType" type="text" maxlength="20" class="easyui-validatebox textbox" data-options="required:true"/>
+                            <input id="AcfType" name="AcfType" type="text" maxlength="20" class="easyui-validatebox textbox" data-options="required:true" style="height:25px"/>
                         </td>
                         <td class="tdal" >最大航程：(KM)
                         </td>
                         <td class="tdar" >
-                            <input id="Range" name="Range" type="text" class="easyui-numberbox" data-options="min:1,max:100000,precision:0,validType:'length[1,6]'" />
+                            <input id="Range" name="Range" type="text" class="easyui-numberbox" data-options="min:1,max:100000,precision:0,validType:'length[1,6]'" style="height:25px" />
                         </td>
                      </tr>
                     <tr>
                         <td class="tdal">航空器出厂序号：</td>
                         <td class="tdar">
-                            <input id="AcfNo" name="AcfNo" type="text" class="easyui-numberbox" data-options="precision:0,validType:'length[1,6]'" />
+                            <input id="AcfNo" name="AcfNo" type="text" class="easyui-validatebox textbox" maxlength="10"  data-options="required:true" style="height:25px" />
                         </td>
                         <td class="tdal">年检日期：</td>
                         <td class="tdar">
-                            <input id="ASdate" name="ASdate" type="text" class="easyui-datebox" data-options="required:true" />
+                            <input id="ASdate" name="ASdate" type="text" class="easyui-datebox" data-options="required:true" style="height:25px" />
                         </td>
                     </tr>
                     <tr>
                         <td class="tdal">飞行器类别：</td>
                         <td class="tdar">
-                            <input id="AcfClass" name="AcfClass" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true"/>
+                            <input id="AcfClass" name="AcfClass" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true" style="height:25px"/>
                         </td>
                         <td class="tdal">巡航高度：(M)</td>
                         <td class="tdar">
-                            <input id="CruiseAltd" name="CruiseAltd" type="text" class="easyui-numberbox" data-options="min:1,max:6000,precision:0,validType:'length[1,4]'" />
+                            <input id="CruiseAltd" name="CruiseAltd" type="text" class="easyui-numberbox" data-options="min:1,max:6000,precision:0,validType:'length[1,4]'" style="height:25px" />
                         </td>   
                     </tr>
                     <tr>
                         <td class="tdal">制造商：</td>
                         <td class="tdar"> 
-                            <input id="Manufacture" name="Manufacture" type="text"  class="easyui-validatebox textbox" maxlength="30" data-options="required:true" />
+                            <input id="Manufacture" name="Manufacture" type="text"  class="easyui-validatebox textbox" maxlength="30" data-options="required:true" style="height:25px" />
                         </td>
                         <td class="tdal">巡航速度：(KM/H)</td>
                         <td class="tdar">
-                            <input id="CruiseSpeed" name="CruiseSpeed" type="text" class="easyui-numberbox"  data-options="min:1,max:10000,precision:0,validType:'length[1,5]'"/>
+                            <input id="CruiseSpeed" name="CruiseSpeed" type="text" class="easyui-numberbox"  data-options="min:1,max:10000,precision:0,validType:'length[1,5]'" style="height:25px"/>
                         </td>                       
                     </tr>
-                    <tr>
-                        <td class="tdal">尾流：</td>
-                        <td class="tdar">
-                            <input id="WakeTurbulance" name="WakeTurbulance" type="text" class="easyui-validatebox textbox" maxlength="5"/>
-                        </td>
+                    <tr>                        
                         <td class="tdal">最大速度：(KM/H)</td>
                         <td class="tdar">
-                            <input id="MaxSpeed" name="MaxSpeed" type="text" class="easyui-numberbox" data-options="min:1,max:10000,precision:0,validType:'length[1,5]'" />
-                        </td>                     
-                    </tr>
-                    <tr>
+                            <input id="MaxSpeed" name="MaxSpeed" type="text" class="easyui-numberbox" data-options="min:1,max:10000,precision:0,validType:'length[1,5]'" style="height:25px"/>
+                        </td>     
                         <td class="tdal">最大起飞重量：(KG)</td>
                         <td class="tdar">
-                            <input id="FueledWeight" name="FueledWeight" type="text" class="easyui-numberbox" data-options="min:1,max:10000,precision:0,validType:'length[1,5]'" />
-                        </td>
+                            <input id="FueledWeight" name="FueledWeight" type="text" class="easyui-numberbox" data-options="min:1,max:10000,precision:0,validType:'length[1,5]'" style="height:25px" />
+                        </td>                
+                    </tr>
+                    <tr>
                         <td class="tdal">最大续航时间：(H)</td>
                         <td class="tdar">
-                            <input id="MaxEndurance" name="MaxEndurance" type="text" class="easyui-numberbox" data-options="min:1,max:999,precision:1,validType:'length[1,3]'" />
+                            <input id="MaxEndurance" name="MaxEndurance" type="text" class="easyui-numberbox" data-options="min:0,max:999,precision:1,required:true,validType:'length[1,3]'" style="height:25px" />
+                        </td>
+                        <td class="tdal">乘客人数：</td>
+                        <td class="tdar">
+                            <input id="Passenger" name="Passenger" type="text" class="easyui-numberbox" data-options="min:0,max:99,precision:0,required:true,validType:'length[1,2]'" style="height:25px" />
                         </td>
                     </tr>
                     <tr>
-                        <td class="tdal">乘客人数：</td>
-                        <td class="tdar">
-                            <input id="Passenger" name="Passenger" type="text" class="easyui-numberbox" data-options="min:0,max:99,precision:0,validType:'length[1,2]'" />
-                        </td>
                         <td class="tdal">适航证颁发单位：</td>
                         <td class="tdar">
-                            <input id="Airworthiness" name="Airworthiness" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true" />
+                            <input id="Airworthiness" name="Airworthiness" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true" style="height:25px"/>
                         </td>
                     </tr>
                 </table>
         </form>
     </div>
     <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">提交</a> <a href="javascript:;"
-            class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
+        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a>
+        <a href="javascript:;"class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
+
+
+    <div id="batchimport" class="easyui-dialog" style="width: 500px; height:300px;"
+        modal="true" closed="true" buttons="#batchimport-buttons">  
+    </div>
+    <div id="batchimport-buttons">
+        <a id="btn_batchimport" href="javascript:;" onclick="Main.BatchImportSumit()" class="easyui-linkbutton">导入</a> <a href="javascript:;"
+            class="easyui-linkbutton"  onclick="$('#batchimport').dialog('close');return false;">取消</a>
+    </div>
+
+     <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
+     <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
+     <link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
+     <script src="<%=Page.ResolveUrl("~/Content/JS/GA/upload.js")%>" type="text/javascript"></script>
+
     <%--添加 修改 end--%>
 
     <%--设置菜单 start--%>
@@ -172,7 +185,6 @@
                         { title: '巡航高度', field: 'CruiseAltd', width: 80 },
                         { title: '制造商', field: 'Manufacture', width: 250 },
                         { title: '巡航速度', field: 'CruiseSpeed', width: 80 },
-                        { title: '尾流', field: 'WakeTurbulance', width: 50 },
                         { title: '最大速度', field: 'MaxSpeed', width: 80 },
                         { title: '最大起飞重量', field: 'FueledWeight', width: 100 },
                         { title: '最大续航时间', field: 'MaxEndurance', width: 100 },
@@ -240,6 +252,34 @@
                     $("#form_edit").form('load', data);
                 });
             },
+
+
+            BatchImport: function () {
+                $("#batchimport").dialog("open").dialog('setTitle', '文件导入').dialog('refresh', 'AircraftBatchImport.aspx');
+            },
+            Export: function () {
+                window.open("ExportHandler.aspx?type=1");
+            },
+            BatchImportSumit: function () {
+
+                var fileInfo = dj.getCmp("AircraftFiles").getUploadedFiles();
+                if (fileInfo == "") {
+                    $.messager.alert('提示', '请先上传文件！', 'info');
+                    return;
+                }
+
+                var json = $.param({ "action": "batchImport", PlanFilesPath: fileInfo });
+                $.post(location.href, json, function (data) {
+                    $.messager.alert('提示', data.msg, 'info', function () {
+                        if (data.isSuccess) {
+                            $("#tab_list").datagrid("reload");
+                            $("#batchimport").dialog("close");
+                        }
+                    });
+                });
+            },
+
+
 
             //删除按钮事件
             Delete: function () {

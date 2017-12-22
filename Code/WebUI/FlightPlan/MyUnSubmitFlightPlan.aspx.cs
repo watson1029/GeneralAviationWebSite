@@ -212,4 +212,13 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
 
         return predicate;
     }
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyUnSubmitFlightPlanCheck";
+        }
+    }
+    #endregion
 }

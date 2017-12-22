@@ -23,7 +23,7 @@
    
 
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 800px; height:500px;"
+    <div id="edit" class="easyui-dialog" style="width:800px; height:500px;"
        modal="true" closed="true" buttons="#edit-buttons">
     </div>
     <div id="edit-buttons">
@@ -108,13 +108,13 @@
                     return;
                 }
 
-                var fileInfo = dj.getCmp("LegalCardImg").getUploadedFiles();
-                $("#LegalCardImgInfo").val(fileInfo);
-                var fileInfo = dj.getCmp("LegalDelegateImg").getUploadedFiles();
-                $("#LegalDelegateImgLicenseImgInfo").val(fileInfo);
-                var fileInfo = dj.getCmp("DelegateCardImg").getUploadedFiles();
-                $("#DelegateCardImgInfo").val(fileInfo);
-                var fileInfo = dj.getCmp("LicensedSeal").getUploadedFiles();
+                //var fileInfo = dj.getCmp("LegalCardImg").getUploadedFiles();
+                //$("#LegalCardImgInfo").val(fileInfo);
+                // fileInfo = dj.getCmp("LegalDelegateImg").getUploadedFiles();
+                //$("#LegalDelegateImgInfo").val(fileInfo);
+                // fileInfo = dj.getCmp("DelegateCardImg").getUploadedFiles();
+                //$("#DelegateCardImgInfo").val(fileInfo);
+                 var fileInfo = dj.getCmp("LicensedSeal").getUploadedFiles();
                 $("#LicensedSealInfo").val(fileInfo);
 
 
