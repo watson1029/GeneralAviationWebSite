@@ -37,5 +37,10 @@ namespace BLL.BasicData
             return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.AircraftID, true);
         }
 
+        public List<Aircraft> GetList(Expression<Func<Aircraft, bool>> where)
+        {
+            return _dal.FindList(where, m => m.AircraftID, true);
+        }
+
     }
 }

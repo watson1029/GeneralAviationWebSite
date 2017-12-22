@@ -35,5 +35,10 @@ namespace BLL.BasicData
         {
             return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
         }
+
+        public List<Pilot> GetList(Expression<Func<Pilot, bool>> where)
+        {
+            return _dal.FindList(where, m => m.ID, true);
+        }
     }
 }

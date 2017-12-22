@@ -80,11 +80,19 @@ public partial class Log_LoginLog : BasePage
         //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = u => u.ID == int.Parse(Request.Form["search_value"]);
+            var val= Request.Form["search_value"] ;
+            predicate = u => u.UserName == val;
 
             //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
         return predicate;
+    }
+    public override string PageRightCode
+    {
+        get
+        {
+            return "LoginLogCheck";
+        }
     }
 
 }

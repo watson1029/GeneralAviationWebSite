@@ -43,5 +43,12 @@ public partial class BasicData_PilotAdd : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
-   
+
+    public override string PageRightCode
+    {
+        get
+        {
+            return "PilotCheck";
+        }
+    }
 }
