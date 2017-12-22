@@ -11,9 +11,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class FlightPlan_MyFinishAuditRepetPlan : BasePage
+public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
 {
-    RepetitivePlanBLL bll = new RepetitivePlanBLL();
+    FlightPlanBLL bll = new FlightPlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -61,11 +61,11 @@ public partial class FlightPlan_MyFinishAuditRepetPlan : BasePage
     /// </summary>
     /// <returns></returns>
     /// 
-    private Expression<Func<vGetRepetitivePlanNodeInstance, bool>> GetWhere()
+    private Expression<Func<vGetFlightPlanNodeInstance, bool>> GetWhere()
     {
 
-        Expression<Func<vGetRepetitivePlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetRepetitivePlanNodeInstance>();
-        predicate = predicate.And(m => m.ActorID != m.Creator);
+        Expression<Func<vGetFlightPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetFlightPlanNodeInstance>();
+        predicate = predicate.And(m => m.ActorID !=m.Creator);
         predicate = predicate.And(m => m.ActorID == User.ID);
         predicate = predicate.And(m => m.State == 2 || m.State == 3);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))

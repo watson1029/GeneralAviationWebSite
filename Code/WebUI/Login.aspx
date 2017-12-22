@@ -11,6 +11,9 @@
     <link href="<%=Page.ResolveUrl("~/Content/Css/login.css")%>" rel="stylesheet" type="text/css" />         
     <script src="<%=Page.ResolveUrl("~/Content/JS/Des.js")%>" type="text/javascript"></script>
     <script type="text/javascript">
+        if (window != top) {
+            top.location.href = location.href;
+        }
         document.onkeydown = function (e) {
             var event = e || window.event;
             var code = event.keyCode || event.which || event.charCode;
