@@ -82,7 +82,7 @@ public partial class BasicData_ExportHandler : BasePage
             foreach (var item in listData)
             {
                 var dataRow = sheet1.CreateRow(rowIndex);
-                dataRow.CreateCell(0).SetCellValue(item.AircraftSign);
+                dataRow.CreateCell(0).SetCellValue(item.AircraftSign.ToString());
                 dataRow.CreateCell(1).SetCellValue(item.FuelCapacity.ToString());
                 dataRow.CreateCell(2).SetCellValue(item.AcfType);
                 dataRow.CreateCell(3).SetCellValue(item.Range.ToString());
@@ -112,7 +112,7 @@ public partial class BasicData_ExportHandler : BasePage
         Response.Clear();
         Response.AppendHeader("Content-Disposition",
                               "attachment;filename=" +
-                              HttpUtility.UrlEncode("长期计划未提交列表" + ".xls", System.Text.Encoding.UTF8));
+                              HttpUtility.UrlEncode("飞行器信息列表" + ".xls", System.Text.Encoding.UTF8));
         file.WriteTo(Response.OutputStream);
         file.Close();
         Response.End();

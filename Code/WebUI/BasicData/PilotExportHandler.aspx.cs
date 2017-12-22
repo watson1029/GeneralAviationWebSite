@@ -80,7 +80,7 @@ public partial class BasicData_PilotExportHandler : BasePage
                 
                 dataRow.CreateCell(0).SetCellValue(item.Pilots);
                 dataRow.CreateCell(1).SetCellValue(item.PilotCardNo);
-                dataRow.CreateCell(2).SetCellValue(item.PilotDT);
+                dataRow.CreateCell(2).SetCellValue(item.PilotDT.ToString());
                 dataRow.CreateCell(3).SetCellValue(item.PilotAge.ToString());
                 dataRow.CreateCell(4).SetCellValue(item.PhoneNo);
                 dataRow.CreateCell(5).SetCellValue(item.LicenseNo);
