@@ -1,6 +1,5 @@
-﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeFile="CompanyAdd.aspx.cs" Inherits="BasicData_Quanlification_CompanyAdd" %>
-
-<form id="form_edit"  method="post" >
+﻿<%@ Page  Language="C#" AutoEventWireup="true" CodeFile="CompanyAdd.aspx.cs" Inherits="BasicData_Quanlification_CompanyAdd" %>
+<form id="form_edit"  method="post">
 <div class="easyui-tabs">   
     <div title="通航企业信息填写" style="padding:10px"> 
             <table class="table_edit">
@@ -101,30 +100,30 @@
                 </tr>
                 <tr>
                     <th>法人身份证复印件：</th>
-                    <td>
+                    <td colspan="3">
                         <input type="hidden" name="LegalCardImgInfo" id="LegalCardImgInfo"/>
                         <input type="file" id="LegalCardImg" name="LegalCardImg" />
-                        <a id="btn_uploadlci" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalCardImg').uploadFiles()">上传</a>
+                        <a  href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalCardImg').uploadFiles()">上传</a>
                         <div id="LegalCardImg-fileQueue"></div>
                         <div id="LegalCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
                 </tr>
                 <tr>
                     <th> 法人委托书原件：</th>
-                    <td>
+                    <td colspan="3">
                         <input type="hidden" name="LegalDelegateImgInfo" id="LegalDelegateImgInfo" />
                         <input type="file" id="LegalDelegateImg" name="LegalDelegateImg" />
-                        <a id="btn_uploadldi" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalDelegateImg').uploadFiles()">上传</a>
+                        <a href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalDelegateImg').uploadFiles()">上传</a>
                         <div id="LegalDelegateImg-fileQueue"></div>
                         <div id="LegalDelegateImg-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
                 </tr>
                 <tr>
                     <th>委托人身份证复印件：</th>
-                    <td>
+                    <td colspan="3">
                         <input type="hidden" name="DelegateCardImgInfo" id="DelegateCardImgInfo" />
                         <input type="file" id="DelegateCardImg" name="DelegateCardImg" />
-                        <a id="btn_uploaddci" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('DelegateCardImg').uploadFiles()">上传</a>
+                        <a  href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('DelegateCardImg').uploadFiles()">上传</a>
                         <div id="DelegateCardImg-fileQueue"></div>
                         <div id="DelegateCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
@@ -209,10 +208,10 @@
                 </tr>              
                 <tr>
                     <th>许可机关印章：</th>
-                    <td>
+                    <td colspan="3">
                         <input type="hidden" name="LicensedSealInfo" id="LicensedSealInfo"  />
                         <input type="file" id="LicensedSeal" name="LicensedSeal" />
-                        <a id="btn_upload" href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LicensedSeal').uploadFiles()">上传</a>
+                        <a  id="btn_upload" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px"  onclick="dj.getCmp('LicensedSeal').uploadFiles()">上传</a>
                         <div id="LicensedSeal-fileQueue"></div>
                         <div id="LicensedSeal-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
@@ -221,10 +220,8 @@
       
     </div>
 </div>
-
 </form>
-
-    <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
+      <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
     <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
     <link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
     <script src="<%=Page.ResolveUrl("~/Content/JS/GA/upload.js")%>" type="text/javascript"></script>
@@ -244,43 +241,48 @@
                         listId: "LicensedSeal-fileList",
                         truncate: "18",
                         maxCount: "1",
-                        uploadPath: "Files/LicensedSeal/"
+                        uploadPath: "Files/LicensedSeal/",
+                        uploadedFiles: data.LicensedSeal
                     });
 
-                    new dj.upload({
-                        id: "LegalCardImg",
-                        maxSize: 5,
-                        multi: true,
-                        queueId: "LegalCardImg-fileQueue",
-                        listId: "LegalCardImg-fileList",
-                        truncate: "18",
-                        maxCount: "1",
-                        uploadPath: "Files/LegalCardImg/"
-                    });
-                    new dj.upload({
-                        id: "LegalDelegateImg",
-                        maxSize: 5,
-                        multi: true,
-                        queueId: "LegalDelegateImg-fileQueue",
-                        listId: "LegalDelegateImg-fileList",
-                        truncate: "18",
-                        maxCount: "1",
-                        uploadPath: "Files/LegalDelegateImg/"
-                    });
-                    new dj.upload({
-                        id: "DelegateCardImg",
-                        maxSize: 5,
-                        multi: true,
-                        queueId: "DelegateCardImg-fileQueue",
-                        listId: "DelegateCardImg-fileList",
-                        truncate: "18",
-                        maxCount: "1",
-                        uploadPath: "Files/DelegateCardImg/"
-                    });
+                    //new dj.upload({
+                    //    id: "LegalCardImg",
+                    //    maxSize: 5,
+                    //    multi: true,
+                    //    queueId: "LegalCardImg-fileQueue",
+                    //    listId: "LegalCardImg-fileList",
+                    //    truncate: "18",
+                    //    maxCount: "1",
+                    //    uploadPath: "Files/LegalCardImg/",
+                    //    uploadedFiles: data.LegalCardImg
+                    //});
+                    //new dj.upload({
+                    //    id: "LegalDelegateImg",
+                    //    maxSize: 5,
+                    //    multi: true,
+                    //    queueId: "LegalDelegateImg-fileQueue",
+                    //    listId: "LegalDelegateImg-fileList",
+                    //    truncate: "18",
+                    //    maxCount: "1",
+                    //    uploadPath: "Files/LegalDelegateImg/",
+                    //    uploadedFiles: data.LegalDelegateImg
+                    //});
+                    //new dj.upload({
+                    //    id: "DelegateCardImg",
+                    //    maxSize: 5,
+                    //    multi: true,
+                    //    queueId: "DelegateCardImg-fileQueue",
+                    //    listId: "DelegateCardImg-fileList",
+                    //    truncate: "18",
+                    //    maxCount: "1",
+                    //    uploadPath: "Files/DelegateCardImg/",
+                    //    uploadedFiles: data.DelegateCardImg
+                    //});
                 });
             }
 
             else {
+                debugger;
                 new dj.upload({
                     id: "LicensedSeal",
                     maxSize: 5,
@@ -289,38 +291,39 @@
                     listId: "LicensedSeal-fileList",
                     truncate: "18",
                     maxCount: "1",
-                    uploadPath: "Files/LicensedSeal/"
+                    uploadPath: "Files/LicensedSeal/",
+                    uploadedFiles: ""
                 });
-                new dj.upload({
-                    id: "LegalCardImg",
-                    maxSize: 5,
-                    multi: true,
-                    queueId: "LegalCardImg-fileQueue",
-                    listId: "LegalCardImg-fileList",
-                    truncate: "18",
-                    maxCount: "1",
-                    uploadPath: "Files/LegalCardImg/"
-                });
-                new dj.upload({
-                    id: "LegalDelegateImg",
-                    maxSize: 5,
-                    multi: true,
-                    queueId: "LegalDelegateImg-fileQueue",
-                    listId: "LegalDelegateImg-fileList",
-                    truncate: "18",
-                    maxCount: "1",
-                    uploadPath: "Files/LegalDelegateImg/"
-                });
-                new dj.upload({
-                    id: "DelegateCardImg",
-                    maxSize: 5,
-                    multi: true,
-                    queueId: "DelegateCardImg-fileQueue",
-                    listId: "DelegateCardImg-fileList",
-                    truncate: "18",
-                    maxCount: "1",
-                    uploadPath: "Files/DelegateCardImg/"
-                });
+                //new dj.upload({
+                //    id: "LegalCardImg",
+                //    maxSize: 5,
+                //    multi: true,
+                //    queueId: "LegalCardImg-fileQueue",
+                //    listId: "LegalCardImg-fileList",
+                //    truncate: "18",
+                //    maxCount: "1",
+                //    uploadPath: "Files/LegalCardImg/"
+                //});
+                //new dj.upload({
+                //    id: "LegalDelegateImg",
+                //    maxSize: 5,
+                //    multi: true,
+                //    queueId: "LegalDelegateImg-fileQueue",
+                //    listId: "LegalDelegateImg-fileList",
+                //    truncate: "18",
+                //    maxCount: "1",
+                //    uploadPath: "Files/LegalDelegateImg/"
+                //});
+                //new dj.upload({
+                //    id: "DelegateCardImg",
+                //    maxSize: 5,
+                //    multi: true,
+                //    queueId: "DelegateCardImg-fileQueue",
+                //    listId: "DelegateCardImg-fileList",
+                //    truncate: "18",
+                //    maxCount: "1",
+                //    uploadPath: "Files/DelegateCardImg/"
+                //});
             }
         });
     </script>

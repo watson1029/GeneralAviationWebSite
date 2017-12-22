@@ -92,4 +92,14 @@ public partial class FlightPlan_MySubmitRepetPlan :BasePage
         Response.End();
     
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MySubmitRepetPlanCheck";
+        }
+    }
+    #endregion
 }

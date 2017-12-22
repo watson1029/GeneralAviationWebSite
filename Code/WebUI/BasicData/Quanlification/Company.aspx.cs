@@ -62,7 +62,12 @@ public partial class BasicData_Quanlification_Company : BasePage
             {
                 model = new Company();
                 model.GetEntitySearchPars<Company>(this.Context);
+                model.LegalCardImg = Request.Params["LegalCardImgInfo"];
+                model.LegalDelegateImg = Request.Params["LegalDelegateImgInfo"];
+                model.DelegateCardImg = Request.Params["DelegateCardImgInfo"];
+                model.LicensedSeal = Request.Params["LicensedSealInfo"];
                 model.CreateTime = DateTime.Now;
+                
                 if (bll.Add(model)>0)
                 {
                     result.IsSuccess = true;
@@ -75,6 +80,10 @@ public partial class BasicData_Quanlification_Company : BasePage
             if (model != null)
                 {
                     model.GetEntitySearchPars<Company>(this.Context);
+                    model.LegalCardImg = Request.Params["LegalCardImgInfo"];
+                    model.LegalDelegateImg = Request.Params["LegalDelegateImgInfo"];
+                    model.DelegateCardImg = Request.Params["DelegateCardImgInfo"];
+                    model.LicensedSeal = Request.Params["LicensedSealInfo"];
                     if (bll.Update(model) > 0)
                     {
                         result.IsSuccess = true;

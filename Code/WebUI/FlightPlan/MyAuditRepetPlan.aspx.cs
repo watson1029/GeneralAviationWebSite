@@ -180,4 +180,14 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         Response.Flush();
         Response.End();
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyAuditRepetPlanCheck";
+        }
+    }
+    #endregion
 }
