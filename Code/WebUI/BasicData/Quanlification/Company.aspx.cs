@@ -138,15 +138,6 @@ public partial class BasicData_Quanlification_Company : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-
-
-
-    /// <summary>
-    /// 查看条件
-    /// </summary>
-
-
-
     private Expression<Func<Company, bool>> GetWhere()
     {
 
@@ -163,6 +154,15 @@ public partial class BasicData_Quanlification_Company : BasePage
         return predicate;
     }
 
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "CompanyCheck";
+        }
+    }
+    #endregion
 }
 
 
