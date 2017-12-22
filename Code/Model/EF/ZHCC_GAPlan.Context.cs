@@ -43,11 +43,11 @@ namespace Model.EF
         public virtual DbSet<Aircraft> Aircraft { get; set; }
         public virtual DbSet<Pilot> Pilot { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
-        public virtual DbSet<FlightPlan> FlightPlan { get; set; }
         public virtual DbSet<vFlightPlan> vFlightPlan { get; set; }
         public virtual DbSet<vGetRepetitivePlanNodeInstance> vGetRepetitivePlanNodeInstance { get; set; }
         public virtual DbSet<CurrentFlightPlan> CurrentFlightPlan { get; set; }
         public virtual DbSet<V_CurrentPlan> V_CurrentPlan { get; set; }
         public virtual DbSet<vGetFlightPlanNodeInstance> vGetFlightPlanNodeInstance { get; set; }
+        public virtual DbSet<FlightPlan> FlightPlan { get; set; }
     }
 }
