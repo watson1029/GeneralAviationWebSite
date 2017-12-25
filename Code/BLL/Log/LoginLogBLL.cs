@@ -19,5 +19,12 @@ namespace BLL.Log
         {
             return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
         }
+        /// <summary>
+        /// 增加一条数据
+        /// </summary>
+        public int Add(LoginLog model)
+        {
+            return _dal.Add(model);
+        }
     }
 }

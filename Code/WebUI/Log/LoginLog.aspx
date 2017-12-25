@@ -54,10 +54,10 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '用户ID', field: 'UserID', width: 150 },
                         { title: '用户名', field: 'UserName', width: 150 },
                         { title: '登录时间', field: 'LoginTime', width: 150 },
-                        { title: '登陆IP', field: 'IPAddress', width: 150 },
+                           { title: '登录信息', field: 'Msg', width: 150 },
+                        { title: '登录IP', field: 'IPAddress', width: 150 },
                        
                     ]],
                     toolbar: "#tab_toolbar",

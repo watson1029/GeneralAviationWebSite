@@ -160,6 +160,7 @@
                 if (!$("#form_audit").form("validate")) {
                     return;
                 }
+
                 var json = $.param({ "id": uid, "action": "auditsubmit" }) + '&' + $('#form_audit').serialize();
 
                 $.post(location.href, json, function (data) {

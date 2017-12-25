@@ -35,18 +35,19 @@
                   //  $("input[name='txtUserName']").focus();
 
                 } else {
-                    
                     var userName = $("input[name='txtUserName']");
                     var password = $("input[name='txtPassword']");
                     var str = encMe(password.val().trim(), userName.val().trim());
                     $("input[name='htxtPassword']").val(str);
                     $("input[name='action']").val('submit');
                     $("#showMsg").html("登录中...");
+                    $("#btn_login").attr("disabled", "disabled");
                     $.ajax({
                         type: "POST",
                         url: location.href,
                         data: $("#loginForm").serialize(),
                         error: function (request) {
+                            $("#btn_login").removeAttr("disabled");
                             $("#showMsg").html(request);
                         },
                         success: function (data) {
@@ -83,8 +84,8 @@
            <input type="hidden" name="htxtPassword" />
                   <div id="showMsg"></div>
            <div class="forgetPassWrod-block">
-               <input type="button" value="登录" onclick="Main.login()"/> 
-               <input type="checkbox" id="rememberme" name="rememberme" />&nbsp;记住帐号
+               <input type="button" value="登录" id="btn_login" onclick="Main.login()"/> 
+               <input type="checkbox" id="rememberme" name="rememberme"/>&nbsp;记住帐号
             <a href="#">忘记密码？</a>   
            </div>
        </div>

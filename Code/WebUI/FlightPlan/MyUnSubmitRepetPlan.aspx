@@ -134,10 +134,15 @@
             },
             //提交按钮事件
             Save: function (uid) {
+                if ($("#Remark").val().length > 200)
+                {
+                    $.messager.alert('提示', '"其他需要说明的事项"不能超过200字符！', 'info');
+                    return;
+                }
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
-
+               
                 var fileInfo = dj.getCmp("AttchFiles").getUploadedFiles();
                 $("#AttchFilesInfo").val(fileInfo);
                 qx = $("input[name='WeekSchedule']").map(function () {
