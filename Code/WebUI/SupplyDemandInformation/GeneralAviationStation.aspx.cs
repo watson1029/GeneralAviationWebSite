@@ -45,7 +45,7 @@ public partial class SupplyDemandInformation_GeneralAviationStation : BasePage
             id = Convert.ToInt32(Request.Form["id"]);
             var model = bll.Get(id);
             model.ModifiedTime = DateTime.Parse(Request.Form["ModifiedTime"]);
-            model.Summary = Server.HtmlDecode(Request.Form["Summary"]);
+            model.Summary = Request.Form["Summary"];
             model.SummaryCode = Server.HtmlDecode(Request.Form["SummaryCode"]);
             model.ModifiedBy = User.ID;
             model.ModifiedByName = User.UserName;
