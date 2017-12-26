@@ -24,10 +24,10 @@ namespace DAL.FlightPlan
                           from f in e.DefaultIfEmpty()
                           select new TemplateClass4StatisticResult
                           {
-                              _field1 = b.Key.CompanyCode3,
+                              _field1 = b.Key.Year.ToString(),
                               _field2 = f.CompanyName,
                               _field3 = b.Count(),
-                              _field4 = b.Key.Year.ToString
+                              _field4 = f.CreateTime.Value
                           };
                 return res.ToList();
             }
