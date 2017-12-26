@@ -143,6 +143,7 @@
     <Compile Include="FlightPlan\WorkflowTemplate.cs" />
     <Compile Include="FlightPlan\WorkflowTplNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemManagement\Compobox.cs" />
     <Compile Include="SystemManagement\KeyValueModel.cs" />
     <Compile Include="SystemManagement\MenuModel.cs" />
     <Compile Include="SystemManagement\Series.cs" />

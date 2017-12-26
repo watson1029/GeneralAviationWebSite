@@ -7,6 +7,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>统计界面</title>
     <script src="Content/JS/easyUI/jquery.min.js"></script>
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/easyUI/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/easyUI/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <link href="<%=Page.ResolveUrl("~/")%>Content/JS/easyUI/themes/default/easyui.css" rel="stylesheet" type="text/css" />
+    <link href="<%=Page.ResolveUrl("~/")%>Content/JS/easyUI/themes/icon.css" rel="stylesheet" type="text/css" />
     <script src="Content/JS/echarts-all.js"></script>
     <style>
         #main {
@@ -15,25 +19,49 @@
             border: 1px solid #dddddd;
             margin: 10px auto;
         }
+
+        #searchbox {
+            width: 900px;
+            margin: 10px auto;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <form id="form1" runat="server">
-    </form>
+
+
     <div id="main">
+    </div>
+    <div id="searchbox">
+        <form id="form1" runat="server" method="post" action="Handler.ashx?action=test">
+            <input id="started" class="easyui-datebox" name="started" data-options="required:true" style="width: 200px" label="开始时间" />
+            <input id="ended" class="easyui-datebox" name="ended" data-options="required:true" style="width: 200px" label="结束时间" />
+            <input id="company" class="easyui-combobox" name="company" style="width:350px" data-options="
+					url:'/Handler.ashx?action=getCompanies',
+					method:'get',
+					valueField:'id',
+					textField:'text',
+					panelHeight:'auto',
+					label: '公司:',
+					labelPosition: 'left'
+					"/>
+            <a href="#" class="easyui-linkbutton" onclick="query();">查询</a>
+        </form>
     </div>
 
     <script type="text/javascript">
+        $('#started').val('2017-01-01');
+        $('#ended').val('2018-01-01');
+
         //初始化echarts图表
         var myChart = echarts.init(document.getElementById('main'));
 
         var option = {
             //设置标题
             title: {
-                text: '这是我的表格',
-                subtext: '这是副标题',
+                text: '长期飞行计划统计表',
                 textStyle: {
-                    fontSize: 18,
+                    fontSize: 20,
                     fontWeight: 'bolder',
                     color: '#ffd700'
                 }
@@ -49,7 +77,7 @@
             calculable: false,
             //设置提示框
             tooltip: {
-                trigger: 'item'
+                trigger: 'axis'
             },
             //设置工具箱
             toolbox: {
@@ -104,58 +132,53 @@
                         title: '保存为图片',
                         type: 'jpeg',
                         lang: ['点击本地保存']
-                    },
-                    myTool: {
-                        show: true,
-                        title: '自定义扩展方法',
-                        icon: 'image://../asset/ico/favicon.png',
-                        onclick: function () {
-                            alert('myToolHandler')
-                        }
                     }
                 }
             },
-            //设置图例
-            legend: {
-                data: ['数量']
-            },
+            ////设置图例
+            //legend: {
+            //    data: ['长期飞行计划数量']
+            //},
             //设置横轴数组
             xAxis: [{
+                name: '公司',
                 type: 'category',
-                data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子", "fdf", "dfd"]
+                boundaryGap: true,
+                data: ['fdfd', 'fsss']
             }],
             //设置纵轴数组
             yAxis: [{
-                type: 'value'
+                type: 'value',
+                name: '长期飞行计划数量'
             }],
             series: [{
                 "name": "数量",
                 "type": "bar",
-                "data": [4]
+                "data": []
             }
             ]
         };
 
         // 为echarts对象加载数据 
-        //myChart.setOption(option);
+        myChart.setOption(option);
         //myChart.setTheme(myChart.SAKURA);
 
         $.ajax({
-            type: "get",
+            type: "post",
             async: false, //同步执行
             url: '/Handler.ashx?action=test',
             dataType: "json", //返回数据形式为json
-            data: {},
+            data: { started: $('#started').val(), ended: $('#ended').val() },
             success: function (result) {
-                //alert(result.data[0]+result.type);
+                //alert(result.category);
                 //将返回的category和series对象赋值给options对象内的category和series
                 //因为xAxis是一个数组 这里需要是xAxis[i]的形式
 
-                //options.xAxis[0].data = result.category;
+                option.xAxis[0].data = result.category;
                 option.series = result.series;
                 //   options.legend.data = result.legend;
 
-                //myChart.hideLoading();
+                myChart.hideLoading();
                 myChart.setOption(option);
                 myChart.refresh();
             },
@@ -163,6 +186,34 @@
                 alert("图表请求数据失败!");
             }
         });
+    </script>
+    <script>
+        function query() {
+            //alert($('#company').combobox('getText'));
+            $.ajax({
+                type: "post",
+                async: false, //同步执行
+                url: '/Handler.ashx?action=test',
+                dataType: "json", //返回数据形式为json
+                data: { started: $('#started').val(), ended: $('#ended').val(), company: $('#company').combobox('getText') },
+                success: function (result) {
+                    //alert(result.category);
+                    //将返回的category和series对象赋值给options对象内的category和series
+                    //因为xAxis是一个数组 这里需要是xAxis[i]的形式
+
+                    option.xAxis[0].data = result.category;
+                    option.series = result.series;
+                    //   options.legend.data = result.legend;
+
+                    myChart.hideLoading();
+                    myChart.setOption(option);
+                    myChart.refresh();
+                },
+                error: function (errorMsg) {
+                    alert("图表请求数据失败!");
+                }
+            });
+        }
     </script>
 </body>
 </html>
