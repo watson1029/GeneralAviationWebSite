@@ -37,7 +37,7 @@
                         </td>
                         <td class="tdar">
                             <input id="UserName" name="UserName" type="text" maxlength="30" class="easyui-validatebox textbox"
-                                required="true" />
+                                required="true" style="height:20px;" />
                         </td>
                     </tr>
                     <tr id="pwdrow">
@@ -45,7 +45,7 @@
                         </td>
                         <td class="tdar">
                             <input id="Password" name="Password" type="text"  maxlength="30" class="easyui-validatebox textbox"
-                                required="true" />
+                                required="true" style="height:20px;"/>
                         </td>
 
                     </tr>
@@ -53,7 +53,7 @@
                         <td class="tdal">手机号码：
                         </td>
                         <td class="tdar">
-                            <input id="Mobile" name="Mobile" maxlength="11" type="text" validType='mobile' required="true" class="easyui-validatebox textbox" />
+                            <input id="Mobile" name="Mobile" maxlength="11" type="text" validType='mobile' required="true" class="easyui-validatebox textbox" style="height:20px;"/>
                         </td>
 
                     </tr>
@@ -61,7 +61,7 @@
                         <td class="tdar">状态：
                         </td>
                         <td class="tdar">
-                            <select id="Status" class="easyui-combobox" editable="false" name="Status" required="true"  panelheight="auto" style="width:194px;height:25px;">
+                            <select id="Status" class="easyui-combobox" editable="false" name="Status" required="true"  panelheight="auto" style="width:197px;height:25px;">
                                  <option value="0">正常</option>
                                  <option value="1" >冻结</option>
                                

@@ -21,7 +21,7 @@
     </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 1111px; height: 725px;"
+    <div id="edit" class="easyui-dialog" style="width: 1122px; height: 725px;"
         modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit" method="post">
             <table class="table_edit">
@@ -128,7 +128,7 @@
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
-                var json = $.param({ "id": uid, "action": "save", "SummaryCode": encodeURI(UE.getEditor('editor').getContent()), "Summary": UE.getEditor('editor').getPlainTxt(), "ModifiedTime": $("#ModifiedTime").datebox("getValue") });
+                var json = $.param({ "id": uid, "action": "save", "SummaryCode": encodeURI(UE.getEditor('editor').getContent()), "Summary": UE.getEditor('editor').getContentTxt(), "ModifiedTime": $("#ModifiedTime").datebox("getValue") });
                 $.post(location.href, json, function (data) {
                     $.messager.alert('提示', data.msg, 'info', function () {
                         if (data.isSuccess) {

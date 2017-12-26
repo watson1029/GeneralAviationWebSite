@@ -28,12 +28,12 @@
             <PropertyRef Name="AircraftID" />
           </Key>
           <Property Name="AircraftID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AircraftSign" Type="nchar" MaxLength="10" />
-          <Property Name="AcfType" Type="nchar" MaxLength="50" />
+          <Property Name="AircraftSign" Type="nvarchar" MaxLength="32" />
+          <Property Name="AcfType" Type="nvarchar" MaxLength="32" />
           <Property Name="AcfNo" Type="nvarchar" MaxLength="512" />
-          <Property Name="AcfClass" Type="nchar" MaxLength="50" />
+          <Property Name="AcfClass" Type="nvarchar" MaxLength="32" />
           <Property Name="Manufacture" Type="nvarchar" MaxLength="64" />
-          <Property Name="WakeTurbulance" Type="nchar" MaxLength="10" />
+          <Property Name="WakeTurbulance" Type="nvarchar" MaxLength="32" />
           <Property Name="FueledWeight" Type="int" />
           <Property Name="FuelCapacity" Type="int" />
           <Property Name="Range" Type="int" />
@@ -129,8 +129,8 @@
           </Key>
           <Property Name="FlightPlanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PlanCode" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="FlightType" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="AircraftType" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="FlightType" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="AircraftType" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="FlightDirHeight" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="ModifyTime" Type="datetime" Nullable="false" />
@@ -141,9 +141,9 @@
           <Property Name="Remark" Type="nvarchar" MaxLength="200" />
           <Property Name="SOBT" Type="datetime" Nullable="false" />
           <Property Name="SIBT" Type="datetime" Nullable="false" />
-          <Property Name="ADEP" Type="char" MaxLength="4" Nullable="false" />
-          <Property Name="ADES" Type="char" MaxLength="4" Nullable="false" />
-          <Property Name="RadarCode" Type="char" MaxLength="4" />
+          <Property Name="ADEP" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ADES" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RadarCode" Type="nvarchar" MaxLength="20" />
           <Property Name="AircraftNum" Type="int" />
           <Property Name="Pilot" Type="nvarchar" MaxLength="36" />
           <Property Name="ContactWay" Type="nvarchar" MaxLength="50" />
@@ -163,7 +163,7 @@
           </Key>
           <Property Name="TaskCode" Type="nchar" MaxLength="3" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="Abbreviation" Type="nchar" MaxLength="4" Nullable="false" />
+          <Property Name="Abbreviation" Type="nvarchar" MaxLength="4" Nullable="false" />
           <Property Name="FlightType" Type="nchar" MaxLength="1" Nullable="false" />
           <Property Name="DefaultMapping" Type="bit" Nullable="false" />
         </EntityType>
@@ -172,10 +172,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="int" />
           <Property Name="UserName" Type="nvarchar" MaxLength="20" />
           <Property Name="LoginTime" Type="datetime" />
           <Property Name="IPAddress" Type="varchar" MaxLength="50" />
+          <Property Name="Msg" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -217,7 +217,7 @@
           <Property Name="LicenseNo" Type="varchar" MaxLength="100" />
           <Property Name="Sign" Type="nvarchar" MaxLength="200" />
           <Property Name="Sex" Type="tinyint" />
-          <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="CompanyCode3" Type="nchar" MaxLength="3" />
           <Property Name="LicenseImg" Type="nvarchar" MaxLength="200" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="PilotAge" Type="int" />
@@ -229,8 +229,8 @@
           </Key>
           <Property Name="RepetPlanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PlanCode" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="FlightType" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="AircraftType" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="FlightType" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="AircraftType" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="FlightDirHeight" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" Nullable="false" />
@@ -245,8 +245,8 @@
           <Property Name="SOBT" Type="time" Precision="0" Nullable="false" />
           <Property Name="SIBT" Type="time" Precision="0" Nullable="false" />
           <Property Name="WeekSchedule" Type="char" MaxLength="7" Nullable="false" />
-          <Property Name="ADEP" Type="char" MaxLength="4" Nullable="false" />
-          <Property Name="ADES" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="ADEP" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ADES" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="CreatorName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CallSign" Type="nvarchar" MaxLength="36" Nullable="false" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
@@ -737,21 +737,21 @@
           <EntitySet Name="TWFSteps" EntityType="ZHCC_GAPlanModel.TWFSteps" />
           <EntitySet Name="UserInfo" EntityType="ZHCC_GAPlanModel.UserInfo" />
           <EntitySet Name="UserRole" EntityType="ZHCC_GAPlanModel.UserRole" />
-          <EntitySet Name="LoginLog" EntityType="ZHCC_GAPlanModel.LoginLog" />
           <EntitySet Name="Resource" EntityType="ZHCC_GAPlanModel.Resource" />
           <EntitySet Name="OperationLog" EntityType="ZHCC_GAPlanModel.OperationLog" />
           <EntitySet Name="SupplyDemandInfo" EntityType="ZHCC_GAPlanModel.SupplyDemandInfo" />
           <EntitySet Name="RepetitivePlan" EntityType="ZHCC_GAPlanModel.RepetitivePlan" />
           <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Company" />
-          <EntitySet Name="Aircraft" EntityType="ZHCC_GAPlanModel.Aircraft" />
-          <EntitySet Name="Pilot" EntityType="ZHCC_GAPlanModel.Pilot" />
           <EntitySet Name="ErrorLog" EntityType="ZHCC_GAPlanModel.ErrorLog" />
-          <EntitySet Name="FlightPlan" EntityType="ZHCC_GAPlanModel.FlightPlan" />
           <EntitySet Name="vFlightPlan" EntityType="ZHCC_GAPlanModel.vFlightPlan" />
           <EntitySet Name="vGetRepetitivePlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance" />
           <EntitySet Name="CurrentFlightPlan" EntityType="ZHCC_GAPlanModel.CurrentFlightPlan" />
           <EntitySet Name="V_CurrentPlan" EntityType="ZHCC_GAPlanModel.V_CurrentPlan" />
           <EntitySet Name="vGetFlightPlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" />
+          <EntitySet Name="FlightPlan" EntityType="ZHCC_GAPlanModel.FlightPlan" />
+          <EntitySet Name="Aircraft" EntityType="ZHCC_GAPlanModel.Aircraft" />
+          <EntitySet Name="Pilot" EntityType="ZHCC_GAPlanModel.Pilot" />
+          <EntitySet Name="LoginLog" EntityType="ZHCC_GAPlanModel.LoginLog" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -777,7 +777,7 @@
           </Key>
           <Property Name="TaskCode" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="Abbreviation" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="true" />
+          <Property Name="Abbreviation" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
           <Property Name="FlightType" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
           <Property Name="DefaultMapping" Type="Boolean" Nullable="false" />
         </EntityType>
@@ -857,16 +857,6 @@
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="LoginLog">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LoginTime" Type="DateTime" Precision="3" />
-          <Property Name="IPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Resource">
           <Key>
             <PropertyRef Name="ID" />
@@ -918,8 +908,8 @@
           </Key>
           <Property Name="RepetPlanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PlanCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="FlightDirHeight" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -934,8 +924,8 @@
           <Property Name="SOBT" Type="Time" Nullable="false" Precision="0" />
           <Property Name="SIBT" Type="Time" Nullable="false" Precision="0" />
           <Property Name="WeekSchedule" Type="String" Nullable="false" MaxLength="7" FixedLength="true" Unicode="false" />
-          <Property Name="ADEP" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="ADES" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="ADEP" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ADES" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CallSign" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
           <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -992,49 +982,6 @@
           <Property Name="BaseAirportCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LicensingAuthority" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Aircraft">
-          <Key>
-            <PropertyRef Name="AircraftID" />
-          </Key>
-          <Property Name="AircraftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AircraftSign" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="AcfType" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="AcfNo" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="AcfClass" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Manufacture" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="WakeTurbulance" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="FueledWeight" Type="Int32" />
-          <Property Name="FuelCapacity" Type="Int32" />
-          <Property Name="Range" Type="Int32" />
-          <Property Name="ASdate" Type="DateTime" Precision="3" />
-          <Property Name="CruiseAltd" Type="Double" />
-          <Property Name="CruiseSpeed" Type="Double" />
-          <Property Name="MaxSpeed" Type="Double" />
-          <Property Name="Passenger" Type="Int32" />
-          <Property Name="MaxEndurance" Type="Double" />
-          <Property Name="Airworthiness" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="Pilot">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Pilots" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PilotCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PilotDT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Licensesort" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LicenseNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Sign" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Sex" Type="Byte" />
-          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LicenseImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="PilotAge" Type="Int32" />
-          <Property Name="LicenseTime" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="ErrorLog">
           <Key>
             <PropertyRef Name="ErrorLogID" />
@@ -1048,40 +995,6 @@
           <Property Name="ErrorProcedure" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ErrorLine" Type="Int32" />
           <Property Name="ErrorMessage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="FlightPlan">
-          <Key>
-            <PropertyRef Name="FlightPlanID" />
-          </Key>
-          <Property Name="FlightPlanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PlanCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="true" />
-          <Property Name="FlightDirHeight" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CompanyCode3" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="PlanState" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="ActorID" Type="Int32" />
-          <Property Name="Creator" Type="Int32" Nullable="false" />
-          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SOBT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="SIBT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ADEP" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="ADES" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="RadarCode" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="AircraftNum" Type="Int32" />
-          <Property Name="Pilot" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="ContactWay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="WeatherCondition" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AircrewGroupNum" Type="Int32" />
-          <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CallSign" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="ActualStartTime" Type="DateTime" Precision="3" />
-          <Property Name="ActualEndTime" Type="DateTime" Precision="3" />
-          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RepetPlanID" Type="Int32" Nullable="false" />
-          <Property Name="CreateSource" Type="Byte" Nullable="false" />
         </EntityType>
         <EntityType Name="vFlightPlan">
           <Key>
@@ -1304,6 +1217,93 @@
           <Property Name="Creator" Type="Int32" Nullable="false" />
           <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="FlightPlan">
+          <Key>
+            <PropertyRef Name="FlightPlanID" />
+          </Key>
+          <Property Name="FlightPlanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlanCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FlightDirHeight" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CompanyCode3" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="PlanState" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ActorID" Type="Int32" />
+          <Property Name="Creator" Type="Int32" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SOBT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SIBT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ADEP" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ADES" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RadarCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AircraftNum" Type="Int32" />
+          <Property Name="Pilot" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ContactWay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WeatherCondition" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AircrewGroupNum" Type="Int32" />
+          <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CallSign" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="ActualStartTime" Type="DateTime" Precision="3" />
+          <Property Name="ActualEndTime" Type="DateTime" Precision="3" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RepetPlanID" Type="Int32" Nullable="false" />
+          <Property Name="CreateSource" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Aircraft">
+          <Key>
+            <PropertyRef Name="AircraftID" />
+          </Key>
+          <Property Name="AircraftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AircraftSign" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AcfType" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AcfNo" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="AcfClass" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Manufacture" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WakeTurbulance" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FueledWeight" Type="Int32" />
+          <Property Name="FuelCapacity" Type="Int32" />
+          <Property Name="Range" Type="Int32" />
+          <Property Name="ASdate" Type="DateTime" Precision="3" />
+          <Property Name="CruiseAltd" Type="Double" />
+          <Property Name="CruiseSpeed" Type="Double" />
+          <Property Name="MaxSpeed" Type="Double" />
+          <Property Name="Passenger" Type="Int32" />
+          <Property Name="MaxEndurance" Type="Double" />
+          <Property Name="Airworthiness" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Pilot">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pilots" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PilotCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PilotDT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Licensesort" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sign" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="Byte" />
+          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="LicenseImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="PilotAge" Type="Int32" />
+          <Property Name="LicenseTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="LoginLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoginTime" Type="DateTime" Precision="3" />
+          <Property Name="IPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Msg" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1418,17 +1418,6 @@
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.UserRole">
               <MappingFragment StoreEntitySet="UserRole">
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LoginLog">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.LoginLog">
-              <MappingFragment StoreEntitySet="LoginLog">
-                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
-                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1564,51 +1553,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Aircraft">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Aircraft">
-              <MappingFragment StoreEntitySet="Aircraft">
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
-                <ScalarProperty Name="Airworthiness" ColumnName="Airworthiness" />
-                <ScalarProperty Name="MaxEndurance" ColumnName="MaxEndurance" />
-                <ScalarProperty Name="Passenger" ColumnName="Passenger" />
-                <ScalarProperty Name="MaxSpeed" ColumnName="MaxSpeed" />
-                <ScalarProperty Name="CruiseSpeed" ColumnName="CruiseSpeed" />
-                <ScalarProperty Name="CruiseAltd" ColumnName="CruiseAltd" />
-                <ScalarProperty Name="ASdate" ColumnName="ASdate" />
-                <ScalarProperty Name="Range" ColumnName="Range" />
-                <ScalarProperty Name="FuelCapacity" ColumnName="FuelCapacity" />
-                <ScalarProperty Name="FueledWeight" ColumnName="FueledWeight" />
-                <ScalarProperty Name="WakeTurbulance" ColumnName="WakeTurbulance" />
-                <ScalarProperty Name="Manufacture" ColumnName="Manufacture" />
-                <ScalarProperty Name="AcfClass" ColumnName="AcfClass" />
-                <ScalarProperty Name="AcfNo" ColumnName="AcfNo" />
-                <ScalarProperty Name="AcfType" ColumnName="AcfType" />
-                <ScalarProperty Name="AircraftSign" ColumnName="AircraftSign" />
-                <ScalarProperty Name="AircraftID" ColumnName="AircraftID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Pilot">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Pilot">
-              <MappingFragment StoreEntitySet="Pilot">
-                <ScalarProperty Name="LicenseTime" ColumnName="LicenseTime" />
-                <ScalarProperty Name="PilotAge" ColumnName="PilotAge" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="LicenseImg" ColumnName="LicenseImg" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="Sex" ColumnName="Sex" />
-                <ScalarProperty Name="Sign" ColumnName="Sign" />
-                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
-                <ScalarProperty Name="Licensesort" ColumnName="Licensesort" />
-                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-                <ScalarProperty Name="PilotDT" ColumnName="PilotDT" />
-                <ScalarProperty Name="PilotCardNo" ColumnName="PilotCardNo" />
-                <ScalarProperty Name="Pilots" ColumnName="Pilots" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ErrorLog">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.ErrorLog">
               <MappingFragment StoreEntitySet="ErrorLog">
@@ -1621,41 +1565,6 @@
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="ErrorLogID" ColumnName="ErrorLogID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FlightPlan">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.FlightPlan">
-              <MappingFragment StoreEntitySet="FlightPlan">
-                <ScalarProperty Name="CreateSource" ColumnName="CreateSource" />
-                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
-                <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
-                <ScalarProperty Name="CallSign" ColumnName="CallSign" />
-                <ScalarProperty Name="CreatorName" ColumnName="CreatorName" />
-                <ScalarProperty Name="AircrewGroupNum" ColumnName="AircrewGroupNum" />
-                <ScalarProperty Name="WeatherCondition" ColumnName="WeatherCondition" />
-                <ScalarProperty Name="ContactWay" ColumnName="ContactWay" />
-                <ScalarProperty Name="Pilot" ColumnName="Pilot" />
-                <ScalarProperty Name="AircraftNum" ColumnName="AircraftNum" />
-                <ScalarProperty Name="RadarCode" ColumnName="RadarCode" />
-                <ScalarProperty Name="ADES" ColumnName="ADES" />
-                <ScalarProperty Name="ADEP" ColumnName="ADEP" />
-                <ScalarProperty Name="SIBT" ColumnName="SIBT" />
-                <ScalarProperty Name="SOBT" ColumnName="SOBT" />
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
-                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
-                <ScalarProperty Name="PlanState" ColumnName="PlanState" />
-                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="FlightDirHeight" ColumnName="FlightDirHeight" />
-                <ScalarProperty Name="AircraftType" ColumnName="AircraftType" />
-                <ScalarProperty Name="FlightType" ColumnName="FlightType" />
-                <ScalarProperty Name="PlanCode" ColumnName="PlanCode" />
-                <ScalarProperty Name="FlightPlanID" ColumnName="FlightPlanID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1812,6 +1721,97 @@
                 <ScalarProperty Name="TWFID" ColumnName="TWFID" />
                 <ScalarProperty Name="StepID" ColumnName="StepID" />
                 <ScalarProperty Name="PlanID" ColumnName="PlanID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FlightPlan">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.FlightPlan">
+              <MappingFragment StoreEntitySet="FlightPlan">
+                <ScalarProperty Name="CreateSource" ColumnName="CreateSource" />
+                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
+                <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
+                <ScalarProperty Name="CallSign" ColumnName="CallSign" />
+                <ScalarProperty Name="CreatorName" ColumnName="CreatorName" />
+                <ScalarProperty Name="AircrewGroupNum" ColumnName="AircrewGroupNum" />
+                <ScalarProperty Name="WeatherCondition" ColumnName="WeatherCondition" />
+                <ScalarProperty Name="ContactWay" ColumnName="ContactWay" />
+                <ScalarProperty Name="Pilot" ColumnName="Pilot" />
+                <ScalarProperty Name="AircraftNum" ColumnName="AircraftNum" />
+                <ScalarProperty Name="RadarCode" ColumnName="RadarCode" />
+                <ScalarProperty Name="ADES" ColumnName="ADES" />
+                <ScalarProperty Name="ADEP" ColumnName="ADEP" />
+                <ScalarProperty Name="SIBT" ColumnName="SIBT" />
+                <ScalarProperty Name="SOBT" ColumnName="SOBT" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
+                <ScalarProperty Name="PlanState" ColumnName="PlanState" />
+                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="FlightDirHeight" ColumnName="FlightDirHeight" />
+                <ScalarProperty Name="AircraftType" ColumnName="AircraftType" />
+                <ScalarProperty Name="FlightType" ColumnName="FlightType" />
+                <ScalarProperty Name="PlanCode" ColumnName="PlanCode" />
+                <ScalarProperty Name="FlightPlanID" ColumnName="FlightPlanID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aircraft">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Aircraft">
+              <MappingFragment StoreEntitySet="Aircraft">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
+                <ScalarProperty Name="Airworthiness" ColumnName="Airworthiness" />
+                <ScalarProperty Name="MaxEndurance" ColumnName="MaxEndurance" />
+                <ScalarProperty Name="Passenger" ColumnName="Passenger" />
+                <ScalarProperty Name="MaxSpeed" ColumnName="MaxSpeed" />
+                <ScalarProperty Name="CruiseSpeed" ColumnName="CruiseSpeed" />
+                <ScalarProperty Name="CruiseAltd" ColumnName="CruiseAltd" />
+                <ScalarProperty Name="ASdate" ColumnName="ASdate" />
+                <ScalarProperty Name="Range" ColumnName="Range" />
+                <ScalarProperty Name="FuelCapacity" ColumnName="FuelCapacity" />
+                <ScalarProperty Name="FueledWeight" ColumnName="FueledWeight" />
+                <ScalarProperty Name="WakeTurbulance" ColumnName="WakeTurbulance" />
+                <ScalarProperty Name="Manufacture" ColumnName="Manufacture" />
+                <ScalarProperty Name="AcfClass" ColumnName="AcfClass" />
+                <ScalarProperty Name="AcfNo" ColumnName="AcfNo" />
+                <ScalarProperty Name="AcfType" ColumnName="AcfType" />
+                <ScalarProperty Name="AircraftSign" ColumnName="AircraftSign" />
+                <ScalarProperty Name="AircraftID" ColumnName="AircraftID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pilot">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Pilot">
+              <MappingFragment StoreEntitySet="Pilot">
+                <ScalarProperty Name="LicenseTime" ColumnName="LicenseTime" />
+                <ScalarProperty Name="PilotAge" ColumnName="PilotAge" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LicenseImg" ColumnName="LicenseImg" />
+                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="Licensesort" ColumnName="Licensesort" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="PilotDT" ColumnName="PilotDT" />
+                <ScalarProperty Name="PilotCardNo" ColumnName="PilotCardNo" />
+                <ScalarProperty Name="Pilots" ColumnName="Pilots" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginLog">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.LoginLog">
+              <MappingFragment StoreEntitySet="LoginLog">
+                <ScalarProperty Name="Msg" ColumnName="Msg" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

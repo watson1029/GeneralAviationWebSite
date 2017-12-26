@@ -24,7 +24,7 @@
     <%--列表 end--%>
 
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 850px; height:600px;"
+    <div id="edit" class="easyui-dialog" style="width: 800px; height:400px;"
         modal="true" closed="true" buttons="#edit-buttons">
     </div>
     <div id="edit-buttons">
@@ -72,6 +72,7 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
+                        { title: '公司三字码', field: 'CompanyCode3', width: 100 },
                         { title: '飞行员姓名', field: 'Pilots', width: 100 },
                         { title: '身份证号', field: 'PilotCardNo', width: 200 },
                         { title: '出生日期', field: 'PilotDT', width: 150 },

@@ -1,4 +1,5 @@
 ﻿using BLL.BasicData;
+using BLL.Log;
 using BLL.SystemManagement;
 using Model;
 using Model.EF;
@@ -15,10 +16,10 @@ using Untity;
 public class LoginUtil
 {
 
-    public static LoginResultEnum GALogin(string userName, string password,bool rememberme, out string msg)
+    public static LoginResultEnum GALogin(string userName, string password, bool rememberme, out string msg)
     {
         UserInfoBLL bll = new UserInfoBLL();
-        msg = string.Empty;
+        msg = "登录成功！";
         //登录结果
         LoginResultEnum loginResult = LoginResultEnum.LoginSuccess;
         try
@@ -50,17 +51,17 @@ public class LoginUtil
                 UserName = user.UserName,
                 CreateTime = user.CreateTime,
                 Status = user.Status,
-                IsGeneralAviation=user.IsGeneralAviation,
-                CompanyCode3=user.CompanyCode3
+                IsGeneralAviation = user.IsGeneralAviation,
+                CompanyCode3 = user.CompanyCode3
 
             };
-            if(!string.IsNullOrEmpty(user.CompanyCode3))
+            if (!string.IsNullOrEmpty(user.CompanyCode3))
             {
-                var com=bll.GetCompany(user.CompanyCode3);
-                if(com!=null)
+                var com = bll.GetCompany(user.CompanyCode3);
+                if (com != null)
                 {
                     userInfoCookie.CompanyName = com.CompanyName;
-                } 
+                }
             }
 
 
@@ -79,8 +80,16 @@ public class LoginUtil
         }
         finally
         {
+            LoginLogBLL loginbll = new LoginLogBLL();
             //记用户登录日志
-            //   UserLoginLogBLL.Log(userName, "-1", isSuccess, loginResult, DateTime.Now, msg);
+            LoginLog entity = new LoginLog()
+            {
+                Msg = msg,
+                UserName = userName,
+                LoginTime = DateTime.Now,
+                IPAddress = IPAddressHelper.GetClientIp()
+            };
+            loginbll.Add(entity);
         }
     }
 

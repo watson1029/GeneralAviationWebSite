@@ -65,43 +65,51 @@ public partial class SystemManage_UserInfo : BasePage
         { id = Convert.ToInt32(Request.Form["id"]); }
         UserInfo model = null;
         if (!id.HasValue)//新增
-        { 
-             model = new UserInfo()
         {
-            UserName = Request.Form["UserName"],
-            Password = CryptTools.HashPassword(Request.Form["Password"]),
-            Mobile = Request.Form["Mobile"],
-            Status = byte.Parse(Request.Form["Status"] ?? "0"),
-            IsGeneralAviation = byte.Parse(Request.Form["IsGeneralAviation"] ?? "0"),
-            CompanyCode3 =model.IsGeneralAviation==1?Request.Form["CompanyCode3"]:"",
-            CreateTime = DateTime.Now
-        };
-            if (userBll.Add(model))
+            var entiy = userBll.Get(Request.Form["UserName"]);
+            if (entiy != null)
             {
-                result.IsSuccess = true;
-                result.Msg = "增加成功！";
+                result.Msg = "用户名存在！";
+            }
+            else
+            {
+                model = new UserInfo()
+           {
+               UserName = Request.Form["UserName"],
+               Password = CryptTools.HashPassword(Request.Form["Password"]),
+               Mobile = Request.Form["Mobile"],
+               Status = byte.Parse(Request.Form["Status"] ?? "0"),
+               IsGeneralAviation = byte.Parse(Request.Form["IsGeneralAviation"] ?? "0"),
+               CompanyCode3 = model.IsGeneralAviation == 1 ? Request.Form["CompanyCode3"] : "",
+               CreateTime = DateTime.Now
+           };
+                if (userBll.Add(model))
+                {
+                    result.IsSuccess = true;
+                    result.Msg = "增加成功！";
+                }
             }
         }
         else//编辑
         {
-            model=userBll.Get(id.Value);
+            model = userBll.Get(id.Value);
             if (model != null)
             {
                 model.UserName = Request.Form["UserName"];
-                 //  model.Password = CryptTools.HashPassword(Request.Form["Password"]);
-                    model.Mobile = Request.Form["Mobile"];
-                    model.Status = byte.Parse(Request.Form["Status"] ?? "0");
-                    model.IsGeneralAviation = byte.Parse(Request.Form["IsGeneralAviation"] ?? "0");
-                    model.CompanyCode3 = model.IsGeneralAviation == 1 ? Request.Form["CompanyCode3"] : "";
-             
+                //  model.Password = CryptTools.HashPassword(Request.Form["Password"]);
+                model.Mobile = Request.Form["Mobile"];
+                model.Status = byte.Parse(Request.Form["Status"] ?? "0");
+                model.IsGeneralAviation = byte.Parse(Request.Form["IsGeneralAviation"] ?? "0");
+                model.CompanyCode3 = model.IsGeneralAviation == 1 ? Request.Form["CompanyCode3"] : "";
+
                 if (userBll.Update(model))
                 {
                     result.IsSuccess = true;
                     result.Msg = "更新成功！";
-                }  
+                }
             }
 
-            }
+        }
         
         Response.Clear();
         Response.Write(result.ToJsonString());

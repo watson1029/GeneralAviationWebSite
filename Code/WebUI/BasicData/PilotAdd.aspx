@@ -1,21 +1,24 @@
 ﻿<%@ Page  Language="C#"  AutoEventWireup="true" CodeFile="PilotAdd.aspx.cs" Inherits="BasicData_PilotAdd" %>
 <form id="form_edit" method="post">
         <table class="table_edit">
-             <tr id="WriteCompany">
-                 <th>公司名称：</th>
-                 <td>
-                     <%=User.CompanyName %>
-                 </td>
-             </tr>
+            <tr><th>公司名称</th>
+
+                         <td>
+                                           <input id="CompanyCode3" name="CompanyCode3" data-options="url:'/FlightPlan/GetComboboxData.ashx?type=3',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                                ,panelMaxHeight:200"
+                        required="true" class="easyui-combobox" style="height:25px"/>
+
+                </td>
+            </tr>
             <tr>
                 <th>飞行员姓名：</th>
                 <td>
                     
-                 <input id="Pilots" name="Pilots" maxlength="10" class="easyui-validatebox textbox" data-options="required:true" style="height:25px"/>
+                 <input id="Pilots" name="Pilots" maxlength="10" class="easyui-validatebox textbox" data-options="required:true" style="height:20px"/>
                 </td>
                <th>身份证号：</th>
                 <td>
-                    <input id="PilotCardNo" name="PilotCardNo" class="easyui-validatebox textbox" maxlength="18"  data-options="required:true" style="height:25px" />
+                    <input id="PilotCardNo" name="PilotCardNo" class="easyui-validatebox textbox" maxlength="18"  data-options="required:true" style="height:20px" />
                 </td>
             </tr>
             <tr>
@@ -35,13 +38,13 @@
                 </td>
                 <th>执照编号：</th>
                 <td>
-                    <input id="LicenseNo" name="LicenseNo" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true" style="height:25px" />
+                    <input id="LicenseNo" name="LicenseNo" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true" style="height:20px" />
                 </td>
             </tr>
             <tr>
                 <th>签发单位：</th>
                 <td>
-                    <input id="Sign" name="Sign" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true"  style="height:25px"/>
+                    <input id="Sign" name="Sign" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true"  style="height:20px"/>
                 </td>
                 <th>签发日期：</th>
                 <td>
