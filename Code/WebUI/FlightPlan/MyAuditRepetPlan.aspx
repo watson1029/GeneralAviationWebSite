@@ -156,7 +156,10 @@
                 });
             },
             AuditSubmit: function (uid) {
-
+                if ($("#AuditComment").val().length > 200) {
+                    $.messager.alert('提示', '"审核意见"不能超过200字符！', 'info');
+                    return;
+                }
                 if (!$("#form_audit").form("validate")) {
                     return;
                 }
@@ -174,6 +177,10 @@
 
             },
             BatchAuditSubmit: function (uid) {
+                if ($("#BatchAuditComment").val().length > 200) {
+                    $.messager.alert('提示', '"审核意见"不能超过200字符！', 'info');
+                    return;
+                }
                 if (!$("#form_batchaudit").form("validate")) {
                     return;
                 }
