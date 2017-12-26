@@ -1,4 +1,5 @@
-﻿using BLL.FlightPlan;
+﻿using BLL.BasicData;
+using BLL.FlightPlan;
 using DAL.FlightPlan;
 using Model.EF;
 using Newtonsoft.Json;
@@ -11,12 +12,14 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Web;
 using Untity;
-
+using System.Linq;
 public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
 {
     RepetitivePlanBLL bll = new RepetitivePlanBLL();
     WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
     WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+    FlightTaskBLL fll = new FlightTaskBLL();
+    AircraftBLL all = new AircraftBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -219,6 +222,10 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                 Response.ContentType = "application/json";
                 Response.End();
             }
+            var ftlist = fll.GetList().Select(u => u.TaskCode);
+            Expression<Func<Aircraft, bool>> predicate = PredicateBuilder.True<Aircraft>();
+            predicate = predicate.And(m => m.CompanyCode3 == User.CompanyCode3);
+            var alist = all.GetList(predicate).Select(u => u.AcfType);
             int length = 0;
             string baseerrormessage = "第{0}行错误,错误信息为{1}:";
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -236,6 +243,10 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "任务类型不能为空！"));
                             if (length > 3)
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "任务类型不能超过3个字符！"));
+                            //if (!ftlist.Contains(colobj))
+                            //{
+                            //    throw new Exception(string.Format(baseerrormessage, i + 2, "任务类型不存在！"));
+                            //}
                             break;
                         case 1:
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
@@ -243,6 +254,10 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "航空器类型不能为空！"));
                             if (length > 8)
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "航空器类型不能超过8个字符！"));
+                            if (!alist.Contains(colobj))
+                            {
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "航空器类型不存在！"));
+                            }
                             break;
                         case 2:
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
@@ -434,7 +449,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     private string DownFile(string attachfile)
     {
         var localNewFileName = Path.GetFileName(attachfile);
-        var localTargetCategory = Server.MapPath("~/Files/PJ/RepetPlanTemp");
+        var localTargetCategory = Server.MapPath("~/Files/ImportTemp");
         if (string.IsNullOrEmpty(localNewFileName))
             throw new ApplicationException(string.Format("获取文件路径[{0}]中的文件名为空", attachfile));
         if (!Directory.Exists(localTargetCategory))

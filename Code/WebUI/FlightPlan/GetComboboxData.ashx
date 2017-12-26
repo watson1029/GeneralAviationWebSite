@@ -8,9 +8,12 @@ using System.Collections.Generic;
 using BLL.BasicData;
 using Model.EF;
 using BLL.FlightPlan;
+using System.Linq.Expressions;
+using Untity;
 public class GetComboboxData : IHttpHandler {
     
     FlightTaskBLL bll = new FlightTaskBLL();
+    AircraftBLL all = new AircraftBLL();
     CompanyBLL cbll = new CompanyBLL();
     public void ProcessRequest (HttpContext context) {
         if (context.Request.Params["type"] != null)
@@ -52,7 +55,9 @@ public class GetComboboxData : IHttpHandler {
     }
     private string GetAllCompany()
     {
-        List<Company> list = cbll.GetList();
+        Expression<Func<Company, bool>> predicate = PredicateBuilder.True<Company>();
+        predicate = predicate.And(m => m.Catalog ==1);
+        List<Company> list = cbll.GetList(predicate);
         ArrayList arr = new ArrayList();
         foreach (var item in list)
         {
@@ -62,12 +67,18 @@ public class GetComboboxData : IHttpHandler {
     }
     private string GetAllAircraftType()
     {
-
-        List<FlightTask> list = bll.GetList();
+        var userInfo = UserLoginService.Instance.GetUser();
+        var list = new List<Aircraft>();    
+        if (userInfo != null)
+        {
+            Expression<Func<Aircraft, bool>> predicate = PredicateBuilder.True<Aircraft>();
+            predicate = predicate.And(m => m.CompanyCode3 == userInfo.CompanyCode3);
+            list = all.GetList(predicate);
+        }
         ArrayList arr = new ArrayList();
         foreach (var item in list)
         {
-            arr.Add(new { id = item.TaskCode, text = item.Abbreviation });
+            arr.Add(new { id = item.AcfType, text = item.AcfType });
         }
         return JsonConvert.SerializeObject(arr);
     }

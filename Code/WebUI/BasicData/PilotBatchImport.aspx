@@ -15,7 +15,7 @@
                    <th>
                 </th>
                <td>
-                <p style="color:red">最多导入500条数据</p><a target="_blank" href="<%=Page.ResolveUrl("~/Files/飞行员信息填写模板.xlsx")%>">模板下载</a>
+                <p style="color:red">最多导入500条数据</p><a target="_blank" href="<%=Page.ResolveUrl("~/Files/飞行员信息填写模板.xls")%>">模板下载</a>
             </td>
                      </tr>
             
@@ -39,7 +39,7 @@
                 listId: "PilotFiles-fileList",
                 truncate: "30",
                 maxCount: "1",
-                uploadPath: "Files/Pilot/PilotFilesTemp/",
+                uploadPath: "Files/ImportTemp/",
                 uploadedFiles: ""
             });
         });

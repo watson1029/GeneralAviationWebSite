@@ -82,7 +82,15 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
             var repetplan=rpbll.Get(model.RepetPlanID);
                if (repetplan != null)
                {
-                   model.FillObject(repetplan);
+                   model.RepetPlanID = repetplan.RepetPlanID;
+                   model.FlightType = repetplan.FlightType;
+                   model.AircraftType = repetplan.AircraftType;
+                   model.FlightDirHeight = repetplan.FlightDirHeight;
+                   model.CallSign = repetplan.CallSign;
+                   model.ADEP = repetplan.ADEP;
+                   model.ADES = repetplan.ADES;
+                   model.Remark = repetplan.Remark;
+              //     model.FillObject(repetplan);
                }
                model.PlanCode = Request.Form["PlanCode"] ?? "";
                model.PlanState = "0";

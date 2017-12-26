@@ -67,6 +67,7 @@
     <Compile Include="EnumerableExtension.cs" />
     <Compile Include="FastProperty.cs" />
     <Compile Include="FastType.cs" />
+    <Compile Include="IPAddressHelper.cs" />
     <Compile Include="ObjectExtension.cs" />
     <Compile Include="OfficeTools.cs" />
     <Compile Include="OrderHelper.cs" />

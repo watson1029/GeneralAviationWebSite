@@ -98,7 +98,7 @@
                         <input id="DelegateTelePhone" name="DelegateTelePhone" type="text"  class="easyui-numberbox" data-options="precision:0,required:true,validType:'length[1,11]'" />
                     </td>
                 </tr>
-                <tr>
+           <tr>
                     <th>法人身份证复印件：</th>
                     <td colspan="3">
                         <input type="hidden" name="LegalCardImgInfo" id="LegalCardImgInfo"/>
@@ -282,7 +282,7 @@
             }
 
             else {
-                debugger;
+
                 new dj.upload({
                     id: "LicensedSeal",
                     maxSize: 5,
