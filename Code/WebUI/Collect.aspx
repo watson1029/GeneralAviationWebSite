@@ -47,6 +47,7 @@
 					"/>
             <a href="#" class="easyui-linkbutton" onclick="query();">查询</a>
         </form>
+        <a href="Handler.ashx?action=collect2">测试</a>
     </div>
 
     <script type="text/javascript">
@@ -166,7 +167,7 @@
         $.ajax({
             type: "post",
             async: false, //同步执行
-            url: '/Handler.ashx?action=test',
+            url: '/Handler.ashx?action=collect',
             dataType: "json", //返回数据形式为json
             data: { started: $('#started').val(), ended: $('#ended').val() },
             success: function (result) {
@@ -193,7 +194,7 @@
             $.ajax({
                 type: "post",
                 async: false, //同步执行
-                url: '/Handler.ashx?action=test',
+                url: '/Handler.ashx?action=collect',
                 dataType: "json", //返回数据形式为json
                 data: { started: $('#started').val(), ended: $('#ended').val(), company: $('#company').combobox('getText') },
                 success: function (result) {

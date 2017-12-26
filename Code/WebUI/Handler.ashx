@@ -41,7 +41,14 @@ public class Handler : IHttpHandler
             case "getCompanies":
                 getCompanies(context);
                 break;
-            case "test":
+            case "collect2":
+                DateTime start=DateTime.Now;
+                DateTime end=DateTime.Now;
+                List<TemplateClass4StatisticResult> ls=dd.getCollect(start,end,1);
+                context.Response.ContentType = "text/plain";
+                context.Response.Write(JsonConvert.SerializeObject(ls));
+                break;
+            case "collect":
                 List<TemplateClass4StatisticResult> ll;
                 DateTime started = DateTime.Parse(context.Request["started"]);
                 DateTime ended = DateTime.Parse(context.Request["ended"]);
