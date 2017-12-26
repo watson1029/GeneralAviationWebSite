@@ -39,7 +39,7 @@
                 listId: "PilotFiles-fileList",
                 truncate: "30",
                 maxCount: "1",
-                uploadPath: "Files/Pilot/PilotFilesTemp/",
+                uploadPath: "Files/ImportTemp/",
                 uploadedFiles: ""
             });
         });

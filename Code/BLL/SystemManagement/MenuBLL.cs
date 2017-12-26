@@ -47,21 +47,25 @@ namespace BLL.SystemManagement
                     var node = new TreeNode();
                     node.id = item.ID;
                     node.text = item.MenuName;
-                    if (isAdmin)
-                    {
-                        node.@checked = true;
-                    }
-                    else
-                    {
-                        if (roledal.GetRoleMenuCount(roleID, item.ID) > 0)
-                        {
-                            node.@checked = true;
-                        }
-                    }
+                    //if (isAdmin)
+                    //{
+                    //    node.@checked = true;
+                    //}
+                    //else
+                    //{
+                    
+                    //}
                     var _treeList = new List<TreeNode>();
                     if (menuDAL.IsParentMenu(item.ID))
                     {
                         _treeList = CreateMenuTree(item.ID, roleID, isAdmin);
+                    }
+                    else
+                    { 
+                        if (roledal.GetRoleMenuCount(roleID, item.ID) > 0)
+                        {
+                            node.@checked = true;
+                        }
                     }
                     node.children = _treeList.ToArray();
                     treeList.Add(node);

@@ -39,7 +39,7 @@
                 listId: "AircraftFiles-fileList",
                 truncate: "30",
                 maxCount: "1",
-                uploadPath: "Files/Aircraft/AircraftFilesTemp/", 
+                uploadPath: "Files/ImportTemp/",
                 uploadedFiles: ""
             });
         });

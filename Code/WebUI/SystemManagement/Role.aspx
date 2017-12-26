@@ -190,13 +190,11 @@
 
             },
             SavePermission: function (uid) {
-                var nodes = $('#tt').tree('getChecked');
-
+                var nodes = $('#tt').tree('getChecked', ['checked', 'indeterminate']);
                 var idarray = new Array();
                 nodes.forEach(function (i) {
                     idarray.push(i.id);
                 });
-                console.info(idarray.join());
                 var json = { id: uid, action:"setrole",newRoleMenus: idarray.join() };
 
                 $.post("Role.aspx", json, function (data) {
@@ -221,7 +219,7 @@
                 }
                 $.messager.confirm('提示', '确认删除该条记录？', function (r) {
                     if (r) {
-                        $.post("UserInfo.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
+                        $.post("Role.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
 
                             if (data.isSuccess) {
                                 $("#tab_list").datagrid("reload");

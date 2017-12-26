@@ -79,8 +79,8 @@ public partial class SystemManage_UserInfo : BasePage
                Password = CryptTools.HashPassword(Request.Form["Password"]),
                Mobile = Request.Form["Mobile"],
                Status = byte.Parse(Request.Form["Status"] ?? "0"),
-               IsGeneralAviation = byte.Parse(Request.Form["IsGeneralAviation"] ?? "0"),
-               CompanyCode3 = model.IsGeneralAviation == 1 ? Request.Form["CompanyCode3"] : "",
+               IsGeneralAviation = byte.Parse(Request.Form["IsGeneralAviation"]),
+               CompanyCode3 = byte.Parse(Request.Form["IsGeneralAviation"]) == 1 ? Request.Form["CompanyCode3"] : "",
                CreateTime = DateTime.Now
            };
                 if (userBll.Add(model))

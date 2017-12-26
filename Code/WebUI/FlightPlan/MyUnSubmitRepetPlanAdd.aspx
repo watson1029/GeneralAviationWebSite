@@ -147,7 +147,7 @@
                         listId: "AttchFiles-fileList",
                         truncate: "30",
                         maxCount: "1",
-                        uploadPath: "Files/PJ/",
+                        uploadPath: "Files/RepetPlan/",
                         uploadedFiles: data.AttchFile
                     });
                 });
@@ -167,7 +167,7 @@
                         listId: "AttchFiles-fileList",
                         truncate: "30",
                         maxCount: "1",
-                        uploadPath: "Files/PJ/",
+                        uploadPath: "Files/RepetPlan/",
                         uploadedFiles: ""
                     });
             }
