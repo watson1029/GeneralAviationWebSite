@@ -62,6 +62,7 @@ public partial class BasicData_Quanlification_Company : BasePage
             {
                 model = new Company();
                 model.GetEntitySearchPars<Company>(this.Context);
+                model.Catalog = 1;
                 model.LegalCardImg = Request.Params["LegalCardImgInfo"];
                 model.LegalDelegateImg = Request.Params["LegalDelegateImgInfo"];
                 model.DelegateCardImg = Request.Params["DelegateCardImgInfo"];

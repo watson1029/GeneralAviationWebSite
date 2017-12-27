@@ -84,7 +84,7 @@
           <Property Name="DelegateCardImg" Type="nvarchar" MaxLength="200" />
           <Property Name="LicenseNo" Type="varchar" MaxLength="200" />
           <Property Name="BaseAirport" Type="nvarchar" MaxLength="200" />
-          <Property Name="ConpanyType" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyType" Type="nvarchar" MaxLength="50" />
           <Property Name="RegisteredFund" Type="float" />
           <Property Name="CapitalLimit" Type="float" />
           <Property Name="Legalperson1" Type="nvarchar" MaxLength="20" />
@@ -755,7 +755,6 @@
           <EntitySet Name="OperationLog" EntityType="ZHCC_GAPlanModel.OperationLog" />
           <EntitySet Name="SupplyDemandInfo" EntityType="ZHCC_GAPlanModel.SupplyDemandInfo" />
           <EntitySet Name="RepetitivePlan" EntityType="ZHCC_GAPlanModel.RepetitivePlan" />
-          <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Company" />
           <EntitySet Name="ErrorLog" EntityType="ZHCC_GAPlanModel.ErrorLog" />
           <EntitySet Name="vFlightPlan" EntityType="ZHCC_GAPlanModel.vFlightPlan" />
           <EntitySet Name="vGetRepetitivePlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance" />
@@ -767,6 +766,7 @@
           <EntitySet Name="Pilot" EntityType="ZHCC_GAPlanModel.Pilot" />
           <EntitySet Name="LoginLog" EntityType="ZHCC_GAPlanModel.LoginLog" />
           <EntitySet Name="News" EntityType="ZHCC_GAPlanModel.News" />
+          <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Company" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -945,57 +945,6 @@
           <Property Name="CallSign" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
           <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsGenFlightPlan" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="Company">
-          <Key>
-            <PropertyRef Name="CompanyID" />
-          </Key>
-          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyCode3" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="CompanyCode2" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="EnglishName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SummaryCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Catalog" Type="Int32" />
-          <Property Name="ActorID" Type="Int32" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="ModifiedByName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
-          <Property Name="RegisterTime" Type="DateTime" Precision="3" />
-          <Property Name="RegisterAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CorporateRepresentative" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RegisteredCapital" Type="Double" />
-          <Property Name="Dealline" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ContactPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LegalPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LegalCardNo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LegalAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LegalTelePhone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LegalCardImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LegalClientele" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LegalDelegateImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DelegateCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DelegateAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DelegateTelePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DelegateCardImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LicenseNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="BaseAirport" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ConpanyType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RegisteredFund" Type="Double" />
-          <Property Name="CapitalLimit" Type="Double" />
-          <Property Name="Legalperson1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ManageItemsScope" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DealLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PresentationDate" Type="DateTime" Precision="3" />
-          <Property Name="LicensedSeal" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="FirmName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="FirmCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FirmAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="BaseAirportCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LicensingAuthority" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ErrorLog">
           <Key>
@@ -1332,6 +1281,57 @@
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyCode3" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="CompanyCode2" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="EnglishName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SummaryCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Catalog" Type="Int32" />
+          <Property Name="ActorID" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedByName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
+          <Property Name="RegisterTime" Type="DateTime" Precision="3" />
+          <Property Name="RegisterAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CorporateRepresentative" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RegisteredCapital" Type="Double" />
+          <Property Name="Dealline" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalCardNo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalTelePhone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalCardImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalClientele" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LegalDelegateImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelegateCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DelegateAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelegateTelePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DelegateCardImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LicenseNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="BaseAirport" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RegisteredFund" Type="Double" />
+          <Property Name="CapitalLimit" Type="Double" />
+          <Property Name="Legalperson1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ManageItemsScope" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DealLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PresentationDate" Type="DateTime" Precision="3" />
+          <Property Name="LicensedSeal" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FirmName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FirmCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirmAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BaseAirportCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LicensingAuthority" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1526,58 +1526,6 @@
                 <ScalarProperty Name="FlightType" ColumnName="FlightType" />
                 <ScalarProperty Name="PlanCode" ColumnName="PlanCode" />
                 <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Company">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Company">
-              <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="LicensingAuthority" ColumnName="LicensingAuthority" />
-                <ScalarProperty Name="BaseAirportCode" ColumnName="BaseAirportCode" />
-                <ScalarProperty Name="FirmAddress" ColumnName="FirmAddress" />
-                <ScalarProperty Name="FirmCode" ColumnName="FirmCode" />
-                <ScalarProperty Name="FirmName" ColumnName="FirmName" />
-                <ScalarProperty Name="LicensedSeal" ColumnName="LicensedSeal" />
-                <ScalarProperty Name="PresentationDate" ColumnName="PresentationDate" />
-                <ScalarProperty Name="DealLine1" ColumnName="DealLine1" />
-                <ScalarProperty Name="ManageItemsScope" ColumnName="ManageItemsScope" />
-                <ScalarProperty Name="Legalperson1" ColumnName="Legalperson1" />
-                <ScalarProperty Name="CapitalLimit" ColumnName="CapitalLimit" />
-                <ScalarProperty Name="RegisteredFund" ColumnName="RegisteredFund" />
-                <ScalarProperty Name="ConpanyType" ColumnName="ConpanyType" />
-                <ScalarProperty Name="BaseAirport" ColumnName="BaseAirport" />
-                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
-                <ScalarProperty Name="DelegateCardImg" ColumnName="DelegateCardImg" />
-                <ScalarProperty Name="DelegateTelePhone" ColumnName="DelegateTelePhone" />
-                <ScalarProperty Name="DelegateAddress" ColumnName="DelegateAddress" />
-                <ScalarProperty Name="DelegateCardNo" ColumnName="DelegateCardNo" />
-                <ScalarProperty Name="LegalDelegateImg" ColumnName="LegalDelegateImg" />
-                <ScalarProperty Name="LegalClientele" ColumnName="LegalClientele" />
-                <ScalarProperty Name="LegalCardImg" ColumnName="LegalCardImg" />
-                <ScalarProperty Name="LegalTelePhone" ColumnName="LegalTelePhone" />
-                <ScalarProperty Name="LegalAddress" ColumnName="LegalAddress" />
-                <ScalarProperty Name="LegalCardNo" ColumnName="LegalCardNo" />
-                <ScalarProperty Name="LegalPerson" ColumnName="LegalPerson" />
-                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
-                <ScalarProperty Name="Dealline" ColumnName="Dealline" />
-                <ScalarProperty Name="RegisteredCapital" ColumnName="RegisteredCapital" />
-                <ScalarProperty Name="CorporateRepresentative" ColumnName="CorporateRepresentative" />
-                <ScalarProperty Name="RegisterAddress" ColumnName="RegisterAddress" />
-                <ScalarProperty Name="RegisterTime" ColumnName="RegisterTime" />
-                <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
-                <ScalarProperty Name="ModifiedByName" ColumnName="ModifiedByName" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
-                <ScalarProperty Name="Catalog" ColumnName="Catalog" />
-                <ScalarProperty Name="SummaryCode" ColumnName="SummaryCode" />
-                <ScalarProperty Name="Summary" ColumnName="Summary" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
-                <ScalarProperty Name="CompanyCode2" ColumnName="CompanyCode2" />
-                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1855,6 +1803,58 @@
                 <ScalarProperty Name="NewContent" ColumnName="NewContent" />
                 <ScalarProperty Name="NewTitle" ColumnName="NewTitle" />
                 <ScalarProperty Name="NewID" ColumnName="NewID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Company">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="LicensingAuthority" ColumnName="LicensingAuthority" />
+                <ScalarProperty Name="BaseAirportCode" ColumnName="BaseAirportCode" />
+                <ScalarProperty Name="FirmAddress" ColumnName="FirmAddress" />
+                <ScalarProperty Name="FirmCode" ColumnName="FirmCode" />
+                <ScalarProperty Name="FirmName" ColumnName="FirmName" />
+                <ScalarProperty Name="LicensedSeal" ColumnName="LicensedSeal" />
+                <ScalarProperty Name="PresentationDate" ColumnName="PresentationDate" />
+                <ScalarProperty Name="DealLine1" ColumnName="DealLine1" />
+                <ScalarProperty Name="ManageItemsScope" ColumnName="ManageItemsScope" />
+                <ScalarProperty Name="Legalperson1" ColumnName="Legalperson1" />
+                <ScalarProperty Name="CapitalLimit" ColumnName="CapitalLimit" />
+                <ScalarProperty Name="RegisteredFund" ColumnName="RegisteredFund" />
+                <ScalarProperty Name="CompanyType" ColumnName="CompanyType" />
+                <ScalarProperty Name="BaseAirport" ColumnName="BaseAirport" />
+                <ScalarProperty Name="LicenseNo" ColumnName="LicenseNo" />
+                <ScalarProperty Name="DelegateCardImg" ColumnName="DelegateCardImg" />
+                <ScalarProperty Name="DelegateTelePhone" ColumnName="DelegateTelePhone" />
+                <ScalarProperty Name="DelegateAddress" ColumnName="DelegateAddress" />
+                <ScalarProperty Name="DelegateCardNo" ColumnName="DelegateCardNo" />
+                <ScalarProperty Name="LegalDelegateImg" ColumnName="LegalDelegateImg" />
+                <ScalarProperty Name="LegalClientele" ColumnName="LegalClientele" />
+                <ScalarProperty Name="LegalCardImg" ColumnName="LegalCardImg" />
+                <ScalarProperty Name="LegalTelePhone" ColumnName="LegalTelePhone" />
+                <ScalarProperty Name="LegalAddress" ColumnName="LegalAddress" />
+                <ScalarProperty Name="LegalCardNo" ColumnName="LegalCardNo" />
+                <ScalarProperty Name="LegalPerson" ColumnName="LegalPerson" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="Dealline" ColumnName="Dealline" />
+                <ScalarProperty Name="RegisteredCapital" ColumnName="RegisteredCapital" />
+                <ScalarProperty Name="CorporateRepresentative" ColumnName="CorporateRepresentative" />
+                <ScalarProperty Name="RegisterAddress" ColumnName="RegisterAddress" />
+                <ScalarProperty Name="RegisterTime" ColumnName="RegisterTime" />
+                <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
+                <ScalarProperty Name="ModifiedByName" ColumnName="ModifiedByName" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
+                <ScalarProperty Name="Catalog" ColumnName="Catalog" />
+                <ScalarProperty Name="SummaryCode" ColumnName="SummaryCode" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="CompanyCode2" ColumnName="CompanyCode2" />
+                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
