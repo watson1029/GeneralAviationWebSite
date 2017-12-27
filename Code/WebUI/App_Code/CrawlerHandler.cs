@@ -8,7 +8,7 @@ using System.Web;
 /// <summary>
 /// Crawler 的摘要说明
 /// </summary>
-public class CrawlerHandler : Handler
+public class CrawlerHandler : UEHandler
 {
     private string[] Sources;
     private Crawler[] Crawlers;

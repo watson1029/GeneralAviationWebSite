@@ -6,7 +6,7 @@ using System.Web;
 /// <summary>
 /// Config 的摘要说明
 /// </summary>
-public class ConfigHandler : Handler
+public class ConfigHandler : UEHandler
 {
     public ConfigHandler(HttpContext context) : base(context) { }
 

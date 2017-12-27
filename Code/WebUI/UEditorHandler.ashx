@@ -6,7 +6,7 @@ using System.Web;
 public class UEditorHandler : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
-        Handler action = null;
+        UEHandler action = null;
         switch (context.Request["action"])
         {
             case "config":

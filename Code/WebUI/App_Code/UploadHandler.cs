@@ -8,7 +8,7 @@ using System.Web;
 /// <summary>
 /// UploadHandler 的摘要说明
 /// </summary>
-public class UploadHandler : Handler
+public class UploadHandler : UEHandler
 {
 
     public UploadConfig UploadConfig { get; private set; }

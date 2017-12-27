@@ -8,9 +8,9 @@ using Newtonsoft.Json;
 /// <summary>
 /// Handler 的摘要说明
 /// </summary>
-public abstract class Handler
+public abstract class UEHandler
 {
-	public Handler(HttpContext context)
+    public UEHandler(HttpContext context)
 	{
         this.Request = context.Request;
         this.Response = context.Response;
