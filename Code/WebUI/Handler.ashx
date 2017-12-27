@@ -12,7 +12,6 @@ using Untity;
 using Newtonsoft.Json;
 using DAL.BasicData;
 using System.Linq;
-using Model.SystemManagement;
 public class Handler : IHttpHandler
 {
     private ResourceDAL dao = new ResourceDAL();
@@ -42,70 +41,148 @@ public class Handler : IHttpHandler
                 getCompanies(context);
                 break;
             case "collect2":
-                DateTime start=DateTime.Now;
-                DateTime end=DateTime.Now;
-                List<TemplateClass4StatisticResult> ls=dd.getCollect(start,end,1);
-                context.Response.ContentType = "text/plain";
-                context.Response.Write(JsonConvert.SerializeObject(ls));
+                collect2(context);
                 break;
             case "collect":
-                List<TemplateClass4StatisticResult> ll;
-                DateTime started = DateTime.Parse(context.Request["started"]);
-                DateTime ended = DateTime.Parse(context.Request["ended"]);
-                String strCompany = context.Request["company"];
-
-                if (strCompany.IsNullOrEmpty() || strCompany.Equals("全部"))
-                {
-                    ll = dd.getStatisticResult(started, ended);
-                }
-                else
-                {
-                    Company company = cDao.Find(m => m.CompanyName == strCompany);
-                    ll = dd.getStatisticResult(started, ended,company.CompanyCode3);
-                }
-                List<string> list = new List<string>();
-                List<string> category = new List<string>();
-                List<Series> ss = new List<Series>();
-                Series series = new Series();
-                    series.name = "长期飞行计划数量";
-                    series.type = "bar";
-                    series.itemStyle = new itemStyle
-                    {
-                        normal = new normal
-                        {
-                            areaStyle = new areaStyle
-                            {
-                                type = "default"
-                            }
-                        }
-                    };
-                    if (ll.Count > 0)
-                    {
-                        foreach (var item in ll)
-                        {
-                            category.Add(item._field2);
-                            list.Add(item._field3.ToString());
-                        }
-                        series.data = list;
-                        ss.Add(series);
-                    }
-                    else
-                    {
-                        category.Add(strCompany);
-                        list.Add("0");
-                        series.data = list;
-                        ss.Add(series);
-                    }
-                var result = new
-                {
-                    category = category.ToArray(),
-                    series = ss.ToArray()
-                };
-                context.Response.ContentType = "text/plain";
-                context.Response.Write(JsonConvert.SerializeObject(result));
+                collect(context);
                 break;
         }
 
+    }
+    public void collect(HttpContext context)
+    {
+        List<TemplateClass4StatisticResult> ll;
+        DateTime started = DateTime.Parse(context.Request["started"]);
+        DateTime ended = DateTime.Parse(context.Request["ended"]);
+        String strCompany = context.Request["company"];
+
+        if (strCompany.IsNullOrEmpty() || strCompany.Equals("全部"))
+        {
+            ll = dd.getStatisticResult(started, ended);
+        }
+        else
+        {
+            Company company = cDao.Find(m => m.CompanyName == strCompany);
+            ll = dd.getStatisticResult(started, ended, company.CompanyCode3);
+        }
+        List<string> list = new List<string>();
+        List<string> category = new List<string>();
+        List<Series> ss = new List<Series>();
+        Series series = new Series();
+        series.name = "长期飞行计划数量";
+        series.type = "bar";
+        series.itemStyle = new itemStyle
+        {
+            normal = new normal
+            {
+                areaStyle = new areaStyle
+                {
+                    type = "default"
+                }
+            }
+        };
+        if (ll.Count > 0)
+        {
+            foreach (var item in ll)
+            {
+                category.Add(item._field2);
+                list.Add(item._field3.ToString());
+            }
+            series.data = list;
+            ss.Add(series);
+        }
+        else
+        {
+            category.Add(strCompany);
+            list.Add("0");
+            series.data = list;
+            ss.Add(series);
+        }
+        var result = new
+        {
+            category = category.ToArray(),
+            series = ss.ToArray()
+        };
+        context.Response.ContentType = "text/plain";
+        context.Response.Write(JsonConvert.SerializeObject(result));
+    }
+    public void collect2(HttpContext context)
+    {
+        List<TemplateClass4StatisticResult> ll;
+        DateTime start = DateTime.Parse(context.Request["started"]);
+        DateTime end = DateTime.Parse(context.Request["ended"]);
+        int timetype = Convert.ToInt16(context.Request["timetype"]);
+        String strCompany = context.Request["company"];
+
+        if (strCompany.IsNullOrEmpty() || strCompany.Equals("全部"))
+        {
+            ll = dd.getCollect(start, end,timetype);
+        }
+        else
+        {
+            Company company = cDao.Find(m => m.CompanyName == strCompany);
+            ll = dd.getCollect(start, end, timetype, company.CompanyCode3);
+        }
+        List<string> list = new List<string>();
+        List<string> category = new List<string>();
+        List<Series> ss = new List<Series>();
+        List<Company> companies = cDao.FindList(m=>m.CompanyID,true);
+        List<string> legend = new List<string>();
+        for (int i = 0; i < companies.Count; i++)
+        {
+            Series series = new Series();
+            series.name = companies[i].CompanyName;
+            series.type = "bar";
+            series.data=new List<String>();
+            series.itemStyle = new itemStyle
+            {
+                normal = new normal
+                {
+                    areaStyle = new areaStyle
+                    {
+                        type = "default"
+                    }
+                }
+            };
+            ss.Add(series);
+            legend.Add(companies[i].CompanyName);
+        }
+        if (ll.Count > 0)
+        {
+            //ll.OrderBy(m => m._field1);
+            foreach (var item in ll)
+            {
+                if (!category.Contains(item._field1))
+                {
+                    category.Add(item._field1);
+                }
+                for (int j = 0; j < ss.Count;j++ )
+                {
+                    if (ss[j].name.Equals(item._field2))
+                    {
+                        ss[j].data.Add(item._field3.ToString());
+                    }
+                    else
+                    {
+                        if (timetype == 3)
+                        {
+                            ss[j].data.Add("-");
+                        }
+                    }
+                }
+                //list.Add(item._field3.ToString());
+            }
+            //series.data = list;
+            //ss.Add(series);
+        }
+        var result = new
+        {
+            category = category.ToArray(),
+            series = ss.ToArray(),
+            legend=legend.ToArray()
+        };
+        context.Response.ContentType = "text/plain";
+        context.Response.Write(JsonConvert.SerializeObject(result));
     }
     /// <summary>
     /// 获取公司列表

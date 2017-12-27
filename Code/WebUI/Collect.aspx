@@ -35,7 +35,7 @@
     <div id="searchbox">
         <form id="form1" runat="server" method="post" action="Handler.ashx?action=test">
             <input id="started" class="easyui-datebox" name="started" data-options="required:true" style="width: 200px" label="开始时间" />
-            <input id="ended" class="easyui-datebox" name="ended" data-options="required:true" style="width: 200px" label="结束时间" />
+            <input id="ended" class="easyui-datebox" name="ended" data-options="required:true" style="width: 200px" label="结束时间" /><br />
             <input id="company" class="easyui-combobox" name="company" style="width:350px" data-options="
 					url:'/Handler.ashx?action=getCompanies',
 					method:'get',
@@ -45,9 +45,14 @@
 					label: '公司:',
 					labelPosition: 'left'
 					"/>
-            <a href="#" class="easyui-linkbutton" onclick="query();">查询</a>
+            <select id="timetype">
+            <option value="1">年</option>
+            <option value="2">月</option>
+            <option value="3">日</option>
+        </select>
+            <a href="#" class="easyui-linkbutton" onclick="query2();">查询</a>
         </form>
-        <a href="Handler.ashx?action=collect2">测试</a>
+        
     </div>
 
     <script type="text/javascript">
@@ -78,11 +83,11 @@
             calculable: false,
             //设置提示框
             tooltip: {
-                trigger: 'axis'
+                trigger: 'item'
             },
             //设置工具箱
             toolbox: {
-                show: true,
+                show: false,
                 orient: 'horizontal',
                 x: 'right', // 水平安放位置
                 y: 'top', // 垂直安放位置
@@ -137,15 +142,18 @@
                 }
             },
             ////设置图例
-            //legend: {
-            //    data: ['长期飞行计划数量']
-            //},
+            legend: {
+                orient: 'horizontal',
+                x: 'right',
+                y:'top',
+                data: ['长期飞行计划数量']
+            },
             //设置横轴数组
             xAxis: [{
                 name: '公司',
                 type: 'category',
                 boundaryGap: true,
-                data: ['fdfd', 'fsss']
+                data: []
             }],
             //设置纵轴数组
             yAxis: [{
@@ -163,7 +171,6 @@
         // 为echarts对象加载数据 
         myChart.setOption(option);
         //myChart.setTheme(myChart.SAKURA);
-
         $.ajax({
             type: "post",
             async: false, //同步执行
@@ -174,7 +181,6 @@
                 //alert(result.category);
                 //将返回的category和series对象赋值给options对象内的category和series
                 //因为xAxis是一个数组 这里需要是xAxis[i]的形式
-
                 option.xAxis[0].data = result.category;
                 option.series = result.series;
                 //   options.legend.data = result.legend;
@@ -189,8 +195,35 @@
         });
     </script>
     <script>
-        function query() {
+        function query2() {
             //alert($('#company').combobox('getText'));
+            $.ajax({
+                type: "post",
+                async: false, //同步执行
+                url: '/Handler.ashx?action=collect2',
+                dataType: "json", //返回数据形式为json
+                data: { started: $('#started').val(), ended: $('#ended').val(), timetype: $('#timetype option:selected').val(), company: $('#company').combobox('getText') },
+                success: function (result) {
+                    //alert(option.legend.data);
+                    myChart.clear();
+                    //将返回的category和series对象赋值给options对象内的category和series
+                    //因为xAxis是一个数组 这里需要是xAxis[i]的形式
+
+                    option.xAxis[0].data = result.category;
+                    option.series = result.series;
+                    option.legend.data = result.legend;
+
+                    myChart.hideLoading();
+                    myChart.setOption(option);
+                    myChart.refresh();
+                },
+                error: function (errorMsg) {
+                    alert("图表请求数据失败!");
+                }
+            });
+        }
+
+        function query() {
             $.ajax({
                 type: "post",
                 async: false, //同步执行
@@ -198,10 +231,10 @@
                 dataType: "json", //返回数据形式为json
                 data: { started: $('#started').val(), ended: $('#ended').val(), company: $('#company').combobox('getText') },
                 success: function (result) {
-                    //alert(result.category);
+                    myChart.clear();
                     //将返回的category和series对象赋值给options对象内的category和series
                     //因为xAxis是一个数组 这里需要是xAxis[i]的形式
-
+                     //option.xAxis[0].data = [""]; 
                     option.xAxis[0].data = result.category;
                     option.series = result.series;
                     //   options.legend.data = result.legend;
