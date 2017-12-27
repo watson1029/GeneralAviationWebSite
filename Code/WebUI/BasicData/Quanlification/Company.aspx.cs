@@ -143,7 +143,7 @@ public partial class BasicData_Quanlification_Company : BasePage
 
 
         Expression<Func<Company, bool>> predicate = PredicateBuilder.True<Company>();
-        predicate = predicate.And(m => 1 == 1);
+        predicate = predicate.And(m => m.Catalog == 1);
         //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

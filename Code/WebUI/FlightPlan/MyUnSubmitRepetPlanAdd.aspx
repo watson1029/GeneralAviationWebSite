@@ -71,7 +71,7 @@
                 <th >起飞时刻：
                 </th>
                 <td>
-                    <input id="SOBT" name="SOBT"   editable="false"required="true" class="easyui-timespinner" style="height:25px"/>
+                    <input id="SOBT" name="SOBT"   editable="false" required="true" class="easyui-timespinner" style="height:25px"/>
                 </td>
 <th>降落时刻：
                 </th>

@@ -70,6 +70,7 @@ public partial class BasicData_Pilot : BasePage
         {
             model = new Pilot();
             model.GetEntitySearchPars<Pilot>(this.Context);
+            model.LicenseImg = Request.Params["LicenseImgsInfo"];
             model.CreateTime = DateTime.Now;
             if (bll.Add(model)>0)
             {
@@ -83,6 +84,7 @@ public partial class BasicData_Pilot : BasePage
             if (model != null)
             {
                 model.GetEntitySearchPars<Pilot>(this.Context);
+                model.LicenseImg = Request.Params["LicenseImgInfo"];
                 if (bll.Update(model) > 0)
                 {
                     result.IsSuccess = true;
