@@ -103,7 +103,7 @@
                     <td colspan="3">
                         <input type="hidden" name="LegalCardImgInfo" id="LegalCardImgInfo"/>
                         <input type="file" id="LegalCardImg" name="LegalCardImg" />
-                        <a  href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalCardImg').uploadFiles()">上传</a>
+                        <a  href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('LegalCardImg').uploadFiles()">上传</a>
                         <div id="LegalCardImg-fileQueue"></div>
                         <div id="LegalCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
@@ -113,7 +113,7 @@
                     <td colspan="3">
                         <input type="hidden" name="LegalDelegateImgInfo" id="LegalDelegateImgInfo" />
                         <input type="file" id="LegalDelegateImg" name="LegalDelegateImg" />
-                        <a href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalDelegateImg').uploadFiles()">上传</a>
+                        <a href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('LegalDelegateImg').uploadFiles()">上传</a>
                         <div id="LegalDelegateImg-fileQueue"></div>
                         <div id="LegalDelegateImg-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
@@ -123,7 +123,7 @@
                     <td colspan="3">
                         <input type="hidden" name="DelegateCardImgInfo" id="DelegateCardImgInfo" />
                         <input type="file" id="DelegateCardImg" name="DelegateCardImg" />
-                        <a  href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('DelegateCardImg').uploadFiles()">上传</a>
+                        <a  href="javascript:;" class="easyui-linkbutton"style="margin-top: -15px"  onclick="dj.getCmp('DelegateCardImg').uploadFiles()">上传</a>
                         <div id="DelegateCardImg-fileQueue"></div>
                         <div id="DelegateCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
