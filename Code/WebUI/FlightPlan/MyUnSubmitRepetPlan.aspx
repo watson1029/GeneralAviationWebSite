@@ -64,16 +64,15 @@
                         { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
                         { title: '预计开始时间', field: 'StartDate',width: 100, formatter: function (value, rec, index) { 
                         
-                            var timesstamp = new Date(value);
-                            return timesstamp.toLocaleDateString();
+                            var timesstamp = new Date(value.dateValFormat());
+                            return timesstamp.format("yyyy-MM-dd");
                         
                         } },
                         {
                             title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) { 
                         
-                                var timesstamp = new Date(value);
-    
-                                return timesstamp.toLocaleDateString();
+                                var timesstamp = new Date(value.dateValFormat());
+                                return timesstamp.format("yyyy-MM-dd");
                         
                             }
                         },

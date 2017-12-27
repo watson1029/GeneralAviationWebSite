@@ -166,6 +166,10 @@
                 chs[i] = this.charAt(i);
             }
             return chs;
+        },
+        dateValFormat: function () {
+
+            return this.replace(/-/g, '/').replace(/T|Z/g, ' ').trim();
         }
     });
 

@@ -49,5 +49,6 @@ namespace Model.EF
         public virtual DbSet<Aircraft> Aircraft { get; set; }
         public virtual DbSet<Pilot> Pilot { get; set; }
         public virtual DbSet<LoginLog> LoginLog { get; set; }
+        public virtual DbSet<News> News { get; set; }
     }
 }
