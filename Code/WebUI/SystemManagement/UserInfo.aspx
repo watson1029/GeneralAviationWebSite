@@ -28,59 +28,59 @@
         </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-   <div id="edit" class="easyui-dialog" style="width: 500px; height: 350px;"
+   <div id="edit" class="easyui-dialog" style="width: 400px; height: 350px;"
         modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit"  method="post">
                 <table class="table_edit">
                     <tr>
-                        <td class="tdal">用户名：
+                        <td>用户名：
                         </td>
-                        <td class="tdar">
+                        <td>
                             <input id="UserName" name="UserName" type="text" maxlength="30" class="easyui-validatebox textbox"
                                 required="true" style="height:20px;" />
                         </td>
                     </tr>
                     <tr id="pwdrow">
-                        <td class="tdal">密码：
+                        <td>密码：
                         </td>
-                        <td class="tdar">
+                        <td>
                             <input id="Password" name="Password" type="text"  maxlength="30" class="easyui-validatebox textbox"
                                 required="true" style="height:20px;"/>
                         </td>
 
                     </tr>
                     <tr>
-                        <td class="tdal">手机号码：
+                        <td>手机号码：
                         </td>
-                        <td class="tdar">
+                        <td>
                             <input id="Mobile" name="Mobile" maxlength="11" type="text" validType='mobile' required="true" class="easyui-validatebox textbox" style="height:20px;"/>
                         </td>
 
                     </tr>
                     <tr>   
-                        <td class="tdar">状态：
+                        <td>状态：
                         </td>
-                        <td class="tdar">
+                        <td>
                             <select id="Status" class="easyui-combobox" editable="false" name="Status" required="true"  panelheight="auto" style="width:197px;height:25px;">
                                  <option value="0">正常</option>
-                                 <option value="1" >冻结</option>
+                                 <option value="1">冻结</option>
                                
                             </select>
                         </td>
 </tr>
                     <tr>   
-                        <td class="tdar">是否通航用户：
+                        <td>是否通航用户：
                         </td>
-                        <td class="tdar">
+                        <td>
 
                                <input type="text" id="IsGeneralAviation" name="IsGeneralAviation" class="easyui-validatebox" required="true" style="height:25px;"/>
            
                         </td>
 </tr>
-                    <tr id="trcompanyCode3" ">
-                         <td class="tdar">公司名称：
+                    <tr id="trcompanyCode3">
+                         <td>公司名称：
                         </td>
-                        <td class="tdar">
+                        <td>
                                <input type="text" id="CompanyCode3"  name="CompanyCode3"   class="easyui-combobox" data-options="url:'<%=Page.ResolveUrl("~/FlightPlan/GetComboboxData.ashx?type=3")%>',method:'get',valueField:'id',textField:'text',panelHeight:'auto',panelMaxHeight:200" style="height:25px;"/>
            
                         </td>
@@ -190,7 +190,12 @@
             //打开添加窗口
             OpenWin: function () {
                 $("#edit").dialog("open").dialog('setTitle', '新增');
-                $("#form_edit").form('clear');
+             //   $("#form_edit").form('clear');
+                $("#UserName").val('');
+                $("#Password").val('');
+                $("#Mobile").val('');
+                $('#Status').combobox('select', '0');
+                $('#IsGeneralAviation').combobox('select', '0');
                 $("#pwdrow").show();
                 $("#trcompanyCode3").hide();
                 $("#btn_add").attr("onclick", "Main.Save();")

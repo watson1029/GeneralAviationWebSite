@@ -59,8 +59,22 @@
                         { title: '使用机型', field: 'AircraftType', width: 80 },
                          { title: '航空器呼号', field: 'CallSign', width: 70 },
                         { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 120 },
-                        { title: '预计开始时间', field: 'StartDate', width: 100 },
-                        { title: '预计结束时间', field: 'EndDate', width: 100 },
+                        {
+                            title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
+
+                                var timesstamp = new Date(value.dateValFormat());
+                                return timesstamp.format("yyyy-MM-dd");
+
+                            }
+                        },
+                        {
+                            title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) {
+
+                                var timesstamp = new Date(value.dateValFormat());
+                                return timesstamp.format("yyyy-MM-dd");
+
+                            }
+                        },
                         { title: '起飞时刻', field: 'SOBT', width: 80 },
                         { title: '降落时刻', field: 'SIBT', width: 80 },
                         { title: '起飞机场', field: 'ADEP', width: 80 },
@@ -156,7 +170,10 @@
                 });
             },
             AuditSubmit: function (uid) {
-
+                if ($("#AuditComment").val().length > 200) {
+                    $.messager.alert('提示', '"审核意见"不能超过200字符！', 'info');
+                    return;
+                }
                 if (!$("#form_audit").form("validate")) {
                     return;
                 }
@@ -174,6 +191,10 @@
 
             },
             BatchAuditSubmit: function (uid) {
+                if ($("#BatchAuditComment").val().length > 200) {
+                    $.messager.alert('提示', '"审核意见"不能超过200字符！', 'info');
+                    return;
+                }
                 if (!$("#form_batchaudit").form("validate")) {
                     return;
                 }

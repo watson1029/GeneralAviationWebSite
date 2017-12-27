@@ -189,7 +189,14 @@
                         { title: '机型', field: 'AcfType', width: 120 },
                         { title: '航程', field: 'Range', width: 50 },
                         { title: '航空器出厂序号', field: 'AcfNo', width: 120 },
-                        { title: '年检时间', field: 'ASdate', width: 150 },
+                        {
+                            title: '年检时间', field: 'ASdate', width: 150, formatter: function (value, rec, index) {
+
+                                var timesstamp = new Date(value.dateValFormat());
+                                return timesstamp.format("yyyy-MM-dd");
+
+                            }
+                        },
                         { title: '飞行器类别', field: 'AcfClass', width: 150 },
                         { title: '巡航高度', field: 'CruiseAltd', width: 80 },
                         { title: '制造商', field: 'Manufacture', width: 250 },
