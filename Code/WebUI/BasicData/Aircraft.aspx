@@ -60,7 +60,7 @@
                         </td>
                         <td class="tdal">年检日期：</td>
                         <td class="tdar">
-                            <input id="ASdate" name="ASdate"  class="easyui-datebox" data-options="required:true" style="height:25px" />
+                            <input id="ASdate" name="ASdate"  editable="false"  class="easyui-datebox" data-options="required:true" style="height:25px" />
                         </td>
                     </tr>
                     <tr>

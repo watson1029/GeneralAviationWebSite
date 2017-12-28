@@ -62,10 +62,11 @@ public partial class BasicData_Quanlification_Company : BasePage
             {
                 model = new Company();
                 model.GetEntitySearchPars<Company>(this.Context);
-                model.LegalCardImg = Request.Params["LegalCardImgInfo"];
-                model.LegalDelegateImg = Request.Params["LegalDelegateImgInfo"];
-                model.DelegateCardImg = Request.Params["DelegateCardImgInfo"];
-                model.LicensedSeal = Request.Params["LicensedSealInfo"];
+                model.Catalog = 1;
+                model.LegalCardImg = Request.Params["LegalCardImgsInfo"];
+                model.LegalDelegateImg = Request.Params["LegalDelegateImgsInfo"];
+                model.DelegateCardImg = Request.Params["DelegateCardImgsInfo"];
+                model.LicensedSeal = Request.Params["LicensedSealsInfo"];
                 model.CreateTime = DateTime.Now;
                 
                 if (bll.Add(model)>0)
@@ -80,10 +81,10 @@ public partial class BasicData_Quanlification_Company : BasePage
             if (model != null)
                 {
                     model.GetEntitySearchPars<Company>(this.Context);
-                    model.LegalCardImg = Request.Params["LegalCardImgInfo"];
-                    model.LegalDelegateImg = Request.Params["LegalDelegateImgInfo"];
-                    model.DelegateCardImg = Request.Params["DelegateCardImgInfo"];
-                    model.LicensedSeal = Request.Params["LicensedSealInfo"];
+                    model.LegalCardImg = Request.Params["LegalCardImgsInfo"];
+                    model.LegalDelegateImg = Request.Params["LegalDelegateImgsInfo"];
+                    model.DelegateCardImg = Request.Params["DelegateCardImgsInfo"];
+                    model.LicensedSeal = Request.Params["LicensedSealsInfo"];
                     if (bll.Update(model) > 0)
                     {
                         result.IsSuccess = true;
@@ -143,7 +144,7 @@ public partial class BasicData_Quanlification_Company : BasePage
 
 
         Expression<Func<Company, bool>> predicate = PredicateBuilder.True<Company>();
-        predicate = predicate.And(m => 1 == 1);
+        predicate = predicate.And(m => m.Catalog == 1);
         //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

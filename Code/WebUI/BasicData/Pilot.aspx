@@ -75,12 +75,26 @@
                         { title: '公司三字码', field: 'CompanyCode3', width: 100 },
                         { title: '飞行员姓名', field: 'Pilots', width: 100 },
                         { title: '身份证号', field: 'PilotCardNo', width: 200 },
-                        { title: '出生日期', field: 'PilotDT', width: 150 },
+                        {
+                            title: '出生日期', field: 'PilotDT', width: 150, formatter: function (value, rec, index) {
+
+                                var timesstamp = new Date(value.dateValFormat());
+                                return timesstamp.format("yyyy-MM-dd");
+
+                            }
+                        },
                         { title: '年龄', field: 'PilotAge', width: 80 },
                         { title: '联系电话', field: 'PhoneNo', width: 150 },
                         { title: '执照编号', field: 'LicenseNo', width: 250 },
                         { title: '签发单位', field: 'Sign', width: 150 },
-                        { title: '签发日期', field: 'LicenseTime', width: 150 },
+                        {
+                            title: '签发日期', field: 'LicenseTime', width: 150, formatter: function (value, rec, index) {
+
+                                var timesstamp = new Date(value.dateValFormat());
+                                return timesstamp.format("yyyy-MM-dd");
+
+                            }
+                        },
                         {
                             title: '执照类别', field: 'Licensesort', formatter: function (value, rec, index){
                             if(value == 0){
@@ -137,8 +151,8 @@
                     return;
                 }
 
-                var fileInfo = dj.getCmp("LicenseImg").getUploadedFiles();
-                $("#LicenseImgInfo").val(fileInfo);
+                var fileInfo = dj.getCmp("LicenseImgs").getUploadedFiles();
+                $("#LicenseImgsInfo").val(fileInfo);
 
 
                 var json = $.param({ "id": uid, "action": "submit" }) + '&' + $('#form_edit').serialize();

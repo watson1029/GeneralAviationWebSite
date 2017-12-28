@@ -67,7 +67,7 @@
                         { title: '公司名称', field: 'CompanyName', width: 150 },
                         { title: '英文名称', field: 'EnglishName', width: 150 },
                         {
-                            title: '操作', field: 'ID', width: 500, formatter: function (value, rec) {
+                            title: '操作', field: 'CompanyID', width: 500, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
                                 
                                 return str;
@@ -108,14 +108,14 @@
                     return;
                 }
 
-                var fileInfo = dj.getCmp("LegalCardImg").getUploadedFiles();
-                $("#LegalCardImgInfo").val(fileInfo);
-                 fileInfo = dj.getCmp("LegalDelegateImg").getUploadedFiles();
-                $("#LegalDelegateImgInfo").val(fileInfo);
-                 fileInfo = dj.getCmp("DelegateCardImg").getUploadedFiles();
-                $("#DelegateCardImgInfo").val(fileInfo);
-                  fileInfo = dj.getCmp("LicensedSeal").getUploadedFiles();
-                $("#LicensedSealInfo").val(fileInfo);
+                var fileInfo = dj.getCmp("LegalCardImgs").getUploadedFiles();
+                $("#LegalCardImgsInfo").val(fileInfo);
+                 fileInfo = dj.getCmp("LegalDelegateImgs").getUploadedFiles();
+                $("#LegalDelegateImgsInfo").val(fileInfo);
+                 fileInfo = dj.getCmp("DelegateCardImgs").getUploadedFiles();
+                $("#DelegateCardImgsInfo").val(fileInfo);
+                  fileInfo = dj.getCmp("LicensedSeals").getUploadedFiles();
+                $("#LicensedSealsInfo").val(fileInfo);
 
 
                 var json = $.param({ "id": uid, "action": "submit" }) + '&' + $('#form_edit').serialize();

@@ -70,6 +70,7 @@ public partial class BasicData_Pilot : BasePage
         {
             model = new Pilot();
             model.GetEntitySearchPars<Pilot>(this.Context);
+            model.LicenseImg = Request.Params["LicenseImgsInfo"];
             model.CreateTime = DateTime.Now;
             if (bll.Add(model)>0)
             {
@@ -83,6 +84,7 @@ public partial class BasicData_Pilot : BasePage
             if (model != null)
             {
                 model.GetEntitySearchPars<Pilot>(this.Context);
+                model.LicenseImg = Request.Params["LicenseImgInfo"];
                 if (bll.Update(model) > 0)
                 {
                     result.IsSuccess = true;
@@ -372,7 +374,7 @@ public partial class BasicData_Pilot : BasePage
     private string DownFile(string attachfile)
     {
         var localNewFileName = Path.GetFileName(attachfile);
-        var localTargetCategory = Server.MapPath("~/Files/Pilot/PilotFilesTemp");
+        var localTargetCategory = Server.MapPath("~/Files/ImportTemp");
         if (string.IsNullOrEmpty(localNewFileName))
             throw new ApplicationException(string.Format("获取文件路径[{0}]中的文件名为空", attachfile));
         if (!Directory.Exists(localTargetCategory))

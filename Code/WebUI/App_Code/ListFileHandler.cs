@@ -7,7 +7,7 @@ using System.Web;
 /// <summary>
 /// FileManager 的摘要说明
 /// </summary>
-public class ListFileManager : Handler
+public class ListFileManager : UEHandler
 {
     enum ResultState
     {

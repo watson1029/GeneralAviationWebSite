@@ -6,7 +6,7 @@ using System.Web;
 /// <summary>
 /// NotSupportedHandler 的摘要说明
 /// </summary>
-public class NotSupportedHandler : Handler
+public class NotSupportedHandler : UEHandler
 {
     public NotSupportedHandler(HttpContext context)
         : base(context)
