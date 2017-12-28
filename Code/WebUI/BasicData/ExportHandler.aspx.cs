@@ -56,7 +56,7 @@ public partial class BasicData_ExportHandler : BasePage
         var style = hssfworkbook.CreateCellStyle();
         var font = hssfworkbook.CreateFont();
         font.FontName = "宋体";
-        font.FontHeightInPoints = 14;
+        font.FontHeightInPoints = 16;
         style.SetFont(font);
 
         var headerRow = sheet1.CreateRow(0);
@@ -76,13 +76,14 @@ public partial class BasicData_ExportHandler : BasePage
         headerRow.CreateCell(12).SetCellValue("最大续航时间");
         headerRow.CreateCell(13).SetCellValue("乘客人数");
         headerRow.CreateCell(14).SetCellValue("适航证颁发单位");
+        headerRow.CreateCell(15).SetCellValue("公司三字码");
         int rowIndex = 1;
         if (listData != null && listData.Count > 0)
         {
             foreach (var item in listData)
             {
                 var dataRow = sheet1.CreateRow(rowIndex);
-                dataRow.CreateCell(0).SetCellValue(item.AircraftSign);
+                dataRow.CreateCell(0).SetCellValue(item.AircraftSign.ToString());
                 dataRow.CreateCell(1).SetCellValue(item.FuelCapacity.ToString());
                 dataRow.CreateCell(2).SetCellValue(item.AcfType);
                 dataRow.CreateCell(3).SetCellValue(item.Range.ToString());
@@ -97,6 +98,7 @@ public partial class BasicData_ExportHandler : BasePage
                 dataRow.CreateCell(12).SetCellValue(item.MaxEndurance.ToString());
                 dataRow.CreateCell(13).SetCellValue(item.Passenger.ToString());
                 dataRow.CreateCell(14).SetCellValue(item.Airworthiness);
+                dataRow.CreateCell(15).SetCellValue(item.CompanyCode3);
                 rowIndex++;
             }
             var dr = sheet1.CreateRow(rowIndex);
@@ -112,7 +114,7 @@ public partial class BasicData_ExportHandler : BasePage
         Response.Clear();
         Response.AppendHeader("Content-Disposition",
                               "attachment;filename=" +
-                              HttpUtility.UrlEncode("长期计划未提交列表" + ".xls", System.Text.Encoding.UTF8));
+                              HttpUtility.UrlEncode("飞行器信息列表" + ".xls", System.Text.Encoding.UTF8));
         file.WriteTo(Response.OutputStream);
         file.Close();
         Response.End();

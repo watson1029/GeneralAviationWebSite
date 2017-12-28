@@ -181,7 +181,7 @@ public partial class BasicData_Pilot : BasePage
                 Response.ContentType = "application/json";
                 Response.End();
             }
-            if (dt.Columns.Count != 10)
+            if (dt.Columns.Count != 11)
             {
                 result.IsSuccess = false;
                 result.Msg = "导入的文件模板不正确，请更新导入模板！";
@@ -263,10 +263,17 @@ public partial class BasicData_Pilot : BasePage
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
                             if (colobj == null || string.IsNullOrEmpty(colobj))
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "性别不能为空！"));
-                            if (length > 2)
-                                throw new Exception(string.Format(baseerrormessage, i + 2, "性别不能超过2个字符！"));
+                            if (length > 1)
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "性别不能超过1个字符！"));
                             break;
-                        
+                        case 10:
+                            length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
+                            if (colobj == null || string.IsNullOrEmpty(colobj))
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "公司三字码不能为空！"));
+                            if (length > 3)
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "公司三字码不能超过3个字符！"));
+                            break;
+
                     }
                 }
             }
@@ -287,7 +294,7 @@ public partial class BasicData_Pilot : BasePage
                     LicenseTime = DateTime.Parse(rowobj.ItemArray[7].ToString()),
                     Licensesort = rowobj.ItemArray[8].ToString() ==  "航线运输驾驶执照" ? "0" : (rowobj.ItemArray[8].ToString() == "商用飞机驾照" ? "1" : "2"),
                     Sex = byte.Parse(rowobj.ItemArray[9].ToString()=="男"?"0":"1"),
-             //       CompanyCode3 = CompanyCode3,
+                    CompanyCode3 = rowobj.ItemArray[10].ToString(),
                     CreateTime = DateTime.Now,
                    
                 };
@@ -333,6 +340,7 @@ public partial class BasicData_Pilot : BasePage
         headerRow.CreateCell(7).SetCellValue("签发日期");
         headerRow.CreateCell(8).SetCellValue("执照类别");
         headerRow.CreateCell(9).SetCellValue("性别");
+        headerRow.CreateCell(10).SetCellValue("公司三字码");
 
         int rowIndex = 1;
         if (listData != null && listData.Count > 0)
@@ -350,7 +358,7 @@ public partial class BasicData_Pilot : BasePage
                 dataRow.CreateCell(7).SetCellValue(item.LicenseTime.ToString());
                 dataRow.CreateCell(8).SetCellValue(item.Licensesort);
                 dataRow.CreateCell(9).SetCellValue(item.Sex.ToString());
-
+                dataRow.CreateCell(10).SetCellValue(item.CompanyCode3);
                 rowIndex++;
             }
             var dr = sheet.CreateRow(rowIndex);

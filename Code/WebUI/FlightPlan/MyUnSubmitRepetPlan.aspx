@@ -13,21 +13,22 @@
     <%--列表 start--%>
         <table id="tab_list">
         </table>
+   
         <div id="tab_toolbar" style="padding: 2px 2px;" >
             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>
              <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-redo" plain="true" onclick="Main.BatchImport()">导入</a>
                        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" plain="true" onclick="Main.Export()">导出</a>
+            
             <div style="float:right">
                         <input id="ipt_search" menu="#search_menu"/>
-               <input id="search_PlanCode" type="hidden"/>
+                       <input id="ssPlanCode" name="ssPlanCode"  type="hidden" value=""/>
                         <div id="search_menu" style="width: 200px">
                             <div name="PlanCode">
                                 申请单号
                             </div>
                         </div>
 </div>
- 
         </div>
     <%--列表 end--%>
 
@@ -117,7 +118,7 @@
                 $("#ipt_search").searchbox({
                     width: 250,
                     searcher: function (val, name) {
-                        $('#search_' + name).val(val);
+                        $('#ss' + name).val(val);
                         $('#tab_list').datagrid('options').queryParams.search_type = name;
                         $('#tab_list').datagrid('options').queryParams.search_value = val;
                         $('#tab_list').datagrid('reload');
@@ -189,7 +190,7 @@
                     $.messager.alert('提示', '无记录导出！', 'info');
                     return;
                 }
-                window.open("ExportHandler.aspx?type=1&plancode="+$('#search_plancode').val());
+                window.open("ExportHandler.aspx?type=1&plancode=" + $('#ssPlanCode').val());
             },
             BatchImportSumit: function () {
 
