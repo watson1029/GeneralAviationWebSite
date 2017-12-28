@@ -18,7 +18,7 @@
                 <th>任务类型：
                 </th>
                 <td>
-                    <input id="FlightType" name="FlightType" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                    <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
                         required="true" class="easyui-combobox" style="height:25px"/>
                 </td>
@@ -26,7 +26,7 @@
                 </th>
                 <td>
                     <%--  <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" />--%>
-                    <input id="AircraftType" name="AircraftType" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                    <input id="AircraftType" name="AircraftType" editable="false" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
                         required="true" class="easyui-combobox" style="height:25px"/>
                 </td>
