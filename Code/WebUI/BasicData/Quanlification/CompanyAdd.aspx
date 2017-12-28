@@ -101,31 +101,31 @@
            <tr>
                     <th>法人身份证复印件：</th>
                     <td colspan="3">
-                        <input type="hidden" name="LegalCardImgInfo" id="LegalCardImgInfo"/>
-                        <input type="file" id="LegalCardImg" name="LegalCardImg" />
-                        <a  href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('LegalCardImg').uploadFiles()">上传</a>
-                        <div id="LegalCardImg-fileQueue"></div>
-                        <div id="LegalCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
+                        <input type="hidden" name="LegalCardImgsInfo" id="LegalCardImgsInfo"/>
+                        <input type="file" id="LegalCardImgs" name="LegalCardImgs" />
+                        <a  href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('LegalCardImgs').uploadFiles()">上传</a>
+                        <div id="LegalCardImgs-fileQueue"></div>
+                        <div id="LegalCardImgs-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
                 </tr>
                 <tr>
                     <th> 法人委托书原件：</th>
                     <td colspan="3">
-                        <input type="hidden" name="LegalDelegateImgInfo" id="LegalDelegateImgInfo" />
-                        <input type="file" id="LegalDelegateImg" name="LegalDelegateImg" />
-                        <a href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('LegalDelegateImg').uploadFiles()">上传</a>
-                        <div id="LegalDelegateImg-fileQueue"></div>
-                        <div id="LegalDelegateImg-fileList" style="margin-top: 2px; zoom: 1"></div>
+                        <input type="hidden" name="LegalDelegateImgsInfo" id="LegalDelegateImgsInfo" />
+                        <input type="file" id="LegalDelegateImgs" name="LegalDelegateImgs" />
+                        <a href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('LegalDelegateImgs').uploadFiles()">上传</a>
+                        <div id="LegalDelegateImgs-fileQueue"></div>
+                        <div id="LegalDelegateImgs-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
                 </tr>
                 <tr>
                     <th>委托人身份证复印件：</th>
                     <td colspan="3">
-                        <input type="hidden" name="DelegateCardImgInfo" id="DelegateCardImgInfo" />
-                        <input type="file" id="DelegateCardImg" name="DelegateCardImg" />
-                        <a  href="javascript:;" class="easyui-linkbutton"style="margin-top: -15px"  onclick="dj.getCmp('DelegateCardImg').uploadFiles()">上传</a>
-                        <div id="DelegateCardImg-fileQueue"></div>
-                        <div id="DelegateCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
+                        <input type="hidden" name="DelegateCardImgsInfo" id="DelegateCardImgsInfo" />
+                        <input type="file" id="DelegateCardImgs" name="DelegateCardImgs" />
+                        <a  href="javascript:;" class="easyui-linkbutton"style="margin-top: -15px"  onclick="dj.getCmp('DelegateCardImgs').uploadFiles()">上传</a>
+                        <div id="DelegateCardImgs-fileQueue"></div>
+                        <div id="DelegateCardImgs-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
                 </tr>                
             </table>
@@ -209,11 +209,11 @@
                 <tr>
                     <th>许可机关印章：</th>
                     <td colspan="3">
-                        <input type="hidden" name="LicensedSealInfo" id="LicensedSealInfo"  />
-                        <input type="file" id="LicensedSeal" name="LicensedSeal" />
-                        <a  id="btn_upload" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px"  onclick="dj.getCmp('LicensedSeal').uploadFiles()">上传</a>
-                        <div id="LicensedSeal-fileQueue"></div>
-                        <div id="LicensedSeal-fileList" style="margin-top: 2px; zoom: 1"></div>
+                        <input type="hidden" name="LicensedSealsInfo" id="LicensedSealsInfo"  />
+                        <input type="file" id="LicensedSeals" name="LicensedSeals" />
+                        <a  id="btn_upload" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px"  onclick="dj.getCmp('LicensedSeals').uploadFiles()">上传</a>
+                        <div id="LicensedSeals-fileQueue"></div>
+                        <div id="LicensedSeals-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
                 </tr>
             </table>
@@ -234,11 +234,11 @@
                     $("#form_edit").form('load', data);
                     
                     new dj.upload({
-                        id: "LicensedSeal",
+                        id: "LicensedSeals",
                         maxSize: 5,
                         multi: true,
-                        queueId: "LicensedSeal-fileQueue",
-                        listId: "LicensedSeal-fileList",
+                        queueId: "LicensedSeals-fileQueue",
+                        listId: "LicensedSeals-fileList",
                         truncate: "18",
                         maxCount: "1",
                         uploadPath: "Files/LicensedSeal/",
@@ -246,33 +246,33 @@
                     });
 
                     new dj.upload({
-                        id: "LegalCardImg",
+                        id: "LegalCardImgs",
                         maxSize: 5,
                         multi: true,
-                        queueId: "LegalCardImg-fileQueue",
-                        listId: "LegalCardImg-fileList",
+                        queueId: "LegalCardImgs-fileQueue",
+                        listId: "LegalCardImgs-fileList",
                         truncate: "18",
                         maxCount: "1",
                         uploadPath: "Files/LegalCardImg/",
                         uploadedFiles: data.LegalCardImg
                     });
                     new dj.upload({
-                        id: "LegalDelegateImg",
+                        id: "LegalDelegateImgs",
                         maxSize: 5,
                         multi: true,
-                        queueId: "LegalDelegateImg-fileQueue",
-                        listId: "LegalDelegateImg-fileList",
+                        queueId: "LegalDelegateImgs-fileQueue",
+                        listId: "LegalDelegateImgs-fileList",
                         truncate: "18",
                         maxCount: "1",
                         uploadPath: "Files/LegalDelegateImg/",
                         uploadedFiles: data.LegalDelegateImg
                     });
                     new dj.upload({
-                        id: "DelegateCardImg",
+                        id: "DelegateCardImgs",
                         maxSize: 5,
                         multi: true,
-                        queueId: "DelegateCardImg-fileQueue",
-                        listId: "DelegateCardImg-fileList",
+                        queueId: "DelegateCardImgs-fileQueue",
+                        listId: "DelegateCardImgs-fileList",
                         truncate: "18",
                         maxCount: "1",
                         uploadPath: "Files/DelegateCardImg/",
@@ -284,42 +284,42 @@
             else {
 
                 new dj.upload({
-                    id: "LicensedSeal",
+                    id: "LicensedSeals",
                     maxSize: 5,
                     multi: true,
-                    queueId: "LicensedSeal-fileQueue",
-                    listId: "LicensedSeal-fileList",
+                    queueId: "LicensedSeals-fileQueue",
+                    listId: "LicensedSeals-fileList",
                     truncate: "18",
                     maxCount: "1",
                     uploadPath: "Files/LicensedSeal/",
                     uploadedFiles: ""
                 });
                 new dj.upload({
-                    id: "LegalCardImg",
+                    id: "LegalCardImgs",
                     maxSize: 5,
                     multi: true,
-                    queueId: "LegalCardImg-fileQueue",
-                    listId: "LegalCardImg-fileList",
+                    queueId: "LegalCardImgs-fileQueue",
+                    listId: "LegalCardImgs-fileList",
                     truncate: "18",
                     maxCount: "1",
                     uploadPath: "Files/LegalCardImg/"
                 });
                 new dj.upload({
-                    id: "LegalDelegateImg",
+                    id: "LegalDelegateImgs",
                     maxSize: 5,
                     multi: true,
-                    queueId: "LegalDelegateImg-fileQueue",
-                    listId: "LegalDelegateImg-fileList",
+                    queueId: "LegalDelegateImgs-fileQueue",
+                    listId: "LegalDelegateImgs-fileList",
                     truncate: "18",
                     maxCount: "1",
                     uploadPath: "Files/LegalDelegateImg/"
                 });
                 new dj.upload({
-                    id: "DelegateCardImg",
+                    id: "DelegateCardImgs",
                     maxSize: 5,
                     multi: true,
-                    queueId: "DelegateCardImg-fileQueue",
-                    listId: "DelegateCardImg-fileList",
+                    queueId: "DelegateCardImgs-fileQueue",
+                    listId: "DelegateCardImgs-fileList",
                     truncate: "18",
                     maxCount: "1",
                     uploadPath: "Files/DelegateCardImg/"

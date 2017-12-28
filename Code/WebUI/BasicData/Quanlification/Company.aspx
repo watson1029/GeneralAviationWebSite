@@ -108,14 +108,14 @@
                     return;
                 }
 
-                var fileInfo = dj.getCmp("LegalCardImg").getUploadedFiles();
-                $("#LegalCardImgInfo").val(fileInfo);
-                 fileInfo = dj.getCmp("LegalDelegateImg").getUploadedFiles();
-                $("#LegalDelegateImgInfo").val(fileInfo);
-                 fileInfo = dj.getCmp("DelegateCardImg").getUploadedFiles();
-                $("#DelegateCardImgInfo").val(fileInfo);
-                  fileInfo = dj.getCmp("LicensedSeal").getUploadedFiles();
-                $("#LicensedSealInfo").val(fileInfo);
+                var fileInfo = dj.getCmp("LegalCardImgs").getUploadedFiles();
+                $("#LegalCardImgsInfo").val(fileInfo);
+                 fileInfo = dj.getCmp("LegalDelegateImgs").getUploadedFiles();
+                $("#LegalDelegateImgsInfo").val(fileInfo);
+                 fileInfo = dj.getCmp("DelegateCardImgs").getUploadedFiles();
+                $("#DelegateCardImgsInfo").val(fileInfo);
+                  fileInfo = dj.getCmp("LicensedSeals").getUploadedFiles();
+                $("#LicensedSealsInfo").val(fileInfo);
 
 
                 var json = $.param({ "id": uid, "action": "submit" }) + '&' + $('#form_edit').serialize();
