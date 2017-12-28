@@ -184,7 +184,7 @@ public partial class BasicData_Aircraft : BasePage
                 Response.ContentType = "application/json";
                 Response.End();
             }
-            if (dt.Columns.Count != 15)
+            if (dt.Columns.Count != 16)
             {
                 result.IsSuccess = false;
                 result.Msg = "导入的文件模板不正确，请更新导入模板！";
@@ -302,6 +302,13 @@ public partial class BasicData_Aircraft : BasePage
                             if (length > 30)
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "适航证颁发单位不能超过30个字符！"));
                             break;
+                        case 15:
+                            length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
+                            if (colobj == null || string.IsNullOrEmpty(colobj))
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "公司三字码不能为空！"));
+                            if (length > 3)
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "公司三字码不能超过3个字符！"));
+                            break;
                     }
                 }
             }
@@ -327,7 +334,8 @@ public partial class BasicData_Aircraft : BasePage
                     MaxEndurance = float.Parse(rowobj.ItemArray[12].ToString()),
                     Passenger = int.Parse(rowobj.ItemArray[13].ToString()),
                     Airworthiness = rowobj.ItemArray[14].ToString(),
-                    CompanyCode3 = User.CompanyCode3 ?? "",                
+                    CompanyCode3 = rowobj.ItemArray[15].ToString(),
+                    //CompanyCode3 = User.CompanyCode3 ?? "",                
                     CreateTime = DateTime.Now,
      
                 };
@@ -378,6 +386,7 @@ public partial class BasicData_Aircraft : BasePage
         headerRow.CreateCell(12).SetCellValue("最大续航时间");
         headerRow.CreateCell(13).SetCellValue("乘客人数");
         headerRow.CreateCell(14).SetCellValue("适航证颁发单位");
+        headerRow.CreateCell(15).SetCellValue("公司三字码");
         int rowIndex = 1;
         if (listData != null && listData.Count > 0)
         {
@@ -399,6 +408,7 @@ public partial class BasicData_Aircraft : BasePage
                 dataRow.CreateCell(12).SetCellValue(item.MaxEndurance.ToString());
                 dataRow.CreateCell(13).SetCellValue(item.Passenger.ToString());
                 dataRow.CreateCell(14).SetCellValue(item.Airworthiness);
+                dataRow.CreateCell(15).SetCellValue(item.CompanyCode3);
                 rowIndex++;
             }
             var dr = sheet.CreateRow(rowIndex);

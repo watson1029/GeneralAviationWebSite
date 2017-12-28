@@ -55,7 +55,7 @@ public partial class BasicData_PilotExportHandler : BasePage
         var style = hssfworkbook.CreateCellStyle();
         var font = hssfworkbook.CreateFont();
         font.FontName = "宋体";
-        font.FontHeightInPoints = 14;
+        font.FontHeightInPoints = 11;
         style.SetFont(font);
 
         var headerRow = sheet1.CreateRow(0);
@@ -71,6 +71,7 @@ public partial class BasicData_PilotExportHandler : BasePage
         headerRow.CreateCell(7).SetCellValue("签发日期");
         headerRow.CreateCell(8).SetCellValue("执照类别");
         headerRow.CreateCell(9).SetCellValue("性别");
+        headerRow.CreateCell(10).SetCellValue("公司三字码");
         int rowIndex = 1;
         if (listData != null && listData.Count > 0)
         {
@@ -89,6 +90,7 @@ public partial class BasicData_PilotExportHandler : BasePage
         
                 dataRow.CreateCell(8).SetCellValue(item.Licensesort=="0"?"航线运输驾驶执照": (item.Licensesort == "1" ? "商用飞机驾照" : "私用飞机驾照"));
                 dataRow.CreateCell(9).SetCellValue(item.Sex == 0 ? "男" : "女");
+                dataRow.CreateCell(10).SetCellValue(item.CompanyCode3);
                 rowIndex++;
             }
             var dr = sheet1.CreateRow(rowIndex);
@@ -104,7 +106,7 @@ public partial class BasicData_PilotExportHandler : BasePage
         Response.Clear();
         Response.AppendHeader("Content-Disposition",
                               "attachment;filename=" +
-                              HttpUtility.UrlEncode("长期计划未提交列表" + ".xls", System.Text.Encoding.UTF8));
+                              HttpUtility.UrlEncode("飞行员信息列表" + ".xls", System.Text.Encoding.UTF8));
         file.WriteTo(Response.OutputStream);
         file.Close();
         Response.End();
