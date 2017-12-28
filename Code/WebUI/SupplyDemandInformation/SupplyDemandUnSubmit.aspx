@@ -29,6 +29,13 @@
         <form id="form_edit" method="post">
             <table class="table_edit">
                 <tr>
+                    <td style="text-align: right;">供求标题
+                    </td>
+                    <td colspan="3">
+                        <input id="Title" name="Title" class="easyui-textbox"required="true" style="width: 465px" />
+                    </td>
+                </tr>
+                <tr>
                     <td style="text-align: right;">供求简介
                     </td>
                     <td colspan="3">
@@ -99,6 +106,7 @@
                         { title: '单位名称', field: 'CompanyName', width: 200 },
                         { title: '录入日期', field: 'CreateTime', width: 150 },
                         { title: '有效期限', field: 'ExpiryDate', width: 150 },
+                        { title: '供求标题', field: 'Title', width: 150 },
                         { title: '供求简介', field: 'Summary', width: 400 },
                         { title: '供求条件', field: 'Catalog', width: 60 },
                         { title: '状态', field: 'State', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 60 },
