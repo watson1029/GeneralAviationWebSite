@@ -109,7 +109,7 @@
     </script>
 
     <%--添加 修改 start--%>
-    <div id="audit" class="easyui-dialog" style="width: 1111px; height: 825px;"
+    <div id="audit" class="easyui-dialog" style="width: 1122px; height: 825px;"
         modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
             <table class="table_edit">

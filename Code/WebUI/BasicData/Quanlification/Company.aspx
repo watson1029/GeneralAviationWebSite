@@ -67,7 +67,7 @@
                         { title: '公司名称', field: 'CompanyName', width: 150 },
                         { title: '英文名称', field: 'EnglishName', width: 150 },
                         {
-                            title: '操作', field: 'ID', width: 500, formatter: function (value, rec) {
+                            title: '操作', field: 'CompanyID', width: 500, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
                                 
                                 return str;

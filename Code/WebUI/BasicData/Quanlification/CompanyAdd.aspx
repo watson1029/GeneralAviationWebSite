@@ -35,7 +35,7 @@
                 <tr>
                     <th>注册时间：</th>
                     <td>
-                        <input id="RegisterTime" name="RegisterTime" type="text" maxlength="30" class="easyui-datebox" data-options="required:true" />
+                        <input id="RegisterTime" name="RegisterTime" editable="false" maxlength="30" class="easyui-datebox" data-options="required:true"  style="height:25px;"/>
                     </td> 
                     <th>注册地址：</th>
                     <td>
@@ -45,7 +45,7 @@
                 <tr>
                     <th>注册资金：（万）</th>
                     <td>
-                        <input id="RegisteredCapital" name="RegisteredCapital" type="text"  class="easyui-numberbox" data-options="min:1,max:1000000000,precision:1,required:true,validType:'length[1,10]'" />
+                        <input id="RegisteredCapital" name="RegisteredCapital" type="text"  class="easyui-numberbox" data-options="min:1,max:1000000000,precision:1,required:true,validType:'length[1,10]'"  style="height:25px;"/>
                     </td>
                     <th>有效期限：</th>
                     <td>
@@ -75,7 +75,7 @@
                 <tr>
                     <th>法人有效联系电话：</th>
                     <td>
-                        <input id="LegalTelePhone" name="LegalTelePhone" type="text"  class="easyui-numberbox" data-options="precision:0,required:true,validType:'length[1,11]'" />
+                        <input id="LegalTelePhone" name="LegalTelePhone" type="text"  class="easyui-numberbox" data-options="precision:0,required:true,validType:'length[1,11]'"  style="height:25px;"/>
                     </td>
                     <th>法人委托人：</th>
                     <td>
@@ -95,7 +95,7 @@
                 <tr>
                     <th>委托人有效联系电话：</th>
                     <td>
-                        <input id="DelegateTelePhone" name="DelegateTelePhone" type="text"  class="easyui-numberbox" data-options="precision:0,required:true,validType:'length[1,11]'" />
+                        <input id="DelegateTelePhone" name="DelegateTelePhone" type="text"  class="easyui-numberbox" data-options="precision:0,required:true,validType:'length[1,11]'"  style="height:25px;"/>
                     </td>
                 </tr>
            <tr>
@@ -103,7 +103,7 @@
                     <td colspan="3">
                         <input type="hidden" name="LegalCardImgInfo" id="LegalCardImgInfo"/>
                         <input type="file" id="LegalCardImg" name="LegalCardImg" />
-                        <a  href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalCardImg').uploadFiles()">上传</a>
+                        <a  href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('LegalCardImg').uploadFiles()">上传</a>
                         <div id="LegalCardImg-fileQueue"></div>
                         <div id="LegalCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
@@ -113,7 +113,7 @@
                     <td colspan="3">
                         <input type="hidden" name="LegalDelegateImgInfo" id="LegalDelegateImgInfo" />
                         <input type="file" id="LegalDelegateImg" name="LegalDelegateImg" />
-                        <a href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('LegalDelegateImg').uploadFiles()">上传</a>
+                        <a href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('LegalDelegateImg').uploadFiles()">上传</a>
                         <div id="LegalDelegateImg-fileQueue"></div>
                         <div id="LegalDelegateImg-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
@@ -123,7 +123,7 @@
                     <td colspan="3">
                         <input type="hidden" name="DelegateCardImgInfo" id="DelegateCardImgInfo" />
                         <input type="file" id="DelegateCardImg" name="DelegateCardImg" />
-                        <a  href="javascript:;" class="easyui-linkbutton" onclick="dj.getCmp('DelegateCardImg').uploadFiles()">上传</a>
+                        <a  href="javascript:;" class="easyui-linkbutton"style="margin-top: -15px"  onclick="dj.getCmp('DelegateCardImg').uploadFiles()">上传</a>
                         <div id="DelegateCardImg-fileQueue"></div>
                         <div id="DelegateCardImg-fileList" style="margin-top: 2px; zoom: 1"></div>
                     </td>
@@ -147,7 +147,7 @@
                 <tr>
                     <th>企业代码：</th>
                     <td>
-                        <input id="FirmCode" name="FirmCode" type="text"  class="easyui-numberbox" data-options="precision:0,required:true,validType:'length[1,30]'" />
+                        <input id="FirmCode" name="FirmCode"  style="height:25px;"  class="easyui-numberbox" data-options="precision:0,required:true,validType:'length[1,30]'" />
                     </td>
                     <th>企业地址：</th>
                     <td>
@@ -171,7 +171,7 @@
                     </td>
                     <th>注册资本：</th>
                     <td>
-                        <input id="RegisteredFund" name="RegisteredFund" type="text"  class="easyui-numberbox" data-options="min:1,max:1000000000,precision:1,required:true,validType:'length[1,10]'"  />
+                        <input id="RegisteredFund" name="RegisteredFund" style="height:25px;"  class="easyui-numberbox" data-options="min:1,max:1000000000,precision:1,required:true,validType:'length[1,10]'"  />
                     </td>
                 </tr>
                 <tr>
@@ -191,7 +191,7 @@
                     </td>
                     <th>颁发日期：</th>
                     <td>
-                        <input id="PresentationDate" name="PresentationDate" type="text"  class="easyui-datebox" data-options="required:true" />
+                        <input id="PresentationDate" name="PresentationDate"  style="height:25px;" editable="false" class="easyui-datebox" data-options="required:true" />
                     </td>
                 </tr>
                 <tr>
@@ -199,7 +199,7 @@
                         <p>购置航空器的</p>
                         <p>自有资金额度：</p></th>
                     <td>
-                        <input id="CapitalLimit" name="CapitalLimit" type="text" class="easyui-numberbox" data-options="min:1,max:1000000000,precision:1,required:true,validType:'length[1,10]'" />
+                        <input id="CapitalLimit" name="CapitalLimit"  style="height:25px;" class="easyui-numberbox" data-options="min:1,max:1000000000,precision:1,required:true,validType:'length[1,10]'" />
                     </td>
                     <th>许可证颁发机关：</th>
                     <td>

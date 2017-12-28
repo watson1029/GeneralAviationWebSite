@@ -47,7 +47,7 @@ namespace Model.EF
         public string DelegateCardImg { get; set; }
         public string LicenseNo { get; set; }
         public string BaseAirport { get; set; }
-        public string ConpanyType { get; set; }
+        public string CompanyType { get; set; }
         public Nullable<double> RegisteredFund { get; set; }
         public Nullable<double> CapitalLimit { get; set; }
         public string Legalperson1 { get; set; }

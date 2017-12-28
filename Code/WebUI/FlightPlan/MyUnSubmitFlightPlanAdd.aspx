@@ -72,12 +72,12 @@
                 <th>起飞时刻：
                 </th>
                 <td>
-                    <input id="SOBT" name="SOBT"  type="text" required="true"  class="easyui-datebox" style="height:25px"/>
+                    <input id="SOBT" name="SOBT"  editable="false" required="true"  class="easyui-datetimebox" style="height:25px"/>
                 </td>
                 <th>降落时刻：
                 </th>
                 <td>
-                    <input id="SIBT" name="SIBT" type="text" required="true" class="easyui-datebox" validtype="md['#SOBT']" style="height:25px"/>
+                    <input id="SIBT" name="SIBT" editable="false"  required="true" class="easyui-datetimebox" validtype="md['#SOBT']" style="height:25px"/>
                 </td>
             </tr>
                 <tr>

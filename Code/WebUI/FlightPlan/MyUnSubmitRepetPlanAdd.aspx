@@ -59,24 +59,24 @@
                 <th>预计开始日期：
                 </th>
                 <td>
-                    <input id="StartDate" name="StartDate"  type="text" required="true"  class="easyui-datebox" style="height:25px"/>
+                    <input id="StartDate" name="StartDate" editable="false"  required="true"  class="easyui-datebox" style="height:25px"/>
                 </td>
                 <th>预计结束日期：
                 </th>
                 <td>
-                    <input id="EndDate" name="EndDate" type="text" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height:25px"/>
+                    <input id="EndDate" name="EndDate"  editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height:25px"/>
                 </td>
             </tr>
             <tr>
                 <th >起飞时刻：
                 </th>
                 <td>
-                    <input id="SOBT" name="SOBT"  type="text" required="true" class="easyui-timespinner" style="height:25px"/>
+                    <input id="SOBT" name="SOBT"   editable="false" required="true" class="easyui-timespinner" style="height:25px"/>
                 </td>
 <th>降落时刻：
                 </th>
                 <td >
-                    <input id="SIBT" name="SIBT"  type="text" required="true" class="easyui-timespinner" style="height:25px"/>
+                    <input id="SIBT" name="SIBT"  editable="false" required="true" class="easyui-timespinner" style="height:25px"/>
                 </td>
 
             </tr>
@@ -112,9 +112,8 @@
                 <th>其他需要说明的事项：
                 </th>
                 <td colspan="3">
-                    <input id="Remark" name="Remark" maxlength="200"  style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                    <input id="Remark" name="Remark"  style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                 </td>
-
             </tr>
         </table>
 
@@ -148,7 +147,7 @@
                         listId: "AttchFiles-fileList",
                         truncate: "30",
                         maxCount: "1",
-                        uploadPath: "Files/PJ/",
+                        uploadPath: "Files/RepetPlan/",
                         uploadedFiles: data.AttchFile
                     });
                 });
@@ -168,7 +167,7 @@
                         listId: "AttchFiles-fileList",
                         truncate: "30",
                         maxCount: "1",
-                        uploadPath: "Files/PJ/",
+                        uploadPath: "Files/RepetPlan/",
                         uploadedFiles: ""
                     });
             }

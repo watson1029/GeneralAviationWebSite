@@ -55,7 +55,9 @@ public class GetComboboxData : IHttpHandler {
     }
     private string GetAllCompany()
     {
-        List<Company> list = cbll.GetList();
+        Expression<Func<Company, bool>> predicate = PredicateBuilder.True<Company>();
+        predicate = predicate.And(m => m.Catalog ==1);
+        List<Company> list = cbll.GetList(predicate);
         ArrayList arr = new ArrayList();
         foreach (var item in list)
         {

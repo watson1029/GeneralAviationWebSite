@@ -1,4 +1,6 @@
-﻿using Model.SystemManagement;
+﻿using BLL.Log;
+using Model.EF;
+using Model.SystemManagement;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -32,7 +34,7 @@ public partial class Login : System.Web.UI.Page
         result.Msg = "登录失败！";
         var password = Request.Form["htxtPassword"]; //登录密码改在客户用js 的DES加密
         var userName = Request.Form["txtUserName"];
-        var remember = false;
+        var remember = Request.Form["rememberme"] == "on" ? true : false;
         //解密的密码
         var PPassword = DES.uncMe(password, userName);
         string msg;
@@ -40,19 +42,11 @@ public partial class Login : System.Web.UI.Page
         password = CryptTools.HashPassword(PPassword);
         LoginResultEnum loginResult = LoginUtil.GALogin(StringSafeFilter.Filter(userName), StringSafeFilter.Filter(password.ToUpper()),remember, out msg);
 
-        // 记录用户登录操作日志
-
         if (loginResult == LoginResultEnum.LoginSuccess)
         {
             result.IsSuccess = true;
             result.Msg = msg;
-            //ActionLogBLL.LogUserAction(ActionLogType.Login, OperateResult.Succeed, user, "", "", user.UserID,
-            //    string.Format("用户登录通航服务站。用户帐号：{0}，手机号码{1}。", user.UserName, user.Mobile));
-        }
-        else
-        {
-            //ActionLogBLL.LogUserAction(ActionLogType.Login, OperateResult.Failed, user, "", "", user.UserID,
-            //    string.Format("用户登录通航服务站。用户帐号：{0}，手机号码{1}。", user.UserName, user.Mobile));
+
         }
 
         if (loginResult == LoginResultEnum.NoUser ||

@@ -39,7 +39,7 @@
                 listId: "PlanFiles-fileList",
                 truncate: "30",
                 maxCount: "1",
-                uploadPath: "Files/PJ/RepetPlanTemp/",
+                uploadPath: "Files/ImportTemp/",
                 uploadedFiles: ""
             });
         });

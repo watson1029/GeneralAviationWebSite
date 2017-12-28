@@ -36,27 +36,27 @@
         <form id="form_edit" method="post">
             <table class="table_edit">
                 <tr>
-                    <td class="tdal">角色名称：
+                    <td>角色名称：
                     </td>
-                    <td class="tdar">
+                    <td >
                         <input id="RoleName" name="RoleName" type="text" maxlength="30" class="easyui-validatebox textbox"
                             required="true" />
                     </td>
                 </tr>
 
                 <tr>
-                    <td class="tdal">描述：
+                    <td>描述：
                     </td>
-                    <td class="tdar">
+                    <td>
                         <input id="Description" name="Description" maxlength="50" type="text" required="true" class="easyui-validatebox textbox" />
                     </td>
 
                 </tr>
                 <tr>
-                    <td class="tdar">是否管理员：
+                    <td>是否管理员：
                     </td>
-                    <td class="tdar">
-                        <select class="easyui-combobox" editable="false" name="IsAdmin" required="true" panelheight="auto" style="width:194px;height:25px;">
+                    <td>
+                        <select class="easyui-combobox" editable="false" id="IsAdmin" name="IsAdmin" required="true" panelheight="auto" style="width:194px;height:25px;">
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
@@ -147,7 +147,9 @@
             //打开添加窗口
             OpenWin: function () {
                 $("#edit").dialog("open").dialog('setTitle', '新增');
-                $("#form_edit").form('clear');
+                  $("#form_edit").form('clear');
+
+                $('#IsAdmin').combobox('select', '0');
                 $("#btn_add").attr("onclick", "Main.Save();")
             },
             //提交按钮事件
@@ -190,13 +192,11 @@
 
             },
             SavePermission: function (uid) {
-                var nodes = $('#tt').tree('getChecked');
-
+                var nodes = $('#tt').tree('getChecked', ['checked', 'indeterminate']);
                 var idarray = new Array();
                 nodes.forEach(function (i) {
                     idarray.push(i.id);
                 });
-                console.info(idarray.join());
                 var json = { id: uid, action:"setrole",newRoleMenus: idarray.join() };
 
                 $.post("Role.aspx", json, function (data) {
@@ -221,7 +221,7 @@
                 }
                 $.messager.confirm('提示', '确认删除该条记录？', function (r) {
                     if (r) {
-                        $.post("UserInfo.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
+                        $.post("Role.aspx", { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
 
                             if (data.isSuccess) {
                                 $("#tab_list").datagrid("reload");

@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BasicData\AircraftBLL.cs" />
     <Compile Include="BasicData\FlightTaskBLL.cs" />
+    <Compile Include="BasicData\NewBLL.cs" />
     <Compile Include="FlightPlan\CurrentPlanBLL.cs" />
     <Compile Include="FlightPlan\FlightPlanBLL.cs" />
     <Compile Include="BasicData\PilotBLL.cs" />

@@ -64,16 +64,15 @@
                         { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
                         { title: '预计开始时间', field: 'StartDate',width: 100, formatter: function (value, rec, index) { 
                         
-                            var timesstamp = new Date(value);
-                            return timesstamp.toLocaleDateString();
+                            var timesstamp = new Date(value.dateValFormat());
+                            return timesstamp.format("yyyy-MM-dd");
                         
                         } },
                         {
                             title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) { 
                         
-                                var timesstamp = new Date(value);
-    
-                                return timesstamp.toLocaleDateString();
+                                var timesstamp = new Date(value.dateValFormat());
+                                return timesstamp.format("yyyy-MM-dd");
                         
                             }
                         },
@@ -134,10 +133,15 @@
             },
             //提交按钮事件
             Save: function (uid) {
+                if ($("#Remark").val().length > 200)
+                {
+                    $.messager.alert('提示', '"其他需要说明的事项"不能超过200字符！', 'info');
+                    return;
+                }
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
-
+               
                 var fileInfo = dj.getCmp("AttchFiles").getUploadedFiles();
                 $("#AttchFilesInfo").val(fileInfo);
                 qx = $("input[name='WeekSchedule']").map(function () {
