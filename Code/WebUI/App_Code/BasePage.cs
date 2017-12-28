@@ -52,7 +52,7 @@ public class BasePage : Page
         if (user == null)
         {
             //跳转到登录页面
-            Response.Redirect("~/Login.aspx");
+            Response.Redirect("~/Default.aspx");
         }
         else
         {

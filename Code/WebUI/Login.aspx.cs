@@ -34,13 +34,33 @@ public partial class Login : System.Web.UI.Page
         result.Msg = "登录失败！";
         var password = Request.Form["htxtPassword"]; //登录密码改在客户用js 的DES加密
         var userName = Request.Form["txtUserName"];
-        var remember = Request.Form["rememberme"] == "on" ? true : false;
+        var vcode = Request.Form["txtCode"];
+    //    var remember = Request.Form["rememberme"] == "on" ? true : false;
+        string ssCode = string.Empty;
+        if (Session["session_verifycode"] != null)
+        {
+            ssCode = Session["session_verifycode"].ToString();
+            Session.Remove("session_verifycode");
+        }
+        else
+        {
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
+        }
+        if (!ssCode.Equals(vcode, StringComparison.CurrentCultureIgnoreCase))
+        {
+            result.Msg = "证码错误，请重新输入！";
+            Response.Write(result.ToJsonString());
+            Response.ContentType = "application/json";
+            Response.End();
+        }
         //解密的密码
         var PPassword = DES.uncMe(password, userName);
         string msg;
         //将明文密码转化为MD5加密
         password = CryptTools.HashPassword(PPassword);
-        LoginResultEnum loginResult = LoginUtil.GALogin(StringSafeFilter.Filter(userName), StringSafeFilter.Filter(password.ToUpper()),remember, out msg);
+        LoginResultEnum loginResult = LoginUtil.GALogin(StringSafeFilter.Filter(userName), StringSafeFilter.Filter(password.ToUpper()),false, out msg);
 
         if (loginResult == LoginResultEnum.LoginSuccess)
         {

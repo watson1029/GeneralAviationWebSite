@@ -6,7 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Untity;
-
+using System.Linq;
+using System.Data.Entity;
 namespace BLL.BasicData
 {
     public class CompanyBLL
@@ -109,5 +110,10 @@ namespace BLL.BasicData
             }
         }
         #endregion
+        public List<Company> GetTopList(int top, Expression<Func<Company, bool>> where)
+        {
+            ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
+            return context.Set<Company>().Where(where).OrderByDescending(m => m.Catalog==1&&m.State=="end").AsNoTracking().Take(top).ToList();
+        }
     }
 }

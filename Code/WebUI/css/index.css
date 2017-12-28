@@ -3,8 +3,8 @@
 .center_left_new{ width:840px; height:362px; float:left; border:1px solid #e2e2e2; border-top:2px solid #5b77c5;background:#fff;margin-top:20px;}
 
 .center_right_container{ width:338px; height:1126px; float:right;margin-top: 5px; padding-bottom:20px;}
-.center_right_top{ width:336px; height:270px; float:right; border:1px solid #e2e2e2; border-top:2px solid #5b77c5; background:#fff;}
-.center_right_middle{ width:338px; height:454px; float:right; border:1px solid #e2e2e2; border-top:2px solid #5b77c5; background:#fff; margin-top:20px; }
+.center_right_top{ width:336px; height:280px; float:right; border:1px solid #e2e2e2; border-top:2px solid #5b77c5; background:#fff;}
+.center_right_middle{ width:338px; height:442px; float:right; border:1px solid #e2e2e2; border-top:2px solid #5b77c5; background:#fff; margin-top:20px; }
 .center_right_bottom{ width:338px; height:362px; float:right; border:1px solid #e2e2e2; border-top:2px solid #5b77c5; background:#fff; margin-top:20px;}
 
 .title_new{ width:90%; padding:0 5%; height:50px; line-height:50px; border-bottom:1px solid #e2e2e2; background:#f8f8f8;}

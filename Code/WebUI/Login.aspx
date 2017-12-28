@@ -30,8 +30,9 @@
         Main = {
             login: function () 
             {
+
                 if ($("input[name='txtUserName']").val().trim() == "" || $("input[name='txtPassword']").val().trim() == "") {
-                    $("#showMsg").html("用户名或密码不能为空！");
+                    $("#showMsg").html("用户名、密码不能为空！");
                   //  $("input[name='txtUserName']").focus();
 
                 } else {
