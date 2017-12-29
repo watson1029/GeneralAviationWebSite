@@ -219,7 +219,7 @@ public class Handler : IHttpHandler
     /// <param name="context"></param>
     public void download(HttpContext context)
     {
-        string file = context.Server.MapPath("~/File/") + context.Request["filepath"];
+        string file = context.Server.MapPath("~/")+context.Request["filepath"];
         if (System.IO.File.Exists(file))
         {
             FileStream fs = new FileStream(file, FileMode.Open);
@@ -286,8 +286,8 @@ public class Handler : IHttpHandler
                 context.Response.ContentType = "text/plain";
                 context.Response.Write("新增资料失败，附件太大了");
             }
-            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/") + context.Request.Files["file"].FileName);
-            filepath = context.Request.Files["file"].FileName;
+            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/Files/Resource/") + context.Request.Files["file"].FileName);
+            filepath = "Files/Resource/"+ context.Request.Files["file"].FileName;
 
             Resource resource = new Resource();
             resource.Title = title;
@@ -333,8 +333,8 @@ public class Handler : IHttpHandler
                 context.Response.ContentType = "text/plain";
                 context.Response.Write("更新资料失败，附件太大了");
             }
-            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/") + context.Request.Files["file"].FileName);
-            resource.FilePath = context.Request.Files["file"].FileName;
+            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/Resource/") + context.Request.Files["file"].FileName);
+            resource.FilePath = context.Server.MapPath("~/File/Resource/")+context.Request.Files["file"].FileName;
         }
 
         resource.ID = id;
