@@ -149,7 +149,7 @@
                         <div class="content" style="margin: 0 auto">
                             <div class="title" style="background: #fff">
                                 <h2><a href="http://www.zslib.com.cn/TempletPage/userService.aspx?dbid=5" target="_blank">新闻中心</a></h2>
-                                <span><a href="List.aspx" target="_blank">+更多</a></span>
+                                <span><a href="List.aspx?Type=News&PageIndex=1" target="_blank">+更多</a></span>
                             </div>
                             <div class="img_container">
                                 <img width="288px" height="288px" src="images/News.jpg" alt="" />
@@ -162,7 +162,7 @@
                                                 foreach(var item in newsModel)
 	                                        {%>
 		                                    <li>
-                                                <h3><a href="#" class="linktit"><%=HtmlWorkShop.CutTitle(item.NewTitle,20)%></a></h3>
+                                                <h3><a href="Detail.aspx?Type=News&Id=<%=item.NewID %>" class="linktit"><%=HtmlWorkShop.CutTitle(item.NewTitle,20)%></a></h3>
                                                 <div><%=HtmlWorkShop.CutTitle(HttpUtility.UrlDecode(item.NewContent),20)%></div>
                                             </li>
 	                                          <%  }%>
@@ -181,9 +181,9 @@
                         <div class="content" style="margin: 0 auto">
                             <div class="title" style="background: #fff">
                                 <h2><a href="#" target="_blank">供求信息</a></h2>
-                                <span><a href="List.aspx" target="_blank">+更多</a></span>
+                                <span><a href="List.aspx?Type=SupplyDemand&PageIndex=1" target="_blank">+更多</a></span>
                             </div>
-                            <div class="img_container">
+                            <%--<div class="img_container">
                                 <img width="288px" height="288px" src="images/Supply.jpg" alt="" />
                             </div>
                             <div class="txt_container">
@@ -193,16 +193,39 @@
                                            foreach (var item in demandModel)
 	                                        {%>
                                    <h3 class="sideMenu00 <%=(i==1)?"on":""%>">
-                                        <a href="#" target="_blank" title=" 中山讲堂 国事·家事·天下事">中山讲堂 国事·家事·天下事</a></h3>
                                    
                                      <ul style="<%=(i==1)?"display: block;":"display: none;"%>">
-                                        <p><a href="#" target="_blank"><%=HtmlWorkShop.CutTitle(item.Summary,20)%></a></p>
+                                        <p><a href="Detail.aspx?Type=News&Id=<%=item.ID %>" target="_blank"><%=HtmlWorkShop.CutTitle(item.Summary,20)%></a></p>
                                     </ul>
                                        <%  
                                                 i++;
                                             }%>
               
                                                           
+                                </div>
+                            </div>--%>
+                            <div class="img_container">
+                                <img width="288px" height="288px" src="images/Supply.jpg" alt="" />
+                            </div>
+                            <div class="txt_container">
+                                <div class="scrollbox">
+                                    <div id="scrollDiv">
+                                        <ul>
+                                            <%
+                                                foreach (var item in demandModel)
+	                                        {%>
+		                                    <li>
+                                                <h3><a href="Detail.aspx?Type=SupplyDemand&Id=<%=item.ID %>" class="linktit"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a></h3>
+                                                <div><%=HtmlWorkShop.CutTitle(HttpUtility.UrlDecode(item.Summary),20)%></div>
+                                            </li>
+	                                          <%  }%>
+                  
+                                        </ul>
+                                    </div>
+                                    <div class="scroltit">
+                                        <div class="updown" id="but_down">向上</div>
+                                        <div class="updown" id="but_up">向下</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -211,19 +234,17 @@
                         <div class="content" style="margin: 0 auto">
                             <div class="title" style="background: #fff">
                                 <h2><a href="#" target="_blank">通航企业</a></h2>
-                                <span><a href="List.aspx" target="_blank">+更多</a></span>
+                                <span><a href="List.aspx?Type=CompanyIntro&PageIndex=1" target="_blank">+更多</a></span>
                             </div>
                             <div class="img_container">
                                 <img width="288px" height="288px" src="images/Company.jpg" alt="" />
                             </div>
-                            <div class="txt_container">
+                           <%-- <div class="txt_container">
                                 <div class="sideMenu">
                                    <%
                                            var j = 1;
                                            foreach (var item in companyModel)
 	                                        {%>
-                                   <h3 class="sideMenu00 <%=(j==1)?"on":""%>">
-                                        <a href="#" target="_blank" title=" 中山讲堂 国事·家事·天下事">中山讲堂 国事·家事·天下事</a></h3>
                                    
                                      <ul style="<%=(j==1)?"display: block;":"display: none;"%>">
                                         <p><a href="#" target="_blank"><%=HtmlWorkShop.CutTitle(item.Summary,20)%></a></p>
@@ -232,8 +253,29 @@
                                                 i++;
                                             }%>              
                                 </div>
+                            </div>--%>
+                            <div class="txt_container">
+                                <div class="scrollbox">
+                                    <div id="scrollDiv">
+                                        <ul>
+                                            <%
+                                                foreach (var item in companyModel)
+	                                        {%>
+		                                    <li>
+                                                <h3><a href="Detail.aspx?Type=CompanyIntro&Id=<%=item.CompanyID %>" class="linktit"><%=HtmlWorkShop.CutTitle(item.CompanyName,20)%></a></h3>
+                                                <div><%=HtmlWorkShop.CutTitle(HttpUtility.UrlDecode(item.SummaryCode),20)%></div>
+                                            </li>
+	                                          <%  }%>                  
+                                        </ul>
+                                    </div>
+                                    <div class="scroltit">
+                                        <div class="updown" id="but_down">向上</div>
+                                        <div class="updown" id="but_up">向下</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -267,10 +309,9 @@
                     <div class="center_right_middle">
                         <div class="title">
                             <h2><a href="http://www.zslib.com.cn/TempletPage/List.aspx?dbid=1" target="_blank">相关资料</a></h2>
-                            <span><a href="http://www.zslib.com.cn/TempletPage/List.aspx?dbid=1" target="_blank">+更多</a></span>
                         </div>
                         <div class="tuijie" style="margin: 0 auto">
-                            <ul>
+                           <%-- <ul>
                                 <li><a href="http://183.63.187.42/ABCenter/Default.aspx" target="_blank" title="广东省古籍保护中心">广东省古籍保护中心广</a></li>
                                 <li><a href="http://www.lsgd.org.cn/" target="_blank" title="广东图书馆学会">广东图书馆学会</a></li>
                                 <li><a href="http://tsglt.zslib.com.cn/" target="_blank" title="《图书馆论坛》">《图书馆论坛》</a></li>
@@ -280,9 +321,17 @@
                                 <li><a href="http://www.zslib.com.cn/jingtaiyemian/zwgk/index.html" target="_blank" title="馆务公开">馆务公开</a></li>
                                 <li><a href="http://www.zslib.com.cn/TempletPage/GQTBList.aspx" target="_blank" title="《馆情通报》">《馆情通报》</a></li>
                                 <li><a href="http://jxjy.gdlink.net/" target="_blank" title="广东省图书情报继续教育网络学习中心">广东省图书情报继续教育网络学习中心</a></li>
-                                <li><a href="http://www.gddcn.gov.cn/" target="_blank" title="广东数字文化网">广东数字文化网</a></li>
-
-                            </ul>
+                                <li><a href="http://www.gddcn.gov.cn/" target="_blank" title="广东数字文化网">广东数字文化网</a></li>                                
+                            </ul>--%>
+                            <ul>
+                                    <%
+                                        foreach (var item in resModel)
+	                                {%>
+		                            <li>
+                                        <h3><a href="Handler.ashx?action=download&filepath=<%=item.FilePath %>" class="linktit"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a></h3>
+                                    </li>
+	                                    <%  }%>                  
+                                </ul>
                         </div>
                         <!-- list  End -->
                     </div>
