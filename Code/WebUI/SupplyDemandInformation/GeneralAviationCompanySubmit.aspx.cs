@@ -1,4 +1,5 @@
-﻿using BLL.BasicData;
+﻿using BLL.SupplyDemandInformation;
+using Model.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using Untity;
 
 public partial class SupplyDemandInformation_GeneralAviationCompanySubmit : BasePage
 {
-    private CompanyBLL bll = new CompanyBLL();
+    private CompanySummaryBLL bll = new CompanySummaryBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -52,10 +53,10 @@ public partial class SupplyDemandInformation_GeneralAviationCompanySubmit : Base
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<Model.EF.Company, bool>> GetWhere()
+    private Expression<Func<CompanySummary, bool>> GetWhere()
     {
-        Expression<Func<Model.EF.Company, bool>> predicate = PredicateBuilder.True<Model.EF.Company>();
-        predicate = predicate.And(m => m.Catalog == 1 && m.State != "0" && m.State != null && m.ModifiedBy == User.ID);
+        Expression<Func<CompanySummary, bool>> predicate = PredicateBuilder.True<CompanySummary>();
+        predicate = predicate.And(m => m.State != "0" && m.ModifiedBy == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

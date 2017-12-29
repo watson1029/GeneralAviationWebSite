@@ -1,4 +1,4 @@
-﻿using BLL.BasicData;
+﻿using BLL.SupplyDemandInformation;
 using Model.EF;
 using Newtonsoft.Json;
 using System;
@@ -12,7 +12,7 @@ using Untity;
 
 public partial class SupplyDemandInformation_GeneralAviationCompanyUnSubmit : BasePage
 {
-    CompanyBLL bll = new CompanyBLL();
+    CompanySummaryBLL bll = new CompanySummaryBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -31,10 +31,35 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyUnSubmit : Ba
                 case "submit":
                     Submit();
                     break;
+                case "del":
+                    Delete();
+                    break;
+                case "init":
+                    Init();
+                    break;
                 default:
                     break;
             }
         }
+    }
+
+    private void Delete()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "删除失败！";
+        if (Request.Form["cbx_select"] != null)
+        {
+            if (bll.Delete(Request.Form["cbx_select"].ToString()))
+            {
+                result.IsSuccess = true;
+                result.Msg = "删除成功！";
+            }
+        }
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
     }
 
     private void Save()
@@ -47,13 +72,12 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyUnSubmit : Ba
         {
             id = Convert.ToInt32(Request.Form["id"]);
             var model = bll.Get(id);
+            model.Title = Request.Form["Title"];
             model.ModifiedTime = DateTime.Parse(Request.Form["ModifiedTime"]);
             model.Summary = Server.HtmlDecode(Request.Form["Summary"]);
             model.SummaryCode = Server.HtmlDecode(Request.Form["SummaryCode"]);
-            model.ModifiedBy = User.ID;
-            model.ModifiedByName = User.UserName;
             model.State = "0";
-            if (bll.Update(model) > 0)
+            if (bll.Update(model))
             {
                 result.IsSuccess = true;
                 result.Msg = "更新成功！";
@@ -61,8 +85,21 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyUnSubmit : Ba
         }
         else
         {
-            result.IsSuccess = false;
-            result.Msg = "没有找到相关记录！";
+            var model = new CompanySummary();
+            model.Title = Request.Form["Title"];
+            model.ModifiedTime = DateTime.Parse(Request.Form["ModifiedTime"]);
+            model.Summary = Server.HtmlDecode(Request.Form["Summary"]);
+            model.SummaryCode = Server.HtmlDecode(Request.Form["SummaryCode"]);
+            model.ModifiedBy = User.ID;
+            model.ModifiedByName = User.UserName;
+            model.CompanyName = User.CompanyName;
+            model.ActorID = User.ID;
+            model.State = "0";
+            if (bll.Add(model))
+            {
+                result.IsSuccess = true;
+                result.Msg = "增加成功！";
+            }
         }
         Response.Clear();
         Response.Write(result.ToJsonString());
@@ -93,14 +130,11 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyUnSubmit : Ba
     private void GetData()
     {
         var id = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var company = bll.Get(id);
+        var companySummary = bll.Get(id);
         var strJSON = "";
-        if (company != null)
+        if (companySummary != null)
         {
-            company.ModifiedBy = User.ID;
-            company.ModifiedByName = User.UserName;
-            company.ModifiedTime = DateTime.Now;
-            strJSON = JsonConvert.SerializeObject(company);
+            strJSON = JsonConvert.SerializeObject(companySummary);
         }
         Response.Clear();
         Response.Write(strJSON);
@@ -133,11 +167,10 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyUnSubmit : Ba
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<Company, bool>> GetWhere()
+    private Expression<Func<CompanySummary, bool>> GetWhere()
     {
-        Expression<Func<Company, bool>> predicate = PredicateBuilder.True<Company>();
-        predicate = predicate.And(m => m.ActorID == User.ID);
-        predicate = predicate.And(m => (m.State == null || m.State == "0" || m.State == "end" || m.State == "Deserted") && m.Catalog == 1);
+        Expression<Func<CompanySummary, bool>> predicate = PredicateBuilder.True<CompanySummary>();
+        predicate = predicate.And(m => m.State == "0" && m.ActorID == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -151,4 +184,20 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyUnSubmit : Ba
         return predicate;
     }
 
+    private void Init()
+    {
+        CompanySummary cs = new CompanySummary
+        {
+            ModifiedBy = User.ID,
+            ModifiedByName = User.UserName,
+            ModifiedTime = DateTime.Today,
+            CompanyName = User.CompanyName
+        };
+        var strJSON = string.Empty;
+        strJSON = JsonConvert.SerializeObject(cs);
+        Response.Clear();
+        Response.Write(strJSON);
+        Response.ContentType = "application/json";
+        Response.End();
+    }
 }

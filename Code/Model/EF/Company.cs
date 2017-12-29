@@ -60,5 +60,6 @@ namespace Model.EF
         public string FirmAddress { get; set; }
         public string BaseAirportCode { get; set; }
         public string LicensingAuthority { get; set; }
+        public string ConpanyType { get; set; }
     }
 }

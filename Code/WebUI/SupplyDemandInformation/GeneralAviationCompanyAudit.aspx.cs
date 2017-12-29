@@ -1,4 +1,5 @@
-﻿using BLL.BasicData;
+﻿using BLL.SupplyDemandInformation;
+using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Untity;
 
 public partial class SupplyDemandInformation_GeneralAviationCompanyAudit : BasePage
 {
-    private CompanyBLL bll = new CompanyBLL();
+    private CompanySummaryBLL bll = new CompanySummaryBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -58,9 +59,9 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyAudit : BaseP
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<Model.EF.Company, bool>> GetWhere()
+    private Expression<Func<CompanySummary, bool>> GetWhere()
     {
-        Expression<Func<Model.EF.Company, bool>> predicate = PredicateBuilder.True<Model.EF.Company>();
+        Expression<Func<CompanySummary, bool>> predicate = PredicateBuilder.True<CompanySummary>();
         predicate = predicate.And(m => m.ActorID == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
