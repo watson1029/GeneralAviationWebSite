@@ -50,5 +50,6 @@ namespace Model.EF
         public virtual DbSet<LoginLog> LoginLog { get; set; }
         public virtual DbSet<News> News { get; set; }
         public virtual DbSet<Company> Company { get; set; }
+        public virtual DbSet<CompanySummary> CompanySummary { get; set; }
     }
 }

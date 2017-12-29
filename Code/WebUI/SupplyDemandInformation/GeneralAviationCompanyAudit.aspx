@@ -35,8 +35,8 @@
                 $('#tab_list').datagrid({
                     title: '列表', //表格标题
                     url: location.href, //请求数据的页面
-                    sortName: 'CompanyID', //排序字段
-                    idField: 'CompanyID', //标识字段,主键
+                    sortName: 'ID', //排序字段
+                    idField: 'ID', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
                     height: $(parent.document).find("#mainPanel").height() - 10 > 0 ? $(parent.document).find("#mainPanel").height() - 10 : 300, //高度
@@ -50,9 +50,10 @@
                     columns: [[
                         { title: '单位名称', field: 'CompanyName', width: 200 },
                         { title: '录入日期', field: 'ModifiedTime', width: 150 },
-                        { title: '业务概况', field: 'Summary', width: 500 },
+                        { title: '宣传标题', field: 'Title', width: 200 },
+                        { title: '宣传介绍', field: 'Summary', width: 500 },
                         {
-                            title: '操作', field: 'CompanyID', width: 80, formatter: function (value, rec) {
+                            title: '操作', field: 'ID', width: 80, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.Audit(' + value + ');$(this).parent().click();return false;">审核</a>';
                                 return str;
                             }
@@ -109,16 +110,24 @@
     </script>
 
     <%--添加 修改 start--%>
-    <div id="audit" class="easyui-dialog" style="width: 1122px; height: 825px;"
+    <div id="audit" class="easyui-dialog" style="width: 1122px; height: 840px;"
         modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
             <table class="table_edit">
-                 <tr>
+                <tr>
                     <td style="text-align:right">
-                        业务概况
+                        宣传标题
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 1000px; height: 450px;"></script>
+                        <input id="Title" name="Title" style="width:200px" type="text" readonly="true" required="true" class="easyui-textbox" />
+                    </td>
+                </tr>
+                 <tr>
+                    <td style="text-align:right">
+                        宣传介绍
+                    </td>
+                    <td colspan="3">
+                        <script id="editor" type="text/plain" style="width: 1000px; height: 430px;"></script>
                     </td>
                 </tr>
                 <tr>

@@ -19,7 +19,7 @@
           <Property Name="State" Type="tinyint" Nullable="false" />
           <Property Name="ActorID" Type="int" />
           <Property Name="ApplyTime" Type="datetime" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="50" />
           <Property Name="ActorTime" Type="datetime" />
           <Property Name="ActorName" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -28,12 +28,12 @@
             <PropertyRef Name="AircraftID" />
           </Key>
           <Property Name="AircraftID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AircraftSign" Type="nvarchar" MaxLength="32" />
-          <Property Name="AcfType" Type="nvarchar" MaxLength="32" />
+          <Property Name="AircraftSign" Type="nchar" MaxLength="10" />
+          <Property Name="AcfType" Type="nchar" MaxLength="50" />
           <Property Name="AcfNo" Type="nvarchar" MaxLength="512" />
-          <Property Name="AcfClass" Type="nvarchar" MaxLength="32" />
+          <Property Name="AcfClass" Type="nchar" MaxLength="50" />
           <Property Name="Manufacture" Type="nvarchar" MaxLength="64" />
-          <Property Name="WakeTurbulance" Type="nvarchar" MaxLength="32" />
+          <Property Name="WakeTurbulance" Type="nchar" MaxLength="10" />
           <Property Name="FueledWeight" Type="int" />
           <Property Name="FuelCapacity" Type="int" />
           <Property Name="Range" Type="int" />
@@ -84,7 +84,7 @@
           <Property Name="DelegateCardImg" Type="nvarchar" MaxLength="200" />
           <Property Name="LicenseNo" Type="varchar" MaxLength="200" />
           <Property Name="BaseAirport" Type="nvarchar" MaxLength="200" />
-          <Property Name="CompanyType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ConpanyType" Type="nvarchar" MaxLength="50" />
           <Property Name="RegisteredFund" Type="float" />
           <Property Name="CapitalLimit" Type="float" />
           <Property Name="Legalperson1" Type="nvarchar" MaxLength="20" />
@@ -97,6 +97,22 @@
           <Property Name="FirmAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="BaseAirportCode" Type="nvarchar" MaxLength="200" />
           <Property Name="LicensingAuthority" Type="nvarchar" MaxLength="200" />
+          <Property Name="CompanyType" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="CompanySummary">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Summary" Type="nvarchar(max)" />
+          <Property Name="ModifiedByName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedTime" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="SummaryCode" Type="nvarchar(max)" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActorID" Type="int" />
         </EntityType>
         <EntityType Name="CurrentFlightPlan">
           <Key>
@@ -129,8 +145,8 @@
           </Key>
           <Property Name="FlightPlanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PlanCode" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="FlightType" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="AircraftType" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="FlightType" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="AircraftType" Type="nchar" MaxLength="8" Nullable="false" />
           <Property Name="FlightDirHeight" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="ModifyTime" Type="datetime" Nullable="false" />
@@ -163,7 +179,7 @@
           </Key>
           <Property Name="TaskCode" Type="nchar" MaxLength="3" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="40" Nullable="false" />
-          <Property Name="Abbreviation" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="Abbreviation" Type="nchar" MaxLength="4" Nullable="false" />
           <Property Name="FlightType" Type="nchar" MaxLength="1" Nullable="false" />
           <Property Name="DefaultMapping" Type="bit" Nullable="false" />
         </EntityType>
@@ -172,10 +188,11 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
           <Property Name="UserName" Type="nvarchar" MaxLength="20" />
           <Property Name="LoginTime" Type="datetime" />
           <Property Name="IPAddress" Type="varchar" MaxLength="50" />
-          <Property Name="Msg" Type="nvarchar" MaxLength="20" />
+          <Property Name="Msg" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -192,9 +209,18 @@
           <Property Name="MenuLevel" Type="tinyint" Nullable="false" />
           <Property Name="MenuCode" Type="varchar" MaxLength="50" />
         </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“ZHCC_GAPlan.dbo.News”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="News">
           <Key>
             <PropertyRef Name="NewID" />
+            
+            
+            
+            
+            
+            
+            
           </Key>
           <Property Name="NewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NewTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -242,8 +268,8 @@
           </Key>
           <Property Name="RepetPlanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PlanCode" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="FlightType" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="AircraftType" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="FlightType" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="AircraftType" Type="nchar" MaxLength="8" Nullable="false" />
           <Property Name="FlightDirHeight" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" Nullable="false" />
@@ -315,7 +341,7 @@
           <Property Name="Catalog" Type="char" MaxLength="4" />
           <Property Name="ActorID" Type="int" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
-          <Property Name="Title" Type="varchar" MaxLength="100" />
+          <Property Name="Title" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="TWFLibrary">
           <Key>
@@ -582,13 +608,13 @@
           <EntitySet Name="ActualSteps" EntityType="Self.ActualSteps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Aircraft" EntityType="Self.Aircraft" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanySummary" EntityType="Self.CompanySummary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CurrentFlightPlan" EntityType="Self.CurrentFlightPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightPlan" EntityType="Self.FlightPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightTask" EntityType="Self.FlightTask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoginLog" EntityType="Self.LoginLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OperationLog" EntityType="Self.OperationLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pilot" EntityType="Self.Pilot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RepetitivePlan" EntityType="Self.RepetitivePlan" Schema="dbo" store:Type="Tables" />
@@ -600,6 +626,18 @@
           <EntitySet Name="TWFSteps" EntityType="Self.TWFSteps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [News].[NewID] AS [NewID], 
+    [News].[NewTitle] AS [NewTitle], 
+    [News].[NewContent] AS [NewContent], 
+    [News].[IsDelete] AS [IsDelete], 
+    [News].[IsTop] AS [IsTop], 
+    [News].[Sort] AS [Sort], 
+    [News].[CreateTime] AS [CreateTime], 
+    [News].[CreateUser] AS [CreateUser]
+    FROM [dbo].[News] AS [News]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="V_CurrentPlan" EntityType="Self.V_CurrentPlan" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [V_CurrentPlan].[CurrentFlightPlanID] AS [CurrentFlightPlanID], 
@@ -768,6 +806,7 @@
           <EntitySet Name="LoginLog" EntityType="ZHCC_GAPlanModel.LoginLog" />
           <EntitySet Name="News" EntityType="ZHCC_GAPlanModel.News" />
           <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Company" />
+          <EntitySet Name="CompanySummary" EntityType="ZHCC_GAPlanModel.CompanySummary" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -783,7 +822,7 @@
           <Property Name="State" Type="Byte" Nullable="false" />
           <Property Name="ActorID" Type="Int32" />
           <Property Name="ApplyTime" Type="DateTime" Precision="3" />
-          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ActorTime" Type="DateTime" Precision="3" />
           <Property Name="ActorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -793,7 +832,7 @@
           </Key>
           <Property Name="TaskCode" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="Abbreviation" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="Abbreviation" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="true" />
           <Property Name="FlightType" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
           <Property Name="DefaultMapping" Type="Boolean" Nullable="false" />
         </EntityType>
@@ -917,7 +956,7 @@
           <Property Name="Catalog" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="ActorID" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="RepetitivePlan">
           <Key>
@@ -925,8 +964,8 @@
           </Key>
           <Property Name="RepetPlanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PlanCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="true" />
           <Property Name="FlightDirHeight" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -1189,8 +1228,8 @@
           </Key>
           <Property Name="FlightPlanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PlanCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="true" />
           <Property Name="FlightDirHeight" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
@@ -1222,12 +1261,12 @@
             <PropertyRef Name="AircraftID" />
           </Key>
           <Property Name="AircraftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AircraftSign" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="AcfType" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AircraftSign" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="AcfType" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="AcfNo" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="AcfClass" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AcfClass" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="Manufacture" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="WakeTurbulance" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="WakeTurbulance" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="FueledWeight" Type="Int32" />
           <Property Name="FuelCapacity" Type="Int32" />
           <Property Name="Range" Type="Int32" />
@@ -1268,7 +1307,8 @@
           <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="LoginTime" Type="DateTime" Precision="3" />
           <Property Name="IPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Msg" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Msg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" />
         </EntityType>
         <EntityType Name="News">
           <Key>
@@ -1320,7 +1360,7 @@
           <Property Name="DelegateCardImg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LicenseNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="BaseAirport" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="RegisteredFund" Type="Double" />
           <Property Name="CapitalLimit" Type="Double" />
           <Property Name="Legalperson1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
@@ -1333,6 +1373,22 @@
           <Property Name="FirmAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="BaseAirportCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LicensingAuthority" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ConpanyType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CompanySummary">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedByName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="SummaryCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActorID" Type="Int32" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1787,6 +1843,7 @@
           <EntitySetMapping Name="LoginLog">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.LoginLog">
               <MappingFragment StoreEntitySet="LoginLog">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="Msg" ColumnName="Msg" />
                 <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
                 <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
@@ -1812,6 +1869,7 @@
           <EntitySetMapping Name="Company">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Company">
               <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="ConpanyType" ColumnName="ConpanyType" />
                 <ScalarProperty Name="LicensingAuthority" ColumnName="LicensingAuthority" />
                 <ScalarProperty Name="BaseAirportCode" ColumnName="BaseAirportCode" />
                 <ScalarProperty Name="FirmAddress" ColumnName="FirmAddress" />
@@ -1858,6 +1916,22 @@
                 <ScalarProperty Name="CompanyCode2" ColumnName="CompanyCode2" />
                 <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanySummary">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.CompanySummary">
+              <MappingFragment StoreEntitySet="CompanySummary">
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="SummaryCode" ColumnName="SummaryCode" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
+                <ScalarProperty Name="ModifiedByName" ColumnName="ModifiedByName" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
