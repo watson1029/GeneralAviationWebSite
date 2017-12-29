@@ -32,7 +32,6 @@
             $(".easyui-accordion1").empty();
             var menulist = "";
             var json = '<%=GetMenuJson()%>';    
-
             $.each($.parseJSON(json), function (i, n) {
                 menulist += '<div title="' + n.menuname + '"  icon="' + n.icon + '" style="overflow:auto;">';
                 menulist += '<ul>';

@@ -13,7 +13,7 @@ public class Loginout : IHttpHandler {
         }
         HttpContext.Current.Response.Cookies.Clear();
         FormsAuthentication.SignOut();
-        context.Response.Redirect("Login.aspx");
+        context.Response.Redirect("Default.aspx");
     }
  
     public bool IsReusable {

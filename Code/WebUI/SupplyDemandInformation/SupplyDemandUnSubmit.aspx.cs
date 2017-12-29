@@ -76,6 +76,7 @@ public partial class SupplyDemandInformation_SupplyDemandUnSubmit : BasePage
             var model = bll.Get(id);
             model.CreateTime = DateTime.Parse(Request.Form["CreateTime"]);
             model.ExpiryDate = DateTime.Parse(Request.Form["ExpiryDate"]);
+            model.Title = Request.Form["Title"];
             model.Summary = Request.Form["Summary"];
             model.Catalog = Request.Form["CataLog"];
             if (bll.Update(model))
@@ -89,6 +90,7 @@ public partial class SupplyDemandInformation_SupplyDemandUnSubmit : BasePage
             var model = new SupplyDemandInfo();
             model.CreateTime = DateTime.Parse(Request.Form["CreateTime"]);
             model.ExpiryDate = DateTime.Parse(Request.Form["ExpiryDate"]);
+            model.Title = Request.Form["Title"];
             model.Summary = Request.Form["Summary"];
             model.Catalog = Request.Form["CataLog"];
             model.State = "0";

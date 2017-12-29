@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActualSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -315,6 +315,7 @@
           <Property Name="Catalog" Type="char" MaxLength="4" />
           <Property Name="ActorID" Type="int" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="TWFLibrary">
           <Key>
@@ -916,6 +917,7 @@
           <Property Name="Catalog" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="ActorID" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="RepetitivePlan">
           <Key>
@@ -1485,6 +1487,7 @@
           <EntitySetMapping Name="SupplyDemandInfo">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.SupplyDemandInfo">
               <MappingFragment StoreEntitySet="SupplyDemandInfo">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="ActorID" ColumnName="ActorID" />
                 <ScalarProperty Name="Catalog" ColumnName="Catalog" />

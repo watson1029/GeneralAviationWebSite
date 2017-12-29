@@ -16,6 +16,69 @@
     <script type="text/javascript" src="js/jq_scroll.js" ></script>
     <script type="text/javascript" src="js/breakingnews.js"></script>
     <script type="text/javascript" src="js/common.js?0410"></script>
+    <script src="<%=Page.ResolveUrl("~/Content/JS/GA/base.js")%>" type="text/javascript"></script>      
+    <script src="<%=Page.ResolveUrl("~/Content/JS/Des.js")%>" type="text/javascript"></script>
+    <script type="text/javascript">
+        if (window != top) {
+            top.location.href = location.href;
+        }
+        document.onkeydown = function (e) {
+            var event = e || window.event;
+            var code = event.keyCode || event.which || event.charCode;
+            if (code == 13) {
+                Main.login();
+            }
+        }
+        $(function () {
+            Main.clearData();
+            $("input[name='txtUserName']").focus();
+            $("#txtUserName", "#txtPassword").keypress(function () { Main.hideErr(); });
+
+        });
+        Main = {
+            login: function () {
+                if ($("input[name='txtUserName']").val().trim() == "" || $("input[name='txtPassword']").val().trim() == "" || $("input[name='txtCode']").val().trim() == "") {
+                    $("#showMsg").html("用户名、密码、验证码不能为空！");
+                    //  $("input[name='txtUserName']").focus();
+
+                } else {
+                    var userName = $("input[name='txtUserName']");
+                    var password = $("input[name='txtPassword']");
+                    var str = encMe(password.val().trim(), userName.val().trim());
+                    $("input[name='htxtPassword']").val(str);
+                    $("#showMsg").html("登录中...");
+                    $("#btn_login").attr("disabled", "disabled");
+                    $.ajax({
+                        type: "POST",
+                        url:"Login.aspx",
+                        data: $("#loginForm").serialize(),
+                        error: function (request) {
+                            $("#btn_login").removeAttr("disabled");
+                            $("#showMsg").html(request);
+                        },
+                        success: function (data) {
+                            if (data.isSuccess) {
+                                document.location = "index.aspx";
+                            }
+                            else {
+                                $("#showMsg").html(data.msg);
+                                $("#btn_login").removeAttr("disabled");
+                            }
+
+                        }
+                    });
+                }
+            },
+            clearData: function () {
+                $("input[name='txtUserName']").val('');
+                $("input[name='txtPassword']").val('');
+                $("input[name='htxtPassword']").val('');
+            },
+            hideErr: function () {
+                $("#showMsg").html('');
+            }
+        };
+    </script>
     <script type="text/javascript">
         if ($.browser.msie && ($.browser.version == "6.0") && !$.support.style) {
             alert("温馨提示:您当前使用的浏览器为ie6内核,可能会影响您浏览此网站,建议使用ie7以上版本浏览器!");
@@ -26,7 +89,7 @@
     </script>
 </head>
 <body>
-    <form id="form1" runat="server">
+
         <!--head begin-->
         <div class="head">
             <div class="center" style="position: relative">
@@ -86,7 +149,7 @@
                         <div class="content" style="margin: 0 auto">
                             <div class="title" style="background: #fff">
                                 <h2><a href="http://www.zslib.com.cn/TempletPage/userService.aspx?dbid=5" target="_blank">新闻中心</a></h2>
-                                <span><a href="http://www.zslib.com.cn/TempletPage/userService.aspx?dbid=5" target="_blank">+更多</a></span>
+                                <span><a href="List.aspx" target="_blank">+更多</a></span>
                             </div>
                             <div class="img_container">
                                 <img width="288px" height="288px" src="images/News.jpg" alt="" />
@@ -95,26 +158,15 @@
                                 <div class="scrollbox">
                                     <div id="scrollDiv">
                                         <ul>
-                                            <li>
-                                                <h3><a href="#" class="linktit">移动娱乐业务突飞</a></h3>
-                                                <div>为了探索推进公车改革后，新能源汽车分时租赁项目试点工作...</div>
+                                            <%
+                                                foreach(var item in newsModel)
+	                                        {%>
+		                                    <li>
+                                                <h3><a href="#" class="linktit"><%=HtmlWorkShop.CutTitle(item.NewTitle,20)%></a></h3>
+                                                <div><%=HtmlWorkShop.CutTitle(HttpUtility.UrlDecode(item.NewContent),20)%></div>
                                             </li>
-                                            <li>
-                                                <h3><a href="#" class="linktit">不停转动向上滚动可控制向上向下滚动特效</a></h3>
-                                                <div>DIV CSS JS自动不断向上一个一个滚动可控制向上向下滚动特效...</div>
-                                            </li>
-                                            <li>
-                                                <h3><a href="#" class="linktit">全国涂料总产量呈现直线下滑态势</a></h3>
-                                                <div>我国涂料工业将面临涂料消费税征收全面铺开，环保压力持续增加...</div>
-                                            </li>
-                                            <li>
-                                                <h3><a href="#" class="linktit">图书预约排行榜</a></h3>
-                                                <div>想读·就读·共读,是参照我馆闭架图书预约排行榜，统计出...</div>
-                                            </li>
-                                            <li>
-                                                <h3><a href="#" class="linktit">主题创业街亮相</a></h3>
-                                                <div>目前已有包括咖啡厅、酒吧、餐厅、瑜伽室在内的8家商铺入驻该火车...</div>
-                                            </li>
+	                                          <%  }%>
+                  
                                         </ul>
                                     </div>
                                     <div class="scroltit">
@@ -128,35 +180,29 @@
                     <div class="center_left_new">
                         <div class="content" style="margin: 0 auto">
                             <div class="title" style="background: #fff">
-                                <h2><a href="http://www.zslib.com.cn/TempletPage/userService.aspx?dbid=5" target="_blank">供求信息</a></h2>
-                                <span><a href="http://www.zslib.com.cn/TempletPage/userService.aspx?dbid=5" target="_blank">+更多</a></span>
+                                <h2><a href="#" target="_blank">供求信息</a></h2>
+                                <span><a href="List.aspx" target="_blank">+更多</a></span>
                             </div>
                             <div class="img_container">
                                 <img width="288px" height="288px" src="images/Supply.jpg" alt="" />
                             </div>
                             <div class="txt_container">
                                 <div class="sideMenu">
-                                    <h3 class="sideMenu00 on">
-                                        <a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2866" target="_blank" title=" 中山讲堂 国事·家事·天下事">中山讲堂 国事·家事·天下事</a></h3>
-                                    <ul style="display: block;">
-                                        <p><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2866" target="_blank" title="第180讲 春秋大学问主 题：当代文化现象与核心价值观问题主 ...">第180讲 春秋大学问主 题：当代文化现象与核心价值观问题主 ...</a></p>
+                                       <%
+                                           var i = 1;
+                                           foreach (var item in demandModel)
+	                                        {%>
+                                   <h3 class="sideMenu00 <%=(i==1)?"on":""%>">
+                                        <a href="#" target="_blank" title=" 中山讲堂 国事·家事·天下事">中山讲堂 国事·家事·天下事</a></h3>
+                                   
+                                     <ul style="<%=(i==1)?"display: block;":"display: none;"%>">
+                                        <p><a href="#" target="_blank"><%=HtmlWorkShop.CutTitle(item.Summary,20)%></a></p>
                                     </ul>
-                                    <h3 class="sideMenu00"><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2865" target="_blank" title="第179讲 健康系列">第179讲 健康系列</a></h3>
-                                    <ul>
-                                        <p><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2865" target="_blank" title="主 题一：小肠生“气”是疝气主讲：陈双，中山大学附属第六医院胃...">主 题一：小肠生“气”是疝气主讲：陈双，中山大学附属第六医院胃...</a></p>
-                                    </ul>
-                                    <h3 class="sideMenu00"><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2864" target="_blank" title="想读·就读·共读】第28-29...">想读·就读·共读】第28-29...</a></h3>
-                                    <ul style="display: none;">
-                                        <p><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2864" target="_blank" title="简介：“想读·就读·共读”是参照我馆闭架图书预约排行榜，统计出...">简介：“想读·就读·共读”是参照我馆闭架图书预约排行榜，统计出...</a></p>
-                                    </ul>
-                                    <h3 class="sideMenu00"><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2863" target="_blank" title="新书推荐第41期｜行走的人生">新书推荐第41期｜行走的人生</a></h3>
-                                    <ul style="display: none;">
-                                        <p><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2863" target="_blank" title="当我开始爱自己（节选） 作者：卓别林当我开始真正爱自己，我开始...">当我开始爱自己（节选） 作者：卓别林当我开始真正爱自己，我开始...</a></p>
-                                    </ul>
-                                    <h3 class="sideMenu00"><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2862" target="_blank" title="走进中图”第54期——定向挑战...">走进中图”第54期——定向挑战...</a></h3>
-                                    <ul>
-                                        <p><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2862" target="_blank" title="活动简介：“走进中图”活动包括带领读者参观我馆主要服务窗口，介...">活动简介：“走进中图”活动包括带领读者参观我馆主要服务窗口，介...</a></p>
-                                    </ul>                                    
+                                       <%  
+                                                i++;
+                                            }%>
+              
+                                                          
                                 </div>
                             </div>
                         </div>
@@ -164,34 +210,27 @@
                     <div class="center_left_new">
                         <div class="content" style="margin: 0 auto">
                             <div class="title" style="background: #fff">
-                                <h2><a href="http://www.zslib.com.cn/TempletPage/userService.aspx?dbid=5" target="_blank">通航企业</a></h2>
-                                <span><a href="http://www.zslib.com.cn/TempletPage/userService.aspx?dbid=5" target="_blank">+更多</a></span>
+                                <h2><a href="#" target="_blank">通航企业</a></h2>
+                                <span><a href="List.aspx" target="_blank">+更多</a></span>
                             </div>
                             <div class="img_container">
                                 <img width="288px" height="288px" src="images/Company.jpg" alt="" />
                             </div>
                             <div class="txt_container">
                                 <div class="sideMenu">
-                                    <h3 class="sideMenu00 on"><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2866" target="_blank" title=" 中山讲堂 国事·家事·天下事">中山讲堂 国事·家事·天下事</a></h3>
-                                    <ul style="display: block;">
-                                        <p><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2866" target="_blank" title="第180讲 春秋大学问主 题：当代文化现象与核心价值观问题主 ...">第180讲 春秋大学问主 题：当代文化现象与核心价值观问题主 ...</a></p>
+                                   <%
+                                           var j = 1;
+                                           foreach (var item in companyModel)
+	                                        {%>
+                                   <h3 class="sideMenu00 <%=(j==1)?"on":""%>">
+                                        <a href="#" target="_blank" title=" 中山讲堂 国事·家事·天下事">中山讲堂 国事·家事·天下事</a></h3>
+                                   
+                                     <ul style="<%=(j==1)?"display: block;":"display: none;"%>">
+                                        <p><a href="#" target="_blank"><%=HtmlWorkShop.CutTitle(item.Summary,20)%></a></p>
                                     </ul>
-                                    <h3 class="sideMenu00"><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2865" target="_blank" title="第179讲 健康系列">第179讲 健康系列</a></h3>
-                                    <ul>
-                                        <p><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2865" target="_blank" title="主 题一：小肠生“气”是疝气主讲：陈双，中山大学附属第六医院胃...">主 题一：小肠生“气”是疝气主讲：陈双，中山大学附属第六医院胃...</a></p>
-                                    </ul>
-                                    <h3 class="sideMenu00"><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2864" target="_blank" title="想读·就读·共读】第28-29...">想读·就读·共读】第28-29...</a></h3>
-                                    <ul style="display: none;">
-                                        <p><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2864" target="_blank" title="简介：“想读·就读·共读”是参照我馆闭架图书预约排行榜，统计出...">简介：“想读·就读·共读”是参照我馆闭架图书预约排行榜，统计出...</a></p>
-                                    </ul>
-                                    <h3 class="sideMenu00"><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2863" target="_blank" title="新书推荐第41期｜行走的人生">新书推荐第41期｜行走的人生</a></h3>
-                                    <ul style="display: none;">
-                                        <p><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2863" target="_blank" title="当我开始爱自己（节选） 作者：卓别林当我开始真正爱自己，我开始...">当我开始爱自己（节选） 作者：卓别林当我开始真正爱自己，我开始...</a></p>
-                                    </ul>
-                                    <h3 class="sideMenu00"><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2862" target="_blank" title="走进中图”第54期——定向挑战...">走进中图”第54期——定向挑战...</a></h3>
-                                    <ul>
-                                        <p><a href="http://www.zslib.com.cn/TempletPage/Detail.aspx?dbid=1&amp;id=2862" target="_blank" title="活动简介：“走进中图”活动包括带领读者参观我馆主要服务窗口，介...">活动简介：“走进中图”活动包括带领读者参观我馆主要服务窗口，介馆主要服务窗口...</a></p>
-                                    </ul>                                    
+                                       <%  
+                                                i++;
+                                            }%>              
                                 </div>
                             </div>
                         </div>
@@ -203,21 +242,27 @@
                         <div class="title_new">
                             <h2>用户登录</h2>
                         </div>
+                               <form id="loginForm" method="post">
                         <div class="login_box">
                             <ul>
                                 <li>
-                                    <input name="LoginFrame1$usrcode" id="LoginFrame1_usrcode" class="login_name ipt" value="用户名" onkeydown="if(event.keyCode==13){document.getElementById('Button1').focus();}" style="color: rgb(173, 173, 173);" type="text" /></li>
+                                    <input name="txtUserName" id="txtUserName" class="login_name ipt" placeholder="请输入用户名" maxlength="40" style="color: rgb(173, 173, 173);" type="text" /></li>
                                 <li>
-                                    <input name="LoginFrame1$password" id="LoginFrame1_password" class="login_pwd ipt" onkeydown="if(event.keyCode==13){document.getElementById('Button1').focus();}" style="color: rgb(173, 173, 173);" type="password" /></li>
+                                    <input name="txtPassword" id="txtPassword" class="login_pwd ipt" placeholder="请输入密码"  style="color: rgb(173, 173, 173);" type="password" />
+                                           <input type="hidden" name="action" value="submit" />
+                                        <input type="hidden" name="htxtPassword" />
+                                </li>
                                 <li style="text-align: left; padding: 0 30px 0 23px; width: 280px;">
                                     <span style="float: right">
                                         <img id="LoginFrame1_IMG_Identify" title="看不清点击刷新" onclick="javascript:this.src='/VerifyCode.aspx?rnd='+Math.random()" src="/VerifyCode.aspx?rnd=<%=rnd %>" style="border-width: 0px;" align="middle" alt="" />
                                     </span>
-                                    <input name="LoginFrame1$icode" id="LoginFrame1_icode" class="login_yzm ipt" value="验证码" onkeydown="if(event.keyCode==13){document.getElementById('Button1').focus();}" style="color: rgb(173, 173, 173);" type="text" /></li>
-                                <li>
-                                    <input name="LoginFrame1$Button1" value="登录" onclick="javascript: document.getElementById('LoginFrame1_login').style.display = 'none'; document.getElementById('LoginFrame1_logstate').style.display = 'none'; document.getElementById('LoginFrame1_logining').style.display = ''; $('.login_boxb').toggle(500); clearTimeout(settime_2wm);" id="LoginFrame1_Button1" class="login_btn" type="submit" /></li>
+                                    <input name="txtCode" id="txtCode" class="login_yzm ipt" placeholder="验证码"  style="color: rgb(173, 173, 173);" type="text" /></li>
+                                <li id="showMsg" style="margin:0px;color:red;">&nbsp;</li>
+                                <li style="margin-top:0px;">
+                                    <input name="btn_login" value="登录" onclick="Main.login()" id="btn_login" class="login_btn" type="button" /></li>
                             </ul>
                         </div>
+                                   </form>
                     </div>
                     <div class="center_right_middle">
                         <div class="title">
@@ -343,6 +388,6 @@
             </div>
         </div>
         <%--<script type="text/javascript" src="js/Copyright.js"></script>--%>
-    </form>
+
 </body>
 </html>

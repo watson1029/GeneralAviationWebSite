@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Data.Entity;
 namespace BLL.BasicData
 {
     public class NewBLL
@@ -14,21 +14,21 @@ namespace BLL.BasicData
         private NewDAL _dal = new NewDAL();
         public bool Delete(string ids)
         {
-            return _dal.BatchDelete(ids)>0;
+            return _dal.BatchDelete(ids) > 0;
         }
         /// <summary>
         /// 增加一条数据
         /// </summary>
         public bool Add(News model)
         {
-            return _dal.Add(model)>0;
+            return _dal.Add(model) > 0;
         }
         /// <summary>
         /// 更新一条数据
         /// </summary>
         public bool Update(News model)
         {
-            return _dal.Update(model)>0;
+            return _dal.Update(model) > 0;
         }
         public News Get(int id)
         {
@@ -43,6 +43,11 @@ namespace BLL.BasicData
         public List<News> GetList(Expression<Func<News, bool>> where)
         {
             return _dal.FindList(where, m => m.NewID, true);
+        }
+        public List<News> GetTopList(int top,Expression<Func<News, bool>> where)
+        {
+            ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
+            return context.Set<News>().Where(where).OrderByDescending(m => m.IsTop).ThenBy(m => m.NewID).AsNoTracking().Take(top).ToList();  
         }
     }
 }

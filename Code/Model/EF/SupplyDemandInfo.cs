@@ -25,5 +25,6 @@ namespace Model.EF
         public string Catalog { get; set; }
         public Nullable<int> ActorID { get; set; }
         public string State { get; set; }
+        public string Title { get; set; }
     }
 }

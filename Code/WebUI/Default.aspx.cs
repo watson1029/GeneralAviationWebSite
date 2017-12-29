@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BLL.BasicData;
+using BLL.SupplyDemandInformation;
+using Model.EF;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,8 +10,14 @@ using System.Web.UI.WebControls;
 
 public partial class _Default : System.Web.UI.Page
 {
-    public double rnd;
-    public int year;
+    protected List<News> newsModel;
+    protected List<SupplyDemandInfo> demandModel;
+    protected List<Company> companyModel;
+    protected double rnd;
+    protected int year;
+    private NewBLL newbll = new NewBLL();
+    private CompanyBLL commmpanybll = new CompanyBLL();
+    private SupplyDemandBLL demandBll = new SupplyDemandBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -17,5 +26,23 @@ public partial class _Default : System.Web.UI.Page
             year = DateTime.Now.Year;
             rnd = (new Random()).NextDouble();
         }
+        LoadNews();
+        LoadSupplyDemand();
+        LoadCompanyIntro();
+    }
+    /// <summary>
+    /// 新闻列表
+    /// </summary>
+    private void LoadNews()
+    {
+        newsModel = newbll.GetTopList(5, u => 1 == 1);
+    }
+    private void LoadSupplyDemand()
+    {
+        demandModel = demandBll.GetTopList(5, u => u.State == "end");
+    }
+    private void LoadCompanyIntro()
+    {
+        companyModel = commmpanybll.GetTopList(5, u => u.State == "end");
     }
 }

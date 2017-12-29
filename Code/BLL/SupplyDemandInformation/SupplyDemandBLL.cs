@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Untity;
-
+using System.Data.Entity;
 namespace BLL.SupplyDemandInformation
 {
     public class SupplyDemandBLL
@@ -107,6 +107,11 @@ namespace BLL.SupplyDemandInformation
         public SupplyDemandInfo Get(int id)
         {
             return dal.Find(u => u.ID == id);
+        }
+        public List<SupplyDemandInfo> GetTopList(int top, Expression<Func<SupplyDemandInfo, bool>> where)
+        {
+            ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
+            return context.Set<SupplyDemandInfo>().Where(where).OrderByDescending(m => m.ID).AsNoTracking().Take(top).ToList();
         }
     }
 }
