@@ -109,6 +109,7 @@ public class Handler : IHttpHandler
     public void collect2(HttpContext context)
     {
         List<TemplateClass4StatisticResult> ll;
+        List<Company> companies=new List<Company>();
         DateTime start = DateTime.Parse(context.Request["started"]);
         DateTime end = DateTime.Parse(context.Request["ended"]);
         int timetype = Convert.ToInt16(context.Request["timetype"]);
@@ -117,16 +118,18 @@ public class Handler : IHttpHandler
         if (strCompany.IsNullOrEmpty() || strCompany.Equals("全部"))
         {
             ll = dd.getCollect(start, end,timetype);
+            companies = cDao.FindList(m=>m.CompanyID,true);
         }
         else
         {
             Company company = cDao.Find(m => m.CompanyName == strCompany);
             ll = dd.getCollect(start, end, timetype, company.CompanyCode3);
+            companies.Add(cDao.Find(m=>m.CompanyName==strCompany));
+            
         }
         List<string> list = new List<string>();
         List<string> category = new List<string>();
         List<Series> ss = new List<Series>();
-        List<Company> companies = cDao.FindList(m=>m.CompanyID,true);
         List<string> legend = new List<string>();
         for (int i = 0; i < companies.Count; i++)
         {
