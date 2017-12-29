@@ -109,6 +109,7 @@ public class Handler : IHttpHandler
     public void collect2(HttpContext context)
     {
         List<TemplateClass4StatisticResult> ll;
+        List<Company> companies=new List<Company>();
         DateTime start = DateTime.Parse(context.Request["started"]);
         DateTime end = DateTime.Parse(context.Request["ended"]);
         int timetype = Convert.ToInt16(context.Request["timetype"]);
@@ -117,16 +118,18 @@ public class Handler : IHttpHandler
         if (strCompany.IsNullOrEmpty() || strCompany.Equals("全部"))
         {
             ll = dd.getCollect(start, end,timetype);
+            companies = cDao.FindList(m=>m.CompanyID,true);
         }
         else
         {
             Company company = cDao.Find(m => m.CompanyName == strCompany);
             ll = dd.getCollect(start, end, timetype, company.CompanyCode3);
+            companies.Add(cDao.Find(m=>m.CompanyName==strCompany));
+            
         }
         List<string> list = new List<string>();
         List<string> category = new List<string>();
         List<Series> ss = new List<Series>();
-        List<Company> companies = cDao.FindList(m=>m.CompanyID,true);
         List<string> legend = new List<string>();
         for (int i = 0; i < companies.Count; i++)
         {
@@ -216,7 +219,7 @@ public class Handler : IHttpHandler
     /// <param name="context"></param>
     public void download(HttpContext context)
     {
-        string file = context.Server.MapPath("~/File/") + context.Request["filepath"];
+        string file = context.Server.MapPath("~/")+context.Request["filepath"];
         if (System.IO.File.Exists(file))
         {
             FileStream fs = new FileStream(file, FileMode.Open);
@@ -283,8 +286,8 @@ public class Handler : IHttpHandler
                 context.Response.ContentType = "text/plain";
                 context.Response.Write("新增资料失败，附件太大了");
             }
-            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/") + context.Request.Files["file"].FileName);
-            filepath = context.Request.Files["file"].FileName;
+            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/Files/Resource/") + context.Request.Files["file"].FileName);
+            filepath = "Files/Resource/"+ context.Request.Files["file"].FileName;
 
             Resource resource = new Resource();
             resource.Title = title;
@@ -330,8 +333,8 @@ public class Handler : IHttpHandler
                 context.Response.ContentType = "text/plain";
                 context.Response.Write("更新资料失败，附件太大了");
             }
-            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/") + context.Request.Files["file"].FileName);
-            resource.FilePath = context.Request.Files["file"].FileName;
+            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/Resource/") + context.Request.Files["file"].FileName);
+            resource.FilePath = context.Server.MapPath("~/File/Resource/")+context.Request.Files["file"].FileName;
         }
 
         resource.ID = id;
