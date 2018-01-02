@@ -12,7 +12,7 @@ public partial class Detail : System.Web.UI.Page
 {
     private List<DetailModel> listModel;
     private NewBLL newbll = new NewBLL();
-    private CompanyBLL commmpanybll = new CompanyBLL();
+    private CompanySummaryBLL commmpanybll = new CompanySummaryBLL();
     private SupplyDemandBLL demandBll = new SupplyDemandBLL();
     private int Id=0;
     protected DetailModel currModel = new DetailModel();
@@ -44,7 +44,7 @@ public partial class Detail : System.Web.UI.Page
     /// </summary>
     private void LoadNews()
     {
-        listModel = newbll.GetTopList(6, u => 1 == 1).Select(m => new DetailModel
+        listModel = newbll.GetTopList(10000, u => 1 == 1).Select(m => new DetailModel
         {
             Title = m.NewTitle,
             Content = m.NewContent,
@@ -56,7 +56,7 @@ public partial class Detail : System.Web.UI.Page
     }
     private void LoadSupplyDemand()
     {
-        listModel = demandBll.GetTopList(6, u => u.State == "end").Select(m => new DetailModel
+        listModel = demandBll.GetTopList(10000, u => u.State == "end").Select(m => new DetailModel
         {
             Title = m.Title,
             Content = m.Summary,
@@ -68,20 +68,20 @@ public partial class Detail : System.Web.UI.Page
     }
     private void LoadCompanyIntro()
     {
-        listModel = commmpanybll.GetTopList(6, u => u.State == "end").Select(m => new DetailModel
+        listModel = commmpanybll.GetTopList(1000, u => u.State == "end").Select(m => new DetailModel
         {
-            Title = m.CompanyName,
+            Title = m.Title,
             Content = m.SummaryCode,
-            Id = m.CompanyID,
+            Id = m.ID,
             Type = "CompanyIntro",
-            CreateTime = m.CreateTime,
+            CreateTime = m.ModifiedTime,
             Creator = m.ModifiedByName
         }).ToList();
     }
 
     public void GetCurrent()
     {
-        if (currModel.Id == 0) currModel = listModel.Find(m => m.Id == Id);
+        if (currModel.Id==0) currModel = listModel.Find(m => m.Id == Id);
         if (currModel!=null){
             int currIndex = listModel.IndexOf(listModel.Find(m => m.Id == currModel.Id));
             if (currIndex == 0)

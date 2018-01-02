@@ -12,11 +12,12 @@ public partial class List : System.Web.UI.Page
 {
     protected List<ListModel> listModel;
     private NewBLL newbll = new NewBLL();
-    private CompanyBLL commmpanybll = new CompanyBLL();
+    private CompanySummaryBLL commmpanybll = new CompanySummaryBLL();
     private SupplyDemandBLL demandBll = new SupplyDemandBLL();
     protected int PageIndex = 0;
     protected int TotalPage = 0;
     protected string Type;
+    private HtmlWorkShop htmlHelper = new HtmlWorkShop();
     protected void Page_Load(object sender, EventArgs e)
     {
         Type = Request.QueryString["Type"];
@@ -51,7 +52,8 @@ public partial class List : System.Web.UI.Page
             Content = m.NewContent,
             Id = m.NewID,
             Type = "News",
-            CreateTime = m.CreateTime
+            CreateTime = m.CreateTime,
+            ImgPath = htmlHelper.getFirstImgSrc(m.NewContent) == "" ? "/images/nofound.jpg" : htmlHelper.getFirstImgSrc(m.NewContent)
         }).ToList();
     }
     private void LoadSupplyDemand()
@@ -62,18 +64,20 @@ public partial class List : System.Web.UI.Page
             Content = m.Summary,
             Id = m.ID,
             Type = "SupplyDemand",
-            CreateTime = m.CreateTime
+            CreateTime = m.CreateTime,
+            ImgPath = htmlHelper.getFirstImgSrc(m.Summary) == "" ? "/images/nofound.jpg" : htmlHelper.getFirstImgSrc(m.Summary)
         }).ToList();
     }
     private void LoadCompanyIntro()
     {
         listModel = commmpanybll.GetTopList(6, u => u.State == "end").Select(m => new ListModel
         {
-            Title = m.CompanyName,
+            Title = m.Title,
             Content = m.SummaryCode,
-            Id = m.CompanyID,
+            Id = m.ID,
             Type = "CompanyIntro",
-            CreateTime = m.CreateTime
+            CreateTime = m.ModifiedTime,
+            ImgPath = htmlHelper.getFirstImgSrc(m.SummaryCode) == "" ? "/images/nofound.jpg" : htmlHelper.getFirstImgSrc(m.SummaryCode)
         }).ToList();
     }
 }
@@ -85,4 +89,5 @@ public class ListModel
     public int Id;
     public string Type;
     public DateTime? CreateTime;
+    public string ImgPath;
 }

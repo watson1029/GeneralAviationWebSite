@@ -64,7 +64,7 @@
 		                        <li>
                                     <div class="list_con clearfix">
                                         <div class="list_img">
-                                            <img src="images/News.jpg" alt=""/>
+                                            <img src="<%=item.ImgPath%>" alt=""/>
                                         </div>
                                         <div class="list_text">
                                             <dl>

@@ -259,10 +259,10 @@
                                     <div id="scrollDiv">
                                         <ul>
                                             <%
-                                                foreach (var item in companyModel)
+                                                foreach (var item in companySummaryModel)
 	                                        {%>
 		                                    <li>
-                                                <h3><a href="Detail.aspx?Type=CompanyIntro&Id=<%=item.CompanyID %>" class="linktit"><%=HtmlWorkShop.CutTitle(item.CompanyName,20)%></a></h3>
+                                                <h3><a href="Detail.aspx?Type=CompanyIntro&Id=<%=item.ID %>" class="linktit"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a></h3>
                                                 <div><%=HtmlWorkShop.CutTitle(HttpUtility.UrlDecode(item.SummaryCode),20)%></div>
                                             </li>
 	                                          <%  }%>                  
