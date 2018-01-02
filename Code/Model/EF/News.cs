@@ -22,5 +22,6 @@ namespace Model.EF
         public int Sort { get; set; }
         public System.DateTime CreateTime { get; set; }
         public string CreateUser { get; set; }
+        public string Author { get; set; }
     }
 }
