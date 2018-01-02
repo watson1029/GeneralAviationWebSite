@@ -12,16 +12,12 @@ namespace Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class News
+    public partial class Advertisment
     {
-        public int NewID { get; set; }
-        public string NewTitle { get; set; }
-        public string NewContent { get; set; }
-        public bool IsDelete { get; set; }
-        public byte IsTop { get; set; }
-        public int Sort { get; set; }
+        public int AdvWebSiteID { get; set; }
+        public string AdvSuiteName { get; set; }
+        public byte IsUsed { get; set; }
+        public string PicPath { get; set; }
         public System.DateTime CreateTime { get; set; }
-        public string CreateUser { get; set; }
-        public string Author { get; set; }
     }
 }

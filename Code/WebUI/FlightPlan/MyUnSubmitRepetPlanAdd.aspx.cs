@@ -53,5 +53,13 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
         Response.ContentType = "text/plain";
         Response.End();
     }
-
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyUnSubmitRepetPlanCheck";
+        }
+    }
+    #endregion
 }

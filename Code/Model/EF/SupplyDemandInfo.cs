@@ -26,5 +26,6 @@ namespace Model.EF
         public Nullable<int> ActorID { get; set; }
         public string State { get; set; }
         public string Title { get; set; }
+        public string SummaryCode { get; set; }
     }
 }

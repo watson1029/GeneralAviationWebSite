@@ -106,6 +106,43 @@
         <a id="btn_set" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#setrole').dialog('close');return false;">取消</a>
     </div>
+
+   <div id="editpwd" class="easyui-dialog" style="width: 400px; height: 200px;"
+        modal="true" closed="true" buttons="#editpwd-buttons">
+        <form id="form_editpwd"  method="post">
+                <table class="table_edit">
+                    <tr>
+                        <td>旧密码：
+                        </td>
+                        <td>
+                            <input id="OldPassword" name="OldPassword" type="password" maxlength="30" class="easyui-validatebox textbox"
+                                required="true" style="height:20px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>新密码：
+                        </td>
+                        <td>
+                            <input id="NewPassword" name="NewPassword" type="password"  maxlength="30" class="easyui-validatebox textbox"
+                                required="true" style="height:20px;"/>
+                        </td>
+                    </tr>
+ <tr>
+                        <td>确认密码：
+                        </td>
+                        <td>
+                            <input id="ComfirmPassword" name="ComfirmPassword" type="password"  maxlength="30" validType="euqalTo['#NewPassword']" class="easyui-validatebox textbox"
+                                required="true" style="height:20px;"/>
+                        </td>
+                    </tr>
+                </table>
+
+        </form>
+    </div>
+    <div id="editpwd-buttons">
+        <a id="btn_editpwd" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
+            class="easyui-linkbutton" onclick="$('#editpwd').dialog('close');return false;">取消</a>
+    </div>
     <%--设置菜单 end--%>
     <script type="text/javascript">
 
@@ -160,6 +197,7 @@
                         {
                             title: '操作', field: 'ID', width: 150, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;';
+                                str += '<a style="color:red" href="javascript:;" onclick="Main.EditPassword(' + value + ');$(this).parent().click();return false;">修改密码</a>&nbsp;&nbsp;';
                                 str += '<a style="color:red" href="javascript:;" onclick="Main.SetRole(' + value + ');$(this).parent().click();return false;">角色设置</a>';
                                 return str;
                             }
@@ -259,7 +297,27 @@
 
                 });
             },
+            EditPassword: function (uid) {
+                $("#form_editpwd").form('clear');
+                $("#editpwd").dialog("open").dialog('setTitle', '修改密码');
+                $("#btn_editpwd").attr("onclick", "Main.SavePassword(" + uid + ");")
+            },
+            SavePassword: function (uid) {
+                if (!$("#form_editpwd").form("validate")) {
+                    return;
+                }
+                var json = $.param({ "id": uid, "action": "savepwd" }) + '&' + $('#form_editpwd').serialize();
 
+                $.post("UserInfo.aspx", json, function (data) {
+                    $.messager.alert('提示', data.msg, 'info', function () {
+                        if (data.isSuccess) {
+                            $("#tab_list").datagrid("reload");
+                            $("#editpwd").dialog("close");
+                        }
+                    });
+                });
+            
+            },
             //删除按钮事件
             Delete: function () {
                 var selRow = $('#tab_list').datagrid('getSelections');

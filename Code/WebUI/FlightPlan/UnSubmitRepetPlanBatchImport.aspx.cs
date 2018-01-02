@@ -5,10 +5,19 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class FlightPlan_UnSubmitRepetPlanBatchImport : System.Web.UI.Page
+public partial class FlightPlan_UnSubmitRepetPlanBatchImport :BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "MyUnSubmitRepetPlanCheck";
+        }
+    }
+    #endregion
 }

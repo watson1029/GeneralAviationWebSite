@@ -89,7 +89,7 @@ public partial class Log_OperationLog : BasePage
         }
         return predicate;
     }
-
+    #region 权限编码
     public override string PageRightCode
     {
         get
@@ -97,5 +97,6 @@ public partial class Log_OperationLog : BasePage
             return "OperationLogCheck";
         }
     }
+    #endregion
 
 }

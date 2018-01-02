@@ -114,5 +114,10 @@ namespace BLL.SupplyDemandInformation
             ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
             return context.Set<CompanySummary>().Where(where).OrderByDescending(m => m.ID).AsNoTracking().Take(top).ToList();
         }
+
+        public List<CompanySummary> GetList(Expression<Func<CompanySummary, bool>> where)
+        {
+            return dal.FindList(where, true);
+        }
     }
 }

@@ -11,7 +11,7 @@ using Untity;
 
 public partial class BasicData_Pilot : BasePage
 {
-      PilotBLL bll = new PilotBLL();
+    PilotBLL bll = new PilotBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -46,7 +46,7 @@ public partial class BasicData_Pilot : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
-            if (bll.Delete(Request.Form["cbx_select"].ToString())>0)
+            if (bll.Delete(Request.Form["cbx_select"].ToString()) > 0)
             {
                 result.IsSuccess = true;
                 result.Msg = "删除成功！";
@@ -72,7 +72,7 @@ public partial class BasicData_Pilot : BasePage
             model.GetEntitySearchPars<Pilot>(this.Context);
             model.LicenseImg = Request.Params["LicenseImgsInfo"];
             model.CreateTime = DateTime.Now;
-            if (bll.Add(model)>0)
+            if (bll.Add(model) > 0)
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -148,7 +148,7 @@ public partial class BasicData_Pilot : BasePage
         //   StringBuilder sb = new StringBuilder("1=1");
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            var val=Request.Form["search_value"];
+            var val = Request.Form["search_value"];
             predicate = u => u.Pilots == val;
 
             //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
@@ -252,7 +252,7 @@ public partial class BasicData_Pilot : BasePage
                             if (!string.IsNullOrEmpty(colobj) && !DateTime.TryParse(colobj, out edt))
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "签发日期格式不正确！"));
                             break;
-                        case 8:                        
+                        case 8:
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
                             if (colobj == null || string.IsNullOrEmpty(colobj))
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "执照类别不能为空！"));
@@ -292,11 +292,11 @@ public partial class BasicData_Pilot : BasePage
                     LicenseNo = rowobj.ItemArray[5].ToString(),
                     Sign = rowobj.ItemArray[6].ToString(),
                     LicenseTime = DateTime.Parse(rowobj.ItemArray[7].ToString()),
-                    Licensesort = rowobj.ItemArray[8].ToString() ==  "航线运输驾驶执照" ? "0" : (rowobj.ItemArray[8].ToString() == "商用飞机驾照" ? "1" : "2"),
-                    Sex = byte.Parse(rowobj.ItemArray[9].ToString()=="男"?"0":"1"),
+                    Licensesort = rowobj.ItemArray[8].ToString() == "航线运输驾驶执照" ? "0" : (rowobj.ItemArray[8].ToString() == "商用飞机驾照" ? "1" : "2"),
+                    Sex = byte.Parse(rowobj.ItemArray[9].ToString() == "男" ? "0" : "1"),
                     CompanyCode3 = rowobj.ItemArray[10].ToString(),
                     CreateTime = DateTime.Now,
-                   
+
                 };
                 bll.Add(model);
 
@@ -391,6 +391,19 @@ public partial class BasicData_Pilot : BasePage
         var filePath = Path.Combine(localTargetCategory, localNewFileName);
         return filePath;
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "PilotCheck";
+        }
+    }
+    #endregion
 }
+
+
+
 
 

@@ -53,6 +53,9 @@
     <Compile Include="EF\ActualSteps.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\Advertisment.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\Aircraft.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>

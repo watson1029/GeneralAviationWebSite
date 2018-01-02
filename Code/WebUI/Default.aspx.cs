@@ -1,4 +1,5 @@
-﻿using BLL.BasicData;
+﻿using BLL.Adv;
+using BLL.BasicData;
 using BLL.SupplyDemandInformation;
 using DAL.SystemManagement;
 using Model.EF;
@@ -17,7 +18,9 @@ public partial class _Default : System.Web.UI.Page
     protected double rnd;
     protected int year;
     protected List<Resource> resModel;
+    protected List<string> picModel=new List<string>();
     private NewBLL newbll = new NewBLL();
+    private AdvertismentBLL advbll = new AdvertismentBLL();
     private CompanySummaryBLL commmpanySummarybll = new CompanySummaryBLL();
     private SupplyDemandBLL demandBll = new SupplyDemandBLL();
     private ResourceDAL resDAL = new ResourceDAL();
@@ -33,6 +36,7 @@ public partial class _Default : System.Web.UI.Page
         LoadSupplyDemand();
         LoadCompanySummaryIntro();
         LoadResource();
+        LoadPicture();
     }
     /// <summary>
     /// 新闻列表
@@ -51,6 +55,19 @@ public partial class _Default : System.Web.UI.Page
     }
     private void LoadResource()
     {
-        resModel = resDAL.GetTopList(5,2);
+        resModel = resDAL.GetTopList(5, 2);
+    }
+    private void LoadPicture()
+    {
+        var model = advbll.Get(1);
+        if (model != null)
+        {
+            var picarray = (model.PicPath ?? "").Split('|');
+            foreach (var item in picarray)
+            {
+                var p1 = item.Split(',');
+                picModel.Add(p1[0]);
+            }
+        }
     }
 }
