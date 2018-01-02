@@ -246,6 +246,7 @@
                         <h2>用户登录</h2>
                     </div>
                     <div class="login_box">
+                               <form id="loginForm" method="post">
                         <ul>
                             <li>
                                 <input name="txtUserName" id="txtUserName" class="login_name ipt" placeholder="请输入用户名" maxlength="40" style="color: rgb(173, 173, 173);" type="text" /></li>
@@ -263,6 +264,7 @@
                             <li style="margin-top: 0px;">
                                 <input name="btn_login" value="登录" onclick="Main.login()" id="btn_login" class="login_btn" type="button" /></li>
                         </ul>
+                                   </form>
                     </div>
                 </div>
                 <div class="center_right_middle">
