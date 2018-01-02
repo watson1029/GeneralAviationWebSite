@@ -187,5 +187,13 @@ public partial class SystemManage_Role : BasePage
         }
         return predicate;
     }
-
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "RoleCheck";
+        }
+    }
+    #endregion
 }

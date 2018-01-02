@@ -201,5 +201,13 @@ public partial class SystemManage_UserInfo : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
-
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "UserInfoCheck";
+        }
+    }
+    #endregion
 }
