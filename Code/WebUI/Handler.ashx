@@ -278,7 +278,9 @@ public class Handler : IHttpHandler
         int status = Convert.ToInt16(context.Request["status"]);
         DateTime started = DateTime.Parse(context.Request["started"]);
         DateTime ended = DateTime.Parse(context.Request["ended"]);
-        string filepath = "";
+        string filename = context.Request.Files["file"].FileName;
+        string hou = filename.Substring(0, filename.IndexOf("."));
+        string tt = filename.Substring(filename.IndexOf("."));
         if (context.Request.Files["file"].ContentLength > 0)
         {
             if (context.Request.Files["file"].ContentLength > 52428800)
@@ -286,8 +288,9 @@ public class Handler : IHttpHandler
                 context.Response.ContentType = "text/plain";
                 context.Response.Write("新增资料失败，附件太大了");
             }
-            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/Files/Resource/") + context.Request.Files["file"].FileName);
-            filepath = "Files/Resource/"+ context.Request.Files["file"].FileName;
+            String time = Guid.NewGuid().ToString("N");
+            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/Files/Resource/") + hou+time+tt);
+            string filepath = "Files/Resource/"+ hou+time+tt;
 
             Resource resource = new Resource();
             resource.Title = title;
