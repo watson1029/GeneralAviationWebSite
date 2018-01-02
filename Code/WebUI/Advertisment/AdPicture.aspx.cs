@@ -1,4 +1,5 @@
-﻿using BLL.BasicData;
+﻿using BLL.Adv;
+using BLL.BasicData;
 using Model.EF;
 using Newtonsoft.Json;
 using System;
@@ -10,9 +11,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class BasicData_New : BasePage
+public partial class Advertisment_AdPicture : BasePage
 {
-    NewBLL bll = new NewBLL();
+    AdvertismentBLL bll = new AdvertismentBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -59,14 +60,14 @@ public partial class BasicData_New : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
-    private Expression<Func<News, bool>> GetWhere()
+    private Expression<Func<Advertisment, bool>> GetWhere()
     {
 
-        Expression<Func<News, bool>> predicate = PredicateBuilder.True<News>();
+        Expression<Func<Advertisment, bool>> predicate = PredicateBuilder.True<Advertisment>();
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             var val = Request.Form["search_value"];
-            predicate = u => u.NewTitle == val;
+            predicate = u => u.AdvSuiteName == val;
         }
         return predicate;
     }
@@ -96,17 +97,13 @@ public partial class BasicData_New : BasePage
         int? id = null;
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
-        News model = null;
+        Advertisment model = null;
         if (!id.HasValue)//新增
         {
-            model = new News();
-        //   model.GetEntitySearchPars<News>(this.Context);
-            model.IsTop = byte.Parse(Request.Form["IsTop"]);
-            model.Sort =int.Parse(Request.Form["Sort"]);
-            model.NewTitle = Request.Form["NewTitle"];
-            model.CreateUser = User.UserName;
+            model = new Advertisment();
+             model.GetEntitySearchPars<Advertisment>(this.Context);
+             model.PicPath = Request.Params["PicPathsInfo"];
             model.CreateTime = DateTime.Now;
-            model.NewContent = Server.HtmlDecode(Request.Form["SummaryCode"]);
             if (bll.Add(model))
             {
                 result.IsSuccess = true;
@@ -118,11 +115,8 @@ public partial class BasicData_New : BasePage
             model = bll.Get(id.Value);
             if (model != null)
             {
-                //model.GetEntitySearchPars<News>(this.Context);
-                model.IsTop = byte.Parse(Request.Form["IsTop"]);
-                model.Sort = int.Parse(Request.Form["Sort"]);
-                model.NewTitle = Request.Form["NewTitle"];
-                model.NewContent = Server.HtmlDecode(Request.Form["SummaryCode"]);
+                model.GetEntitySearchPars<Advertisment>(this.Context);
+                model.PicPath = Request.Params["PicPathsInfo"];
                 if (bll.Update(model))
                 {
                     result.IsSuccess = true;
@@ -158,7 +152,7 @@ public partial class BasicData_New : BasePage
     {
         get
         {
-            return "NewsCheck";
+            return "AdvertismentCheck";
         }
     }
     #endregion

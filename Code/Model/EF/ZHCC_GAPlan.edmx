@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActualSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -22,6 +22,16 @@
           <Property Name="Comments" Type="nvarchar" MaxLength="50" />
           <Property Name="ActorTime" Type="datetime" />
           <Property Name="ActorName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Advertisment">
+          <Key>
+            <PropertyRef Name="AdvWebSiteID" />
+          </Key>
+          <Property Name="AdvWebSiteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdvSuiteName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsUsed" Type="tinyint" Nullable="false" />
+          <Property Name="PicPath" Type="nvarchar(max)" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Aircraft">
           <Key>
@@ -337,11 +347,12 @@
           <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="ExpiryDate" Type="datetime" />
-          <Property Name="Summary" Type="nvarchar" MaxLength="500" />
+          <Property Name="Summary" Type="nvarchar(max)" />
           <Property Name="Catalog" Type="char" MaxLength="4" />
           <Property Name="ActorID" Type="int" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
           <Property Name="Title" Type="varchar" MaxLength="500" />
+          <Property Name="SummaryCode" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="TWFLibrary">
           <Key>
@@ -606,6 +617,7 @@
         </EntityType>
         <EntityContainer Name="ZHCC_GAPlanModelStoreContainer">
           <EntitySet Name="ActualSteps" EntityType="Self.ActualSteps" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Advertisment" EntityType="Self.Advertisment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Aircraft" EntityType="Self.Aircraft" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanySummary" EntityType="Self.CompanySummary" Schema="dbo" store:Type="Tables" />
@@ -792,7 +804,6 @@
           <EntitySet Name="UserRole" EntityType="ZHCC_GAPlanModel.UserRole" />
           <EntitySet Name="Resource" EntityType="ZHCC_GAPlanModel.Resource" />
           <EntitySet Name="OperationLog" EntityType="ZHCC_GAPlanModel.OperationLog" />
-          <EntitySet Name="SupplyDemandInfo" EntityType="ZHCC_GAPlanModel.SupplyDemandInfo" />
           <EntitySet Name="RepetitivePlan" EntityType="ZHCC_GAPlanModel.RepetitivePlan" />
           <EntitySet Name="ErrorLog" EntityType="ZHCC_GAPlanModel.ErrorLog" />
           <EntitySet Name="vFlightPlan" EntityType="ZHCC_GAPlanModel.vFlightPlan" />
@@ -807,6 +818,8 @@
           <EntitySet Name="News" EntityType="ZHCC_GAPlanModel.News" />
           <EntitySet Name="Company" EntityType="ZHCC_GAPlanModel.Company" />
           <EntitySet Name="CompanySummary" EntityType="ZHCC_GAPlanModel.CompanySummary" />
+          <EntitySet Name="Advertisment" EntityType="ZHCC_GAPlanModel.Advertisment" />
+          <EntitySet Name="SupplyDemandInfo" EntityType="ZHCC_GAPlanModel.SupplyDemandInfo" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -940,23 +953,6 @@
           <Property Name="AccessLinks" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="OperationType" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="SupplyDemandInfo">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Creator" Type="Int32" />
-          <Property Name="CreateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
-          <Property Name="Summary" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Catalog" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="ActorID" Type="Int32" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="RepetitivePlan">
           <Key>
@@ -1390,6 +1386,34 @@
           <Property Name="ActorID" Type="Int32" />
           <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Advertisment">
+          <Key>
+            <PropertyRef Name="AdvWebSiteID" />
+          </Key>
+          <Property Name="AdvWebSiteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdvSuiteName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsUsed" Type="Byte" Nullable="false" />
+          <Property Name="PicPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="SupplyDemandInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Creator" Type="Int32" />
+          <Property Name="CreateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Catalog" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="ActorID" Type="Int32" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SummaryCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1536,24 +1560,6 @@
                 <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SupplyDemandInfo">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.SupplyDemandInfo">
-              <MappingFragment StoreEntitySet="SupplyDemandInfo">
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
-                <ScalarProperty Name="Catalog" ColumnName="Catalog" />
-                <ScalarProperty Name="Summary" ColumnName="Summary" />
-                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
-                <ScalarProperty Name="CreateName" ColumnName="CreateName" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1931,6 +1937,36 @@
                 <ScalarProperty Name="ModifiedByName" ColumnName="ModifiedByName" />
                 <ScalarProperty Name="Summary" ColumnName="Summary" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Advertisment">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Advertisment">
+              <MappingFragment StoreEntitySet="Advertisment">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="PicPath" ColumnName="PicPath" />
+                <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+                <ScalarProperty Name="AdvSuiteName" ColumnName="AdvSuiteName" />
+                <ScalarProperty Name="AdvWebSiteID" ColumnName="AdvWebSiteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplyDemandInfo">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.SupplyDemandInfo">
+              <MappingFragment StoreEntitySet="SupplyDemandInfo">
+                <ScalarProperty Name="SummaryCode" ColumnName="SummaryCode" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
+                <ScalarProperty Name="Catalog" ColumnName="Catalog" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
+                <ScalarProperty Name="CreateName" ColumnName="CreateName" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

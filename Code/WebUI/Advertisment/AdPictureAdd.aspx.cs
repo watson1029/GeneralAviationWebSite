@@ -1,4 +1,5 @@
-﻿using BLL.BasicData;
+﻿using BLL.Adv;
+using BLL.BasicData;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class BasicData_NewAdd : BasePage
+public partial class Advertisment_AdPictureAdd : BasePage
 {
-    NewBLL bll = new NewBLL();
+    AdvertismentBLL bll = new AdvertismentBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -47,7 +48,7 @@ public partial class BasicData_NewAdd : BasePage
     {
         get
         {
-            return "NewsCheck";
+            return "AdvertismentCheck";
         }
     }
     #endregion

@@ -36,7 +36,6 @@ namespace Model.EF
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<Resource> Resource { get; set; }
         public virtual DbSet<OperationLog> OperationLog { get; set; }
-        public virtual DbSet<SupplyDemandInfo> SupplyDemandInfo { get; set; }
         public virtual DbSet<RepetitivePlan> RepetitivePlan { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<vFlightPlan> vFlightPlan { get; set; }
@@ -51,5 +50,7 @@ namespace Model.EF
         public virtual DbSet<News> News { get; set; }
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<CompanySummary> CompanySummary { get; set; }
+        public virtual DbSet<Advertisment> Advertisment { get; set; }
+        public virtual DbSet<SupplyDemandInfo> SupplyDemandInfo { get; set; }
     }
 }
