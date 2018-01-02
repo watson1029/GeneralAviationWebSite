@@ -26,7 +26,8 @@
             images: false,
             mouse: 'press',
             onChange: function (page) {
-                $('._current', '#paginationdemo').removeClass('_current').hide();
+                $('._current', '#paginationdemo').removeClass('_current').hide();
+
                 $('#p' + page).addClass('_current').show();
             },
             callback: function (api) {

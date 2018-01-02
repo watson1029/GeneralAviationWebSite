@@ -85,4 +85,33 @@ public class HtmlWorkShop
         }
         return orgin;
     }
+    public string getFirstImgSrc(string urlEncodeString)
+    {
+        if (!string.IsNullOrEmpty(urlEncodeString))
+        {
+            string urlDecodeString = HttpUtility.UrlDecode(urlEncodeString);          
+            int startPos = urlDecodeString.IndexOf("<img");
+            if (startPos >= 0)
+            {
+                string img = urlDecodeString.Substring(startPos);
+
+                int endPos = img.IndexOf("/>");
+                if (endPos >= 0)
+                {
+                    img = img.Substring(0, endPos + 2);
+
+                    startPos = img.IndexOf("src=\"");
+                    img = img.Substring(startPos + 5);
+
+                    endPos = img.IndexOf("\"");
+
+                    return img.Substring(0, endPos);
+                }
+                return "";
+            }
+            return "";
+        }
+        return "";
+    }   
+
 }

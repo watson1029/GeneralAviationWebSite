@@ -19,5 +19,6 @@ namespace Model.EF
         public Nullable<System.DateTime> LoginTime { get; set; }
         public string IPAddress { get; set; }
         public string Msg { get; set; }
+        public Nullable<int> UserID { get; set; }
     }
 }

@@ -32,8 +32,8 @@
                 $('#tab_list').datagrid({
                     title: '列表', //表格标题
                     url: location.href, //请求数据的页面
-                    sortName: 'CompanyID', //排序字段
-                    idField: 'CompanyID', //标识字段,主键
+                    sortName: 'ID', //排序字段
+                    idField: 'ID', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
                     height: $(parent.document).find("#mainPanel").height() - 10 > 0 ? $(parent.document).find("#mainPanel").height() - 10 : 300, //高度
@@ -48,7 +48,8 @@
                     columns: [[
                         { title: '单位名称', field: 'CompanyName', width: 200 },
                         { title: '录入日期', field: 'ModifiedTime', width: 150 },
-                        { title: '业务概况', field: 'Summary', width: 500 },
+                        { title: '宣传标题', field: 'Title', width: 200 },
+                        { title: '宣传介绍', field: 'Summary', width: 500 },
                         {
                             title: '状态', field: 'State', formatter: function (value, rec, index) {
                                 var str = "";

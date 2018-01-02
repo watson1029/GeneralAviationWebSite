@@ -1,5 +1,6 @@
 ﻿using BLL.BasicData;
 using BLL.SupplyDemandInformation;
+using DAL.SystemManagement;
 using Model.EF;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,14 @@ public partial class _Default : System.Web.UI.Page
 {
     protected List<News> newsModel;
     protected List<SupplyDemandInfo> demandModel;
-    protected List<Company> companyModel;
+    protected List<CompanySummary> companySummaryModel;
     protected double rnd;
     protected int year;
+    protected List<Resource> resModel;
     private NewBLL newbll = new NewBLL();
-    private CompanyBLL commmpanybll = new CompanyBLL();
+    private CompanySummaryBLL commmpanySummarybll = new CompanySummaryBLL();
     private SupplyDemandBLL demandBll = new SupplyDemandBLL();
+    private ResourceDAL resDAL = new ResourceDAL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -28,7 +31,8 @@ public partial class _Default : System.Web.UI.Page
         }
         LoadNews();
         LoadSupplyDemand();
-        LoadCompanyIntro();
+        LoadCompanySummaryIntro();
+        LoadResource();
     }
     /// <summary>
     /// 新闻列表
@@ -41,8 +45,12 @@ public partial class _Default : System.Web.UI.Page
     {
         demandModel = demandBll.GetTopList(5, u => u.State == "end");
     }
-    private void LoadCompanyIntro()
+    private void LoadCompanySummaryIntro()
     {
-        companyModel = commmpanybll.GetTopList(5, u => u.State == "end");
+        companySummaryModel = commmpanySummarybll.GetTopList(5, u => u.State == "end");
+    }
+    private void LoadResource()
+    {
+        resModel = resDAL.GetTopList(5,2);
     }
 }

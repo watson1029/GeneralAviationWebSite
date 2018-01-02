@@ -6,6 +6,8 @@
     position: relative;
     text-align: center;
     zoom: 1;
+    width: 500px;
+margin: 0 auto;
 }
 .M-box:before,.M-box:after,.M-box1:before,.M-box1:after ,.M-box2:before,.M-box2:after ,.M-box3:before,.M-box3:after,.M-box4:before,.M-box4:after{
     content:"";

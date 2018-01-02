@@ -79,5 +79,9 @@ namespace DAL.SystemManagement
             List<Model.EF.Resource> list = FindList(predicate, m => m.ID, true);
             return list.Count;
         }
+        public List<Resource> GetTopList(int records,int status)
+        {
+            return GetList(1, status, 1, records);
+        }
     }
 }
