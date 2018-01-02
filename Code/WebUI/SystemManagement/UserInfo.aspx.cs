@@ -31,6 +31,9 @@ public partial class SystemManage_UserInfo : BasePage
                 case "setrole":
                     SaveUserRole();
                     break;
+                case "savepwd":
+                    SavePwd();
+                    break;
                 default:
                     break;
             }
@@ -51,6 +54,42 @@ public partial class SystemManage_UserInfo : BasePage
             }
         }
         Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
+    }
+
+    private void SavePwd()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "保存失败！";
+        if (!Request.Form["NewPassword"].Trim().Equals(Request.Form["ComfirmPassword"].Trim()))
+        {
+            result.Msg = "新密码不一致！";
+
+        }
+        else
+        {
+            var id = Convert.ToInt32(Request.Form["id"]);
+            var model = userBll.Get(id);
+            if (model != null)
+            {
+                if (model.Password == CryptTools.HashPassword(Request.Form["OldPassword"]))
+                {
+                    model.Password = CryptTools.HashPassword(Request.Form["ComfirmPassword"]);
+                    if (userBll.Update(model))
+                    {
+                        result.IsSuccess = true;
+                        result.Msg = "更新成功！";
+                    }
+                }
+                else
+                {
+                    result.Msg = "旧密码不正确！";
+                }
+            }
+        }
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
         Response.End();
@@ -110,7 +149,7 @@ public partial class SystemManage_UserInfo : BasePage
             }
 
         }
-        
+
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
@@ -141,15 +180,15 @@ public partial class SystemManage_UserInfo : BasePage
         int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
         string sort = Request.Form["sort"] ?? "";
         string order = Request.Form["order"] ?? "";
-  
+
         if (page < 1) return;
-        int pageCount=0;
-        int rowCount=0;
+        int pageCount = 0;
+        int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
 
         var pageList = userBll.GetList(page, size, out pageCount, out rowCount, strWhere);
-       var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -164,13 +203,13 @@ public partial class SystemManage_UserInfo : BasePage
 
 
         Expression<Func<UserInfo, bool>> predicate = PredicateBuilder.True<UserInfo>();
-        predicate = predicate.And(m =>1 == 1);
+        predicate = predicate.And(m => 1 == 1);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             var val = Request.Form["search_value"].Trim();
             predicate = predicate.And(m => m.UserName == val);
 
-          //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
+            //  sb.AppendFormat(" and charindex('{0}',{1})>0", Request.Form["search_value"], Request.Form["search_type"]);
         }
         return predicate;
     }
