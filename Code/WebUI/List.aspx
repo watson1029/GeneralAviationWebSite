@@ -59,6 +59,7 @@
                     <div class="list">
                         <ul>
                              <%
+                                 if (listModel == null) return;
                                  foreach(var item in listModel)
 	                        {%>
 		                        <li>
@@ -68,7 +69,7 @@
                                         </div>
                                         <div class="list_text">
                                             <dl>
-                                                <dt><a href="/Detail.aspx?Type=<%=item.Type%>&Id=<%=item.Id%>"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a></dt>
+                                                <dt><a href="/Detail.aspx?Type=<%=item.type%>&Id=<%=item.Id%>"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a></dt>
                                                 <dd class="ddtxt">
                                                     <p><%=HtmlWorkShop.CutTitle(HttpUtility.UrlDecode(item.Content),20)%></p>
                                                 </dd>
@@ -104,8 +105,8 @@
                                 start: 1,
                                 display: 7,
                                 showdata: 6,
-                                pageCount:<%=TotalPage%>,
-                                current:<%=PageIndex%>,
+                                pageCount:<%=totalPage%>,
+                                current:<%=pageIndex%>,
                                 images: false,
                                 mouse: 'press',
                                 onChange: function (page) {
@@ -122,7 +123,7 @@
                                     $.getJSON('http://localhost:3000/data.json', data, function (json) {
                                         console.log(json);
                                     });
-                                    window.location = "List.aspx?Type=<%=Type%>&PageIndex="+data.page;
+                                    window.location = "List.aspx?Type=<%=type%>&PageIndex="+data.page;
                                 }
                             });
                         </script>

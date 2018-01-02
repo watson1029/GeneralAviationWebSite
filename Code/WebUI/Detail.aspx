@@ -20,24 +20,26 @@
 </head>
 <body>
     <script type="text/javascript">
-        if ("<%=previousModel.Id%>" == "0") {        
-            document.getElementById("h3pre").style.display = "none";
-            document.getElementById("divpre").style.display = "none";
-            document.getElementById("prev").style.display = "none";            
-        } else {
-            document.getElementById("prev").style.display = "block";
-            document.getElementById("h3pre").style.display = "block";
-            document.getElementById("divpre").style.display = "block";
-        }
-        if ("<%=nextModel.Id%>" == "0") {
-            document.getElementById("next").style.display = "none";
-            document.getElementById("h3next").style.display = "none";
-            document.getElementById("divnext").style.display = "none";
-        }else{
-            document.getElementById("next").style.display = "block";
-            document.getElementById("h3next").style.display = "block";
-            document.getElementById("divnext").style.display = "block";
-        }
+        $(function () {
+            if ("<%=previousModel.Id%>" == "0") {
+                document.getElementById("h3pre").style.display = "none";
+                document.getElementById("divpre").style.display = "none";
+                document.getElementById("prev").style.display = "none";
+            } else {
+                document.getElementById("prev").style.display = "block";
+                document.getElementById("h3pre").style.display = "block";
+                document.getElementById("divpre").style.display = "block";
+            }
+            if ("<%=nextModel.Id%>" == "0") {
+                document.getElementById("next").style.display = "none";
+                document.getElementById("h3next").style.display = "none";
+                document.getElementById("divnext").style.display = "none";
+            } else {
+                document.getElementById("next").style.display = "block";
+                document.getElementById("h3next").style.display = "block";
+                document.getElementById("divnext").style.display = "block";
+            }
+        });        
     </script>
     <form id="form1" runat="server">
         <!--head begin-->

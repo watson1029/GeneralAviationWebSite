@@ -103,6 +103,10 @@ namespace BLL.SupplyDemandInformation
         {
             return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
         }
+        public List<SupplyDemandInfo> GetList(Expression<Func<SupplyDemandInfo, bool>> where)
+        {
+            return dal.FindList(where, true);
+        }
 
         public SupplyDemandInfo Get(int id)
         {
