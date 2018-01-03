@@ -16,9 +16,10 @@
         <table id="tab_list">
         </table>
         <div id="tab_toolbar" style="padding: 2px 2px;height:22px;">
-          
+                   <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" plain="true" onclick="Main.Export()">导出</a>
             <div style="float:right">
                         <input id="ipt_search" menu="#search_menu"/>
+                <input id="ssPlanCode" name="ssPlanCode"  type="hidden" value=""/>
                         <div id="search_menu" style="width: 200px">
                             <div name="PlanCode">
                                 申请单号
@@ -167,13 +168,22 @@
               $("#ipt_search").searchbox({
                   width: 250,
                   searcher: function (val, name) {
+                      $('#ss' + name).val(val);
                       $('#tab_list').datagrid('options').queryParams.search_type = name;
                       $('#tab_list').datagrid('options').queryParams.search_value = val;
                       $('#tab_list').datagrid('reload');
                   },
                   prompt: '请输入要查询的信息'
               });
+          },
+          Export: function () {
+          var selRow = $('#tab_list').datagrid('getData');
+          if (selRow.total == 0) {
+              $.messager.alert('提示', '无记录导出！', 'info');
+              return;
           }
+          window.open("ExportHandler.aspx?type=3&plancode=" + $('#ssPlanCode').val());
+      },
 
       };
     </script>
