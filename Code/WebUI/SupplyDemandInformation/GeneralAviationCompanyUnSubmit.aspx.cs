@@ -200,4 +200,14 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyUnSubmit : Ba
         Response.ContentType = "application/json";
         Response.End();
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "GeneralAviationCompanyUnSubmitCheck";
+        }
+    }
+    #endregion
 }

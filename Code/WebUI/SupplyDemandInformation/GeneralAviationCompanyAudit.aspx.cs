@@ -62,7 +62,7 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyAudit : BaseP
     private Expression<Func<CompanySummary, bool>> GetWhere()
     {
         Expression<Func<CompanySummary, bool>> predicate = PredicateBuilder.True<CompanySummary>();
-        predicate = predicate.And(m => m.ActorID == User.ID);
+        predicate = predicate.And(m => m.ActorID == User.ID && m.State != "0");
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -124,4 +124,14 @@ public partial class SupplyDemandInformation_GeneralAviationCompanyAudit : BaseP
         Response.ContentType = "application/json";
         Response.End();
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "GeneralAviationCompanyAuditCheck";
+        }
+    }
+    #endregion
 }

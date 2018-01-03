@@ -26,7 +26,6 @@ public partial class SupplyDemandInformation_SupplyDemandSubmit : BasePage
         }
     }
 
-
     /// <summary>
     /// 查询数据
     /// </summary>
@@ -72,4 +71,14 @@ public partial class SupplyDemandInformation_SupplyDemandSubmit : BasePage
 
         return predicate;
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "SupplyDemandSubmitCheck";
+        }
+    }
+    #endregion
 }

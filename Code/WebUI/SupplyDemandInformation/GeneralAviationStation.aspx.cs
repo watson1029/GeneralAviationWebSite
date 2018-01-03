@@ -129,4 +129,13 @@ public partial class SupplyDemandInformation_GeneralAviationStation : BasePage
         return predicate;
     }
 
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "GeneralAviationStationCheck";
+        }
+    }
+    #endregion
 }

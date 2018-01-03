@@ -48,7 +48,7 @@
                     remoteSort: true, //定义是否从服务器给数据排序
 
                     columns: [[
-                        { title: '单位名称', field: 'CompanyName', width: 200 },
+                        { title: '单位名称', field: 'CompanyName', width: 300 },
                         { title: '录入日期', field: 'ModifiedTime', width: 150 },
                         { title: '宣传标题', field: 'Title', width: 200 },
                         { title: '宣传介绍', field: 'Summary', width: 500 },
@@ -110,7 +110,7 @@
     </script>
 
     <%--添加 修改 start--%>
-    <div id="audit" class="easyui-dialog" style="width: 1122px; height: 840px;"
+    <div id="audit" class="easyui-dialog" style="width: 1122px; height: 810px;"
         modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
             <table class="table_edit">
@@ -127,7 +127,7 @@
                         宣传介绍
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 1000px; height: 430px;"></script>
+                        <script id="editor" type="text/plain" style="width: 1000px; height: 400px;"></script>
                     </td>
                 </tr>
                 <tr>

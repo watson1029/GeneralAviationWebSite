@@ -27,7 +27,6 @@ public partial class SupplyDemandInformation_GeneralAviationCompanySubmit : Base
         }
     }
 
-
     /// <summary>
     /// 查询数据
     /// </summary>
@@ -69,4 +68,14 @@ public partial class SupplyDemandInformation_GeneralAviationCompanySubmit : Base
 
         return predicate;
     }
+
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "GeneralAviationCompanySubmitCheck";
+        }
+    }
+    #endregion
 }
