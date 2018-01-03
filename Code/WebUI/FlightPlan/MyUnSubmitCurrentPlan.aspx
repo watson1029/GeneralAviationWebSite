@@ -103,57 +103,6 @@
                 });
             },
 
-            //提交按钮事件
-            Save: function (uid) {
-                if (!$("#form_edit").form("validate")) {
-                    return;
-                }
-                var json = $.param({ "id": uid, "action": "save" }) + '&' + $('#form_edit').serialize();
-                $.post(location.href, json, function (data) {
-                    $.messager.alert('提示', data.msg, 'info', function () {
-                        if (data.isSuccess) {
-                            $("#tab_list").datagrid("reload");
-                            $("#add").dialog("close");
-                            $("#edit").dialog("close");
-                        }
-                    });
-                });
-            },
-            //打开添加窗口
-            OpenWin: function () {
-                $("#edit").dialog("open").dialog('setTitle', '新增飞行计划').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx');
-                ("#btn_add").attr("onclick", "Main.Save();");
-            },
-            //修改链接 事件
-            EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑');
-                $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
-            },
-
-            //删除按钮事件
-            Delete: function () {
-                var selRow = $('#tab_list').datagrid('getSelections');
-                if (selRow.length == 0) {
-                    $.messager.alert('提示', '请选择一条记录！', 'info');
-                    return;
-                }
-                var idArray = [];
-                for (var i = 0; i < selRow.length; i++) {
-                    var id = selRow[i].FlightPlanID;
-                    idArray.push(id);
-                }
-                $.messager.confirm('提示', '确认删除该条记录？', function (r) {
-                    if (r) {
-                        $.post(location.href, { "action": "del", "cbx_select": idArray.join(',') }, function (data) {
-
-                            if (data.isSuccess) {
-                                $("#tab_list").datagrid("reload");
-                                selRow.length = 0;
-                            }
-                        });
-                    }
-                });
-            },
             Submit: function (uid) {
                 if (!$("#form_edit").form("validate")) {
                     return;

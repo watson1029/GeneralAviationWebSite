@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
-
+<%@ Register src="Menu.ascx" TagName="Menu" TagPrefix="cc1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -101,20 +101,7 @@
                     <button id="ibtn_txt_request" type="submit" class="btn" onclick="subjs('gc');return false">搜&nbsp;索</button>
                 </span>
             </div>
-            <div class="nav-box">
-                <ul>
-                    <li class="cur"><a href="/index.aspx">首页<span>Home</span></a></li>
-                    <li><a href="/List.aspx?Type=News&PageIndex=1">新闻<span>News</span></a></li>
-                    <li><a href="/List.aspx?Type=SupplyDemand&PageIndex=1">供求<span>Supply-Demand</span></a></li>
-                    <li><a href="/List.aspx?Type=CompanyIntro&PageIndex=1">企业<span>Company</span></a></li>
-                    <li><a href="/TempletPage/Page.aspx?column=qk">资料<span>File</span></a></li>
-                    <li><a href="/TempletPage/Page.aspx?column=tc">计划<span>Plan</span></a></li>
-                    <li><a href="/TempletPage/Page.aspx?column=tc">气象<span>Weather</span></a></li>
-                    <li><a href="/TempletPage/Page.aspx?column=ww">情报<span>Information</span></a></li>
-                    <li><a href="/TempletPage/Page.aspx?column=st">监视<span>Surveillance</span></a></li>
-                </ul>
-                <div class="nav-line" style="left: 0px; width: 128px; display: block;"></div>
-            </div>
+          <cc1:Menu ID="ccMenu" runat="server" />
         </div>
     </div>
     <!--head end-->
