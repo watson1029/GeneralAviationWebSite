@@ -11,7 +11,7 @@
     </table>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 1122px; height: 725px;"
+    <div id="edit" class="easyui-dialog" style="width: 1144px; height: 725px;"
         modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit" method="post">
             <table class="table_edit">
