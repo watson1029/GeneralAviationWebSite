@@ -20,6 +20,11 @@
             </td>
         </tr>
         <tr>
+             <th>作者：
+            </th>
+            <td>
+                <input id="Author" name="Author" maxlength="32" type="text"  class="easyui-validatebox textbox" />
+            </td>
              <th>排序：
             </th>
             <td>

@@ -32,7 +32,7 @@ namespace BLL.Adv
         }
         public Advertisment Get(int id)
         {
-            return _dal.Find(m => m.AdvWebSiteID == id);
+            return _dal.Find(m => m.AdvWebSiteID == id&&m.IsUsed==1);
         }
 
         public List<Advertisment> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<Advertisment, bool>> where)
