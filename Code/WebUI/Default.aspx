@@ -124,26 +124,26 @@
         <div class="center">
             <div class="adBox">
                 <ul class="adpic">
-                         <%foreach (var item in picModel)
-                          {%>
+                    <%foreach (var item in picModel)
+                        {%>
 
-                          <li><img src="<%=Page.ResolveUrl("~/")+item%>" alt=""/></li>
-                        <%  }%>
+                    <li>
+                        <img src="<%=Page.ResolveUrl("~/")+item%>" alt="" /></li>
+                    <%  }%>
                 </ul>
                 <ul class="hd">
-                      <%
-                          for (int z = 0; z < picModel.Count; z++)
-                          {
-                              if (z == 0)
-                              { %>
-                                <li class=" on"></li>
-                            <%    }
-                                  else
-                              { %>
-                                <li class=" "></li>
-                             <%   }
-                          }%>
-                  
+                    <%
+                        for (int z = 0; z < picModel.Count; z++)
+                        {
+                            if (z == 0)
+                            { %>
+                    <li class=" on"></li>
+                    <%    }
+                        else
+                        { %>
+                    <li class=" "></li>
+                    <%   }
+                        }%>
                 </ul>
             </div>
             <script type="text/javascript">
