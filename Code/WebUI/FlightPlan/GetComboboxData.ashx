@@ -49,7 +49,7 @@ public class GetComboboxData : IHttpHandler {
         ArrayList arr = new ArrayList();
         foreach (var item in list)
         {
-            arr.Add(new { id = item.TaskCode, text = item.Abbreviation });
+            arr.Add(new { id = item.TaskCode, text = item.Description });
         }
         return JsonConvert.SerializeObject(arr);
     }
