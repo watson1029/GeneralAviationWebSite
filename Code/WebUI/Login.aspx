@@ -6,7 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>通航服务站</title>
-   <script src="<%=Page.ResolveUrl("~/Content/JS/easyUI/jquery.min.js")%>" type="text/javascript"></script>
+  <%-- <script src="<%=Page.ResolveUrl("~/Content/JS/easyUI/jquery.min.js")%>" type="text/javascript"></script>
     <script src="<%=Page.ResolveUrl("~/Content/JS/GA/base.js")%>" type="text/javascript"></script>
     <link href="<%=Page.ResolveUrl("~/Content/Css/login.css")%>" rel="stylesheet" type="text/css" />         
     <script src="<%=Page.ResolveUrl("~/Content/JS/Des.js")%>" type="text/javascript"></script>
@@ -70,10 +70,10 @@
                 $("#showMsg").html('');
             }
         };
-    </script>
+    </script>--%>
 </head>
 <body>
-    <div> <div class="top">
+<%--    <div> <div class="top">
     欢迎登录飞行服务站
     </div></div>
    <div class="Container">
@@ -92,7 +92,7 @@
        </div>
            </form>
    </div>
-    <div class="bottom">Copyright © 2017 广州市中南民航空管通信网络科技有限公司.All rights reserved.</div>
+    <div class="bottom">Copyright © 2017 广州市中南民航空管通信网络科技有限公司.All rights reserved.</div>--%>
 
 </body>
 </html>
