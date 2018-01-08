@@ -10,10 +10,19 @@ using DAL;
 using DAL.SystemManagement;
 using Model.EF;
 
-public partial class ResourceManagement : System.Web.UI.Page
+public partial class ResourceManagement : BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "ResourceManagementCheck";
+        }
+    }
+    #endregion
 }
