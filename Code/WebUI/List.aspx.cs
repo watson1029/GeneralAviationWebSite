@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using BLL.BasicData;
 using BLL.SupplyDemandInformation;
-using Model.EF;
-using Untity;
 
 public partial class List : System.Web.UI.Page
 {
@@ -69,7 +65,7 @@ public partial class List : System.Web.UI.Page
         listModel = demandBll.GetList(pageIndex, 6, out totalPage, out rowCount, u => u.State == "end").Select(m => new ListModel
         {
             Title = m.Title,
-            Content = m.Summary,
+            Content = m.SummaryCode,
             Id = m.ID,
             type = "SupplyDemand",
             CreateTime = m.CreateTime,

@@ -9,7 +9,7 @@ public partial class VerifyCode : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        GetVerifyCode1(70, 34);
+        GetVerifyCode1(73, 34);
     }
 
     public void GetVerifyCode1(int weight, int height, int fontsize = 16)

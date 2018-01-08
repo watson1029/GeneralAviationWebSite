@@ -101,11 +101,11 @@ namespace BLL.SupplyDemandInformation
 
         public List<SupplyDemandInfo> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<SupplyDemandInfo, bool>> where)
         {
-            return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.ID, true);
+            return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.CreateTime, false);
         }
         public List<SupplyDemandInfo> GetList(Expression<Func<SupplyDemandInfo, bool>> where)
         {
-            return dal.FindList(where, true);
+            return dal.FindList(where,m=>m.CreateTime, false);
         }
 
         public SupplyDemandInfo Get(int id)
@@ -115,7 +115,7 @@ namespace BLL.SupplyDemandInformation
         public List<SupplyDemandInfo> GetTopList(int top, Expression<Func<SupplyDemandInfo, bool>> where)
         {
             ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
-            return context.Set<SupplyDemandInfo>().Where(where).OrderByDescending(m => m.ID).AsNoTracking().Take(top).ToList();
+            return context.Set<SupplyDemandInfo>().Where(where).OrderByDescending(m => m.CreateTime).AsNoTracking().Take(top).ToList();
         }
     }
 }

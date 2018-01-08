@@ -1,0 +1,35 @@
+﻿.list{ height:auto;  border:1px solid #e2e2e2; background:#fff;margin:0 auto;}
+.list_on{width:auto; margin:10px 35px 0px; border-bottom:1px solid #e2e2e2; height:auto; padding-bottom:20px;}
+.list_on h2{ margin:20px 0;}
+.list_on h2 a{ font-size:24px; font-weight:normal; color:#000; line-height:30px;}
+.list_text_on{ width:440px; color:#666; height:auto; font-size:14px; line-height:22px; float:left;}
+.list_text_on p{ text-indent:28px;}
+.list_time{width:414px; height:32px; line-height:32px; font-size:12px; background:url(../images/icon_time.png) left center no-repeat; padding-left:20px; color:#888;}
+.list_time  a{ width:72px; height:22px; line-height:22px; display:inline-block; float:right; color:#fff; text-align:center; background:#5f81df; border-radius:4px;}
+.list_time  a:hover{ background:#005cac;}
+.list_img_on{ float:right; width:300px; height:200px; overflow:hidden;}
+.list_img_on img{ width:300px; height:auto;}
+
+.list ul{ padding:0 150px;}
+.list ul li{ padding:20px; border-bottom:1px solid #ebebeb; clear:both;padding-bottom:5px;}
+.list_con{ width:100%; clear:both;}
+.list_img{ width:200px; height:134px; overflow:hidden; float:left;}
+.list_img img{ width:200px; height:auto;}
+.list_img2{ width:300px; height:134px; overflow:hidden; float:left; margin:2px 0 12px; *padding-bottom:20px;}
+.list_img2 img{ width:300px; height:auto;}
+
+.list_text{ width: 620px;float: left;margin-left: 30px;line-height:25px;}
+.list_text dl dt{ padding:0px 0 10px;}
+.list_text dl dt a{ font-size:18px; color:#000; line-height:22px;  }
+.list_text dl dd p{text-indent:28px;}
+.list_text dl dd a{ font-size:14px; color:#666; line-height:20px; }
+.list_text dl dd a:hover{ color:#000;}
+.list_text dl dd span{ background:url(../images/icon_time.png) left center no-repeat; padding-left:20px; height:30px; line-height:30px; color:#888; font-size:12px;float:right;}
+.list_text2{ width:442px; float:right; }
+.list_text2 dl dt{ padding:0px 0 10px;}
+.list_text2 dl dt a{ font-size:22px; color:#444; line-height:34px;  }
+.list_text2 dl dt a:hover{color:#177bbb;;}
+.list_text2 dl dd p{text-indent:28px;}
+.list_text2 dl dd a{ font-size:14px; color:#666; line-height:20px; }
+.list_text2 dl dd a:hover{ color:#000;}
+.list_text2 dl dd span{ background:url(../images/icon_time.png) left center no-repeat; padding-left:20px; height:30px; line-height:30px; color:#888; font-size:12px;}
