@@ -15,7 +15,6 @@
     <link href="css/togfloatdiv.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="js/jquery.pack.js"></script>
     <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
-    <script type="text/javascript" src="js/common.js"></script>
     <script type="text/javascript" src="js/jq_scroll.js"></script>
     <script type="text/javascript" src="js/topbottom.js"></script>
     <script type="text/javascript" src="js/togfloatdiv.js"></script>
