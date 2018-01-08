@@ -2,6 +2,8 @@
     CodeFile="SupplyDemandUnSubmit.aspx.cs" Inherits="SupplyDemandInformation_SupplyDemandUnSubmit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.config.js" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.all.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <%--列表 start--%>
@@ -25,21 +27,21 @@
     </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 720px; height: 450px; padding: 30px 60px;" modal="true" closed="true" buttons="#edit-buttons">
+    <div id="edit" class="easyui-dialog" style="width: 1144px; height: 790px;" modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit" method="post">
             <table class="table_edit">
                 <tr>
                     <td style="text-align: right;">供求标题
                     </td>
                     <td colspan="3">
-                        <input id="Title" name="Title" class="easyui-textbox"required="true" style="width: 465px" />
+                        <input id="Title" name="Title" class="easyui-textbox"required="true" style="width: 1000px" />
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right;">供求简介
                     </td>
                     <td colspan="3">
-                        <input id="Summary" name="Summary" class="easyui-textbox" multiline="true" required="true" style="width: 465px; height: 150px" />
+                        <script id="editor" type="text/plain" style="width: 1000px; height: 400px;"></script>
                     </td>
                 </tr>
                 <tr>
@@ -81,6 +83,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
+            UE.getEditor('editor');
         });
         Main = {
             //初始化表格
@@ -155,7 +158,7 @@
                     return;
                 }
 
-                var json = $.param({ "id": uid, "action": "save" }) + '&' + $('#form_edit').serialize();
+                var json = $.param({ "id": uid, "action": "save", "SummaryCode": encodeURI(UE.getEditor('editor').getContent()), "Summary": UE.getEditor('editor').getContentTxt() }) + '&' + $('#form_edit').serialize();
                 $.post(location.href, json, function (data) {
                     $.messager.alert('提示', data.msg, 'info', function () {
                         if (data.isSuccess) {
@@ -173,6 +176,7 @@
 
                 $.post(location.href, { "action": "queryone", "id": id }, function (data) {
                     $("#form_edit").form('load', data);
+                    UE.getEditor('editor').setContent(decodeURI(data.SummaryCode));
                 });
             },
 

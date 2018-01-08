@@ -44,5 +44,7 @@ namespace Model.EF
         public int RepetPlanID { get; set; }
         public byte CreateSource { get; set; }
         public string RepPlanCode { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
     }
 }

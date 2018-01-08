@@ -34,7 +34,10 @@ namespace BLL.FlightPlan
         {
             return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.FlightPlanID, true);
         }
-
+        public List<Model.EF.FlightPlan> GetList(Expression<Func<Model.EF.FlightPlan, bool>> where)
+        {
+            return dal.FindList(where, m => m.FlightPlanID, true);
+        }
         public Model.EF.FlightPlan Get(int id)
         {
             return dal.Find(u => u.FlightPlanID == id);

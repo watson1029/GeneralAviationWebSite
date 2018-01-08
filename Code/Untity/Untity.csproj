@@ -33,6 +33,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\Lib\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\Newtonsoft.Json.dll</HintPath>
@@ -68,6 +71,18 @@
     <Compile Include="FastProperty.cs" />
     <Compile Include="FastType.cs" />
     <Compile Include="IPAddressHelper.cs" />
+    <Compile Include="Log\ILog.cs" />
+    <Compile Include="Log\ILogFactory.cs" />
+    <Compile Include="Log\ILogFactoryBinder.cs" />
+    <Compile Include="Log\Impl\Log4netExt\ITraceLog.cs" />
+    <Compile Include="Log\Impl\Log4netExt\TraceLogImpl.cs" />
+    <Compile Include="Log\Impl\Log4netExt\TraceLogManager.cs" />
+    <Compile Include="Log\Impl\Log4netLogger.cs" />
+    <Compile Include="Log\Impl\Log4netLoggerFactory.cs" />
+    <Compile Include="Log\Impl\StaticLogFactoryBinder.cs" />
+    <Compile Include="Log\Impl\Utility.cs" />
+    <Compile Include="Log\LogHelper.cs" />
+    <Compile Include="Log\LogManager.cs" />
     <Compile Include="ObjectExtension.cs" />
     <Compile Include="OfficeTools.cs" />
     <Compile Include="OrderHelper.cs" />

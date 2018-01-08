@@ -16,6 +16,7 @@ using Untity;
 public partial class FlightPlan_ExportHandler : BasePage
 {
     RepetitivePlanBLL bll = new RepetitivePlanBLL();
+    FlightPlanBLL fbll = new FlightPlanBLL();
     private CurrentPlanBLL currPlanBll = new CurrentPlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -24,17 +25,20 @@ public partial class FlightPlan_ExportHandler : BasePage
             switch (Request.QueryString["type"])
             {
                 case "1"://查询数据
-                    MyUnSubmitFlightPlanExport();
+                    MyUnSubmitRepetPlanExport();
                     break;
                 case "2":
                   //  MyUnSubmitCurrentPlanExport();
+                    break;
+                case "3":
+                    MySubmitFlightPlanExport();
                     break;
                 default:
                     break;
             }
         }
     }
-    private void MyUnSubmitFlightPlanExport()
+    private void MyUnSubmitRepetPlanExport()
     {
         AjaxResult result = new AjaxResult();
         result.IsSuccess = true;
@@ -98,6 +102,114 @@ public partial class FlightPlan_ExportHandler : BasePage
                 dataRow.CreateCell(11).SetCellValue(item.SIBT.ToString());
                 dataRow.CreateCell(12).SetCellValue(item.WeekSchedule);
                 dataRow.CreateCell(13).SetCellValue(item.Remark);
+                rowIndex++;
+            }
+            var dr = sheet1.CreateRow(rowIndex);
+            rowIndex++;
+        }
+
+        #endregion
+        var file = new MemoryStream();
+        hssfworkbook.Write(file);
+        Response.ContentType = "application/vnd.ms-excel";
+        Response.ContentEncoding = Encoding.UTF8;
+        Response.Charset = "";
+        Response.Clear();
+        Response.AppendHeader("Content-Disposition",
+                              "attachment;filename=" +
+                              HttpUtility.UrlEncode("长期计划未提交列表" + ".xls", System.Text.Encoding.UTF8));
+        file.WriteTo(Response.OutputStream);
+        file.Close();
+        Response.End();
+    }
+    private void MySubmitFlightPlanExport()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = true;
+        Expression<Func<FlightPlan, bool>> predicate = PredicateBuilder.True<FlightPlan>();
+        predicate = predicate.And(m => m.PlanState != "0");
+        predicate = predicate.And(m => m.Creator == User.ID);
+        if (!string.IsNullOrEmpty(Request.QueryString["plancode"]))
+        {
+            var val = Request.QueryString["plancode"].Trim();
+            predicate = predicate.And(m => m.PlanCode == val);
+        }
+        var listData = fbll.GetList(predicate);
+
+        #region
+        var hssfworkbook = new HSSFWorkbook();
+        var sheet1 = hssfworkbook.CreateSheet("Sheet1");
+        sheet1.DefaultRowHeight = 15 * 20;
+        sheet1.DefaultColumnWidth = 18;
+
+        //设置样式
+        var styleTop = hssfworkbook.CreateCellStyle();
+        var fontTop = hssfworkbook.CreateFont();
+        fontTop.FontHeightInPoints = 11;
+        fontTop.FontName = "宋体";
+        fontTop.Boldweight = (short)FontBoldWeight.Bold;
+        styleTop.Alignment = HorizontalAlignment.Center;
+        styleTop.SetFont(fontTop);
+
+        //设置样式
+        var style = hssfworkbook.CreateCellStyle();
+        var font = hssfworkbook.CreateFont();
+        font.FontName = "宋体";
+        font.FontHeightInPoints = 11;
+        style.SetFont(font);
+
+        var headerRow = sheet1.CreateRow(0);
+
+        headerRow.CreateCell(0).SetCellValue("申请单编号");
+        headerRow.CreateCell(1).SetCellValue("公司名称");
+        headerRow.CreateCell(2).SetCellValue("任务类型");
+        headerRow.CreateCell(3).SetCellValue("航空器类型");
+        headerRow.CreateCell(4).SetCellValue("航线走向和飞行高度");
+        headerRow.CreateCell(5).SetCellValue("起飞机场");
+        headerRow.CreateCell(6).SetCellValue("降落机场");
+        headerRow.CreateCell(7).SetCellValue("起飞时刻");
+        headerRow.CreateCell(8).SetCellValue("降落时刻");
+        headerRow.CreateCell(9).SetCellValue("其他需要说明的事项");
+        headerRow.CreateCell(10).SetCellValue("航空器架数");
+        headerRow.CreateCell(11).SetCellValue("机长（飞行员）姓名");
+        headerRow.CreateCell(12).SetCellValue("通信联络方法");
+        headerRow.CreateCell(13).SetCellValue("飞行气象条件");
+        headerRow.CreateCell(14).SetCellValue("空勤组人数");
+        headerRow.CreateCell(15).SetCellValue("二次雷达应答机代码");
+        headerRow.CreateCell(16).SetCellValue("状态");
+        int rowIndex = 1;
+        if (listData != null && listData.Count > 0)
+        {
+            foreach (var item in listData)
+            {
+                var dataRow = sheet1.CreateRow(rowIndex);
+                dataRow.CreateCell(0).SetCellValue(item.PlanCode);
+                dataRow.CreateCell(1).SetCellValue(item.CompanyName);
+                dataRow.CreateCell(2).SetCellValue(item.FlightType);
+                dataRow.CreateCell(3).SetCellValue(item.AircraftType);
+                dataRow.CreateCell(4).SetCellValue(item.FlightDirHeight);
+                dataRow.CreateCell(5).SetCellValue(item.ADEP);
+                dataRow.CreateCell(6).SetCellValue(item.ADES);  
+                dataRow.CreateCell(7).SetCellValue(item.SOBT.ToString());
+                dataRow.CreateCell(8).SetCellValue(item.SIBT.ToString());
+                dataRow.CreateCell(9).SetCellValue(item.Remark);
+                dataRow.CreateCell(10).SetCellValue((item.AircraftNum ?? 0).ToString()); 
+                dataRow.CreateCell(11).SetCellValue(item.Pilot);
+                dataRow.CreateCell(12).SetCellValue(item.ContactWay);
+                dataRow.CreateCell(13).SetCellValue(item.WeatherCondition);
+                dataRow.CreateCell(14).SetCellValue((item.AircrewGroupNum??0).ToString());          
+                dataRow.CreateCell(15).SetCellValue(item.RadarCode);
+                   var str = "";
+                              if (item.PlanState == "end") {
+                                  str = "审核通过";
+                              }
+                              else if (item.PlanState == "Deserted") {
+                                  str = "审核不通过";
+                              }
+                              else {
+                                  str = item.PlanState + "审核中";
+                              }
+                dataRow.CreateCell(16).SetCellValue(str); 
                 rowIndex++;
             }
             var dr = sheet1.CreateRow(rowIndex);

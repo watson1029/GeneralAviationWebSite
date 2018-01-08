@@ -121,11 +121,11 @@
             //打开添加窗口
             OpenWin: function () {
                 $("#edit").dialog("open").dialog('setTitle', '新增飞行计划').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx');
-                ("#btn_add").attr("onclick", "Main.Save();");
+                $("#btn_add").attr("onclick", "Main.Save();");
             },
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx?id=' + uid);
+                $("#edit").dialog("open").dialog('setTitle', '编辑飞行计划').dialog('refresh', 'MyUnSubmitFlightPlanAdd.aspx?id=' + uid);
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");");
             },
 
@@ -177,7 +177,7 @@
         modal="true" closed="true" buttons="#edit-buttons">
                </div>
     <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;" onclick="Main.Save();" class="easyui-linkbutton">保存</a><a href="javascript:;"
+        <a id="btn_add" href="javascript:;"  class="easyui-linkbutton">保存</a><a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
 

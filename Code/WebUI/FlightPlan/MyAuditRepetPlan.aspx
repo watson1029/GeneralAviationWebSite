@@ -145,8 +145,8 @@
                     $("#FlightDirHeight").html(data.FlightDirHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
-                    $("#StartDate").html(new Date(data.StartDate).toLocaleDateString());
-                    $("#EndDate").html(new Date(data.EndDate).toLocaleDateString());
+                    $("#StartDate").html(new Date(data.StartDate.dateValFormat()).format("yyyy-MM-dd"));
+                    $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
                     $("#SOBT").html(data.SOBT);
                     $("#SIBT").html(data.SIBT);
                     $("#Remark").html(data.Remark);

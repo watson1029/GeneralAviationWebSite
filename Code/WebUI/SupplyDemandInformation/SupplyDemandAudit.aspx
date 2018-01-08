@@ -2,6 +2,8 @@
     CodeFile="SupplyDemandAudit.aspx.cs" Inherits="SupplyDemandInformation_SupplyDemandAudit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.config.js" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.all.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <%--列表 start--%>
@@ -28,6 +30,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
+            UE.getEditor('editor');
         });
         Main = {
             //初始化表格
@@ -87,6 +90,7 @@
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                     $("#form_audit").form('load', data);
+                    UE.getEditor('editor').setContent(decodeURI(data.SummaryCode));
                 });
             },
             AuditSubmit: function (uid) {
@@ -111,7 +115,7 @@
     </script>
 
     <%--添加 修改 start--%>
-    <div id="audit" class="easyui-dialog" style="width: 700px; height: 600px;"
+    <div id="audit" class="easyui-dialog" style="width: 1144px; height: 810px;"
         modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
             <table class="table_edit">
@@ -119,29 +123,29 @@
                     <td style="text-align: right">供求标题
                     </td>
                     <td colspan="3">
-                        <input id="Title" name="Title" class="easyui-textbox" required="true" style="width: 465px" />
+                        <input id="Title" name="Title" class="easyui-textbox" readonly="true" style="width: 1000px" />
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right">供求简介
                     </td>
                     <td colspan="3">
-                        <input id="Summary" name="Summary" class="easyui-textbox" multiline="true" required="true" style="width: 465px; height: 150px" />
+                        <script id="editor" type="text/plain" style="width: 1000px; height: 350px;"></script>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right">供求条件
                     </td>
                     <td>
-                        <select id="CataLog" class="easyui-combobox" name="CataLog" required="true" style="width: 145px">
-                            <option value="提供" selected>提供</option>
+                        <select id="Catalog" class="easyui-combobox" name="Catalog" required="true" style="width: 145px">
+                            <option value="提供" >提供</option>
                             <option value="寻求">寻求</option>
                         </select>
                     </td>
                     <td style="text-align: right">有效期限
                     </td>
                     <td>
-                        <input id="ExpiryDate" name="ExpiryDate" style="width: 145px" type="text" required="true" class="easyui-datebox" />
+                        <input id="ExpiryDate" name="ExpiryDate" style="width: 145px" type="text" readonly="true" required="true" class="easyui-datebox" />
                     </td>
                 </tr>
                 <tr>
@@ -164,7 +168,7 @@
                 <tr>
                     <td style="text-align: right">审核意见</td>
                     <td colspan="3">
-                        <input id="AuditComment" name="AuditComment" required="true" maxlength="465" style="width: 465px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AuditComment" name="AuditComment" required="true" style="width: 1000px; height: 50px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
                 </tr>
             </table>

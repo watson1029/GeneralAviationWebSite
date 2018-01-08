@@ -14,5 +14,11 @@ $.fn.validatebox.defaults.rules, {
             return value>=start;
         },
     message:'结束时间要大于等于开始时间！'
-    }
+    },
+    euqalTo: {
+        validator: function (value, param) {
+            return value == $(param[0]).val();       
+        },
+        message: '新密码不一致！'
+    },
 });

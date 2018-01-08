@@ -77,7 +77,8 @@ public partial class SupplyDemandInformation_SupplyDemandUnSubmit : BasePage
             model.CreateTime = DateTime.Parse(Request.Form["CreateTime"]);
             model.ExpiryDate = DateTime.Parse(Request.Form["ExpiryDate"]);
             model.Title = Request.Form["Title"];
-            model.Summary = Request.Form["Summary"];
+            model.Summary = Server.HtmlDecode(Request.Form["Summary"]);
+            model.SummaryCode = Server.HtmlDecode(Request.Form["SummaryCode"]);
             model.Catalog = Request.Form["CataLog"];
             if (bll.Update(model))
             {
@@ -91,7 +92,8 @@ public partial class SupplyDemandInformation_SupplyDemandUnSubmit : BasePage
             model.CreateTime = DateTime.Parse(Request.Form["CreateTime"]);
             model.ExpiryDate = DateTime.Parse(Request.Form["ExpiryDate"]);
             model.Title = Request.Form["Title"];
-            model.Summary = Request.Form["Summary"];
+            model.Summary = Server.HtmlDecode(Request.Form["Summary"]);
+            model.SummaryCode = Server.HtmlDecode(Request.Form["SummaryCode"]);
             model.Catalog = Request.Form["CataLog"];
             model.State = "0";
             model.CompanyCode3 = User.CompanyCode3;
@@ -215,4 +217,13 @@ public partial class SupplyDemandInformation_SupplyDemandUnSubmit : BasePage
         Response.End();
     }
 
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "SupplyDemandUnSubmitCheck";
+        }
+    }
+    #endregion
 }

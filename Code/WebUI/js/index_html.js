@@ -1,31 +1,30 @@
 ﻿//底部温馨提示浮窗
 $(function() {
-    $('#breakingnews2').BreakingNews({
-        title: '温馨提示',
-        titlebgcolor: '#343434',
-        linkhovercolor: '#fff',
-        border: 'none',
-        timer: 6000,
-        effect: 'slide'
-    });
-    $('.inpop_close').click(
-	  function() {
-	      $('.index_pop').hide(500);
-	  }
-	);
-    $('#breakingnews2 > ul').find('li').click(
-	  function() {
-	      $(this).css("height", "120px");
-	      $('#breakingnews2').css('height', '120px');
-	  }
-	 );
-    $('#breakingnews2').mouseleave(function() {
-        $(this).css("height", "40px");
-        $('#breakingnews2').find('li').css('height', '40px');
-    });
-
-
-    //活动公告		
+    //$('#breakingnews2').BreakingNews({
+    //    title: '温馨提示',
+    //    titlebgcolor: '#343434',
+    //    linkhovercolor: '#fff',
+    //    border: 'none',
+    //    timer: 6000,
+    //    effect: 'slide'
+    //});
+    //$('.inpop_close').click(
+	//  function() {
+	//      $('.index_pop').hide(500);
+	//  }
+	//);
+    //$('#breakingnews2 > ul').find('li').click(
+	//  function() {
+	//      $(this).css("height", "120px");
+	//      $('#breakingnews2').css('height', '120px');
+	//  }
+	// );
+    //$('#breakingnews2').mouseleave(function() {
+    //    $(this).css("height", "40px");
+    //    $('#breakingnews2').find('li').css('height', '40px');
+    //});
+    
+    //供求信息、通航企业特效		
     jQuery(".sideMenu").slide({
         titCell: "h3", //鼠标触发对象
         targetCell: "ul", //与titCell一一对应，第n个titCell控制第n个targetCell的显示隐藏
@@ -56,73 +55,66 @@ $(function() {
     //中文新书TAB 
     //jQuery(".switchLoad03").slide({ titCell:".hd03 li", mainCell:".bd03", targetCell:".more a", trigger:"mouseover",switchLoad:"_src",delayTime:0 });
 
-
-//问卷调查
-
-   $('.diaocha_m').hover(function(){				 
-		$('.diaocha_b').toggle(100);
-		});
-
+    //问卷调查
+   //$('.diaocha_m').hover(function(){				 
+   // 	$('.diaocha_b').toggle(100);
+   // 	});
 
     //展览、专题js
-    $(".zhuanti").hover(function() {
-        $(this).find(".imgtxt").stop().animate({ height: "198px" }, 400);
-        $(this).find(".imgtxt h4").stop().animate({ paddingTop: "60px" }, 400);
-    }, function() {
-        $(this).find(".imgtxt").stop().animate({ height: "45px" }, 400);
-        $(this).find(".imgtxt h4").stop().animate({ paddingTop: "0px" }, 400);
-    })
+    //$(".zhuanti").hover(function() {
+    //    $(this).find(".imgtxt").stop().animate({ height: "198px" }, 400);
+    //    $(this).find(".imgtxt h4").stop().animate({ paddingTop: "60px" }, 400);
+    //}, function() {
+    //    $(this).find(".imgtxt").stop().animate({ height: "45px" }, 400);
+    //    $(this).find(".imgtxt h4").stop().animate({ paddingTop: "0px" }, 400);
+    //})
 
 });
 
 //底部图片翻转
-$(document).ready(function(e) {
-    var turn = function(target, time, opts) {
-        target.find('a').hover(function() {
-            $(this).find('img').stop().animate(opts[0], time, function() {
-                $(this).hide().next().show();
-                $(this).next().animate(opts[1], time);
-            });
-        }, function() {
-            $(this).find('.info').animate(opts[0], time, function() {
-                $(this).hide().prev().show();
-                $(this).prev().animate(opts[1], time);
-            });
-        });
-    }
-    var verticalOpts = [{ 'width': 0 }, { 'width': '226px'}];
-    turn($('#vertical'), 150, verticalOpts);
-
-});
+//$(document).ready(function(e) {
+//    var turn = function(target, time, opts) {
+//        target.find('a').hover(function() {
+//            $(this).find('img').stop().animate(opts[0], time, function() {
+//                $(this).hide().next().show();
+//                $(this).next().animate(opts[1], time);
+//            });
+//        }, function() {
+//            $(this).find('.info').animate(opts[0], time, function() {
+//                $(this).hide().prev().show();
+//                $(this).prev().animate(opts[1], time);
+//            });
+//        });
+//    }
+//    var verticalOpts = [{ 'width': 0 }, { 'width': '226px'}];
+//    turn($('#vertical'), 150, verticalOpts);
+//});
 
 //登陆框
-$(document).ready(function(e) {
-    $.ajax({
-        type: "GET",
-        url: "/WebService/AjaxService.aspx?login=login",
-        async: true,
-        dataType: "text",
-        beforeSend: function() {
-            //$("#T1").html("<img height='30px' src='images/load.gif'/>");
-        },
-        success: function(data) {
-            var txt = data.split(",");
-            if (txt != null && txt != "") {
-                $("#LoginFrame1_Image_2wm_code").attr('src', "http://wx.zslib.com.cn/zslibwx/" + txt[0]);
-                if (txt[1] != null && txt[1] != "") {
-                    $("#LoginFrame1_wxuc").text(txt[1]);
-
-                    $("#LoginFrame1_kj_log").css("display", "block");
-                    $("#LoginFrame1_userid_login").css("display", "block");
-                    $("#LoginFrame1_mdf_log").css("display", "block");
-                    $("#LoginFrame1_qrcode_login").css("display", "none");
-                    $("#LoginFrame1_sm_log").css("display", "none");
-                    $("#LoginFrame1_savewx").css("display", "none");
-                    $("#LoginFrame1_saveInfo").attr("checked",true);
-
-                }
-            }
-        }
-    });
-
-});
+//$(document).ready(function(e) {
+//    $.ajax({
+//        type: "GET",
+//        url: "/WebService/AjaxService.aspx?login=login",
+//        async: true,
+//        dataType: "text",
+//        beforeSend: function() {
+//            //$("#T1").html("<img height='30px' src='images/load.gif'/>");
+//        },
+//        success: function(data) {
+//            var txt = data.split(",");
+//            if (txt != null && txt != "") {
+//                $("#LoginFrame1_Image_2wm_code").attr('src', "http://" + txt[0]);
+//                if (txt[1] != null && txt[1] != "") {
+//                    $("#LoginFrame1_wxuc").text(txt[1]);
+//                    $("#LoginFrame1_kj_log").css("display", "block");
+//                    $("#LoginFrame1_userid_login").css("display", "block");
+//                    $("#LoginFrame1_mdf_log").css("display", "block");
+//                    $("#LoginFrame1_qrcode_login").css("display", "none");
+//                    $("#LoginFrame1_sm_log").css("display", "none");
+//                    $("#LoginFrame1_savewx").css("display", "none");
+//                    $("#LoginFrame1_saveInfo").attr("checked",true);
+//                }
+//            }
+//        }
+//    });
+//});

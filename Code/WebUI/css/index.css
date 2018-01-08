@@ -27,8 +27,15 @@
 .scroltit{ height:26px; line-height:26px; padding-bottom:4px; margin-bottom:4px;}
 .scroltit h3{ width:100px; float:left;}
 .scroltit .updown{float:right; width:32px; height:22px; margin-left:4px}
-#but_up{ background:url(images/up.gif) no-repeat 0 0; text-indent:-9999px}
-#but_down{ background:url(images/down.gif) no-repeat 0 0; text-indent:-9999px}
+#but_up {
+    /*background: url(images/up.gif) no-repeat 0 0;*/
+    text-indent: -9999px;
+}
+
+#but_down {
+    /*background: url(images/down.gif) no-repeat 0 0;*/
+    text-indent: -9999px;
+}
 
 /*馆藏检索  APP下载*/
 .seapp{ width:1200px; height:238px; margin:20px 0 0px; border:1px solid #e2e2e2;}
@@ -45,12 +52,44 @@
 .slideTxtBox .hd ul li{ float:left; width:92px; background:#fff; border-radius:6px; color:#4a69bf; font-size:14px; height:34px; line-height:34px; margin:0 15px 0 0; cursor:pointer; text-align:center;  }
 .slideTxtBox .hd ul li.on{ height:34px; color:#fff; line-height:34px;  background:#5e83e9; }
 .slideTxtBox .bd ul{ padding:80px 15px 0 15px;  zoom:1;  }
-.searchbox{ width:300px; height:50px;  border:2px solid #5e83e9; border-radius:28px 0px 0px 28px; 
-background: #fff;  color:#ccc; 
-font-size:18px; font-family:"微软雅黑",Microsoft YaHei; line-height:50px; 
-padding-left:10px; outline:none;}
+
+.searchboxdiv {
+height: 45px;
+width: 320px;
+margin: 0 auto;
+padding: 60px 0px 0 0px;
+position: relative;
+float: right;
+    }
+.searchbox{ width: 200px;
+height: 40px;
+border: 2px solid #5e83e9;
+border-radius: 28px 0px 0px 28px;
+background: #fff;
+color: #ccc;
+font-size: 18px;
+font-family: "微软雅黑",Microsoft YaHei;
+line-height: 50px;
+padding-left: 10px;
+outline: none;
+vertical-align:top;
+}
 .btn_search{display:inline-block; margin-left:-6px; }
-.btn{width:120px; height:56px; background:url(../images/icon_search_w.png) 16px center no-repeat #5e83e9; border-radius:0px 28px 28px 0px; font-family:"微软雅黑",Microsoft YaHei; font-size:20px; text-align:left; padding-left:50px; color:#fff; line-height:46px; margin-left:0px; cursor:pointer; border:none;  }
+.btn{
+    width: 100px;
+height: 46px;
+background: url(../images/icon_search_w.png) 6px center no-repeat #5e83e9;
+border-radius: 0px 28px 28px 0px;
+font-family: "微软雅黑",Microsoft YaHei;
+font-size: 18px;
+text-align: left;
+padding-left: 30px;
+color: #fff;
+line-height: 46px;
+margin-left: 0px;
+cursor: pointer;
+border: none;
+}
 
 
 .Topapps{ background-color: #fafafa;  float:left;  height:236px; width:338px; vertical-align:top;}
@@ -249,10 +288,10 @@ padding-left:10px; outline:none;}
 .zhuanti .imgtxt p{font-size:14px;text-align:left; padding:0 15px;}
 
 /* index AD css */
-.adBox { position: relative; width:1200px; height:200px; overflow: hidden; margin:5px 0px 0px 0px;  clear:both; border:none;}
-.adpic{ position: relative; width: 1200px; height: 200px; border:none;}
+.adBox { position: relative; width:1200px; height:150px; overflow: hidden; margin:5px 0px 0px 0px;  clear:both; border:none;}
+.adpic{ position: relative; width: 1200px; height: 150px; border:none;}
 .adBox .adpic li{position: absolute; width: 1200px; left: 0px; top: 0px; display: none;}
-.adBox .adpic img { width:1200px; height:200px; display: block; border:none;}
+.adBox .adpic img { width:1200px; height:150px; display: block; border:none;}
 .adBox .hd { overflow:hidden; zoom:1; position:absolute; bottom:5px; right:10px; z-index:3}
 .adBox .hd li{float:left; line-height:15px; text-align:center; font-size:12px; width:18px; height:4px; cursor:pointer; overflow:hidden; background:#919191; margin-left:4px; filter:alpha(opacity=80); opacity:.8; -webkit-transition:All .5s ease;-moz-transition:All .5s ease;-o-transition:All .5s ease }
 .adBox .hd .on{ background:#fff; filter:alpha(opacity=100);opacity:1;   }

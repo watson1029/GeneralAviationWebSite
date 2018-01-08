@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adv\AdvertismentBLL.cs" />
     <Compile Include="BasicData\AircraftBLL.cs" />
     <Compile Include="BasicData\FlightTaskBLL.cs" />
     <Compile Include="BasicData\NewBLL.cs" />

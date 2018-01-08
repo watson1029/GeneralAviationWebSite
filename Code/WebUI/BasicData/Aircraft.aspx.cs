@@ -441,7 +441,7 @@ public partial class BasicData_Aircraft : BasePage
         var filePath = Path.Combine(localTargetCategory, localNewFileName);
         return filePath;
     }
-
+    #region 权限编码
     public override string PageRightCode
     {
         get
@@ -449,6 +449,6 @@ public partial class BasicData_Aircraft : BasePage
             return "AircraftCheck";
         }
     }
-
+    #endregion
 }
 

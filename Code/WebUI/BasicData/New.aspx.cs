@@ -104,6 +104,7 @@ public partial class BasicData_New : BasePage
             model.IsTop = byte.Parse(Request.Form["IsTop"]);
             model.Sort =int.Parse(Request.Form["Sort"]);
             model.NewTitle = Request.Form["NewTitle"];
+            model.Author = Request.Form["Author"];
             model.CreateUser = User.UserName;
             model.CreateTime = DateTime.Now;
             model.NewContent = Server.HtmlDecode(Request.Form["SummaryCode"]);
@@ -122,6 +123,7 @@ public partial class BasicData_New : BasePage
                 model.IsTop = byte.Parse(Request.Form["IsTop"]);
                 model.Sort = int.Parse(Request.Form["Sort"]);
                 model.NewTitle = Request.Form["NewTitle"];
+                model.Author = Request.Form["Author"];
                 model.NewContent = Server.HtmlDecode(Request.Form["SummaryCode"]);
                 if (bll.Update(model))
                 {
@@ -153,4 +155,13 @@ public partial class BasicData_New : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "NewsCheck";
+        }
+    }
+    #endregion
 }

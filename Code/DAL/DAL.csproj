@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adv\AdvertismentDAL.cs" />
     <Compile Include="BasicData\AircraftDAL.cs" />
     <Compile Include="BasicData\FlightTaskDAL.cs" />
     <Compile Include="BasicData\NewDAL.cs" />
@@ -84,6 +85,7 @@
     <None Include="App.Config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

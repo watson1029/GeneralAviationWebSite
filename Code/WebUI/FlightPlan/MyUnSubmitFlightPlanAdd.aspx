@@ -46,6 +46,16 @@
                 <td id="CallSign">
                 </td>
             </tr>
+          <tr>
+                <th>预计开始日期：
+                </th>
+                <td id="StartDate">
+                </td>
+ <th>预计结束日期：
+                </th>
+                <td id="EndDate">
+                </td>
+            </tr>
             <tr>
                 <th>起飞机场：
                 </th>
@@ -138,6 +148,8 @@
                     $("#form_edit").form('load', data);
                     $("#CompanyName").html(data.CompanyName);
                     $("#FlightType").html(data.FlightType);
+                    $("#StartDate").html(new Date(data.StartDate.dateValFormat()).format("yyyy-MM-dd"));
+                    $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
                     $("#CallSign").html(data.CallSign);
                     $("#AircraftType").html(data.AircraftType);
                     $("#FlightDirHeight").html(data.FlightDirHeight);
@@ -164,6 +176,8 @@
                             $("#CallSign").html(data.CallSign);
                             $("#AircraftType").html(data.AircraftType);
                             $("#FlightDirHeight").html(data.FlightDirHeight);
+                            $("#StartDate").html(new Date(data.StartDate.dateValFormat()).format("yyyy-MM-dd"));
+                            $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
                             $("#ADEP").html(data.ADEP);
                             $("#ADES").html(data.ADES);
                             $("#Remark").html(data.Remark);

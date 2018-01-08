@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Untity
@@ -75,6 +76,14 @@ namespace Untity
                     return (temp + bh);
                 }
             }
+        }
+        public static bool IsInt(this string str)
+        {
+            return Regex.IsMatch(str,@"^[+-]?\d*$");
+        }
+        public static bool IsNumeric(this string str)
+        {
+            return Regex.IsMatch(str, @"^[+-]?\d*[.]?\d*$");
         }
     }
 }

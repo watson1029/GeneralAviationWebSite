@@ -37,17 +37,17 @@ namespace BLL.BasicData
 
         public List<News> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<News, bool>> where)
         {
-            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.NewID, true);
+            return _dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.CreateTime, false);
         }
 
         public List<News> GetList(Expression<Func<News, bool>> where)
         {
-            return _dal.FindList(where, m => m.NewID, true);
+            return _dal.FindList(where, m => m.CreateTime, false);
         }
         public List<News> GetTopList(int top,Expression<Func<News, bool>> where)
         {
             ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
-            return context.Set<News>().Where(where).OrderByDescending(m => m.IsTop).ThenBy(m => m.NewID).AsNoTracking().Take(top).ToList();  
+            return context.Set<News>().Where(where).OrderByDescending(m => m.IsTop).ThenByDescending(m => m.CreateTime).AsNoTracking().Take(top).ToList();  
         }
     }
 }
