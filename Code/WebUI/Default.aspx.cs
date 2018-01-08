@@ -74,7 +74,7 @@ public partial class Default : System.Web.UI.Page
         }
         if (!ssCode.Equals(vcode, StringComparison.CurrentCultureIgnoreCase))
         {
-            result.Msg = "证码错误，请重新输入！";
+            result.Msg = "验证码错误，请重新输入！";
             Response.Write(result.ToJsonString());
             Response.ContentType = "application/json";
             Response.End();

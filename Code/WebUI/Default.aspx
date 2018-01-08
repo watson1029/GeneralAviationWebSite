@@ -243,16 +243,8 @@
                     </div>
                     <div class="tuijie" style="margin: 0 auto">
                         <ul>
-                            <li><a href="http://183.63.187.42/ABCenter/Default.aspx" target="_blank" title="广东省古籍保护中心">广东省古籍保护中心</a></li>
-                            <li><a href="http://www.lsgd.org.cn/" target="_blank" title="广东图书馆学会">广东图书馆学会</a></li>
-                            <li><a href="http://tsglt.zslib.com.cn/" target="_blank" title="《图书馆论坛》">《图书馆论坛》</a></li>
-                            <li><a href="http://ldtsg.zslib.com.cn/" target="_blank" title="广东流动图书馆">广东流动图书馆</a></li>
-                            <li><a href="http://govinfo.zslib.com.cn/" target="_blank" title="中国政府公开信息整合服务平台">中国政府公开信息整合服务平台</a></li>
-                            <li><a href="http://bmzx.zslib.com.cn/" target="_blank" title="广东省文献编目中心">广东省文献编目中心</a></li>
-                            <li><a href="http://www.zslib.com.cn/jingtaiyemian/zwgk/index.html" target="_blank" title="馆务公开">馆务公开</a></li>
-                            <li><a href="http://www.zslib.com.cn/TempletPage/GQTBList.aspx" target="_blank" title="《馆情通报》">《馆情通报》</a></li>
-                            <li><a href="http://jxjy.gdlink.net/" target="_blank" title="广东省图书情报继续教育网络学习中心">广东省图书情报继续教育网络学习中心</a></li>
-                            <li><a href="http://www.gddcn.gov.cn/" target="_blank" title="广东数字文化网">广东数字文化网</a></li>
+                            <li><a href="#" target="_blank" title="广东省古籍保护中心">广东省古籍保护中心</a></li>
+            
                         </ul>
                     </div>
                 </div>
