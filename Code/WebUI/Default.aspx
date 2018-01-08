@@ -59,7 +59,7 @@
                 $("input[name='txtUserName']").val('');
                 $("input[name='txtPassword']").val('');
                 $("input[name='htxtPassword']").val('');
-                $("input[name='txtCode']").val('');                
+                $("input[name='txtCode']").val('');
             },
             hideErr: function () {
                 $("#showMsg").html('');
@@ -102,7 +102,7 @@
             </div>
             <script type="text/javascript">
                 jQuery(".adBox").slide({ mainCell: ".adpic", effect: "fold", autoPlay: true, delayTime: 800, interTime: 5000 });
-                </script>
+            </script>
 
             <div class="center_left_container">
                 <div class="center_left">
@@ -243,8 +243,9 @@
                     </div>
                     <div class="tuijie" style="margin: 0 auto">
                         <ul>
-                            <li><a href="#" target="_blank" title="广东省古籍保护中心">广东省古籍保护中心</a></li>
-            
+                            <li><a href="www.atmb.net.cn" target="_blank" title="中国民用航空空中交通管理局">中国民用航空空中交通管理局</a></li>
+                            <li><a href="zn.caac.gov.cn" target="_blank" title="中国民用航空中南地区管理局">中国民用航空中南地区管理局</a></li>
+                            <li><a href="www.atmb.net.cn/Indexsecond.aspx?areanum=A2FD7EFFA8CA72F1" target="_blank" title="广东省古籍保护中心">中国民用航空中南地区空中交通管理局</a></li>
                         </ul>
                     </div>
                 </div>
