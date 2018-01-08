@@ -49,6 +49,7 @@
                             else {
                                 $("#showMsg").html(data.msg);
                                 $("#btn_login").removeAttr("disabled");
+                                $("#LoginFrame1_IMG_Identify").attr('src', 'VerifyCode.aspx?rnd=' + Math.random());
                             }
                         }
                     });
