@@ -71,11 +71,13 @@ font-size: 18px;
 font-family: "微软雅黑",Microsoft YaHei;
 line-height: 50px;
 padding-left: 10px;
-outline: none;}
+outline: none;
+vertical-align:top;
+}
 .btn_search{display:inline-block; margin-left:-6px; }
 .btn{
     width: 100px;
-height: 45px;
+height: 46px;
 background: url(../images/icon_search_w.png) 6px center no-repeat #5e83e9;
 border-radius: 0px 28px 28px 0px;
 font-family: "微软雅黑",Microsoft YaHei;

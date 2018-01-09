@@ -65,7 +65,7 @@ margin: 0 auto;
     max-width: 800px;
     min-height: 500px;
 }
-input{
+.jump-ipt{
     float: left;
     margin:0 5px;
     width: 38px;

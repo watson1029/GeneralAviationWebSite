@@ -153,9 +153,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>附件</th>
+                    <th></th>
                     <td>
-                        <input id="file" class="easyui-textbox" type="text" readonly="readonly" style="width: 100%;" />
+                        <input id="file" type="hidden" style="width: 0%;" />
                     </td>
                 </tr>
             </table>
@@ -179,7 +179,7 @@
             $('#resourcetype').combobox('select', data.ResourceType);
             $('#started').datebox('setValue', data.Started);
             $('#ended').datebox('setValue', data.Ended);
-            $('#file').textbox('setValue', data.FilePath);
+            //$('#file').textbox('setValue', data.FilePath);
 
             open1(id);
         }
