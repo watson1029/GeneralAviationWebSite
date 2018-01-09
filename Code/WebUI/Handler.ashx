@@ -246,6 +246,7 @@ public class Handler : IHttpHandler
     public void get(HttpContext context)
     {
         int page = Convert.ToInt16(context.Request["page"]);
+        //int usrid=context.Session[""];
         int rows = Convert.ToInt16(context.Request["rows"]);
         int type = Convert.ToInt16(context.Request["type"]);
         int status = Convert.ToInt16(context.Request["status"]);
