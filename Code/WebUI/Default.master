@@ -45,19 +45,9 @@
         </div>
         <div class="tog" id="tog"><span>简  介</span></div>
         <div class="head">
-            <div class="center" style="position: relative">
-                <div class="logo">
-                    <img src="images/logo.png" alt="" style="height: 90px;" />
-                </div>
-                <div class="searchboxdiv">
-                    <input type="text" name="search" id="txt_request" class="searchbox ipt" value="请输入搜索关键词" onblur="setkeyword('txt_request')"
-                        onkeydown="if(event.keyCode==13){document.getElementById('ibtn_txt_request').focus();}" />
-                    <span class="btn_search">
-                        <button id="ibtn_txt_request" type="submit" class="btn" onclick="subjs('gc');return false">搜&nbsp;索</button>
-                    </span>
-                </div>
+
                 <cc1:Menu ID="ccMenu" runat="server" />
-            </div>
+
         </div>
         <!--head end-->
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

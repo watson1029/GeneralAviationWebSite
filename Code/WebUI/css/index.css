@@ -71,7 +71,9 @@ font-size: 18px;
 font-family: "微软雅黑",Microsoft YaHei;
 line-height: 50px;
 padding-left: 10px;
-outline: none;}
+outline: none;
+vertical-align:top;
+}
 .btn_search{display:inline-block; margin-left:-6px; }
 .btn{
     width: 100px;
