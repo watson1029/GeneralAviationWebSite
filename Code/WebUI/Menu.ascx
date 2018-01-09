@@ -1,14 +1,15 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="Menu.ascx.cs" Inherits="Menu" %>
      <div class="center" style="position: relative">
+         <input type="hidden" id="searchtype" value="news"/>
                 <div class="logo">
                     <img src="images/logo.png" alt="" style="height: 90px;" />
                 </div>
                 <div class="searchboxdiv">
-                    <input type="text" name="search" id="txt_request" class="searchbox ipt" value="请输入搜索关键词" onblur="setkeyword('txt_request')"
-                        onkeydown="if(event.keyCode==13){document.getElementById('ibtn_txt_request').focus();}" />
+                    <input type="text" name="search" id="txt_request" class="searchbox ipt" maxlength="30" value="请输入搜索关键词" onblur="if (this.value=='')this.value='请输入搜索关键词'" onfocus="if (this.value=='请输入搜索关键词')this.value=''" />
                     <span class="btn_search">
-                        <button id="ibtn_txt_request" type="submit" class="btn" onclick="subjs('gc');return false">搜&nbsp;索</button>
+                        <button id="ibtn_txt_request" type="submit" class="btn" onclick="searchcommit('search.aspx')">搜&nbsp;索</button>
                     </span>
+                    <label id="newslabel" style="color:red" onclick="Menu.click('news')">新闻</label>  <label id="supplydemandlabel"  onclick="Menu.click('supplydemand')">供求</label>  <label  id="companyintrolabel"  onclick="Menu.click('companyintro')">企业</label>
                 </div>
                <div class="nav-box">
     <ul>
@@ -32,11 +33,27 @@
         width: 128px;
         display: block;
     }
+
 </style>
 <script type="text/javascript">
     $(function () {
         $('#' + '<%=names%>').addClass('cur').siblings("li").removeClass('cur');
         $(".nav-line").attr('style', 'left:' + '<%=position%>');
     });
+    window.Menu = {
+        click: function (type) {
+            $('#' + type + 'label').attr('style', 'color:red').siblings("label").removeAttr('style');
+            $('#searchtype').val(type);
+    
+    }
+
+    };
+    var searchcommit = function (url) {
+        var content = $("#txt_request").val();
+        if(content!='')
+        {
+            location.href = url + "?Type=" + $('#searchtype').val() + "&Content=" + escape(content);
+        }
+    }
 </script>
 <script type="text/javascript" src="js/common.js"></script>
