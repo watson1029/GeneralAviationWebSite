@@ -84,7 +84,7 @@ public partial class BasicData_Pilot : BasePage
             if (model != null)
             {
                 model.GetEntitySearchPars<Pilot>(this.Context);
-                model.LicenseImg = Request.Params["LicenseImgInfo"];
+                model.LicenseImg = Request.Params["LicenseImgsInfo"];
                 if (bll.Update(model) > 0)
                 {
                     result.IsSuccess = true;
