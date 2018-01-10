@@ -17,7 +17,7 @@
         <li id="news"><a href="/List.aspx?Type=News&PageIndex=1">新闻<span>News</span></a></li>
         <li id="supplydemand"><a href="/List.aspx?Type=SupplyDemand&PageIndex=1">供求<span>Supply-Demand</span></a></li>
         <li id="companyintro"><a href="/List.aspx?Type=CompanyIntro&PageIndex=1">企业<span>Company</span></a></li>
-        <li><a href="javascript:void(0)">资料<span>File</span></a></li>
+               <li id="file"><a href="/FileList.aspx?Type=File">资料<span>File</span></a></li>
         <li><a href="javascript:void(0)">计划<span>Plan</span></a></li>
         <li><a href="javascript:void(0)">气象<span>Weather</span></a></li>
         <li><a href="javascript:void(0)">情报<span>Information</span></a></li>
@@ -44,14 +44,13 @@
         click: function (type) {
             $('#' + type + 'label').attr('style', 'color:red').siblings("label").removeAttr('style');
             $('#searchtype').val(type);
-    
-    }
+
+        }
 
     };
     var searchcommit = function (url) {
         var content = $("#txt_request").val();
-        if(content!='')
-        {
+        if (content != '') {
             location.href = url + "?Type=" + $('#searchtype').val() + "&Content=" + escape(content);
         }
     }

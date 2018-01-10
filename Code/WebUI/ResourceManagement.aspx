@@ -20,8 +20,7 @@
                 url: "/Handler.ashx?action=get"
             });
             $('#dialog').dialog({
-                buttons: [
-                  <%--  {
+                buttons: [{
                     text: '保存',
                     iconCls: 'icon-ok',
                     handler: function () {
@@ -31,10 +30,8 @@
                             update(1);
                         }
                     }
-                    },
-       --%>
-                {
-                    text: '提交',
+                }, {
+                    text: '保存并提交',
                     iconCls: 'icon-ok',
                     handler: function () {
                         if (id == 0) {
@@ -102,7 +99,6 @@
         <%--<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>--%>
 
         <div style="float: right">
-            <!--
             <select class="easyui-combobox" id="status" name="status" labelposition="left" style="width: 100px; margin: 20px;">
                 <option value="0">资料状态</option>
                 <option value="1">草稿中</option>
@@ -110,7 +106,6 @@
                 <option value="3">已通过</option>
                 <option value="4">已拒绝</option>
             </select>
-            -->
             <select class="easyui-combobox" id="type" name="type" labelposition="left" style="width: 250px; margin: 20px;">
                 <option value="0">资料类别</option>
                 <option value="1">国家和民航相关通航政策、管理规定</option>
@@ -130,7 +125,7 @@
                 <th data-options="field:'UsefulTime',width:200,align:'center'">有效时间</th>
                 <th data-options="field:'Created',width:155,align:'center',formatter:formatDate">发布时间</th>
                 <th data-options="field:'FilePath',width:100,align:'center',formatter:formatFile">附件</th>
-                <!--<th data-options="field:'Status',width:100,align:'center',formatter:formatStatus">状态</th>-->
+                <th data-options="field:'Status',width:100,align:'center',formatter:formatStatus">状态</th>
                 <th data-options="field:'ID',width:100,align:'center',formatter:formatOperation">操作</th>
             </tr>
         </thead>
@@ -237,8 +232,12 @@
                 var data = row.rows[rowIndex];
                 var status = data.Status;
                 var bb;
+                if (status < 2) {
                     bb = "<a onclick='showupdate(" + val + "," + rowIndex + ");' href='javascript:void();' style='margin:5px;'>修改</a>"
                     + "<a onclick='delete1(" + val + ");' href='javascript:void();' style='margin:5px;'>删除</a>";
+                } else {
+                    bb = "--";
+                }
                 return bb;
             }
             function formatDate(val, row, index) {

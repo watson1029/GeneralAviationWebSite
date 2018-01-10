@@ -3,16 +3,25 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link rel="Stylesheet" type="text/css" href="css/list.css" />
     <link rel="Stylesheet" type="text/css" href="css/pagination.css" />
+    <link rel="Stylesheet" type="text/css" href="css/rcrumbs.css" />
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="main">
         <div class="center">
-            <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
-            <script type="text/ecmascript">
-                //console.log($.fn.jquery);//输出jquery版本号，为1.10.2
+            <script type="text/javascript" src="js/jquery-1.10.2.js"></script>            
+            <script type="text/javascript" src="js/jquery.rcrumbs.js"></script>            
+            <div class="rcrumbs" id="breadcrumbs">                
+                <ul>     
+                    <li>当前位置：</li>               
+                    <li><a href="Default.aspx">首页</a><span class="divider">></span></li>
+                    <li><a href="<%=Request.RawUrl %>"><%=title%></a><span class="divider">></span></li>
+                </ul>
+            </div>
+            <script type="text/javascript">
+                $("#breadcrumbs").rcrumbs({windowResize:false});
             </script>
-            <script type="text/javascript" src="js/jquery.paginate.js"></script>
+            
             <div class="list">
                 <ul>
                     <%
@@ -26,7 +35,7 @@
                             </div>
                             <div class="list_text">
                                 <dl>
-                                    <dt><a href="/Detail.aspx?Type=<%=item.type%>&Id=<%=item.Id%>"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a></dt>
+                                    <dt><a target="_self" href="/Detail.aspx?Type=<%=item.type%>&Id=<%=item.Id%>"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a></dt>
                                     <dd>
                                         <p><%=HtmlWorkShop.CutTitle(HttpUtility.UrlDecode(item.Content),150)%></p>
                                     </dd>
@@ -37,6 +46,7 @@
                     </li>
                     <%  }%>
                 </ul>
+                <script type="text/javascript" src="js/jquery.paginate.js"></script>
                 <div id="M-box2" class="M-box2"></div>
                 <script type="text/javascript">
                     $('#M-box2').pagination({
@@ -71,7 +81,7 @@
                     });
                 </script>
             </div>
-            <script type="text/ecmascript">
+            <script type="text/javascript">
                 //console.log($.fn.jquery);//输出jquery版本号，为1.10.2        
                 jQuery.noConflict(true);//释放 $ 标识符的控制
                 //console.log($.fn.jquery);//输出jquery版本号，为1.4.1

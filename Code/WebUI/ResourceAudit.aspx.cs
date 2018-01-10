@@ -5,19 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class ResourceAudit : BasePage
+public partial class ResourceAudit : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
-    #region 权限编码
-    public override string PageRightCode
-    {
-        get
-        {
-            return "ResourceAuditCheck";
-        }
-    }
-    #endregion
 }
