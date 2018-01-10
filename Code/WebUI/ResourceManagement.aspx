@@ -45,9 +45,10 @@
                     }
                 },
                 {
-                    text: '重置',
+                    text: '取消',
+                    iconCls: 'icon-cancel',
                     handler: function () {
-                        clearForm();
+                        close1();
                     }
                 }]
 
@@ -201,6 +202,12 @@
             </form>
         </div>
         <script>
+            function myformatter(date){
+                var y=date.getFullYear();
+                var m=date.getMonth()+1;
+                var d=date.getDate();
+                return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
+            }
             function delete1(id) {
                 this.id = id;
                 $('#hint').dialog('open');
@@ -215,8 +222,14 @@
                 $('#id').val(id);
                 $('#dealuser').textbox('setValue', data.DealUser);
                 $('#resourcetype').combobox('select', data.ResourceType);
-                $('#started').datebox('setValue', data.Started);
-                $('#ended').datebox('setValue', data.Ended);
+                var start = data.Started.substring(6, data.Started.length - 2);
+                var end = data.Ended.substring(6, data.Ended.length - 2);
+                var started = new Date();
+                started.setTime(start);
+                var ended = new Date();
+                ended.setTime(end);
+                $('#started').datebox('setValue', myformatter(started));
+                $('#ended').datebox('setValue', myformatter(ended));
                 open1(id);
             }
             function formatOperation(val, row, rowIndex) {
@@ -229,6 +242,7 @@
                 return bb;
             }
             function formatDate(val, row, index) {
+                //alert(val);
                 var value = val.substring(6, val.length - 2);
                 var date = new Date();
                 date.setTime(value);
