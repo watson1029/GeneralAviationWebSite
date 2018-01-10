@@ -86,12 +86,7 @@
             },
             //审核
             Audit: function (uid) {
-                if (screen.height == 768) {
-                    $("#audit").dialog({ title: '审核', top: 0, height: 500 }).dialog("open");
-                }
-                else {
-                    $("#audit").dialog("open").dialog('setTitle', '审核');
-                }
+                $("#audit").dialog("open").dialog('setTitle', '审核');
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                     $("#form_audit").form('load', data);
@@ -120,21 +115,22 @@
     </script>
 
     <%--添加 修改 start--%>
-    <div id="audit" class="easyui-dialog" style="width: 1050px; height: 770px;" modal="true" closed="true" buttons="#audit-buttons">
+    <div id="audit" class="easyui-dialog" style="width: 1144px; height: 810px;"
+        modal="true" closed="true" buttons="#audit-buttons">
         <form id="form_audit" method="post">
             <table class="table_edit">
                  <tr>
                     <td style="text-align: right">供求标题
                     </td>
                     <td colspan="3">
-                        <input id="Title" name="Title" class="easyui-textbox" readonly="true" style="width: 900px" />
+                        <input id="Title" name="Title" class="easyui-textbox" readonly="true" style="width: 1000px" />
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right">供求简介
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 900px; height: 300px;"></script>
+                        <script id="editor" type="text/plain" style="width: 1000px; height: 350px;"></script>
                     </td>
                 </tr>
                 <tr>
@@ -172,7 +168,7 @@
                 <tr>
                     <td style="text-align: right">审核意见</td>
                     <td colspan="3">
-                        <input id="AuditComment" name="AuditComment" required="true" style="width: 900px; height: 50px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AuditComment" name="AuditComment" required="true" style="width: 1000px; height: 50px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
                 </tr>
             </table>

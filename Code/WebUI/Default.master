@@ -45,9 +45,7 @@
         </div>
         <div class="tog" id="tog"><span>简  介</span></div>
         <div class="head">
-
                 <cc1:Menu ID="ccMenu" runat="server" />
-
         </div>
         <!--head end-->
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

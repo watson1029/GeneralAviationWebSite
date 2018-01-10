@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link rel="Stylesheet" type="text/css" href="css/rcrumbs.css" />
     <script type="text/javascript">
         $(function () {
             if ("<%=previousModel.Id%>" == "0") {
@@ -30,6 +31,20 @@
     <!--main begin-->
     <div class="main clearfix" style="background: #fff;">
         <div class="center">
+            <script type="text/javascript" src="js/jquery-1.10.2.js"></script>            
+            <script type="text/javascript" src="js/jquery.rcrumbs.js"></script>            
+            <div class="rcrumbs" id="breadcrumbs">                
+                <ul>     
+                    <li>当前位置：</li>               
+                    <li><a href="Default.aspx">首页</a><span class="divider">></span></li>
+                    <li><a href="<%=SetURL(Request.RawUrl) %>"><%=parentTitle%></a><span class="divider">></span></li>
+                    <li><a href="<%=Request.RawUrl %>"><%=currModel.Title%></a><span class="divider">></span></li>
+                </ul>
+            </div>
+            <script type="text/javascript">
+                $("#breadcrumbs").rcrumbs({ windowResize: false });
+                jQuery.noConflict(true);//释放 $ 标识符的控制
+            </script>
             <div class="main_left">
                 <h1><span id="title"><%=currModel.Title%></span></h1>
                 <div class="title_tip">
@@ -41,9 +56,7 @@
                         <span id="puttime">发布时间：<%=currModel.CreateTime%></span>&nbsp;
                         </span>
                 </div>
-                <div class="detailcontent">
-                    <%=HttpUtility.UrlDecode(currModel.Content)%>
-                </div>
+                <div class="detailcontent"><%=HttpUtility.UrlDecode(currModel.Content)%></div>
                 <div class="article_section">
                     <a id="prev" class="prev" href="Detail.aspx?Type=<%=currModel.Type%>&Id=<%=previousModel.Id%>" title="">
                         <i class="prev_btn"></i>

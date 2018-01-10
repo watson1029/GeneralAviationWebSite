@@ -220,7 +220,6 @@ public class Handler : IHttpHandler
     public void download(HttpContext context)
     {
         string file = context.Server.MapPath("~/")+context.Request["filepath"];
-        string filename=context.Request["filepath"];
         if (System.IO.File.Exists(file))
         {
             FileStream fs = new FileStream(file, FileMode.Open);
@@ -228,7 +227,7 @@ public class Handler : IHttpHandler
             fs.Read(bytes, 0, bytes.Length);
             fs.Close();
             context.Response.ContentType = "application/octet-stream";
-            context.Response.AddHeader("Content-Disposition", "attachment;filename=" + filename.Substring(filename.LastIndexOf("/")));
+            context.Response.AddHeader("Content-Disposition", "attachment;filename=" + context.Request["filepath"]);
             context.Response.BinaryWrite(bytes);
             context.Response.Flush();
             context.Response.End();
@@ -290,8 +289,8 @@ public class Handler : IHttpHandler
                 context.Response.Write("新增资料失败，附件太大了");
             }
             String time = Guid.NewGuid().ToString("N");
-            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/Files/Resource/") + filename);
-            string filepath = "Files/Resource/"+ filename;
+            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/Files/Resource/") + hou+time+tt);
+            string filepath = "Files/Resource/"+ hou+time+tt;
 
             Resource resource = new Resource();
             resource.Title = title;
@@ -327,7 +326,6 @@ public class Handler : IHttpHandler
         string dealuser = context.Request["dealuser"];
         int resourcetype = Convert.ToInt16(context.Request["resourcetype"]);
         int status = Convert.ToInt16(context.Request["status"]);
-        string filename = context.Request.Files["file"].FileName;
         DateTime started = DateTime.Parse(context.Request["started"]);
         DateTime ended = DateTime.Parse(context.Request["ended"]);
         Resource resource = new Resource();
@@ -338,8 +336,8 @@ public class Handler : IHttpHandler
                 context.Response.ContentType = "text/plain";
                 context.Response.Write("更新资料失败，附件太大了");
             }
-            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/Resource/") + filename);
-            resource.FilePath = "Files/Resource/" + filename;
+            context.Request.Files["file"].SaveAs(context.Server.MapPath("~/File/Resource/") + context.Request.Files["file"].FileName);
+            resource.FilePath = context.Server.MapPath("~/File/Resource/")+context.Request.Files["file"].FileName;
         }
 
         resource.ID = id;

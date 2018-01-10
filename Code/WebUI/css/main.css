@@ -97,7 +97,7 @@ padding-left:10px; outline:none;}
 .main_left h1{ text-align:center; font-size:26px; color:#000; font-weight:normal; line-height:32px; padding:30px 0 24px;}
 .title_tip{ padding:0 15px; height:48px; line-height:48px; color:#909090; border:1px solid #f2f2f2;  border-top:3px solid #4a69bf; font-size:12px;}
 .detailcontent{ padding:5px 20px 5px 20px; color:#111; font-size:16px; line-height:28px;}
-.detailcontent p{ text-indent:32px; margin-top:24px; line-height:28px; }
+.detailcontent p{margin-top:5px; line-height:28px; }
 .detailcontent p img{ width:auto;}
 
 .shareBox { margin-bottom: 20px; border-top: solid 1px  #e5e5e5; border-bottom: solid 1px  #e5e5e5; height: 46px; line-height: 46px; } 

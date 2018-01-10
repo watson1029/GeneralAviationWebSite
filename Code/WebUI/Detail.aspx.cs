@@ -9,15 +9,25 @@ public partial class Detail : System.Web.UI.Page
 {
     private List<DetailModel> listModel;
     private NewBLL newbll = new NewBLL();
-    private CompanySummaryBLL commmpanybll = new CompanySummaryBLL();
-    private SupplyDemandBLL demandBll = new SupplyDemandBLL();
+    private CompanySummaryBLL commmpanybll;
+    private SupplyDemandBLL demandBll;
     private int id=0;
     protected string type;
-    protected DetailModel currModel = new DetailModel();
-    protected DetailModel previousModel = new DetailModel();
-    protected DetailModel nextModel = new DetailModel();
+    protected string parentTitle = "";
+    protected DetailModel currModel;
+    protected DetailModel previousModel;
+    protected DetailModel nextModel;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack)
+        {
+            commmpanybll = new CompanySummaryBLL();
+            demandBll = new SupplyDemandBLL();
+            currModel = new DetailModel();
+            previousModel = new DetailModel();
+            nextModel = new DetailModel();
+        }
+
         try
         {
             id = Request.QueryString["Id"] == null ? 0 : Convert.ToInt32(Request.QueryString["Id"]);
@@ -27,12 +37,15 @@ public partial class Detail : System.Web.UI.Page
             switch (type)
             {
                 case "News":
+                    parentTitle = "新闻中心";
                     LoadNews();
                     break;
                 case "SupplyDemand":
+                    parentTitle = "供求信息";
                     LoadSupplyDemand();
                     break;
                 case "CompanyIntro":
+                    parentTitle = "通航企业";
                     LoadCompanyIntro();
                     break;
                 default:
@@ -104,6 +117,22 @@ public partial class Detail : System.Web.UI.Page
             nextModel =  new DetailModel();
         else
             nextModel = listModel[currIndex + 1];      
+    }
+
+    public string SetURL(string rawURL)
+    {
+        //http://localhost:24612/Detail.aspx?Type=CompanyIntro&Id=10
+        if (!string.IsNullOrEmpty(rawURL))
+        {
+            rawURL = rawURL.Replace("Detail", "List");
+            int pos = rawURL.IndexOf("?");
+            if (pos >= 0)
+            {
+                return rawURL.Substring(0, pos + 1) + "Type=" + Request.QueryString["Type"] + "&PageIndex=1";
+            }
+            return "#";
+        }
+        return "#";
     }
 }
 public class DetailModel

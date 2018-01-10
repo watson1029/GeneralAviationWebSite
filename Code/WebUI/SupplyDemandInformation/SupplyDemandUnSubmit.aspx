@@ -27,21 +27,21 @@
     </div>
     <%--列表 end--%>
     <%--添加 修改 start--%>
-    <div id="edit" class="easyui-dialog" style="width: 1050px; height: 770px" modal="true" closed="true" buttons="#edit-buttons">
+    <div id="edit" class="easyui-dialog" style="width: 1144px; height: 790px;" modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit" method="post">
             <table class="table_edit">
                 <tr>
                     <td style="text-align: right;">供求标题
                     </td>
                     <td colspan="3">
-                        <input id="Title" name="Title" class="easyui-textbox"required="true" style="width: 900px" />
+                        <input id="Title" name="Title" class="easyui-textbox"required="true" style="width: 1000px" />
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right;">供求简介
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 900px; height: 400px;"></script>
+                        <script id="editor" type="text/plain" style="width: 1000px; height: 400px;"></script>
                     </td>
                 </tr>
                 <tr>
@@ -144,12 +144,7 @@
 
             //打开添加窗口
             OpenWin: function () {
-                if (screen.height == 768) {
-                    $("#edit").dialog({ title:'新增', top: 0, height:500 }).dialog("open");
-                }
-                else {
-                    $("#edit").dialog("open").dialog('setTitle', '新增');
-                }
+                $("#edit").dialog("open").dialog('setTitle', '新增');
                 $("#form_edit").form('clear');
                 $.post(location.href, { "action": "init" }, function (data) {
                     $("#form_edit").form('load', data);
@@ -176,12 +171,7 @@
 
             //修改链接 事件
             EditData: function (id) {
-                if (screen.height == 768) {
-                    $("#edit").dialog({ title: '编辑', top: 0, height: 500 }).dialog("open");
-                }
-                else {
-                    $("#edit").dialog("open").dialog('setTitle', '编辑');
-                }
+                $("#edit").dialog("open").dialog('setTitle', '编辑');
                 $("#btn_add").attr("onclick", "Main.Save(" + id + ");")
 
                 $.post(location.href, { "action": "queryone", "id": id }, function (data) {
