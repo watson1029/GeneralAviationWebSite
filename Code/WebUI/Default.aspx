@@ -108,8 +108,8 @@
                 <div class="center_left">
                     <div class="content" style="margin: 0 auto">
                         <div class="title" style="background: #fff">
-                            <h2><a href="List.aspx?Type=News&PageIndex=1" target="_blank">新闻中心</a></h2>
-                            <span><a href="List.aspx?Type=News&PageIndex=1" target="_blank">+更多</a></span>
+                            <h2><a href="List.aspx?Type=News&PageIndex=1" target="_self">新闻中心</a></h2>
+                            <span><a href="List.aspx?Type=News&PageIndex=1" target="_self">+更多</a></span>
                         </div>
                         <div class="img_container">
                             <img width="288px" height="288px" src="images/News.jpg" alt="" />
@@ -122,7 +122,7 @@
                                             foreach (var item in newsModel)
                                             {%>
                                         <li>
-                                            <h3><a href="Detail.aspx?Type=News&Id=<%=item.NewID %>" class="linktit"><%=HtmlWorkShop.CutTitle(item.NewTitle,20)%></a></h3>
+                                            <h3><a target="_self" href="Detail.aspx?Type=News&Id=<%=item.NewID %>" class="linktit"><%=HtmlWorkShop.CutTitle(item.NewTitle,20)%></a></h3>
                                             <div><%=HtmlWorkShop.CutTitle(HttpUtility.UrlDecode(item.NewContent),30)%></div>
                                         </li>
                                         <%  }%>
@@ -139,8 +139,8 @@
                 <div class="center_left_new">
                     <div class="content" style="margin: 0 auto">
                         <div class="title" style="background: #fff">
-                            <h2><a href="List.aspx?Type=SupplyDemand&PageIndex=1" target="_blank">供求信息</a></h2>
-                            <span><a href="List.aspx?Type=SupplyDemand&PageIndex=1" target="_blank">+更多</a></span>
+                            <h2><a href="List.aspx?Type=SupplyDemand&PageIndex=1" target="_self">供求信息</a></h2>
+                            <span><a href="List.aspx?Type=SupplyDemand&PageIndex=1" target="_self">+更多</a></span>
                         </div>
                         <div class="img_container">
                             <img width="288px" height="288px" src="images/Supply.jpg" alt="" />
@@ -152,11 +152,11 @@
                                     foreach (var item in demandModel)
                                     {%>
                                 <h3 class="sideMenu00 <%=(i==1)?"on":""%>">
-                                    <a href="Detail.aspx?Type=SupplyDemand&Id=<%=item.ID %>" target="_blank"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a>
+                                    <a target="_self" href="Detail.aspx?Type=SupplyDemand&Id=<%=item.ID %>"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a>
                                 </h3>
 
                                 <ul>
-                                    <p><a href="Detail.aspx?Type=SupplyDemand&Id=<%=item.ID %>" target="_blank"><%=HtmlWorkShop.CutTitle(item.Summary,30)%></a></p>
+                                    <p><a target="_self" href="Detail.aspx?Type=SupplyDemand&Id=<%=item.ID %>"><%=HtmlWorkShop.CutTitle(item.Summary,30)%></a></p>
                                 </ul>
                                 <%   i++;
                                     }%>
@@ -167,8 +167,8 @@
                 <div class="center_left_new">
                     <div class="content" style="margin: 0 auto">
                         <div class="title" style="background: #fff">
-                            <h2><a href="List.aspx?Type=CompanyIntro&PageIndex=1" target="_blank">通航企业</a></h2>
-                            <span><a href="List.aspx?Type=CompanyIntro&PageIndex=1" target="_blank">+更多</a></span>
+                            <h2><a href="List.aspx?Type=CompanyIntro&PageIndex=1" target="_self">通航企业</a></h2>
+                            <span><a href="List.aspx?Type=CompanyIntro&PageIndex=1" target="_self">+更多</a></span>
                         </div>
                         <div class="img_container">
                             <img width="288px" height="288px" src="images/Company.jpg" alt="" />
@@ -180,11 +180,11 @@
                                     foreach (var item in companySummaryModel)
                                     {%>
                                 <h3 class="sideMenu00 <%=(j==1)?"on":""%>">
-                                    <a href="Detail.aspx?Type=CompanyIntro&Id=<%=item.ID %>" target="_blank"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a>
+                                    <a href="Detail.aspx?Type=CompanyIntro&Id=<%=item.ID %>" target="_self"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a>
                                 </h3>
 
                                 <ul>
-                                    <p><a href="Detail.aspx?Type=CompanyIntro&Id=<%=item.ID %>" target="_blank"><%=HtmlWorkShop.CutTitle(item.Summary,30)%></a></p>
+                                    <p><a href="Detail.aspx?Type=CompanyIntro&Id=<%=item.ID %>" target="_self"><%=HtmlWorkShop.CutTitle(item.Summary,30)%></a></p>
                                 </ul>
                                 <%   j++;
                                     }%>
