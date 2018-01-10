@@ -46,6 +46,9 @@ public class Handler : IHttpHandler
             case "collect":
                 collect(context);
                 break;
+            case "dictionary":
+                
+                break;
         }
 
     }
