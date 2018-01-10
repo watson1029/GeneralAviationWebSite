@@ -39,7 +39,7 @@ public partial class Menu : System.Web.UI.UserControl
         {
             var left = "0px";
             var url = Request.RawUrl.ToLower();
-            if (url.Contains("default.aspx") || url.Contains("/"))
+            if (url.Contains("default.aspx"))
             {
                 left = "0px";
             }
