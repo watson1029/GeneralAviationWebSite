@@ -112,6 +112,81 @@ public class HtmlWorkShop
             return "";
         }
         return "";
-    }   
+    }
+    /// <summary>
+    /// 获取内容简介并关键字高亮
+    /// </summary>
+    /// <param name="des"></param>
+    /// <param name="MaxNum"></param>
+    /// <param name="cont"></param>
+    /// <param name="color"></param>
+    /// <returns></returns>
+    public static string GetCutDes(string des, int MaxNum, string cont, string color)
+    {
+        try
+        {
+            string[] strs = cont.Split(' ');
+            string dess = striphtml(ClearHtml(des)).Replace("&nbsp;", "").Replace("&#12288;", "").Replace("&#12288", "").Replace(" ", "").Trim();
+            List<string> nstr = new List<string>();
+            foreach (string str in strs)//处理数组空元素
+            {
+                if (str != null && str != " " && str != "")
+                {
+                    nstr.Add(str);
+                }
+            }
+            int prelength = 0;
+            int i = 0;
+            foreach (string st in nstr)//获取最前关键字下标
+            {
+                if (i == 0 && dess.IndexOf(st) >= 0)
+                {
+                    prelength = dess.IndexOf(st, StringComparison.CurrentCultureIgnoreCase);
+                    i = 1;
+                }
+                else
+                {
+                    if (dess.IndexOf(st, StringComparison.CurrentCultureIgnoreCase) < prelength && dess.IndexOf(st, StringComparison.CurrentCultureIgnoreCase) >= 0)
+                    {
+                        prelength = dess.IndexOf(st);
+                    }
+                }
+
+            }
+
+            string predes = dess.Substring(0, prelength);//获取关键字前面内容
+            if (prelength > 30)
+            {
+                predes = predes.Substring(0, 30) + "...";
+            }
+            dess = predes + dess.Substring(prelength);
+            int leng = dess.Length;
+            int totalLength = 0;
+            int currentIndex = 0;
+            while (totalLength < MaxNum * 2 && currentIndex < leng)
+            {
+                if (dess[currentIndex] < 0 || dess[currentIndex] > 255)
+                    totalLength += 2;
+                else
+                    totalLength++;
+                currentIndex++;
+            }
+            if (currentIndex < leng)
+            {
+                dess = dess.Substring(0, currentIndex) + "...";
+            }
+            dess = dess.ToLower();
+            foreach (string rstr in nstr)//改变关键字样式
+            {
+                dess = dess.Replace(rstr.ToLower(), "<label style='color:" + color + ";'>" + rstr + "</label>");
+            }
+            return dess;
+        }
+        catch
+        {
+            return "";
+        }
+    }
+
 
 }

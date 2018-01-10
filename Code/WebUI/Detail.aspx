@@ -56,9 +56,7 @@
                         <span id="puttime">发布时间：<%=currModel.CreateTime%></span>&nbsp;
                         </span>
                 </div>
-                <div class="detailcontent">
-                    <%=HttpUtility.UrlDecode(currModel.Content)%>
-                </div>
+                <div class="detailcontent"><%=HttpUtility.UrlDecode(currModel.Content)%></div>
                 <div class="article_section">
                     <a id="prev" class="prev" href="Detail.aspx?Type=<%=currModel.Type%>&Id=<%=previousModel.Id%>" title="">
                         <i class="prev_btn"></i>

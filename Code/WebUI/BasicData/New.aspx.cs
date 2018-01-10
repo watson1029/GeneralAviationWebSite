@@ -65,8 +65,8 @@ public partial class BasicData_New : BasePage
         Expression<Func<News, bool>> predicate = PredicateBuilder.True<News>();
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            var val = Request.Form["search_value"];
-            predicate = u => u.NewTitle == val;
+            var val = Request.Form["search_value"].Trim();
+            predicate = u => u.NewTitle.Contains(val);
         }
         return predicate;
     }
