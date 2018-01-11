@@ -78,8 +78,9 @@ namespace BLL.SystemManagement
             List<Menu> userMenus = userInforBLL.GetUserMenu(userID);
             var menuList = new List<MenuModel>();
             if (userMenus != null && userMenus.Any())
-            {
+            { 
                 var topMenus = userMenus.Where(u => u.MenuLevel == 1).OrderBy(u => u.OrderSort);
+               
                 foreach (var item in topMenus)
                 {
                     var model = new MenuModel()
@@ -89,7 +90,7 @@ namespace BLL.SystemManagement
                         menuname = item.MenuName
                     };
                     var secMenuList = new List<MenuModel>();
-                    var secMenus = userMenus.Where(u => u.ParentMenuID == item.ID).OrderBy(u => u.OrderSort).ToList();
+                    var secMenus = userMenus.Where(u => u.ParentMenuID == item.ID).OrderBy(u => u.OrderSort);
                     if (secMenus != null && secMenus.Any())
                     {
                         secMenuList.AddRange(secMenus.Select(dto => new MenuModel

@@ -21,17 +21,7 @@
             });
             $('#dialog').dialog({
                 buttons: [{
-                    text: '保存',
-                    iconCls: 'icon-ok',
-                    handler: function () {
-                        if (id == 0) {
-                            add(1);
-                        } else {
-                            update(1);
-                        }
-                    }
-                }, {
-                    text: '保存并提交',
+                    text: '提交',
                     iconCls: 'icon-ok',
                     handler: function () {
                         if (id == 0) {
@@ -42,9 +32,10 @@
                     }
                 },
                 {
-                    text: '重置',
+                    text: '取消',
+                    iconCls: 'icon-cancel',
                     handler: function () {
-                        clearForm();
+                        close1();
                     }
                 }]
 
@@ -58,8 +49,10 @@
                             url: '/Handler.ashx?action=delete&id=' + id,
                             async: false,
                             success: function (data) {
-                                alert(data);
-                                location.reload();
+                                $.messager.alert('提示',
+                             data
+                        );
+                                setTimeout(function () { location.reload() }, 2000);
                             }
                         });
                         $('#hint').dialog('close');
@@ -98,13 +91,13 @@
         <%--<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>--%>
 
         <div style="float: right">
-            <select class="easyui-combobox" id="status" name="status" labelposition="left" style="width: 100px; margin: 20px;">
+            <!--<select class="easyui-combobox" id="status" name="status" labelposition="left" style="width: 100px; margin: 20px;">
                 <option value="0">资料状态</option>
                 <option value="1">草稿中</option>
                 <option value="2">已提交</option>
                 <option value="3">已通过</option>
                 <option value="4">已拒绝</option>
-            </select>
+            </select>-->
             <select class="easyui-combobox" id="type" name="type" labelposition="left" style="width: 250px; margin: 20px;">
                 <option value="0">资料类别</option>
                 <option value="1">国家和民航相关通航政策、管理规定</option>
@@ -124,7 +117,7 @@
                 <th data-options="field:'UsefulTime',width:200,align:'center'">有效时间</th>
                 <th data-options="field:'Created',width:155,align:'center',formatter:formatDate">发布时间</th>
                 <th data-options="field:'FilePath',width:100,align:'center',formatter:formatFile">附件</th>
-                <th data-options="field:'Status',width:100,align:'center',formatter:formatStatus">状态</th>
+                <!--<th data-options="field:'Status',width:100,align:'center',formatter:formatStatus">状态</th>-->
                 <th data-options="field:'ID',width:100,align:'center',formatter:formatOperation">操作</th>
             </tr>
         </thead>
@@ -196,6 +189,12 @@
             </form>
         </div>
         <script>
+            function myformatter(date){
+                var y=date.getFullYear();
+                var m=date.getMonth()+1;
+                var d=date.getDate();
+                return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
+            }
             function delete1(id) {
                 this.id = id;
                 $('#hint').dialog('open');
@@ -210,8 +209,14 @@
                 $('#id').val(id);
                 $('#dealuser').textbox('setValue', data.DealUser);
                 $('#resourcetype').combobox('select', data.ResourceType);
-                $('#started').datebox('setValue', data.Started);
-                $('#ended').datebox('setValue', data.Ended);
+                var start = data.Started.substring(6, data.Started.length - 2);
+                var end = data.Ended.substring(6, data.Ended.length - 2);
+                var started = new Date();
+                started.setTime(start);
+                var ended = new Date();
+                ended.setTime(end);
+                $('#started').datebox('setValue', myformatter(started));
+                $('#ended').datebox('setValue', myformatter(ended));
                 open1(id);
             }
             function formatOperation(val, row, rowIndex) {
@@ -219,15 +224,12 @@
                 var data = row.rows[rowIndex];
                 var status = data.Status;
                 var bb;
-                if (status < 2) {
                     bb = "<a onclick='showupdate(" + val + "," + rowIndex + ");' href='javascript:void();' style='margin:5px;'>修改</a>"
                     + "<a onclick='delete1(" + val + ");' href='javascript:void();' style='margin:5px;'>删除</a>";
-                } else {
-                    bb = "--";
-                }
                 return bb;
             }
             function formatDate(val, row, index) {
+                //alert(val);
                 var value = val.substring(6, val.length - 2);
                 var date = new Date();
                 date.setTime(value);
@@ -253,9 +255,9 @@
 
                         clearForm();
                         close1();
-                        $.messager.show({
-                            title: result
-                        });
+                        $.messager.alert('提示',
+                             result
+                        );
                         setTimeout(function () { location.reload() }, 2000);
                     }
                 });
@@ -268,9 +270,9 @@
 
                         clearForm();
                         close1();
-                        $.messager.show({
-                            title: result
-                        });
+                        $.messager.alert('提示',
+                             result
+                        );
                         setTimeout(function () { location.reload() }, 2000);
                     }
                 });
