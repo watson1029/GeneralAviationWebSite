@@ -106,11 +106,11 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '单位名称', field: 'CompanyName', width: 200 },
+                        { title: '单位名称', field: 'CompanyName', width: 300 },
                         { title: '录入日期', field: 'CreateTime', width: 150 },
                         { title: '有效期限', field: 'ExpiryDate', width: 150 },
-                        { title: '供求标题', field: 'Title', width: 150 },
-                        { title: '供求简介', field: 'Summary', width: 400 },
+                        { title: '供求标题', field: 'Title', width: 300 },
+                        //{ title: '供求简介', field: 'Summary', width: 400 },
                         { title: '供求条件', field: 'Catalog', width: 60 },
                         { title: '状态', field: 'State', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 60 },
                         {

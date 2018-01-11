@@ -1,5 +1,6 @@
 ﻿using BLL.SupplyDemandInformation;
 using Model.EF;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,9 @@ public partial class SupplyDemandInformation_GeneralAviationCompanySubmit : Base
             {
                 case "query"://查询数据
                     QueryData();
+                    break;
+                case "queryone":
+                    GetData();
                     break;
                 default:
                     break;
@@ -67,6 +71,25 @@ public partial class SupplyDemandInformation_GeneralAviationCompanySubmit : Base
         }
 
         return predicate;
+    }
+
+
+    /// <summary>
+    /// 获取指定ID的数据
+    /// </summary>
+    private void GetData()
+    {
+        var id = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var companySummary = bll.Get(id);
+        var strJSON = "";
+        if (companySummary != null)
+        {
+            strJSON = JsonConvert.SerializeObject(companySummary);
+        }
+        Response.Clear();
+        Response.Write(strJSON);
+        Response.ContentType = "application/json";
+        Response.End();
     }
 
     #region 权限编码
