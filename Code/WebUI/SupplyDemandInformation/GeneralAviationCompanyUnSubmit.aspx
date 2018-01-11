@@ -84,10 +84,10 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '单位名称', field: 'CompanyName', width: 200 },
-                        { title: '录入日期', field: 'ModifiedTime', width: 150 },
-                        { title: '宣传标题', field: 'Title', width: 200 },
-                        { title: '宣传介绍', field: 'Summary', width: 500 },
+                        { title: '单位名称', field: 'CompanyName', width: 300 },
+                        { title: '录入日期', field: 'ModifiedTime', width: 200 },
+                        { title: '宣传标题', field: 'Title', width: 300 },
+                        //{ title: '宣传介绍', field: 'Summary', width: 500 },
                         {
                             title: '状态', field: 'State', formatter: function (value, rec, index) {
                                 var str = "";

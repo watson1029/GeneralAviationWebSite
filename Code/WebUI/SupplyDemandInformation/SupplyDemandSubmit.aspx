@@ -2,6 +2,8 @@
     CodeFile="SupplyDemandSubmit.aspx.cs" Inherits="SupplyDemandInformation_SupplyDemandSubmit" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.config.js" type="text/javascript"></script>
+    <script src="<%=Page.ResolveUrl("~/")%>Content/JS/ueditor/ueditor.all.min.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <%--列表 start--%>
@@ -23,12 +25,64 @@
 
     </div>
     <%--列表 end--%>
+     <%--添加 修改 start--%>
+    <div id="edit" class="easyui-dialog" style="width: 1144px; height: 790px;" modal="true" closed="true" buttons="#edit-buttons">
+        <form id="form_edit" method="post">
+            <table class="table_edit">
+                <tr>
+                    <td style="text-align: right;">供求标题
+                    </td>
+                    <td colspan="3">
+                        <input id="Title" name="Title" class="easyui-textbox"required="true" style="width: 1000px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">供求简介
+                    </td>
+                    <td colspan="3">
+                        <script id="editor" type="text/plain" style="width: 1000px; height: 400px;"></script>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">供求条件
+                    </td>
+                    <td>
+                        <select id="CataLog" class="easyui-combobox" name="CataLog" required="true" style="width: 145px;">
+                            <option value="提供">提供</option>
+                            <option value="寻求" selected="true">寻求</option>
+                        </select>
+                    </td>
+                    <td style="text-align: right; width:25%">有效期限
+                    </td>
+                    <td>
+                        <input id="ExpiryDate" name="ExpiryDate" style="width: 145px" type="text" required="true" class="easyui-datebox" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">撰写人</td>
+                    <td>
+                        <input id="CreateName" name="CreateName" style="width: 145px" type="text" readonly="true" required="true" class="easyui-textbox" /></td>
+                    <td style="text-align: right; width:25%">录入日期</td>
+                    <td>
+                        <input id="CreateTime" name="CreateTime" style="width: 145px" type="text" readonly="true" required="true" class="easyui-datebox" /></td>
+                </tr>
+            </table>
+            <input id="Creator" name="Creator" style="display:none" type="text"/>
+            <input id="CompanyName" name="CompanyName" style="display:none" type="text"/>
+            <input id="CompanyCode3" name="CompanyCode3" style="display:none" type="text"/>
+        </form>
+    </div>
 
+    <div id="edit-buttons">
+        <a href="javascript:;" class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
+    </div>
+    <%--添加 修改 end--%>
     <script type="text/javascript">
 
         $(function () {
             Main.InitGird();
             Main.InitSearch();
+            UE.getEditor('editor');
         });
         Main = {
             //初始化表格
@@ -50,11 +104,11 @@
                     frozenColumns: [[//冻结的列，不会随横向滚动轴移动
                     ]],
                     columns: [[
-                        { title: '单位名称', field: 'CompanyName', width: 200 },
+                        { title: '单位名称', field: 'CompanyName', width: 300 },
                         { title: '录入日期', field: 'CreateTime', width: 150 },
                         { title: '有效期限', field: 'ExpiryDate', width: 150 },
-                        { title: '供求标题', field: 'Title', width: 150 },
-                        { title: '供求简介', field: 'Summary', width: 400 },
+                        { title: '供求标题', field: 'Title', width: 300 },
+                        //{ title: '供求简介', field: 'Summary', width: 400 },
                         { title: '供求条件', field: 'Catalog', width: 60 },
                         {
                             title: '状态', field: 'State', formatter: function (value, rec, index) {
@@ -70,7 +124,13 @@
                                 }
                                 return str;
                             }, width: 80
-                        }
+                        },
+                          {
+                              title: '操作', field: 'ID', width: 80, formatter: function (value, rec) {
+                                  var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">查看</a>';
+                                  return str;
+                              }
+                          }
                     ]],
                     toolbar: "#tab_toolbar",
                     queryParams: { "action": "query" },
@@ -93,6 +153,14 @@
                     prompt: '请输入要查询的信息'
                 });
             },
+            //修改链接 事件
+            EditData: function (id) {
+                $("#edit").dialog("open").dialog('setTitle', '查看');
+                $.post(location.href, { "action": "queryone", "id": id }, function (data) {
+                    $("#form_edit").form('load', data);
+                    UE.getEditor('editor').setContent(decodeURI(data.SummaryCode));
+                });
+            }
         };
     </script>
 </asp:Content>

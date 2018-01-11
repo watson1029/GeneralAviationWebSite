@@ -1,4 +1,5 @@
 ﻿using BLL.SupplyDemandInformation;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,9 @@ public partial class SupplyDemandInformation_SupplyDemandSubmit : BasePage
             {
                 case "query"://查询数据
                     QueryData();
+                    break;
+                case "queryone"://获取一条记录
+                    GetData();
                     break;
                 default:
                     break;
@@ -72,6 +76,23 @@ public partial class SupplyDemandInformation_SupplyDemandSubmit : BasePage
         return predicate;
     }
 
+    /// <summary>
+    /// 获取指定ID的数据
+    /// </summary>
+    private void GetData()
+    {
+        var id = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var supplyDemandInfo = bll.Get(id);
+        var strJSON = "";
+        if (supplyDemandInfo != null)
+        {
+            strJSON = JsonConvert.SerializeObject(supplyDemandInfo);
+        }
+        Response.Clear();
+        Response.Write(strJSON);
+        Response.ContentType = "application/json";
+        Response.End();
+    }
     #region 权限编码
     public override string PageRightCode
     {
