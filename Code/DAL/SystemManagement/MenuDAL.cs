@@ -33,10 +33,9 @@ namespace DAL.SystemManagement
             //SELECT * FROM dbo.RoleMenu a LEFT JOIN dbo.Menu b ON a.MenuID=b.ID
             //WHERE a.RoleID IN (SELECT DISTINCT c.RoleID FROM dbo.UserRole c WHERE c.UserID = 18)
             var menu = from a in context.RoleMenu
-                       join b in context.Menu on a.MenuID equals b.ID into tempTb
-                       from c in tempTb.DefaultIfEmpty()
+                       join b in context.Menu on a.MenuID equals b.ID 
                        where distinctRoleIDs.Any(d => d == a.RoleID)
-                       select c;
+                       select b;
             return menu.ToList();
         } 
     }
