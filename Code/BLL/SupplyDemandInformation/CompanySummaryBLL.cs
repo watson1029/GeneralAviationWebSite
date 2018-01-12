@@ -117,7 +117,7 @@ namespace BLL.SupplyDemandInformation
 
         public List<CompanySummary> GetList(Expression<Func<CompanySummary, bool>> where)
         {
-            return dal.FindList(where, true);
+            return dal.FindList(where, m => m.ModifiedTime, true);
         }
     }
 }
