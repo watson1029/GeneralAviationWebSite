@@ -252,8 +252,8 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
                             if (colobj == null || string.IsNullOrEmpty(colobj))
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "航空器类型不能为空！"));
-                            if (length > 8)
-                                throw new Exception(string.Format(baseerrormessage, i + 2, "航空器类型不能超过8个字符！"));
+                            if (length > 20)
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "航空器类型不能超过20个字符！"));
                             if (!alist.Contains(colobj))
                             {
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "航空器类型不存在！"));
