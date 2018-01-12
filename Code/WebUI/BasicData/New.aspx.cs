@@ -101,6 +101,8 @@ public partial class BasicData_New : BasePage
         {
             model = new News();
         //   model.GetEntitySearchPars<News>(this.Context);
+            model.Author = "";
+            model.IsDelete = false;
             model.IsTop = byte.Parse(Request.Form["IsTop"]);
             model.Sort =int.Parse(Request.Form["Sort"]);
             model.NewTitle = Request.Form["NewTitle"];
