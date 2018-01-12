@@ -49,8 +49,8 @@ namespace Model.EF
         public virtual DbSet<CompanySummary> CompanySummary { get; set; }
         public virtual DbSet<Advertisment> Advertisment { get; set; }
         public virtual DbSet<SupplyDemandInfo> SupplyDemandInfo { get; set; }
-        public virtual DbSet<News> News { get; set; }
         public virtual DbSet<RepetitivePlan> RepetitivePlan { get; set; }
         public virtual DbSet<vFlightPlan> vFlightPlan { get; set; }
+        public virtual DbSet<News> News { get; set; }
     }
 }
