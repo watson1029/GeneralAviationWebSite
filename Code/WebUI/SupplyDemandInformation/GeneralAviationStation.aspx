@@ -20,7 +20,7 @@
                         业务概况
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 1000px; height: 450px;"></script>
+                        <script id="editor" type="text/plain" style="width: 950px; height: 450px;"></script>
                     </td>
                 </tr>
                 <tr>
@@ -41,7 +41,6 @@
     <script type="text/javascript">
         $(function () {
             Main.InitGird();
-            UE.getEditor('editor');
         });
         Main = {
             //初始化表格
@@ -111,7 +110,10 @@
                 $("#btn_add").attr("onclick", "Main.Save(" + id + ");")
                 $.post(location.href, { "action": "queryone", "id": id }, function (data) {
                     $("#form_edit").form('load', data);
-                    UE.getEditor('editor').setContent(decodeURI(data.SummaryCode));
+                    var ue = UE.getEditor('editor');
+                    ue.ready(function () {
+                        ue.setContent(decodeURI(data.SummaryCode), false);
+                    });
                 });
             }
         };

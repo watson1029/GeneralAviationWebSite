@@ -27,7 +27,6 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            UE.getEditor('editor');
         });
         Main = {
             //初始化表格
@@ -90,7 +89,10 @@
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                     $("#form_audit").form('load', data);
-                    UE.getEditor('editor').setContent(decodeURI(data.SummaryCode));
+                    var ue = UE.getEditor('editor');
+                    ue.ready(function () {
+                        ue.setContent(decodeURI(data.SummaryCode), false);
+                    });
                 });
             },
             AuditSubmit: function (uid) {
@@ -132,7 +134,7 @@
                         宣传介绍
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 1000px; height: 400px;"></script>
+                        <script id="editor" type="text/plain" style="width: 950px; height: 400px;"></script>
                     </td>
                 </tr>
                 <tr>
@@ -153,7 +155,7 @@
                 <tr>
                     <td style="text-align:right">审核意见</td>
                     <td colspan="3">
-                        <input id="AuditComment" name="AuditComment" required="true" maxlength="1000" style="width: 1000px;" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AuditComment" name="AuditComment" required="true" style="width: 950px;" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
                 </tr>
             </table>

@@ -66,7 +66,7 @@ public partial class SupplyDemandInformation_GeneralAviationCompanySubmit : Base
             string strValue = Request.Form["search_value"].ToString();
             if (Request.Form["search_type"].ToString() == "CompanyName")
             {
-                predicate = u => u.CompanyName.Contains(strValue);
+                predicate = predicate.And(u => u.CompanyName.Contains(strValue));
             }
         }
 

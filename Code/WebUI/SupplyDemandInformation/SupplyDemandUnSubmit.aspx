@@ -19,7 +19,7 @@
                 <div name="CompanyName">
                     通航公司
                 </div>
-                <div name="Catalog">
+                <div name="CatalogName">
                     供求条件
                 </div>
             </div>
@@ -34,26 +34,26 @@
                     <td style="text-align: right;">供求标题
                     </td>
                     <td colspan="3">
-                        <input id="Title" name="Title" class="easyui-textbox"required="true" style="width: 1000px" />
+                        <input id="Title" name="Title" class="easyui-textbox"required="true" style="width: 950px" />
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right;">供求简介
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 1000px; height: 400px;"></script>
+                        <script id="editor" type="text/plain" style="width: 950px; height: 400px;"></script>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right;">供求条件
                     </td>
                     <td>
-                        <select id="CataLog" class="easyui-combobox" name="CataLog" required="true" style="width: 145px;">
+                        <select id="Catalog" class="easyui-combobox" name="Catalog" required="true" style="width: 145px;">
                             <option value="提供">提供</option>
                             <option value="寻求" selected="true">寻求</option>
                         </select>
                     </td>
-                    <td style="text-align: right; width:25%">有效期限
+                    <td style="text-align: right;">有效期限
                     </td>
                     <td>
                         <input id="ExpiryDate" name="ExpiryDate" style="width: 145px" type="text" required="true" class="easyui-datebox" />
@@ -63,7 +63,7 @@
                     <td style="text-align: right;">撰写人</td>
                     <td>
                         <input id="CreateName" name="CreateName" style="width: 145px" type="text" readonly="true" required="true" class="easyui-textbox" /></td>
-                    <td style="text-align: right; width:25%">录入日期</td>
+                    <td style="text-align: right;">录入日期</td>
                     <td>
                         <input id="CreateTime" name="CreateTime" style="width: 145px" type="text" readonly="true" required="true" class="easyui-datebox" /></td>
                 </tr>
@@ -83,7 +83,6 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            UE.getEditor('editor');
         });
         Main = {
             //初始化表格
@@ -153,6 +152,10 @@
                 $("#form_edit").form('clear');
                 $.post(location.href, { "action": "init" }, function (data) {
                     $("#form_edit").form('load', data);
+                    var ue = UE.getEditor('editor');
+                    ue.ready(function () {
+                        ue.setContent('', false);
+                    });
                 });
                 $("#btn_add").attr("onclick", "Main.Save();")
             },
@@ -186,7 +189,10 @@
 
                 $.post(location.href, { "action": "queryone", "id": id }, function (data) {
                     $("#form_edit").form('load', data);
-                    UE.getEditor('editor').setContent(decodeURI(data.SummaryCode));
+                    var ue = UE.getEditor('editor');
+                    ue.ready(function () {
+                        ue.setContent(decodeURI(data.SummaryCode), false);
+                    });
                 });
             },
 

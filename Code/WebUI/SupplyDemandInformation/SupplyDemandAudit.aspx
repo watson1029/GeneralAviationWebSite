@@ -17,7 +17,7 @@
                 <div name="CompanyName">
                     通航公司
                 </div>
-                <div name="Catalog">
+                <div name="CatalogName">
                     供求条件
                 </div>
             </div>
@@ -30,7 +30,6 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            UE.getEditor('editor');
         });
         Main = {
             //初始化表格
@@ -95,7 +94,10 @@
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                     $("#form_audit").form('load', data);
-                    UE.getEditor('editor').setContent(decodeURI(data.SummaryCode));
+                    var ue = UE.getEditor('editor');
+                    ue.ready(function () {
+                        ue.setContent(decodeURI(data.SummaryCode), false);
+                    });
                 });
             },
             AuditSubmit: function (uid) {
@@ -128,14 +130,14 @@
                     <td style="text-align: right">供求标题
                     </td>
                     <td colspan="3">
-                        <input id="Title" name="Title" class="easyui-textbox" readonly="true" style="width: 1000px" />
+                        <input id="Title" name="Title" class="easyui-textbox" readonly="true" style="width: 950px" />
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right">供求简介
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 1000px; height: 350px;"></script>
+                        <script id="editor" type="text/plain" style="width: 950px; height: 350px;"></script>
                     </td>
                 </tr>
                 <tr>
