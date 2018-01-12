@@ -183,8 +183,7 @@
               return;
           }
           window.open("ExportHandler.aspx?type=3&plancode=" + $('#ssPlanCode').val());
-      },
-
+      }
       };
     </script>
     <div id="detail" class="easyui-dialog" style="width: 700px; height:580px;"

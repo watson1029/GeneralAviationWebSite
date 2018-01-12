@@ -20,5 +20,5 @@ $.fn.validatebox.defaults.rules, {
             return value == $(param[0]).val();       
         },
         message: '新密码不一致！'
-    },
+    }
 });
