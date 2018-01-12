@@ -73,6 +73,7 @@ float: left;}
     float: left;
     position: relative;
     background-color: rgba(94,131,233,0.65);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#995e83e9,endColorstr=#995e83e9);
     border-radius: 15px 15px 0px 0px;
 }
 .nav-box ul { padding-top:12px;}

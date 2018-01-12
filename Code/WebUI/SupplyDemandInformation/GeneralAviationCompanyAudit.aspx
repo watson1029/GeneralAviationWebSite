@@ -81,7 +81,12 @@
             },
             //审核
             Audit: function (uid) {
-                $("#audit").dialog("open").dialog('setTitle', '审核');
+                if (screen.height >= 1080) {
+                    $("#audit").dialog("open").dialog('setTitle', '审核');
+                }
+                else {
+                    $("#audit").dialog({ title: '审核', left: 0, top: 0, height: 500 }).dialog("open");
+                }
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
                 $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
                     $("#form_audit").form('load', data);

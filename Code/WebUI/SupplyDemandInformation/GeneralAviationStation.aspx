@@ -102,7 +102,12 @@
 
             //修改链接 事件
             EditData: function (id) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑');
+                if (screen.height >= 1080) {
+                    $("#edit").dialog("open").dialog('setTitle', '编辑');
+                }
+                else {
+                    $("#edit").dialog({ title: '编辑', left: 0, top: 0, height: 500 }).dialog("open");
+                }
                 $("#btn_add").attr("onclick", "Main.Save(" + id + ");")
                 $.post(location.href, { "action": "queryone", "id": id }, function (data) {
                     $("#form_edit").form('load', data);
