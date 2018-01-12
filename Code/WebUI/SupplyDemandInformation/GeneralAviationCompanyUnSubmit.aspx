@@ -30,14 +30,14 @@
                     <td style="text-align: right">宣传标题
                     </td>
                     <td colspan="3">
-                         <input id="Title" name="Title" type="text" required="true" class="easyui-textbox" style="width: 1000px" />
+                         <input id="Title" name="Title" type="text" required="true" class="easyui-textbox" style="width: 950px" />
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: right">宣传介绍
                     </td>
                     <td colspan="3">
-                        <script id="editor" type="text/plain" style="width: 1000px; height: 440px;"></script>
+                        <script id="editor" type="text/plain" style="width: 950px; height: 440px;"></script>
                     </td>
                 </tr>
                 <tr>
@@ -61,7 +61,6 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            UE.getEditor('editor');
         });
         Main = {
             //初始化表格
@@ -143,6 +142,10 @@
                 $("#form_edit").form('clear');
                 $.post(location.href, { "action": "init" }, function (data) {
                     $("#form_edit").form('load', data);
+                    var ue = UE.getEditor('editor');
+                    ue.ready(function () {
+                        ue.setContent('', false);
+                    });
                 });
                 $("#btn_add").attr("onclick", "Main.Save();")
             },
@@ -174,7 +177,10 @@
                 $("#btn_add").attr("onclick", "Main.Save(" + id + ");")
                 $.post(location.href, { "action": "queryone", "id": id }, function (data) {
                     $("#form_edit").form('load', data);
-                    UE.getEditor('editor').setContent(decodeURI(data.SummaryCode));
+                    var ue = UE.getEditor('editor');
+                    ue.ready(function () {
+                        ue.setContent(decodeURI(data.SummaryCode), false);
+                    });
                 });
             },
 

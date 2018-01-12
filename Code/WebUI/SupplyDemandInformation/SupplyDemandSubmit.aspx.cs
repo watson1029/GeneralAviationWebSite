@@ -65,11 +65,11 @@ public partial class SupplyDemandInformation_SupplyDemandSubmit : BasePage
             string strValue = Request.Form["search_value"].ToString();
             if (Request.Form["search_type"].ToString() == "CompanyName")
             {
-                predicate = u => u.CompanyName.Contains(strValue);
+                predicate = predicate.And(u => u.CompanyName.Contains(strValue));
             }
-            else if (Request.Form["search_type"].ToString() == "Catalog")
+            else if (Request.Form["search_type"].ToString() == "CatalogName")
             {
-                predicate = u => u.Catalog.Contains(strValue);
+                predicate = predicate.And(u => u.Catalog.Contains(strValue));
             }
         }
 
