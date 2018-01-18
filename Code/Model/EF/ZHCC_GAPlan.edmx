@@ -135,6 +135,17 @@
           <Property Name="CreateUserId" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="Dictionary">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DicType" Type="varchar" MaxLength="100" />
+          <Property Name="DicValue" Type="varchar" MaxLength="100" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="DeleteFlag" Type="bit" />
+        </EntityType>
         <EntityType Name="ErrorLog">
           <Key>
             <PropertyRef Name="ErrorLogID" />
@@ -616,6 +627,7 @@
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanySummary" EntityType="Self.CompanySummary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CurrentFlightPlan" EntityType="Self.CurrentFlightPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dictionary" EntityType="Self.Dictionary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightPlan" EntityType="Self.FlightPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlightTask" EntityType="Self.FlightTask" Schema="dbo" store:Type="Tables" />
@@ -805,6 +817,7 @@
           <EntitySet Name="RepetitivePlan" EntityType="ZHCC_GAPlanModel.RepetitivePlan" />
           <EntitySet Name="vFlightPlan" EntityType="ZHCC_GAPlanModel.vFlightPlan" />
           <EntitySet Name="News" EntityType="ZHCC_GAPlanModel.News" />
+          <EntitySet Name="Dictionary" EntityType="ZHCC_GAPlanModel.Dictionary" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -1402,6 +1415,17 @@
           <Property Name="Author" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Dictionary">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DicType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DicValue" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="DeleteFlag" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1959,6 +1983,18 @@
                 <ScalarProperty Name="NewContent" ColumnName="NewContent" />
                 <ScalarProperty Name="NewTitle" ColumnName="NewTitle" />
                 <ScalarProperty Name="NewID" ColumnName="NewID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dictionary">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Dictionary">
+              <MappingFragment StoreEntitySet="Dictionary">
+                <ScalarProperty Name="DeleteFlag" ColumnName="DeleteFlag" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DicValue" ColumnName="DicValue" />
+                <ScalarProperty Name="DicType" ColumnName="DicType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

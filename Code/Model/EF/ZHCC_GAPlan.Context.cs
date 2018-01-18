@@ -52,5 +52,6 @@ namespace Model.EF
         public virtual DbSet<RepetitivePlan> RepetitivePlan { get; set; }
         public virtual DbSet<vFlightPlan> vFlightPlan { get; set; }
         public virtual DbSet<News> News { get; set; }
+        public virtual DbSet<Dictionary> Dictionary { get; set; }
     }
 }
