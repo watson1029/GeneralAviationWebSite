@@ -46,8 +46,8 @@ public class Handler : IHttpHandler
             case "collect":
                 collect(context);
                 break;
-            case "dictionary":
-                
+            case "getTypes":
+                getTypes(context);
                 break;
         }
 
@@ -189,6 +189,33 @@ public class Handler : IHttpHandler
         };
         context.Response.ContentType = "text/plain";
         context.Response.Write(JsonConvert.SerializeObject(result));
+    }
+    public void getTypes(HttpContext context)
+    {
+        int type = Convert.ToInt16(context.Request["type"]);
+        DBHelper<Dictionary> helper = new DBHelper<Dictionary>();
+        List<Dictionary> list = helper.FindList(m => m.ID, true);
+        List<Compobox> cbs = new List<Compobox>();
+        if (type == 1)
+        {
+            Compobox c = new Compobox();
+            c.id = 0;
+            c.text = "资料类型";
+            c.selected = true;
+            cbs.Add(c);
+        }
+        for (int i = 0; i < list.Count; i++)
+        {
+            Dictionary dic = list[i];
+            
+            Compobox cb = new Compobox();
+            cb.id = dic.ID;
+            cb.text = dic.DicValue;
+            cb.desc = dic.DicValue;
+            cbs.Add(cb);
+        }
+        context.Response.ContentType = "application/json";
+        context.Response.Write(JsonConvert.SerializeObject(cbs));
     }
     /// <summary>
     /// 获取公司列表

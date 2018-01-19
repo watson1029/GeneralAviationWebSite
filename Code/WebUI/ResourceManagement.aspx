@@ -15,7 +15,23 @@
         var id;
         var index;
         var type;
+        var map = {};
         $(function () {
+            $.ajax({
+                url: '/Handler.ashx?action=getTypes&type=3',
+                async: false,
+                datatype:'json',
+                success: function (data) {
+                    
+                    var json = data
+                    for (var i = 0; i < json.length; i++) {
+                        //alert(json[i].id + json[i].text);
+                        map[json[i].id]=json[i].text;
+                    }
+                    //alert(map[1]);
+                }
+            });
+
             $('#dg').datagrid({
                 url: "/Handler.ashx?action=get"
             });
@@ -80,7 +96,7 @@
         function get() {
             $('#dg').datagrid({
                 url: "/Handler.ashx?action=get",
-                queryParams: { type: +$('#type option:selected').val(), status: $('#status option:selected').val() }
+                queryParams: { type: +$('#type').combobox('getValue'), status: $('#status option:selected').val() }
             });
         }
     </script>
@@ -98,13 +114,15 @@
                 <option value="3">已通过</option>
                 <option value="4">已拒绝</option>
             </select>-->
-            <select class="easyui-combobox" id="type" name="type" labelposition="left" style="width: 250px; margin: 20px;">
-                <option value="0">资料类别</option>
-                <option value="1">国家和民航相关通航政策、管理规定</option>
-                <option value="2">中南地区通航管理规定</option>
-                <option value="3">河南空管通航管理相关程序</option>
-                <option value="4">应急救援相关程序</option>
-            </select>
+
+            <input class="easyui-combobox" id="type" name="type" labelposition="left" style="width: 250px; margin: 20px;" data-options="
+					url:'/Handler.ashx?action=getTypes&type=1',
+					method:'get',
+					valueField:'id',
+					textField:'text',
+					panelHeight:'auto',
+					labelPosition: 'left'
+					"/>
             <a class="easyui-linkbutton" id="bt_query" onclick="get();" data-options="iconCls:'icon-search'" style="margin-right:10px;">查询</a>
         </div>
     </div>
@@ -147,12 +165,12 @@
                     <tr>
                         <th>资料类别</th>
                         <td>
-                            <select id="resourcetype" class="easyui-combobox" name="resourcetype" style="width: 100%" data-options="required:true">
-                                <option value="1">国家和民航相关通航政策、管理规定</option>
-                                <option value="2">中南地区通航管理规定</option>
-                                <option value="3">河南空管通航管理相关程序</option>
-                                <option value="4">应急救援相关程序</option>
-                            </select>
+                            <input class="easyui-combobox" id="resourcetype" name="resourcetype" style="width: 100%; margin: 20px;" data-options="
+					            url:'/Handler.ashx?action=getTypes&type=2',
+					            method:'get',
+					            valueField:'id',
+					            textField:'text',
+					            panelHeight:'auto',required:true"/>
                         </td>
                     </tr>
                     <tr>
@@ -241,7 +259,10 @@
             }
             function formatType(val, row) {
                 var types = new Array('国家和民航相关通航政策、管理规定', '中南地区通航管理规定', '河南空管通航管理相关程序', '应急救援相关程序');
-                return types[val - 1];
+                if (map[val] == '') {
+                    return "其他";
+                }
+                return map[val];
             }
             function formatFile(val, row, index) {
                 var btn = "<a href='/Handler.ashx?action=download&filepath=" + val + "'>下载</a>";
