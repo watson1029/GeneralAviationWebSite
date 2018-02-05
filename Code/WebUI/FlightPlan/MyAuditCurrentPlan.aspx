@@ -106,7 +106,8 @@
                     $("#PlanCode").html(data.PlanCode);
                     $("#FlightType").html(data.FlightType);
                     $("#AircraftType").html(data.AircraftType);
-                    $("#FlightDirHeight").html(data.FlightDirHeight);
+                    $("#FlightArea").html(data.FlightArea);
+                    $("#FlightHeight").html(data.FlightHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
                     $("#SOBT").html(new Date(data.SOBT).toDateString());
@@ -180,16 +181,25 @@
                     <th>航空器类型：</th>
                     <td id="AircraftType"></td>
                 </tr>
+                    <tr>
+              <th>飞行范围：</th>
+                    <td id="FlightArea"></td>
+                    <th>飞行高度：
+                    </th>
+                    <td id="FlightHeight"></td>
+                </tr>
             <tr>
-                    <th style="width:176px;">航线走向和飞行高度：</th>
-                    <td id="FlightDirHeight"></td>
+                  <%--  <th style="width:176px;">航线走向和飞行高度：</th>
+                    <td id="FlightDirHeight"></td>--%>
                     <th>批件：</th>
                     <td id="AttchFile"></td>
+                    <th>其他批件：</th>
+                    <td id="OtherAttchFile"></td>
                 </tr>
                   <tr>
-              <th>起飞机场：</th>
+              <th>起飞点：</th>
                     <td id="ADEP"></td>
-                    <th>降落机场：
+                    <th>降落点：
                     </th>
                     <td id="ADES"></td>
                 </tr>

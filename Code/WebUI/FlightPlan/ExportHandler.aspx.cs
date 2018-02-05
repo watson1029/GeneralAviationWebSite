@@ -72,16 +72,18 @@ public partial class FlightPlan_ExportHandler : BasePage
         headerRow.CreateCell(1).SetCellValue("公司名称");
         headerRow.CreateCell(2).SetCellValue("任务类型");
         headerRow.CreateCell(3).SetCellValue("航空器类型");
-        headerRow.CreateCell(4).SetCellValue("航线走向和飞行高度");
-        headerRow.CreateCell(5).SetCellValue("航空器呼号");
-        headerRow.CreateCell(6).SetCellValue("起飞机场");
-        headerRow.CreateCell(7).SetCellValue("降落机场");
-        headerRow.CreateCell(8).SetCellValue("预计开始日期");
-        headerRow.CreateCell(9).SetCellValue("预计结束日期");
-        headerRow.CreateCell(10).SetCellValue("起飞时刻");
-        headerRow.CreateCell(11).SetCellValue("降落时刻");
-        headerRow.CreateCell(12).SetCellValue("周执行计划");
-        headerRow.CreateCell(13).SetCellValue("其他需要说明的事项");
+       // headerRow.CreateCell(4).SetCellValue("航线走向和飞行高度");
+        headerRow.CreateCell(4).SetCellValue("飞行范围");
+        headerRow.CreateCell(5).SetCellValue("飞行高度");
+        headerRow.CreateCell(6).SetCellValue("注册号");
+        headerRow.CreateCell(7).SetCellValue("起飞点");
+        headerRow.CreateCell(8).SetCellValue("降落点");
+        headerRow.CreateCell(9).SetCellValue("预计开始日期");
+        headerRow.CreateCell(10).SetCellValue("预计结束日期");
+        headerRow.CreateCell(11).SetCellValue("起飞时刻");
+        headerRow.CreateCell(12).SetCellValue("降落时刻");
+        headerRow.CreateCell(13).SetCellValue("周执行计划");
+        headerRow.CreateCell(14).SetCellValue("其他需要说明的事项");
         int rowIndex = 1;
         if (listData != null && listData.Count > 0)
         {
@@ -92,16 +94,17 @@ public partial class FlightPlan_ExportHandler : BasePage
                 dataRow.CreateCell(1).SetCellValue(item.CompanyName);
                 dataRow.CreateCell(2).SetCellValue(item.FlightType);
                 dataRow.CreateCell(3).SetCellValue(item.AircraftType);
-                dataRow.CreateCell(4).SetCellValue(item.FlightDirHeight);
-                dataRow.CreateCell(5).SetCellValue(item.CallSign);
-                dataRow.CreateCell(6).SetCellValue(item.ADEP);
-                dataRow.CreateCell(7).SetCellValue(item.ADES);
-                dataRow.CreateCell(8).SetCellValue(item.StartDate.ToString());
-                dataRow.CreateCell(9).SetCellValue(item.EndDate.ToString());
-                dataRow.CreateCell(10).SetCellValue(item.SOBT.ToString());
-                dataRow.CreateCell(11).SetCellValue(item.SIBT.ToString());
-                dataRow.CreateCell(12).SetCellValue(item.WeekSchedule);
-                dataRow.CreateCell(13).SetCellValue(item.Remark);
+                dataRow.CreateCell(4).SetCellValue(item.FlightArea);
+                dataRow.CreateCell(5).SetCellValue(item.FlightHeight);
+                dataRow.CreateCell(6).SetCellValue(item.CallSign);
+                dataRow.CreateCell(7).SetCellValue(item.ADEP);
+                dataRow.CreateCell(8).SetCellValue(item.ADES);
+                dataRow.CreateCell(9).SetCellValue(item.StartDate.ToString());
+                dataRow.CreateCell(10).SetCellValue(item.EndDate.ToString());
+                dataRow.CreateCell(11).SetCellValue(item.SOBT.ToString());
+                dataRow.CreateCell(12).SetCellValue(item.SIBT.ToString());
+                dataRow.CreateCell(13).SetCellValue(item.WeekSchedule);
+                dataRow.CreateCell(14).SetCellValue(item.Remark);
                 rowIndex++;
             }
             var dr = sheet1.CreateRow(rowIndex);
@@ -164,19 +167,20 @@ public partial class FlightPlan_ExportHandler : BasePage
         headerRow.CreateCell(1).SetCellValue("公司名称");
         headerRow.CreateCell(2).SetCellValue("任务类型");
         headerRow.CreateCell(3).SetCellValue("航空器类型");
-        headerRow.CreateCell(4).SetCellValue("航线走向和飞行高度");
-        headerRow.CreateCell(5).SetCellValue("起飞机场");
-        headerRow.CreateCell(6).SetCellValue("降落机场");
-        headerRow.CreateCell(7).SetCellValue("起飞时刻");
-        headerRow.CreateCell(8).SetCellValue("降落时刻");
-        headerRow.CreateCell(9).SetCellValue("其他需要说明的事项");
-        headerRow.CreateCell(10).SetCellValue("航空器架数");
-        headerRow.CreateCell(11).SetCellValue("机长（飞行员）姓名");
-        headerRow.CreateCell(12).SetCellValue("通信联络方法");
-        headerRow.CreateCell(13).SetCellValue("飞行气象条件");
-        headerRow.CreateCell(14).SetCellValue("空勤组人数");
-        headerRow.CreateCell(15).SetCellValue("二次雷达应答机代码");
-        headerRow.CreateCell(16).SetCellValue("状态");
+        headerRow.CreateCell(4).SetCellValue("飞行范围");
+        headerRow.CreateCell(5).SetCellValue("飞行高度");
+        headerRow.CreateCell(6).SetCellValue("起飞点");
+        headerRow.CreateCell(7).SetCellValue("降落点");
+        headerRow.CreateCell(8).SetCellValue("起飞时刻");
+        headerRow.CreateCell(9).SetCellValue("降落时刻");
+        headerRow.CreateCell(10).SetCellValue("其他需要说明的事项");
+        headerRow.CreateCell(11).SetCellValue("航空器架数");
+        headerRow.CreateCell(12).SetCellValue("机长（飞行员）姓名");
+        headerRow.CreateCell(13).SetCellValue("通信联络方法");
+        headerRow.CreateCell(14).SetCellValue("飞行气象条件");
+        headerRow.CreateCell(15).SetCellValue("空勤组人数");
+        headerRow.CreateCell(16).SetCellValue("二次雷达应答机代码");
+        headerRow.CreateCell(17).SetCellValue("状态");
         int rowIndex = 1;
         if (listData != null && listData.Count > 0)
         {
@@ -187,18 +191,20 @@ public partial class FlightPlan_ExportHandler : BasePage
                 dataRow.CreateCell(1).SetCellValue(item.CompanyName);
                 dataRow.CreateCell(2).SetCellValue(item.FlightType);
                 dataRow.CreateCell(3).SetCellValue(item.AircraftType);
-                dataRow.CreateCell(4).SetCellValue(item.FlightDirHeight);
-                dataRow.CreateCell(5).SetCellValue(item.ADEP);
-                dataRow.CreateCell(6).SetCellValue(item.ADES);  
-                dataRow.CreateCell(7).SetCellValue(item.SOBT.ToString());
-                dataRow.CreateCell(8).SetCellValue(item.SIBT.ToString());
-                dataRow.CreateCell(9).SetCellValue(item.Remark);
-                dataRow.CreateCell(10).SetCellValue((item.AircraftNum ?? 0).ToString()); 
-                dataRow.CreateCell(11).SetCellValue(item.Pilot);
-                dataRow.CreateCell(12).SetCellValue(item.ContactWay);
-                dataRow.CreateCell(13).SetCellValue(item.WeatherCondition);
-                dataRow.CreateCell(14).SetCellValue((item.AircrewGroupNum??0).ToString());          
-                dataRow.CreateCell(15).SetCellValue(item.RadarCode);
+             //   dataRow.CreateCell(4).SetCellValue(item.FlightDirHeight);
+                dataRow.CreateCell(4).SetCellValue(item.FlightArea);
+                dataRow.CreateCell(5).SetCellValue(item.FlightHeight);
+                dataRow.CreateCell(6).SetCellValue(item.ADEP);
+                dataRow.CreateCell(7).SetCellValue(item.ADES);  
+                dataRow.CreateCell(8).SetCellValue(item.SOBT.ToString());
+                dataRow.CreateCell(9).SetCellValue(item.SIBT.ToString());
+                dataRow.CreateCell(10).SetCellValue(item.Remark);
+                dataRow.CreateCell(11).SetCellValue((item.AircraftNum ?? 0).ToString()); 
+                dataRow.CreateCell(12).SetCellValue(item.Pilot);
+                dataRow.CreateCell(13).SetCellValue(item.ContactWay);
+                dataRow.CreateCell(14).SetCellValue(item.WeatherCondition);
+                dataRow.CreateCell(15).SetCellValue((item.AircrewGroupNum??0).ToString());          
+                dataRow.CreateCell(16).SetCellValue(item.RadarCode);
                    var str = "";
                               if (item.PlanState == "end") {
                                   str = "审核通过";
@@ -209,7 +215,7 @@ public partial class FlightPlan_ExportHandler : BasePage
                               else {
                                   str = item.PlanState + "审核中";
                               }
-                dataRow.CreateCell(16).SetCellValue(str); 
+                dataRow.CreateCell(17).SetCellValue(str); 
                 rowIndex++;
             }
             var dr = sheet1.CreateRow(rowIndex);
@@ -281,15 +287,15 @@ public partial class FlightPlan_ExportHandler : BasePage
 
         headerRow.CreateCell(0).SetCellValue("申请单号");
         headerRow.CreateCell(1).SetCellValue("任务类型");
-        headerRow.CreateCell(2).SetCellValue("航空器呼号");
+        headerRow.CreateCell(2).SetCellValue("注册号");
         headerRow.CreateCell(3).SetCellValue("使用机型");
         headerRow.CreateCell(4).SetCellValue("航线走向和飞行高度");
         headerRow.CreateCell(5).SetCellValue("预计开始时间");
         headerRow.CreateCell(6).SetCellValue("预计结束时间");
         headerRow.CreateCell(7).SetCellValue("起飞时刻");
         headerRow.CreateCell(8).SetCellValue("降落时刻");
-        headerRow.CreateCell(9).SetCellValue("起飞机场");
-        headerRow.CreateCell(10).SetCellValue("降落机场");
+        headerRow.CreateCell(9).SetCellValue("起飞点");
+        headerRow.CreateCell(10).SetCellValue("降落点");
         headerRow.CreateCell(11).SetCellValue("周执行计划");
         headerRow.CreateCell(12).SetCellValue("其他需要说明的事项");
         int rowIndex = 1;

@@ -80,6 +80,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
             model.GetEntitySearchPars<RepetitivePlan>(this.Context);
             model.WeekSchedule = Request.Form["qx"];
             model.AttchFile = Request.Params["AttchFilesInfo"];
+            model.OtherAttchFile = Request.Params["OtherAttchFilesInfo"];
             model.PlanState = "0";
             model.CompanyCode3 = User.CompanyCode3 ?? "";
             model.CompanyName = User.CompanyName;
@@ -103,6 +104,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                 model.GetEntitySearchPars<RepetitivePlan>(this.Context);
                 model.ModifyTime = DateTime.Now;
                 model.AttchFile = Request.Params["AttchFilesInfo"];
+                model.OtherAttchFile = Request.Params["OtherAttchFilesInfo"];
                 model.WeekSchedule = Request.Form["qx"];
                 if (bll.Update(model))
                 {
@@ -262,56 +264,64 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                         case 2:
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
                             if (colobj == null || string.IsNullOrEmpty(colobj))
-                                throw new Exception(string.Format(baseerrormessage, i + 2, "航线走向和飞行高度不能为空！"));
-                            if (length > 32)
-                                throw new Exception(string.Format(baseerrormessage, i + 2, "航空器类型不能超过32个字符！"));
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "飞行范围不能为空！"));
+                            if (length > 50)
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "飞行范围不能超过50个字符！"));
                             break;
                         case 3:
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
                             if (colobj == null || string.IsNullOrEmpty(colobj))
-                                throw new Exception(string.Format(baseerrormessage, i + 2, "航空器呼号不能为空！"));
-                            if (length > 36)
-                                throw new Exception(string.Format(baseerrormessage, i + 2, "航空器呼号不能超过36个字符！"));
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "飞行高度不能为空！"));
+                             int flyheight = int.MinValue;
+                             if (!string.IsNullOrEmpty(colobj) && !int.TryParse(colobj, out flyheight))
+                                 throw new Exception(string.Format(baseerrormessage, i + 2, "飞行高度格式不正确！"));
                             break;
                         case 4:
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
                             if (colobj == null || string.IsNullOrEmpty(colobj))
-                                throw new Exception(string.Format(baseerrormessage, i + 2, "起飞机场不能为空！"));
-                            if (length > 4)
-                                throw new Exception(string.Format(baseerrormessage, i + 2, "起飞机场不能超过4个字符！"));
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "注册号不能为空！"));
+                            if (length > 36)
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "注册号不能超过36个字符！"));
                             break;
                         case 5:
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
                             if (colobj == null || string.IsNullOrEmpty(colobj))
-                                throw new Exception(string.Format(baseerrormessage, i + 2, "降落机场不能为空！"));
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "起飞点不能为空！"));
                             if (length > 4)
-                                throw new Exception(string.Format(baseerrormessage, i + 2, "降落机场不能超过4个字符！"));
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "起飞点不能超过4个字符！"));
                             break;
                         case 6:
+                            length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
+                            if (colobj == null || string.IsNullOrEmpty(colobj))
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "降落点不能为空！"));
+                            if (length > 4)
+                                throw new Exception(string.Format(baseerrormessage, i + 2, "降落点不能超过4个字符！"));
+                            break;
+                        case 7:
                             DateTime bdt = DateTime.MinValue;
                             if (!string.IsNullOrEmpty(colobj) && !DateTime.TryParse(colobj, out bdt))
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "预计开始日期格式不正确！"));
                             break;
-                        case 7:
+                        case 8:
                             DateTime edt = DateTime.MinValue;
                             if (!string.IsNullOrEmpty(colobj) && !DateTime.TryParse(colobj, out edt))
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "预计结束日期格式不正确！"));
                             if (edt < Convert.ToDateTime(rowobj.ItemArray[j - 1]))
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "预计结束日期不能小于预计开始日期！"));
                             break;
-                        case 8:
+                        case 9:
                             TimeSpan bts = TimeSpan.MinValue;
                             colobj=Convert.ToDateTime(colobj).ToString("hh:mm:ss");
                             if (!string.IsNullOrEmpty(colobj) && !TimeSpan.TryParse(colobj, out bts))
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "起飞时刻格式不正确！"));
                             break;
-                        case 9:
+                        case 10:
                             TimeSpan ets = TimeSpan.MinValue;
                             colobj = Convert.ToDateTime(colobj).ToString("hh:mm:ss");
                             if (!string.IsNullOrEmpty(colobj) && !TimeSpan.TryParse(colobj, out ets))
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "降落时刻格式不正确！"));
                             break;
-                        case 10:
+                        case 11:
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
 
                             if (colobj == null || string.IsNullOrEmpty(colobj))
@@ -319,7 +329,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                             if (length > 7)
                                 throw new Exception(string.Format(baseerrormessage, i + 2, "周执行计划不能超过7个字符！"));
                             break;
-                        case 11:
+                        case 12:
                             length = string.IsNullOrEmpty(colobj) ? 0 : colobj.Length;
 
                             if (length == 0)
@@ -340,16 +350,17 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                 {
                     FlightType = rowobj.ItemArray[0].ToString(),
                     AircraftType = rowobj.ItemArray[1].ToString(),
-                    FlightDirHeight = rowobj.ItemArray[2].ToString(),
-                    CallSign = rowobj.ItemArray[3].ToString(),
-                    ADEP = rowobj.ItemArray[4].ToString(),
-                    ADES = rowobj.ItemArray[5].ToString(),
-                    StartDate = DateTime.Parse(rowobj.ItemArray[6].ToString()),
-                    EndDate = DateTime.Parse(rowobj.ItemArray[7].ToString()),
-                    SOBT = TimeSpan.Parse(Convert.ToDateTime(rowobj.ItemArray[8]).ToString("hh:mm:ss")),
-                    SIBT = TimeSpan.Parse(Convert.ToDateTime(rowobj.ItemArray[9]).ToString("hh:mm:ss")),
-                    WeekSchedule = rowobj.ItemArray[10].ToString(),
-                    Remark = rowobj.ItemArray[11].ToString(),
+                    FlightArea = rowobj.ItemArray[2].ToString(),
+                    FlightHeight =int.Parse(rowobj.ItemArray[3].ToString()),
+                    CallSign = rowobj.ItemArray[4].ToString(),
+                    ADEP = rowobj.ItemArray[5].ToString(),
+                    ADES = rowobj.ItemArray[6].ToString(),
+                    StartDate = DateTime.Parse(rowobj.ItemArray[7].ToString()),
+                    EndDate = DateTime.Parse(rowobj.ItemArray[8].ToString()),
+                    SOBT = TimeSpan.Parse(Convert.ToDateTime(rowobj.ItemArray[9]).ToString("hh:mm:ss")),
+                    SIBT = TimeSpan.Parse(Convert.ToDateTime(rowobj.ItemArray[10]).ToString("hh:mm:ss")),
+                    WeekSchedule = rowobj.ItemArray[11].ToString(),
+                    Remark = rowobj.ItemArray[12].ToString(),
                     PlanState = "0",
                     CompanyCode3 = User.CompanyCode3 ?? "",
                     CompanyName = User.CompanyName,
@@ -396,16 +407,17 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         headerRow.CreateCell(1).SetCellValue("公司名称");
         headerRow.CreateCell(2).SetCellValue("任务类型");
         headerRow.CreateCell(3).SetCellValue("航空器类型");
-        headerRow.CreateCell(4).SetCellValue("航线走向和飞行高度");
-        headerRow.CreateCell(5).SetCellValue("航空器呼号");
-        headerRow.CreateCell(6).SetCellValue("起飞机场");
-        headerRow.CreateCell(7).SetCellValue("降落机场");
-        headerRow.CreateCell(8).SetCellValue("预计开始日期");
-        headerRow.CreateCell(9).SetCellValue("预计结束日期");
-        headerRow.CreateCell(10).SetCellValue("起飞时刻");
-        headerRow.CreateCell(11).SetCellValue("降落时刻");
-        headerRow.CreateCell(12).SetCellValue("周执行计划");
-        headerRow.CreateCell(13).SetCellValue("其他需要说明的事项");
+        headerRow.CreateCell(4).SetCellValue("飞行范围");
+        headerRow.CreateCell(5).SetCellValue("飞行高度");
+        headerRow.CreateCell(6).SetCellValue("注册号");
+        headerRow.CreateCell(7).SetCellValue("起飞点");
+        headerRow.CreateCell(8).SetCellValue("降落点");
+        headerRow.CreateCell(9).SetCellValue("预计开始日期");
+        headerRow.CreateCell(10).SetCellValue("预计结束日期");
+        headerRow.CreateCell(11).SetCellValue("起飞时刻");
+        headerRow.CreateCell(12).SetCellValue("降落时刻");
+        headerRow.CreateCell(13).SetCellValue("周执行计划");
+        headerRow.CreateCell(14).SetCellValue("其他需要说明的事项");
         int rowIndex = 1;
         if (listData != null && listData.Count > 0)
         {
@@ -416,16 +428,17 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                     dataRow.CreateCell(1).SetCellValue(item.CompanyName);
                     dataRow.CreateCell(2).SetCellValue(item.FlightType);
                     dataRow.CreateCell(3).SetCellValue(item.AircraftType);
-                    dataRow.CreateCell(4).SetCellValue(item.FlightDirHeight);
-                    dataRow.CreateCell(5).SetCellValue(item.CallSign);
-                    dataRow.CreateCell(6).SetCellValue(item.ADEP);
-                    dataRow.CreateCell(7).SetCellValue(item.ADES);
-                    dataRow.CreateCell(8).SetCellValue(item.StartDate.ToString());
-                    dataRow.CreateCell(9).SetCellValue(item.EndDate.ToString());
-                    dataRow.CreateCell(10).SetCellValue(item.SOBT.ToString());
-                    dataRow.CreateCell(11).SetCellValue(item.SIBT.ToString());
-                    dataRow.CreateCell(12).SetCellValue(item.WeekSchedule);
-                    dataRow.CreateCell(13).SetCellValue(item.Remark);
+                    dataRow.CreateCell(4).SetCellValue(item.FlightArea);
+                    dataRow.CreateCell(5).SetCellValue(item.FlightHeight);
+                    dataRow.CreateCell(6).SetCellValue(item.CallSign);
+                    dataRow.CreateCell(7).SetCellValue(item.ADEP);
+                    dataRow.CreateCell(8).SetCellValue(item.ADES);
+                    dataRow.CreateCell(9).SetCellValue(item.StartDate.ToString());
+                    dataRow.CreateCell(10).SetCellValue(item.EndDate.ToString());
+                    dataRow.CreateCell(11).SetCellValue(item.SOBT.ToString());
+                    dataRow.CreateCell(12).SetCellValue(item.SIBT.ToString());
+                    dataRow.CreateCell(13).SetCellValue(item.WeekSchedule);
+                    dataRow.CreateCell(14).SetCellValue(item.Remark);
                     rowIndex++;
                 }
                 var dr = sheet.CreateRow(rowIndex);

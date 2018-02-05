@@ -36,12 +36,26 @@
 
                 </td>
             </tr>
+
+
+              <tr>
+                <th>飞行范围：
+                </th>
+                <td id="FlightArea">
+                </td>
+                <th>飞行高度（米）：
+                </th>
+                <td id="FlightHeight">
+
+                </td>
+            </tr>
+
             <tr>
-                <th>航线走向和飞行高度：
+  <%--              <th>航线走向和飞行高度：
                 </th>
                 <td id="FlightDirHeight">
-                </td>
-  <th>航空器呼号：
+                </td>--%>
+  <th>注册号：
                 </th>
                 <td id="CallSign">
                 </td>
@@ -57,11 +71,11 @@
                 </td>
             </tr>
             <tr>
-                <th>起飞机场：
+                <th>起飞点：
                 </th>
                 <td id="ADEP">
                 </td>
- <th>降落机场：
+ <th>降落机点：
                 </th>
                 <td id="ADES">
                 </td>
@@ -152,7 +166,8 @@
                     $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
                     $("#CallSign").html(data.CallSign);
                     $("#AircraftType").html(data.AircraftType);
-                    $("#FlightDirHeight").html(data.FlightDirHeight);
+                    $("#FlightArea").html(data.FlightArea);
+                    $("#FlightHeight").html(data.FlightHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
                     $("#Remark").html(data.Remark);
@@ -175,7 +190,8 @@
                             $("#FlightType").html(data.FlightType);
                             $("#CallSign").html(data.CallSign);
                             $("#AircraftType").html(data.AircraftType);
-                            $("#FlightDirHeight").html(data.FlightDirHeight);
+                            $("#FlightArea").html(data.FlightArea);
+                            $("#FlightHeight").html(data.FlightHeight);
                             $("#StartDate").html(new Date(data.StartDate.dateValFormat()).format("yyyy-MM-dd"));
                             $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
                             $("#ADEP").html(data.ADEP);

@@ -38,5 +38,8 @@ namespace Model.EF
         public string CallSign { get; set; }
         public string CompanyName { get; set; }
         public Nullable<bool> IsGenFlightPlan { get; set; }
+        public string FlightArea { get; set; }
+        public int FlightHeight { get; set; }
+        public string OtherAttchFile { get; set; }
     }
 }

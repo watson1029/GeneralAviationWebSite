@@ -46,5 +46,7 @@ namespace Model.EF
         public string RepPlanCode { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
+        public string FlightArea { get; set; }
+        public byte FlightHeight { get; set; }
     }
 }

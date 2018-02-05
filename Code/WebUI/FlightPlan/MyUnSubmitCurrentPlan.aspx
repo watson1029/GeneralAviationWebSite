@@ -50,9 +50,11 @@
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 60 },
-                        { title: '航空器呼号', field: 'CallSign', width: 80 },
+                        { title: '注册号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 60 },
-                        { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
+                        { title: 'FlightHeight', field: 'FlightArea', width: 100 },
+                        { title: '飞行高度', field: 'FlightHeight', width: 100 },
+                        //{ title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
                         {
                             title: '起飞时刻', field: 'SOBT', width: 100, formatter: function (value, rec, index) {
 
@@ -67,8 +69,8 @@
                                 return timesstamp.toLocaleDateString();
                             }
                         },
-                        { title: '起飞机场', field: 'ADEP', width: 80 },
-                        { title: '降落机场', field: 'ADES', width: 80 },
+                        { title: '起飞点', field: 'ADEP', width: 80 },
+                        { title: '降落点', field: 'ADES', width: 80 },
 
                          { title: '创建人', field: 'CreatorName', width: 60 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },

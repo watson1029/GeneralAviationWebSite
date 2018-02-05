@@ -85,7 +85,10 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
                    model.RepetPlanID = repetplan.RepetPlanID;
                    model.FlightType = repetplan.FlightType;
                    model.AircraftType = repetplan.AircraftType;
-                   model.FlightDirHeight = repetplan.FlightDirHeight;
+                   model.CallSign = repetplan.CallSign;
+                   model.FlightArea = repetplan.FlightArea;
+                   model.FlightHeight = repetplan.FlightHeight;
+                   // model.FlightDirHeight = repetplan.FlightDirHeight;
                    model.CallSign = repetplan.CallSign;
                    model.ADEP = repetplan.ADEP;
                    model.ADES = repetplan.ADES;

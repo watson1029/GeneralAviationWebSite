@@ -21,7 +21,7 @@ namespace DAL.FlightPlan
         {
             List<WorkflowTplNode> _WorkflowTplNodeList = new List<WorkflowTplNode>();
 
-            var _TWFStepsList = FindList(a => a.TWFID == twfId.ToString(), a => a.StepID, true);
+            var _TWFStepsList = FindList(a => a.TWFID == twfId, a => a.StepID, true);
             foreach (var item in _TWFStepsList)
             {
                 _WorkflowTplNodeList.Add(ExecReader(item));
@@ -33,8 +33,7 @@ namespace DAL.FlightPlan
         {
             WorkflowTplNode wfNode = new WorkflowTplNode();
                 wfNode.StepId = entity.StepID;
-            if (!string.IsNullOrEmpty(entity.TWFID))
-                wfNode.TWFID = Convert.ToInt32(entity.TWFID);
+                wfNode.TWFID = entity.TWFID;
                 wfNode.StepName =entity.StepName??"";
             if (entity.PrevID.HasValue)
                 wfNode.PrevId = entity.PrevID.Value;

@@ -43,5 +43,7 @@ namespace Model.EF
         public string CompanyName { get; set; }
         public int RepetPlanID { get; set; }
         public byte CreateSource { get; set; }
+        public string FlightArea { get; set; }
+        public int FlightHeight { get; set; }
     }
 }

@@ -31,25 +31,37 @@
                         required="true" class="easyui-combobox" style="height:25px"/>
                 </td>
             </tr>
+              <tr>
+                <th>飞行范围：
+                </th>
+                <td>
+                    <input id="FlightArea" name="FlightArea" maxlength="50"  type="text" required="true" class="easyui-validatebox textbox" />
+                </td>
+  <th>飞行高度（米）：
+                </th>
+                <td>
+                 <input id="FlightHeight" name="FlightHeight" style="height:25px" maxlength="5" type="text" required="true" class="easyui-numberbox" data-options="min:1,max:50000"/>
+                </td>
+            </tr>
             <tr>
-                <th>航线走向和飞行高度：
+<%--                <th>航线走向和飞行高度：
                 </th>
                 <td>
                     <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30"  type="text" required="true" class="easyui-validatebox textbox" />
-                </td>
-  <th>航空器呼号：
+                </td>--%>
+  <th>注册号：
                 </th>
                 <td>
                     <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-validatebox textbox" />
                 </td>
             </tr>
             <tr>
-                <th>起飞机场：
+                <th>起飞点：
                 </th>
                 <td>
                     <input id="ADEP" name="ADEP" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
                 </td>
- <th>降落机场：
+ <th>降落点：
                 </th>
                 <td>
                     <input id="ADES" name="ADES" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
@@ -71,12 +83,12 @@
                 <th >起飞时刻：
                 </th>
                 <td>
-                    <input id="SOBT" name="SOBT"   editable="false" required="true" class="easyui-timespinner" style="height:25px"/>
+                    <input id="SOBT" name="SOBT"  required="true" class="easyui-timespinner" showSeconds="true" style="height:25px"/>
                 </td>
 <th>降落时刻：
                 </th>
                 <td >
-                    <input id="SIBT" name="SIBT"  editable="false" required="true" class="easyui-timespinner" style="height:25px"/>
+                    <input id="SIBT" name="SIBT"  required="true" class="easyui-timespinner" showSeconds="true" style="height:25px"/>
                 </td>
 
             </tr>
@@ -84,15 +96,24 @@
             <tr>
                 <th>批件：
                 </th>
-                <td>
-
+                <td colspan="3">
                     <input type="hidden" name="AttchFilesInfo" id="AttchFilesInfo" />
                     <input type="file" id="AttchFiles" name="AttchFiles" />
                     <a id="btn_upload" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('AttchFiles').uploadFiles()">上传</a>
                     <div id="AttchFiles-fileQueue"></div>
                     <div id="AttchFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
                 </td>
-
+            </tr>
+               <tr>
+                <th>其他批件：
+                </th>
+                <td colspan="3">
+                    <input type="hidden" name="OtherAttchFilesInfo" id="OtherAttchFilesInfo" />
+                    <input type="file" id="OtherAttchFiles" name="OtherAttchFiles" />
+                    <a id="btn_upload1" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('OtherAttchFiles').uploadFiles()">上传</a>
+                    <div id="OtherAttchFiles-fileQueue"></div>
+                    <div id="OtherAttchFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
+                </td>
             </tr>
             <tr>
                 <th>周执行计划：
@@ -150,6 +171,17 @@
                         uploadPath: "Files/RepetPlan/",
                         uploadedFiles: data.AttchFile
                     });
+                    new dj.upload({
+                        id: "OtherAttchFiles",
+                        maxSize: 5,
+                        multi: true,
+                        queueId: "OtherAttchFiles-fileQueue",
+                        listId: "OtherAttchFiles-fileList",
+                        truncate: "30",
+                        maxCount: "1",
+                        uploadPath: "Files/RepetPlan/",
+                        uploadedFiles: data.OtherAttchFile
+                    });
                 });
             }
             else {
@@ -169,7 +201,18 @@
                         maxCount: "1",
                         uploadPath: "Files/RepetPlan/",
                         uploadedFiles: ""
-                    });
+                });
+                new dj.upload({
+                    id: "OtherAttchFiles",
+                    maxSize: 5,
+                    multi: true,
+                    queueId: "OtherAttchFiles-fileQueue",
+                    listId: "OtherAttchFiles-fileList",
+                    truncate: "30",
+                    maxCount: "1",
+                    uploadPath: "Files/RepetPlan/",
+                    uploadedFiles: ""
+                });
             }
         });
 

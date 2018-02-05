@@ -50,9 +50,10 @@
                   columns: [[
                       { title: '申请单号', field: 'PlanCode', width: 120 },
                       { title: '任务类型', field: 'FlightType', width: 80 },
-                      { title: '航空器呼号', field: 'CallSign', width: 80 },
+                      { title: '注册号', field: 'CallSign', width: 80 },
                       { title: '使用机型', field: 'AircraftType', width: 100 },
-                      { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
+                      { title: '飞行范围', field: 'FlightArea', width: 100 },
+                          { title: '飞行高度', field: 'FlightHeight', width: 100 },
                       {
                           title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
                               var timesstamp = new Date(value.dateValFormat());
@@ -69,13 +70,13 @@
                           }
                       },
                       {
-                          title: '起飞时刻', field: 'SOBT', width: 80
+                          title: '起飞点', field: 'SOBT', width: 80
                       },
                       {
-                          title: '降落时刻', field: 'SIBT', width: 80
+                          title: '降落点', field: 'SIBT', width: 80
                       },
-                      { title: '起飞机场', field: 'ADEP', width: 100 },
-                      { title: '降落机场', field: 'ADES', width: 100 },
+                      { title: '起飞点', field: 'ADEP', width: 100 },
+                      { title: '降落点', field: 'ADES', width: 100 },
 
                       {
                           title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
@@ -169,7 +170,9 @@
                   $("#PlanCode").html(data.PlanCode);
                   $("#FlightType").html(data.FlightType);
                   $("#AircraftType").html(data.AircraftType);
-                  $("#FlightDirHeight").html(data.FlightDirHeight);
+                  $("#FlightArea").html(data.FlightArea);
+                  $("#FlightHeight").html(data.FlightHeight);
+            //      $("#FlightDirHeight").html(data.FlightDirHeight);
                   $("#ADEP").html(data.ADEP);
                   $("#ADES").html(data.ADES);
                   $("#StartDate").html(new Date(data.StartDate.dateValFormat()).format("yyyy-MM-dd"));
@@ -187,6 +190,17 @@
                   }
                   else {
                       $("#AttchFile").html('');
+                  }
+                  if (!!data.OtherAttchFile) {
+                      var fileArray = data.OtherAttchFile.split('|');
+                      for (var i = 0; i < fileArray.length; i++) {
+                          var info = fileArray[i].split(','),
+                          filepath = dj.root + info[0];
+                          $("#OtherAttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
+                      }
+                  }
+                  else {
+                      $("#OtherAttchFile").html('');
                   }
                   var arr = [];
                   $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
@@ -225,16 +239,24 @@
                     <th>航空器类型：</th>
                     <td id="AircraftType"></td>
                 </tr>
+                     <tr>
+                    <th>飞行范围：</th>
+                    <td id="FlightArea"></td>
+                    <th>飞行高度：</th>
+                    <td id="FlightHeight"></td>
+                </tr>
             <tr>
-                    <th style="width:140px;">航线走向和飞行高度：</th>
-                    <td id="FlightDirHeight"></td>
+                   <%-- <th style="width:140px;">航线走向和飞行高度：</th>
+                    <td id="FlightDirHeight"></td>--%>
                     <th>批件：</th>
                     <td id="AttchFile"></td>
+                  <th>其他批件：</th>
+                    <td id="OtherAttchFile"></td>
                 </tr>
                   <tr>
-              <th>起飞机场：</th>
+              <th>起飞点：</th>
                     <td id="ADEP"></td>
-                    <th>降落机场：
+                    <th>降落点：
                     </th>
                     <td id="ADES"></td>
                 </tr>

@@ -60,9 +60,10 @@
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
-                        { title: '航空器呼号', field: 'CallSign', width: 80 },   
+                        { title: '注册号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 70 },
-                        { title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
+                        { title: '飞行范围', field: 'FlightArea', width: 100 },
+                         { title: '飞行高度', field: 'FlightHeight', width: 100 },
                         { title: '预计开始时间', field: 'StartDate',width: 100, formatter: function (value, rec, index) { 
                         
                             var timesstamp = new Date(value.dateValFormat());
@@ -80,8 +81,8 @@
                         {
                             title: '起飞时刻', field: 'SOBT', width: 100 },
                         { title: '降落时刻', field: 'SIBT', width: 100},
-                        { title: '起飞机场', field: 'ADEP', width: 80 },
-                        { title: '降落机场', field: 'ADES', width: 80 },
+                        { title: '起飞点', field: 'ADEP', width: 80 },
+                        { title: '降落点', field: 'ADES', width: 80 },
 
                         {
                             title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
@@ -145,6 +146,8 @@
                
                 var fileInfo = dj.getCmp("AttchFiles").getUploadedFiles();
                 $("#AttchFilesInfo").val(fileInfo);
+                fileInfo = dj.getCmp("OtherAttchFiles").getUploadedFiles();
+                $("#OtherAttchFilesInfo").val(fileInfo);
                 qx = $("input[name='WeekSchedule']").map(function () {
                     var $this = $(this);
                     if ($this.is(':checked')) {
