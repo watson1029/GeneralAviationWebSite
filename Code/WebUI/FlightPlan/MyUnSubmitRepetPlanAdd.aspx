@@ -19,8 +19,7 @@
                 </th>
                 <td>
                     <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200"
-                        required="true" class="easyui-combobox" style="height:25px"/>
+                                ,panelMaxHeight:200" required="true" class="easyui-combobox" style="height:25px"/>
                 </td>
   <th>航空器类型：
                 </th>
@@ -43,18 +42,7 @@
                  <input id="FlightHeight" name="FlightHeight" style="height:25px" maxlength="5" type="text" required="true" class="easyui-numberbox" data-options="min:1,max:50000"/>
                 </td>
             </tr>
-            <tr>
-<%--                <th>航线走向和飞行高度：
-                </th>
-                <td>
-                    <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30"  type="text" required="true" class="easyui-validatebox textbox" />
-                </td>--%>
-  <th>注册号：
-                </th>
-                <td>
-                    <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-validatebox textbox" />
-                </td>
-            </tr>
+            
             <tr>
                 <th>起飞点：
                 </th>
@@ -66,7 +54,24 @@
                 <td>
                     <input id="ADES" name="ADES" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
                 </td>
-            </tr>          
+            </tr> 
+            <tr>
+<%--                <th>航线走向和飞行高度：
+                </th>
+                <td>
+                    <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30"  type="text" required="true" class="easyui-validatebox textbox" />
+                </td>--%>
+  <th>注册号：
+                </th>
+                <td>
+                    <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-validatebox textbox" />
+                </td>
+                  <th>备降点：
+                </th>
+                <td>
+                    <input id="Alternate" name="Alternate" maxlength="30" type="text" required="true" class="easyui-validatebox textbox" />
+                </td>
+            </tr>         
             <tr>
                 <th>预计开始日期：
                 </th>
