@@ -83,7 +83,7 @@
                         { title: '降落时刻', field: 'SIBT', width: 100},
                         { title: '起飞点', field: 'ADEP', width: 80 },
                         { title: '降落点', field: 'ADES', width: 80 },
-
+                         { title: '备降点', field: 'Alternate', width: 80 },
                         {
                             title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
                                 var array = [];
@@ -94,8 +94,8 @@
 
                             }
                         },
-                         { title: '创建人', field: 'CreatorName', width: 60 },
-                          { title: '其他需要说明的事项', field: 'Remark', width: 150 },
+                         { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
+                          { title: '其他需要说明的事项', field: 'Remark', width: 150, hidden: 'true' },
 
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {

@@ -26,6 +26,9 @@ public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
                 case "queryone"://获取一条记录
                     GetData();
                     break;
+                case "save":
+                    Save();
+                    break;
                 default:
                     break;
             }
@@ -82,14 +85,49 @@ public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
     private void GetData()
     {
         var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-        var plan = bll.Get(planid);
+
+        Expression<Func<vGetFlightPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetFlightPlanNodeInstance>();
+        predicate = predicate.And(m => m.ActorID != m.Creator);
+        predicate = predicate.And(m => m.ActorID == User.ID);
+        predicate = predicate.And(m => m.State == 2 || m.State == 3);
+        predicate = predicate.And(m => m.PlanID == planid);
+        predicate = predicate.And(m => m.TWFID == (int)TWFTypeEnum.FlightPlan);
+        var plan = bll.GetFlightPlanNodeInstance(predicate);
         var strJSON = JsonConvert.SerializeObject(plan);
         Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
     }
+    private void Save()
+    {
+        WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "保存失败！";
+        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        try
+        {
 
+            var instance = insdal.GetNodeInstance(User.ID, (int)TWFTypeEnum.FlightPlan, planid);
+            if (instance != null)
+            {
+                if (insdal.UpdateComment(instance.ID, Request.Form["AuditComment"] ?? ""))
+                {
+                    result.IsSuccess = true;
+                    result.Msg = "保存成功！";
+                }
+            }
+        }
+        catch (Exception)
+        {
+        }
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
+
+    }
         #region 权限编码
     public override string PageRightCode
     {

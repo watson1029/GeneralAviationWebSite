@@ -80,6 +80,7 @@
                         { title: '降落时刻', field: 'SIBT', width: 80 },
                         { title: '起飞点', field: 'ADEP', width: 80 },
                         { title: '降落点', field: 'ADES', width: 80 },
+                         { title: '备降点', field: 'Alternate', width: 80 },
                         {
                             title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
                                 var array = [];
@@ -91,10 +92,10 @@
 
                             }
                         },
-                        { title: '公司三字码', field: 'CompanyCode3', width: 100 },
+                        { title: '公司三字码', field: 'CompanyCode3', width: 100, hidden: 'true' },
                          { title: '公司名称', field: 'CompanyName', width: 100 },
                          { title: '创建人', field: 'CreatorName', width: 60 },
-                          { title: '其他需要说明的事项', field: 'Remark', width: 150 },
+                          { title: '其他需要说明的事项', field: 'Remark', width: 150, hidden: 'true' },
                              {
                                  title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
                                      var str = '<a style="color:red" href="javascript:;" onclick="Main.Audit(' + value + ');$(this).parent().click();return false;">审核</a>';
@@ -152,6 +153,7 @@
                     $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
                     $("#SOBT").html(data.SOBT);
                     $("#SIBT").html(data.SIBT);
+                    $("#Alternate").html(data.Alternate);
                     $("#Remark").html(data.Remark);
                     if (!!data.AttchFile) {
                         var fileArray = data.AttchFile.split('|');
@@ -175,13 +177,27 @@
                     else {
                         $("#OtherAttchFile").html('');
                     }
+
+                    
+                    
+                        //var str = "";
+                        //if (data.PlanState == "end")
+                        //{
+                        //    str = "审核通过";
+                        //}
+                        //else if (data.PlanState == "Deserted") {
+                        //    str = "审核不通过";
+                        //}
+                        //else {
+                        //    str = data.PlanState + '审核中';
+                        //}
+                        //$("#WeekSchedule").html(str);
                     var arr=[];
                     $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
                         arr.push("星期"+n);
                     });
                     $("#WeekSchedule").html(arr.join(','));
-
-                });
+            });
             },
             AuditSubmit: function (uid) {
                 if ($("#AuditComment").val().length > 200) {
@@ -289,7 +305,9 @@
                     <td id="SOBT"></td>
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
-                </tr>
+                </tr> 
+                <tr>  <th>备降点：</th>
+                      <td id="Alternate"></td></tr>
                       <tr>
                       <th>周执行计划：</th>
                     <td id="WeekSchedule" colspan="3">

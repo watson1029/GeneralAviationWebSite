@@ -50,9 +50,9 @@ namespace Model.EF
         public virtual DbSet<Dictionary> Dictionary { get; set; }
         public virtual DbSet<TWFPerson> TWFPerson { get; set; }
         public virtual DbSet<TWFSteps> TWFSteps { get; set; }
-        public virtual DbSet<vFlightPlan> vFlightPlan { get; set; }
-        public virtual DbSet<FlightPlan> FlightPlan { get; set; }
         public virtual DbSet<RepetitivePlan> RepetitivePlan { get; set; }
         public virtual DbSet<vGetRepetitivePlanNodeInstance> vGetRepetitivePlanNodeInstance { get; set; }
+        public virtual DbSet<FlightPlan> FlightPlan { get; set; }
+        public virtual DbSet<vFlightPlan> vFlightPlan { get; set; }
     }
 }

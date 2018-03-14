@@ -82,6 +82,8 @@
             </tr>          
             
             <tr>
+                <th>备降点</th>
+                <td id="Alternate"></td>
                 <th>其他需要说明的事项：
                 </th>
                 <td colspan="3"  id="Remark">
@@ -170,6 +172,7 @@
                     $("#FlightHeight").html(data.FlightHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
+                    $("#Alternate").html(data.Alternate);
                     $("#Remark").html(data.Remark);
       
                 });
@@ -196,6 +199,7 @@
                             $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
                             $("#ADEP").html(data.ADEP);
                             $("#ADES").html(data.ADES);
+                            $("#Alternate").html(data.Alternate);
                             $("#Remark").html(data.Remark);
 
                         })

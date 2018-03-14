@@ -50,7 +50,7 @@
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 120 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
-                        { title: '注册号', field: 'CallSign', width: 80 },
+                        { title: '注册号', field: 'CallSign', width: 80},
                         { title: '使用机型', field: 'AircraftType', width: 80 },
                         { title: '飞行范围', field: 'FlightArea', width: 100 },
                         { title: '飞行高度（米）', field: 'FlightHeight', width: 100 },
@@ -78,6 +78,7 @@
                         },
                         { title: '起飞点', field: 'ADEP', width: 80 },
                         { title: '降落点', field: 'ADES', width: 80 },
+                     { title: '备降点', field: 'Alternate', width: 80 },
 
                         {
                             title: '周执行计划', field: 'WeekSchedule', width: 130, formatter: function (value, rec, index) {
@@ -90,11 +91,17 @@
 
                             }
                         },
-                         { title: '创建人', field: 'CreatorName', width: 60 },
+                         { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
                          { title: '公司名称', field: 'CompanyName', width: 100 },
-                          { title: '其他需要说明的事项', field: 'Remark', width: 120 },
+                          { title: '其他需要说明的事项', field: 'Remark', width: 120, hidden: 'true' },
                           { title: '审核意见', field: 'Comments', width: 120 },
                           { title: '审核时间', field: 'ActorTime', width: 120 },
+                                                       {
+                                                           title: '操作', field: 'PlanID', width: 80, formatter: function (value, rec) {
+                                                               var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>';
+                                                               return str;
+                                                           }
+                                                       }
                     ]],
                     toolbar: "#tab_toolbar",
                     queryParams: { "action": "query" },
@@ -117,10 +124,162 @@
                     },
                     prompt: '请输入要查询的信息'
                 });
+            },
+            //修改链接 事件
+            EditData: function (uid) {
+                $("#edit").dialog("open").dialog('setTitle', '编辑');
+                $("#btn_edit").attr("onclick", "Main.Save(" + uid + ");")
+                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
+                    //    $("#form_audit").form('load', data);
+                    $("#PlanCode").html(data.PlanCode);
+                    $("#CompanyName").html(data.CompanyName);
+                    $("#FlightType").html(data.FlightType);
+                    $("#AircraftType").html(data.AircraftType);
+                    $("#FlightArea").html(data.FlightArea);
+                    $("#FlightHeight").html(data.FlightHeight);
+                    //$("#FlightDirHeight").html(data.FlightDirHeight);
+                    $("#ADEP").html(data.ADEP);
+                    $("#ADES").html(data.ADES);
+                    $("#StartDate").html(new Date(data.StartDate.dateValFormat()).format("yyyy-MM-dd"));
+                    $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
+                    $("#SOBT").html(data.SOBT);
+                    $("#SIBT").html(data.SIBT);
+                    $("#Alternate").html(data.Alternate);
+                    $("#Remark").html(data.Remark);
+                    if (!!data.AttchFile) {
+                        var fileArray = data.AttchFile.split('|');
+                        for (var i = 0; i < fileArray.length; i++) {
+                            var info = fileArray[i].split(','),
+                            filepath = dj.root + info[0];
+                            $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
+                        }
+                    }
+                    else {
+                        $("#AttchFile").html('');
+                    }
+                    if (!!data.OtherAttchFile) {
+                        var fileArray1 = data.OtherAttchFile.split('|');
+                        for (var i = 0; i < fileArray1.length; i++) {
+                            var info1 = fileArray1[i].split(','),
+                            filepath1 = dj.root + info1[0];
+                            $("#OtherAttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath1, info1[1], info1[1]));
+                        }
+                    }
+                    else {
+                        $("#OtherAttchFile").html('');
+                    }
+                    var arr = [];
+                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
+                        arr.push("星期" + n);
+                    });
+                    $("#WeekSchedule").html(arr.join(','));
+                    if (data.State == 2) {
+                        $("#Auditresult").html("审核通过");
+                    }
+                    if (data.State == 3){
+                        $("#Auditresult").html("审核不通过");
+                    }
+                    $("#AuditComment").textbox("setValue",data.Comments);
+                });
+            },
+            Save: function (uid) {
+                if ($("#AuditComment").val().length > 200) {
+                    $.messager.alert('提示', '"审核意见"不能超过200字符！', 'info');
+                    return;
+                }
+                var json = $.param({ "id": uid, "action": "save" }) + '&' + $('#form_edit').serialize();
+                $.post(location.href, json, function (data) {
+                    $.messager.alert('提示', data.msg, 'info', function () {
+                        if (data.isSuccess) {
+                            $("#tab_list").datagrid("reload");
+                            $("#edit").dialog("close");
+                        }
+                    });
+                });
             }
-
         };
     </script>
+        <div id="edit" class="easyui-dialog" style="width: 850px; height: 600px;"
+        modal="true" closed="true" buttons="#edit-buttons">
+        <form id="form_edit" method="post">
+            <table class="table_edit">
+                  <tr>
+                    <th>申请单号：</th>
+                    <td id="PlanCode" style="color:red"></td>
+                    <th>公司名称：</th>
+                    <td id="CompanyName" style="color:red"></td>
+                </tr>
+                <tr>
+                    <th>任务类型：</th>
+                    <td id="FlightType"></td>
+                    <th>航空器类型：</th>
+                    <td id="AircraftType"></td>
+                </tr>
+                 <tr>
+                    <th>飞行范围：</th>
+                    <td id="FlightArea"></td>
+                    <th>飞行高度（米）：</th>
+                    <td id="FlightHeight"></td>
+                </tr>
+            <tr>
+              <%--      <th style="width:140px;">航线走向和飞行高度：</th>
+                    <td id="FlightDirHeight"></td>--%>
+                    <th>批件：</th>
+                    <td id="AttchFile"></td>
+                                    <th>其他批件：</th>
+                    <td id="OtherAttchFile"></td>
+                </tr>
+                  <tr>
+              <th>起飞点：</th>
+                    <td id="ADEP"></td>
+                    <th>降落点：
+                    </th>
+                    <td id="ADES"></td>
+                </tr>
+                <tr>
+                    <th>预计开始日期：</th>
+                    <td id="StartDate"></td>
+                    <th>预计结束日期：</th>
+                    <td id="EndDate"></td>
+                </tr>
+                <tr>
+                    <th>起飞时刻：</th>
+                    <td id="SOBT"></td>
+                    <th>降落时刻：</th>
+                    <td id="SIBT"></td>
+                </tr>
+                <tr>
+                          <th>备降点</th>
+                          <td id="Alternate"></td>  </tr>
+                      <tr>
+                         
+                      <th>周执行计划：</th>
+                    <td id="WeekSchedule" colspan="3">
+                    </td>
+                     </tr>
 
+              
+                <tr>
+                    <th style="width:160px;">其他需要说明的事项：</th>
+                    <td id="Remark"></td>
+                </tr>
+                <tr>
+                    <th>审核结果：</th>
+                     <td id="Auditresult"></td>
+                </tr>
+                <tr>
+                    <th>审核意见：</th>
+                    <td colspan="3">
+                        <input id="AuditComment" name="AuditComment" required="true" maxlength="400" style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                    </td>
+
+                </tr>
+            </table>
+        </form>
+    
+    <div id="edit-buttons">
+        <a id="btn_edit" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
+            class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
+    </div></div>
 </asp:Content>
 

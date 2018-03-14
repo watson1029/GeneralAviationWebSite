@@ -77,6 +77,7 @@
                       },
                       { title: '起飞点', field: 'ADEP', width: 100 },
                       { title: '降落点', field: 'ADES', width: 100 },
+                               { title: '备降点', field: 'Alternate', width: 80 },
 
                       {
                           title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
@@ -90,7 +91,7 @@
                           }
                       },
                        { title: '创建人', field: 'CreatorName', width: 60 },
-                        { title: '其他需要说明的事项', field: 'Remark', width: 150 },
+                        { title: '其他需要说明的事项', field: 'Remark', width: 150 ,hidden:'true'},
 
                       {
                           title: '状态', field: 'PlanState', formatter: function (value, rec, index) {
@@ -179,6 +180,7 @@
                   $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
                   $("#SOBT").html(data.SOBT);
                   $("#SIBT").html(data.SIBT);
+                  $("#Alternate").html(data.Alternate);
                   $("#Remark").html(data.Remark);
                   if (!!data.AttchFile) {
                       var fileArray = data.AttchFile.split('|');
@@ -272,7 +274,10 @@
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
                 </tr>
-                      <tr>
+                  <tr><th>备降点：</th>
+                    <td id="Alternate"></td>
+                       </tr>  
+                 <tr>
                       <th>周执行计划：</th>
                     <td id="WeekSchedule" colspan="3">
                     </td>

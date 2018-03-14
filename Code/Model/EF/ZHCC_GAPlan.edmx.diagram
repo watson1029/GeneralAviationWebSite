@@ -30,10 +30,10 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Dictionary" Width="1.5" PointX="0.75" PointY="12.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.TWFPerson" Width="1.5" PointX="13.375" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.TWFSteps" Width="1.5" PointX="13.375" PointY="3.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vFlightPlan" Width="1.5" PointX="13.375" PointY="7.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="9.375" PointY="12.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.RepetitivePlan" Width="1.5" PointX="15.375" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance" Width="1.5" PointX="0.75" PointY="15.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="9.375" PointY="12.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vFlightPlan" Width="1.5" PointX="11.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

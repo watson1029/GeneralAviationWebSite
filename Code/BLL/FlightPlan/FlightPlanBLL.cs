@@ -53,5 +53,10 @@ namespace BLL.FlightPlan
             var insdal = new DBHelper<vGetFlightPlanNodeInstance>();
             return insdal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.PlanID, true);
         }
+        public vGetFlightPlanNodeInstance GetFlightPlanNodeInstance(Expression<Func<vGetFlightPlanNodeInstance, bool>> where)
+        {
+            var insdal = new DBHelper<vGetFlightPlanNodeInstance>();
+            return insdal.Find(where);
+        }
     }
 }

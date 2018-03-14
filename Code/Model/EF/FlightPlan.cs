@@ -45,5 +45,6 @@ namespace Model.EF
         public byte CreateSource { get; set; }
         public string FlightArea { get; set; }
         public int FlightHeight { get; set; }
+        public string Alternate { get; set; }
     }
 }

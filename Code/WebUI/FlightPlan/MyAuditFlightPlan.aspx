@@ -68,10 +68,10 @@
                         { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
                         { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
 
-                        { title: '公司三字码', field: 'CompanyCode3', width: 100 },
+                        { title: '公司三字码', field: 'CompanyCode3', width: 100, hidden: 'true' },
                            { title: '公司名称', field: 'CompanyName', width: 100 },
-                         { title: '创建人', field: 'CreatorName', width: 80 },
-                          { title: '其他需要说明的事项', field: 'Remark', width: 150 },
+                         { title: '创建人', field: 'CreatorName', width: 80, hidden: 'true' },
+                          { title: '其他需要说明的事项', field: 'Remark', width: 150, hidden: 'true' },
                              {
                                  title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
                                      var str = '<a style="color:red" href="javascript:;" onclick="Main.Audit(' + value + ');$(this).parent().click();return false;">审核</a>';
@@ -134,7 +134,6 @@
                     $("#WeatherCondition").html(data.WeatherCondition);
                     $("#AircrewGroupNum").html(data.AircrewGroupNum);
                     $("#RadarCode").html(data.RadarCode);
-
                 });
             },
             AuditSubmit: function (uid) {
@@ -236,9 +235,10 @@
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
                 </tr>
-                     
-
-              
+                      <tr>
+                    <th>备降点：</th>
+ <td id="Alternate"></td>
+                 </tr>
                 <tr>
                     <th style="width:176px;">其他需要说明的事项：</th>
                     <td id="Remark"></td>

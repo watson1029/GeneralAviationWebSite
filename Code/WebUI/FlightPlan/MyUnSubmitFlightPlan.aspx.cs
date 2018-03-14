@@ -93,6 +93,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
                    model.ADEP = repetplan.ADEP;
                    model.ADES = repetplan.ADES;
                    model.Remark = repetplan.Remark;
+                   model.Alternate = repetplan.Alternate;
               //     model.FillObject(repetplan);
                }
                model.PlanCode = Request.Form["PlanCode"] ?? "";

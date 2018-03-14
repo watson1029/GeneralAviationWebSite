@@ -47,6 +47,7 @@ namespace Model.EF
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string FlightArea { get; set; }
-        public byte FlightHeight { get; set; }
+        public int FlightHeight { get; set; }
+        public string Alternate { get; set; }
     }
 }

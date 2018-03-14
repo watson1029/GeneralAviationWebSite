@@ -46,7 +46,18 @@ namespace DAL.FlightPlan
                 throw ex;
             }
         }
-
+        public bool UpdateComment(Guid id,string auditComment)
+        {
+            try
+            {
+                var entity = new ActualSteps { ID = id, Comments = auditComment };
+                return Update(entity, "Comments") > 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public WorkflowNodeInstance Submit(int planId, int twfid, string comments, Action<WorkflowPlan> action)
         {
             List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId, twfid);
@@ -177,7 +188,11 @@ namespace DAL.FlightPlan
             ActualSteps _instance = Find(a => a.ID == id);
             return ExecReader(_instance);
         }
-
+        public ActualSteps GetNodeInstance(int actorID, int twfID, int planID)
+        {
+            ActualSteps _instance = Find(a => a.ActorID == actorID && a.TWFID == twfID&&a.PlanID==planID);
+            return _instance;
+        }
         private WorkflowNodeInstance ExecReader(ActualSteps entity)
         {
             WorkflowNodeInstance ninst = new WorkflowNodeInstance();

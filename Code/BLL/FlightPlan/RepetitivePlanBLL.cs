@@ -53,6 +53,11 @@ namespace BLL.FlightPlan
         {
             return dal.Find(u=>u.RepetPlanID==id);
         }
+        public vGetRepetitivePlanNodeInstance GetRepetitivePlanNodeInstance(Expression<Func<vGetRepetitivePlanNodeInstance, bool>> where)
+        {
+            var insdal = new DBHelper<vGetRepetitivePlanNodeInstance>();
+            return insdal.Find(where);
+        }
         public RepetitivePlan Get(string code)
         {
             return dal.Find(u => u.PlanCode == code);
