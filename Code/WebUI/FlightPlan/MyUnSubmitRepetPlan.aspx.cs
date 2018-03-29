@@ -351,7 +351,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                     FlightType = rowobj.ItemArray[0].ToString(),
                     AircraftType = rowobj.ItemArray[1].ToString(),
                     FlightArea = rowobj.ItemArray[2].ToString(),
-                    FlightHeight =int.Parse(rowobj.ItemArray[3].ToString()),
+                    FlightHeight =rowobj.ItemArray[3].ToString(),
                     CallSign = rowobj.ItemArray[4].ToString(),
                     ADEP = rowobj.ItemArray[5].ToString(),
                     ADES = rowobj.ItemArray[6].ToString(),

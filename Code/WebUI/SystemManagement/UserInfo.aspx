@@ -81,7 +81,7 @@
                          <td>公司名称：
                         </td>
                         <td>
-                               <input type="text" id="CompanyCode3"  name="CompanyCode3"   class="easyui-combobox" data-options="url:'<%=Page.ResolveUrl("~/FlightPlan/GetComboboxData.ashx?type=3")%>',method:'get',valueField:'id',textField:'text',panelHeight:'auto',panelMaxHeight:200" style="height:25px;"/>
+                               <input type="text" id="CompanyCode3"  name="CompanyCode3" editable="false"  class="easyui-combobox" data-options="url:'<%=Page.ResolveUrl("~/FlightPlan/GetComboboxData.ashx?type=3")%>',method:'get',valueField:'id',textField:'text',panelHeight:'auto',panelMaxHeight:200" style="height:25px;"/>
            
                         </td>
                     </tr>

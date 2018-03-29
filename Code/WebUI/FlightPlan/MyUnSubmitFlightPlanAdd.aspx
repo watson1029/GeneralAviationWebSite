@@ -20,7 +20,7 @@
                 </th>
                 <td id="trrepcode" colspan="2" style="display:none">
                     <input id="RepetPlanID" name="RepetPlanID" 
-                        required="true" class="easyui-validatebox" style="height:25px;width:250px;"/>
+                        required="true" class="easyui-validatebox" style="height:25px;"/>
                 </td>
                 <td colspan="2" id="RepPlanCode"></td>
             </tr>
@@ -28,67 +28,77 @@
             <tr>
                 <th>任务类型：
                 </th>
-                <td id="FlightType">
+                <td>
+                     <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                                ,panelMaxHeight:200" required="true" class="easyui-combobox" style="height:25px"/>
                 </td>
                 <th>航空器类型：
                 </th>
-                <td id="AircraftType">
-
+                <td>
+                      <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox"  style="height:25px" />
                 </td>
             </tr>
 
 
-              <tr>
-                <th>飞行范围：
-                </th>
-                <td id="FlightArea">
-                </td>
-                <th>飞行高度（米）：
-                </th>
-                <td id="FlightHeight">
+              
 
+            <tr>  
+                <th>注册号：
+                </th>
+                <td>
+                      <input id="CallSign" name="CallSign" maxlength="30" type="text"  class="easyui-validatebox textbox" />
                 </td>
-            </tr>
+                <th>备降点</th>
+                <td>
+                     <input id="Alternate" name="Alternate" maxlength="30" type="text"  class="easyui-validatebox textbox" />
+                </td>
 
-            <tr>
-  <%--              <th>航线走向和飞行高度：
-                </th>
-                <td id="FlightDirHeight">
-                </td>--%>
-  <th>注册号：
-                </th>
-                <td id="CallSign">
-                </td>
             </tr>
           <tr>
                 <th>预计开始日期：
                 </th>
-                <td id="StartDate">
+                <td>
+                    <input id="StartDate" name="StartDate" editable="false"  required="true"  class="easyui-datebox" style="height:25px"/>
                 </td>
  <th>预计结束日期：
                 </th>
-                <td id="EndDate">
+                <td>
+                     <input id="EndDate" name="EndDate"  editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height:25px"/>
                 </td>
             </tr>
             <tr>
                 <th>起飞点：
                 </th>
-                <td id="ADEP">
+                <td>
+                       <input id="ADEP" name="ADEP" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
                 </td>
- <th>降落机点：
+ <th>降落点：
                 </th>
-                <td id="ADES">
+                <td>
+                     <input id="ADES" name="ADES" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
                 </td>
-            </tr>          
-            
-            <tr>
-                <th>备降点</th>
-                <td id="Alternate"></td>
+            </tr>       
+          <tr>
+
+                <th>飞行高度（米）：
+                </th>
+                <td >
+<input id="FlightHeight" name="FlightHeight" style="height:25px" maxlength="50" type="text" required="true" class="easyui-validatebox textbox" style="height:25px"/>
+                </td>
+            </tr>   
+                   <tr>
+                <th>飞行范围：
+                </th>
+                <td colspan="3">
+                    <input id="FlightArea" name="FlightArea"  required="true" style="width: 600px; height: 150px" type="text" maxlength="200" data-options="multiline:true" class="easyui-textbox" />
+                </td>
+            </tr>
+         <tr>
                 <th>其他需要说明的事项：
                 </th>
-                <td colspan="3"  id="Remark">
+                <td colspan="3">
+                    <input id="Remark" name="Remark"  style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                 </td>
-
             </tr>
         </table>
 
@@ -115,7 +125,7 @@
                     <th>机长（飞行员）姓名：
                     </th>
                     <td>
-                        <input id="Pilot" name="Pilot" maxlength="15" type="text" required="true" class="easyui-validatebox textbox" />
+                        <input id="Pilot" name="Pilot" maxlength="15" type="text" class="easyui-validatebox textbox" />
                     </td>
                 </tr>
                 <tr>
@@ -127,19 +137,19 @@
                     <th>飞行气象条件：
                     </th>
                     <td>
-                        <input id="WeatherCondition" name="WeatherCondition" maxlength="50" type="text" required="true" class="easyui-validatebox textbox" />
+                        <input id="WeatherCondition" name="WeatherCondition" maxlength="50" type="text"  class="easyui-validatebox textbox" />
                     </td>
                 </tr>
                 <tr>
                     <th>空勤组人数：
                     </th>
                     <td>
-                        <input id="AircrewGroupNum" name="AircrewGroupNum" style="height:25px" maxlength="4" type="text" data-options="min:1,max:100" required="true" class="easyui-numberbox" />
+                        <input id="AircrewGroupNum" name="AircrewGroupNum" style="height:25px" maxlength="4" type="text" data-options="min:1,max:100" class="easyui-numberbox" />
                     </td>
                     <th style="width:160px;">二次雷达应答机代码：
                     </th>
                     <td>
-                        <input id="RadarCode" name="RadarCode"  maxlength="4" type="text" required="true" class="easyui-validatebox textbox" />
+                        <input id="RadarCode" name="RadarCode"  maxlength="4" type="text"  class="easyui-validatebox textbox" />
                     </td>
                 </tr>
             </table>
@@ -162,19 +172,6 @@
                     $('#RepPlanCode').html(data.RepPlanCode);
                     $("#name").html(data.CompanyName);
                     $("#form_edit").form('load', data);
-                    $("#CompanyName").html(data.CompanyName);
-                    $("#FlightType").html(data.FlightType);
-                    $("#StartDate").html(new Date(data.StartDate.dateValFormat()).format("yyyy-MM-dd"));
-                    $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
-                    $("#CallSign").html(data.CallSign);
-                    $("#AircraftType").html(data.AircraftType);
-                    $("#FlightArea").html(data.FlightArea);
-                    $("#FlightHeight").html(data.FlightHeight);
-                    $("#ADEP").html(data.ADEP);
-                    $("#ADES").html(data.ADES);
-                    $("#Alternate").html(data.Alternate);
-                    $("#Remark").html(data.Remark);
-      
                 });
             }
             else {
@@ -189,19 +186,7 @@
                     textField: 'text',
                     onSelect: function (record) {
                         $.post("MyUnSubmitFlightPlanAdd.aspx", { "action": "gerrpplan", "id": record.id }, function (data) {
-                            //    $("#form_audit").form('load', data);
-                            $("#FlightType").html(data.FlightType);
-                            $("#CallSign").html(data.CallSign);
-                            $("#AircraftType").html(data.AircraftType);
-                            $("#FlightArea").html(data.FlightArea);
-                            $("#FlightHeight").html(data.FlightHeight);
-                            $("#StartDate").html(new Date(data.StartDate.dateValFormat()).format("yyyy-MM-dd"));
-                            $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
-                            $("#ADEP").html(data.ADEP);
-                            $("#ADES").html(data.ADES);
-                            $("#Alternate").html(data.Alternate);
-                            $("#Remark").html(data.Remark);
-
+                            $("#form_edit").form('load', data);
                         })
                     }
                 });

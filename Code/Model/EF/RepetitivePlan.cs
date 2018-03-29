@@ -39,7 +39,7 @@ namespace Model.EF
         public string CompanyName { get; set; }
         public Nullable<bool> IsGenFlightPlan { get; set; }
         public string FlightArea { get; set; }
-        public int FlightHeight { get; set; }
+        public string FlightHeight { get; set; }
         public string OtherAttchFile { get; set; }
         public string Alternate { get; set; }
     }

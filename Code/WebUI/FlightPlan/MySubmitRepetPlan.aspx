@@ -180,6 +180,7 @@
                   $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
                   $("#SOBT").html(data.SOBT);
                   $("#SIBT").html(data.SIBT);
+                  $("#CallSign").html(data.CallSign);
                   $("#Alternate").html(data.Alternate);
                   $("#Remark").html(data.Remark);
                   if (!!data.AttchFile) {
@@ -228,7 +229,7 @@
 
       };
     </script>
-    <div id="detail" class="easyui-dialog" style="width: 700px; height:580px;"
+    <div id="detail" class="easyui-dialog" style="width: 700px; height:700px;"
         modal="true" closed="true" buttons="#detail-buttons">
         <form id="form_detail" method="post">          
             <table class="table_edit">
@@ -241,12 +242,7 @@
                     <th>航空器类型：</th>
                     <td id="AircraftType"></td>
                 </tr>
-                     <tr>
-                    <th>飞行范围：</th>
-                    <td id="FlightArea"></td>
-                    <th>飞行高度：</th>
-                    <td id="FlightHeight"></td>
-                </tr>
+
             <tr>
                    <%-- <th style="width:140px;">航线走向和飞行高度：</th>
                     <td id="FlightDirHeight"></td>--%>
@@ -274,15 +270,26 @@
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
                 </tr>
-                  <tr><th>备降点：</th>
+                  <tr>
+                      <th>备降点：</th>
                     <td id="Alternate"></td>
-                       </tr>  
+                 <th>飞行范围：</th>
+                    <td id="CallSign"></td>
+                       </tr> 
+                <tr>
+                    <th>飞行高度：</th>
+                    <td id="FlightHeight"></td>
+                </tr> 
                  <tr>
                       <th>周执行计划：</th>
                     <td id="WeekSchedule" colspan="3">
                     </td>
                      </tr>
 
+                  <tr>
+                    <th style="width:160px;">飞行范围：</th>
+                    <td id="FlightArea"></td>
+                </tr>
               
                 <tr>
                     <th style="width:160px;">其他需要说明的事项：</th>

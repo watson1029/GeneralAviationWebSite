@@ -44,7 +44,7 @@ namespace Model.EF
         public int RepetPlanID { get; set; }
         public byte CreateSource { get; set; }
         public string FlightArea { get; set; }
-        public int FlightHeight { get; set; }
+        public string FlightHeight { get; set; }
         public string Alternate { get; set; }
     }
 }

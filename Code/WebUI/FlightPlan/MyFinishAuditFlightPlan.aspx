@@ -1,26 +1,27 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true"
     CodeFile="MyFinishAuditFlightPlan.aspx.cs" Inherits="FlightPlan_MyFinishAuditFlightPlan" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-   <%-- <div class="gridsearch">
+    <%-- <div class="gridsearch">
         <label>用户名：</label>
         <input type="text" id="s_UserName" name="s_UserName" class="easyui-validatebox" />
         <input type="button" class="searchbotton easyui-linkbutton " style="margin-left:60px" iconcls="icon-search" value="查询" onclick="Main.FunSearchData()" />
     </div>--%>
     <%--列表 start--%>
-        <table id="tab_list">
-        </table>
-        <div id="tab_toolbar" style="padding: 2px 2px;height:22px;">      
-            <div style="float:right">
-                        <input id="ipt_search" menu="#search_menu"/>
-                        <div id="search_menu" style="width: 200px">
-                            <div name="PlanCode">
-                                申请单号
-                            </div>
-                        </div>
-</div>
+    <table id="tab_list">
+    </table>
+    <div id="tab_toolbar" style="padding: 2px 2px; height: 22px;">
+        <div style="float: right">
+            <input id="ipt_search" menu="#search_menu" />
+            <div id="search_menu" style="width: 200px">
+                <div name="PlanCode">
+                    申请单号
+                </div>
+            </div>
         </div>
+    </div>
     <%--列表 end--%>
     <script type="text/javascript">
 
@@ -119,8 +120,9 @@
                     $("#WeatherCondition").html(data.WeatherCondition);
                     $("#AircrewGroupNum").html(data.AircrewGroupNum);
                     $("#RadarCode").html(data.RadarCode);
+                    $("#CallSign").html(data.CallSign);
                     $("#Alternate").html(data.Alternate);
-                    
+
                     if (data.State == 2) {
                         $("#Auditresult").html("审核通过");
                     }
@@ -148,15 +150,15 @@
 
         };
     </script>
-    <div id="edit" class="easyui-dialog" style="width: 800px; height: 700px;"
+    <div id="edit" class="easyui-dialog" style="width: 800px; height: 800px;"
         modal="true" closed="true" buttons="#edit-buttons">
         <form id="form_edit" method="post">
             <table class="table_edit">
-                  <tr>
+                <tr>
                     <th>申请单号：</th>
-                    <td id="PlanCode" style="color:red"></td>
+                    <td id="PlanCode" style="color: red"></td>
                     <th>公司名称：</th>
-                    <td id="CompanyName" style="color:red"></td>
+                    <td id="CompanyName" style="color: red"></td>
                 </tr>
                 <tr>
                     <th>任务类型：</th>
@@ -164,22 +166,17 @@
                     <th>航空器类型：</th>
                     <td id="AircraftType"></td>
                 </tr>
-                  <tr>
-                    <th>飞行范围：</th>
-                    <td id="FlightArea"></td>
-                    <th>飞行高度：</th>
-                    <td id="FlightHeight"></td>
-                </tr>
-            <tr>
-           <%--         <th style="width:176px;">航线走向和飞行高度：</th>
+         
+                <tr>
+                    <%--         <th style="width:176px;">航线走向和飞行高度：</th>
                     <td id="FlightDirHeight"></td>--%>
                     <th>批件：</th>
                     <td id="AttchFile"></td>
-                      <th>其他批件：</th>
+                    <th>其他批件：</th>
                     <td id="OtherAttchFile"></td>
                 </tr>
-                  <tr>
-              <th>起飞点：</th>
+                <tr>
+                    <th>起飞点：</th>
                     <td id="ADEP"></td>
                     <th>降落点：
                     </th>
@@ -197,29 +194,38 @@
                     <th>降落时刻：</th>
                     <td id="SIBT"></td>
                 </tr>
-                                           <tr>
-                    <th>备降点：</th>
- <td id="Alternate"></td>
-                 </tr>
-
-              
                 <tr>
-                    <th style="width:176px;">其他需要说明的事项：</th>
+                    <th>注册号：</th>
+                    <td id="CallSign"></td>
+                    <th>备降点：</th>
+                    <td id="Alternate"></td>
+                </tr>
+                       <tr>
+                    <th>飞行高度：</th>
+                    <td id="FlightHeight"></td>
+                </tr>
+                  <tr>
+                    <th style="width: 176px;">飞行范围：</th>
+                    <td id="FlightArea"></td>
+                </tr>
+
+                <tr>
+                    <th style="width: 176px;">其他需要说明的事项：</th>
                     <td id="Remark"></td>
                 </tr>
-                 <tr>
+                <tr>
                     <th>航空器架数：</th>
                     <td id="AircraftNum"></td>
                     <th>机长（飞行员）姓名：</th>
                     <td id="Pilot"></td>
                 </tr>
-                      <tr>
+                <tr>
                     <th>通信联络方法：</th>
                     <td id="ContactWay"></td>
                     <th>飞行气象条件：</th>
                     <td id="WeatherCondition"></td>
                 </tr>
-                 <tr>
+                <tr>
                     <th>空勤组人数：</th>
                     <td id="AircrewGroupNum"></td>
                     <th>二次雷达应答机代码：</th>
@@ -228,8 +234,8 @@
                 <tr>
                     <th>审核结果：</th>
 
-                         <td id="Auditresult"></td>
- 
+                    <td id="Auditresult"></td>
+
                 </tr>
                 <tr>
                     <th>审核意见：</th>

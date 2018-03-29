@@ -24,25 +24,13 @@
   <th>航空器类型：
                 </th>
                 <td>
-                    <%--  <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" />--%>
-                    <input id="AircraftType" name="AircraftType" editable="false" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                      <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" style="height:25px"/>
+ <%--                   <input id="AircraftType" name="AircraftType" editable="false" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
-                        required="true" class="easyui-combobox" style="height:25px"/>
+                        required="true" class="easyui-combobox" style="height:25px"/>--%>
                 </td>
             </tr>
-              <tr>
-                <th>飞行范围：
-                </th>
-                <td>
-                    <input id="FlightArea" name="FlightArea" maxlength="50"  type="text" required="true" class="easyui-validatebox textbox" />
-                </td>
-  <th>飞行高度（米）：
-                </th>
-                <td>
-                 <input id="FlightHeight" name="FlightHeight" style="height:25px" maxlength="5" type="text" required="true" class="easyui-numberbox" data-options="min:1,max:50000"/>
-                </td>
-            </tr>
-            
+
             <tr>
                 <th>起飞点：
                 </th>
@@ -64,12 +52,12 @@
   <th>注册号：
                 </th>
                 <td>
-                    <input id="CallSign" name="CallSign" maxlength="30" type="text" required="true" class="easyui-validatebox textbox" />
+                    <input id="CallSign" name="CallSign" maxlength="30" type="text"  class="easyui-validatebox textbox" />
                 </td>
                   <th>备降点：
                 </th>
                 <td>
-                    <input id="Alternate" name="Alternate" maxlength="30" type="text" required="true" class="easyui-validatebox textbox" />
+                    <input id="Alternate" name="Alternate" maxlength="30" type="text"  class="easyui-validatebox textbox" />
                 </td>
             </tr>         
             <tr>
@@ -97,7 +85,13 @@
                 </td>
 
             </tr>
-
+            <tr>
+  <th>飞行高度（米）：
+                </th>
+                <td>
+                 <input id="FlightHeight" name="FlightHeight" style="height:25px" maxlength="50" type="text" required="true" class="easyui-validatebox textbox" />
+                </td>
+            </tr>
             <tr>
                 <th>批件：
                 </th>
@@ -133,6 +127,14 @@
                              <input id="d7" type="checkbox" name="WeekSchedule" value="7" style="width:20px"/>星期日
                 </td>
 
+            </tr>
+
+              <tr>
+                <th>飞行范围：
+                </th>
+                <td colspan="3">
+                    <input id="FlightArea" name="FlightArea"  required="true" style="width: 600px; height: 150px" type="text" maxlength="200" data-options="multiline:true" class="easyui-textbox" />
+                </td>
             </tr>
             <tr>
                 <th>其他需要说明的事项：
