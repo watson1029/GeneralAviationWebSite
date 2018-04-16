@@ -373,16 +373,6 @@
           <Property Name="TWFDescription" Type="nvarchar" MaxLength="50" />
           <Property Name="TWFType" Type="tinyint" />
         </EntityType>
-        <EntityType Name="TWFPerson">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
-          <Property Name="AuthorType" Type="nvarchar" MaxLength="50" />
-          <Property Name="TWFID" Type="int" Nullable="false" />
-          <Property Name="StepID" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="TWFSteps">
           <Key>
             <PropertyRef Name="StepID" />
@@ -663,7 +653,6 @@
           <EntitySet Name="RoleMenu" EntityType="Self.RoleMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplyDemandInfo" EntityType="Self.SupplyDemandInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TWFLibrary" EntityType="Self.TWFLibrary" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TWFPerson" EntityType="Self.TWFPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TWFSteps" EntityType="Self.TWFSteps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
@@ -840,7 +829,6 @@
           <EntitySet Name="SupplyDemandInfo" EntityType="ZHCC_GAPlanModel.SupplyDemandInfo" />
           <EntitySet Name="News" EntityType="ZHCC_GAPlanModel.News" />
           <EntitySet Name="Dictionary" EntityType="ZHCC_GAPlanModel.Dictionary" />
-          <EntitySet Name="TWFPerson" EntityType="ZHCC_GAPlanModel.TWFPerson" />
           <EntitySet Name="TWFSteps" EntityType="ZHCC_GAPlanModel.TWFSteps" />
           <EntitySet Name="RepetitivePlan" EntityType="ZHCC_GAPlanModel.RepetitivePlan" />
           <EntitySet Name="vGetRepetitivePlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance" />
@@ -1217,16 +1205,6 @@
           <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="DeleteFlag" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="TWFPerson">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AuthorType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TWFID" Type="Int32" Nullable="false" />
-          <Property Name="StepID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="TWFSteps">
           <Key>
@@ -1854,17 +1832,6 @@
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="DicValue" ColumnName="DicValue" />
                 <ScalarProperty Name="DicType" ColumnName="DicType" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TWFPerson">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.TWFPerson">
-              <MappingFragment StoreEntitySet="TWFPerson">
-                <ScalarProperty Name="StepID" ColumnName="StepID" />
-                <ScalarProperty Name="TWFID" ColumnName="TWFID" />
-                <ScalarProperty Name="AuthorType" ColumnName="AuthorType" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
