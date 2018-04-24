@@ -44,5 +44,6 @@ namespace Model.EF
         public string CompanyName { get; set; }
         public int RepetPlanID { get; set; }
         public byte CreateSource { get; set; }
+        public string AttachFIle { get; set; }
     }
 }

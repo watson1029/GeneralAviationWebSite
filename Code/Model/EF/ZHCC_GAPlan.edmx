@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActualSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -196,6 +196,7 @@
           <Property Name="FlightArea" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="FlightHeight" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Alternate" Type="nvarchar" MaxLength="20" />
+          <Property Name="AttachFile" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="FlightTask">
           <Key>
@@ -415,7 +416,6 @@
             <PropertyRef Name="PlanCode" />
             <PropertyRef Name="FlightType" />
             <PropertyRef Name="AircraftType" />
-            <PropertyRef Name="FlightDirHeight" />
             <PropertyRef Name="CreateTime" />
             <PropertyRef Name="ModifyTime" />
             <PropertyRef Name="CompanyCode3" />
@@ -425,17 +425,19 @@
             <PropertyRef Name="ADEP" />
             <PropertyRef Name="ADES" />
             <PropertyRef Name="CreatorName" />
-            <PropertyRef Name="CallSign" />
             <PropertyRef Name="RepetPlanID" />
             <PropertyRef Name="CreateSource" />
+            <PropertyRef Name="FlightDirHeight" />
+            <PropertyRef Name="CallSign" />
           </Key>
           <Property Name="CurrentFlightPlanID" Type="int" />
           <Property Name="FlightPlanID" Type="int" Nullable="false" />
           <Property Name="PlanCode" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="FlightType" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="AircraftType" Type="nchar" MaxLength="8" Nullable="false" />
-          <Property Name="FlightDirHeight" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="FlightType" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="AircraftType" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="FlightDirHeight" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="AttachFIle" Type="nvarchar" MaxLength="200" />
           <Property Name="ModifyTime" Type="datetime" Nullable="false" />
           <Property Name="CompanyCode3" Type="nchar" MaxLength="3" Nullable="false" />
           <Property Name="PlanState" Type="nvarchar" MaxLength="36" />
@@ -444,9 +446,9 @@
           <Property Name="Remark" Type="nvarchar" MaxLength="200" />
           <Property Name="SOBT" Type="datetime" Nullable="false" />
           <Property Name="SIBT" Type="datetime" Nullable="false" />
-          <Property Name="ADEP" Type="char" MaxLength="4" Nullable="false" />
-          <Property Name="ADES" Type="char" MaxLength="4" Nullable="false" />
-          <Property Name="RadarCode" Type="char" MaxLength="4" />
+          <Property Name="ADEP" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ADES" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RadarCode" Type="nvarchar" MaxLength="20" />
           <Property Name="AircraftNum" Type="int" />
           <Property Name="Pilot" Type="nvarchar" MaxLength="36" />
           <Property Name="ContactWay" Type="nvarchar" MaxLength="50" />
@@ -487,6 +489,7 @@
           <Property Name="PlanCode" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="FlightType" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="AircraftType" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="AttachFile" Type="nvarchar" MaxLength="200" />
           <Property Name="FlightDirHeight" Type="nvarchar" MaxLength="50" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="ModifyTime" Type="datetime" Nullable="false" />
@@ -665,6 +668,7 @@
     [V_CurrentPlan].[AircraftType] AS [AircraftType], 
     [V_CurrentPlan].[FlightDirHeight] AS [FlightDirHeight], 
     [V_CurrentPlan].[CreateTime] AS [CreateTime], 
+    [V_CurrentPlan].[AttachFIle] AS [AttachFIle], 
     [V_CurrentPlan].[ModifyTime] AS [ModifyTime], 
     [V_CurrentPlan].[CompanyCode3] AS [CompanyCode3], 
     [V_CurrentPlan].[PlanState] AS [PlanState], 
@@ -696,6 +700,7 @@
     [vFlightPlan].[PlanCode] AS [PlanCode], 
     [vFlightPlan].[FlightType] AS [FlightType], 
     [vFlightPlan].[AircraftType] AS [AircraftType], 
+    [vFlightPlan].[AttachFile] AS [AttachFile], 
     [vFlightPlan].[FlightDirHeight] AS [FlightDirHeight], 
     [vFlightPlan].[CreateTime] AS [CreateTime], 
     [vFlightPlan].[ModifyTime] AS [ModifyTime], 
@@ -1004,9 +1009,9 @@
           <Property Name="CurrentFlightPlanID" Type="Int32" />
           <Property Name="FlightPlanID" Type="Int32" Nullable="false" />
           <Property Name="PlanCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="true" />
-          <Property Name="FlightDirHeight" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="FlightDirHeight" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifyTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CompanyCode3" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
@@ -1016,9 +1021,9 @@
           <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="SOBT" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SIBT" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ADEP" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="ADES" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="RadarCode" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="ADEP" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ADES" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RadarCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AircraftNum" Type="Int32" />
           <Property Name="Pilot" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
           <Property Name="ContactWay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1031,6 +1036,7 @@
           <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RepetPlanID" Type="Int32" Nullable="false" />
           <Property Name="CreateSource" Type="Byte" Nullable="false" />
+          <Property Name="AttachFIle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Aircraft">
           <Key>
@@ -1346,6 +1352,7 @@
           <Property Name="FlightArea" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FlightHeight" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Alternate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vFlightPlan">
           <Key>
@@ -1403,6 +1410,7 @@
           <Property Name="FlightArea" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FlightHeight" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Alternate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vGetFlightPlanNodeInstance">
           <Key>
@@ -1620,6 +1628,7 @@
           <EntitySetMapping Name="V_CurrentPlan">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.V_CurrentPlan">
               <MappingFragment StoreEntitySet="V_CurrentPlan">
+                <ScalarProperty Name="AttachFIle" ColumnName="AttachFIle" />
                 <ScalarProperty Name="CreateSource" ColumnName="CreateSource" />
                 <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
@@ -1926,6 +1935,7 @@
           <EntitySetMapping Name="FlightPlan">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.FlightPlan">
               <MappingFragment StoreEntitySet="FlightPlan">
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
                 <ScalarProperty Name="Alternate" ColumnName="Alternate" />
                 <ScalarProperty Name="FlightHeight" ColumnName="FlightHeight" />
                 <ScalarProperty Name="FlightArea" ColumnName="FlightArea" />
@@ -1964,6 +1974,7 @@
           <EntitySetMapping Name="vFlightPlan">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vFlightPlan">
               <MappingFragment StoreEntitySet="vFlightPlan">
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
                 <ScalarProperty Name="Alternate" ColumnName="Alternate" />
                 <ScalarProperty Name="FlightHeight" ColumnName="FlightHeight" />
                 <ScalarProperty Name="FlightArea" ColumnName="FlightArea" />

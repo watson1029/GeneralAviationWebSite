@@ -73,42 +73,44 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         if (!string.IsNullOrEmpty(Request.Form["id"]))
         { id = Convert.ToInt32(Request.Form["id"]); }
 
-           FlightPlan model = null;
-           if (!id.HasValue)//新增
-           {
-               model = new FlightPlan();  
-              
-               model.GetEntitySearchPars<FlightPlan>(this.Context);
+        FlightPlan model = null;
+        if (!id.HasValue)//新增
+        {
+            model = new FlightPlan();
 
-               model.PlanCode = Request.Form["PlanCode"] ?? "";
-               model.PlanState = "0";
-               model.CompanyCode3 = User.CompanyCode3 ?? "";
-               model.CompanyName = User.CompanyName;
-               model.Creator = User.ID;
-               model.CreatorName = User.UserName;
-               model.ActorID = User.ID;
-               model.CreateTime = DateTime.Now;
-               model.ModifyTime = DateTime.Now;
-               model.CreateSource = 2;
-               if (bll.Add(model))
-               {
-                   result.IsSuccess = true;
-                   result.Msg = "增加成功！";
-               }
-           }
-           else//编辑
-           {
-               model = bll.Get(id.Value);
-               if (model != null)
-               {
-                   model.GetEntitySearchPars<FlightPlan>(this.Context);
-                   if (bll.Update(model))
-                   {
-                       result.IsSuccess = true;
-                       result.Msg = "更新成功！";
-                   }
-               }
-           }
+            model.GetEntitySearchPars<FlightPlan>(this.Context);
+
+            model.AttachFile = Request.Params["AttchFilesInfo"];
+            model.PlanCode = Request.Form["PlanCode"] ?? "";
+            model.PlanState = "0";
+            model.CompanyCode3 = User.CompanyCode3 ?? "";
+            model.CompanyName = User.CompanyName;
+            model.Creator = User.ID;
+            model.CreatorName = User.UserName;
+            model.ActorID = User.ID;
+            model.CreateTime = DateTime.Now;
+            model.ModifyTime = DateTime.Now;
+            model.CreateSource = 2;
+            if (bll.Add(model))
+            {
+                result.IsSuccess = true;
+                result.Msg = "增加成功！";
+            }
+        }
+        else//编辑
+        {
+            model = bll.Get(id.Value);
+            if (model != null)
+            {
+                model.AttachFile = Request.Params["AttchFilesInfo"];
+                model.GetEntitySearchPars<FlightPlan>(this.Context);
+                if (bll.Update(model))
+                {
+                    result.IsSuccess = true;
+                    result.Msg = "更新成功！";
+                }
+            }
+        }
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
@@ -134,7 +136,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
                 result.IsSuccess = true;
                 result.Msg = "提交成功！";
             }
-             catch(Exception e)
+            catch (Exception e)
             {
                 result.IsSuccess = false;
                 result.Msg = "提交失败！";

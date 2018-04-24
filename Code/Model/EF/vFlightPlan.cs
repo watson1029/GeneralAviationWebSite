@@ -49,5 +49,6 @@ namespace Model.EF
         public string FlightArea { get; set; }
         public string FlightHeight { get; set; }
         public string Alternate { get; set; }
+        public string AttachFile { get; set; }
     }
 }

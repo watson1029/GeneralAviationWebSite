@@ -6,19 +6,19 @@
                 <tr>
                     <th>公司三字码:</th>
                     <td>
-                          <input id="CompanyCode3" name="CompanyCode3" type="text" class="easyui-validatebox textbox" maxlength="3" data-options="required:true" />
+                          <input id="CompanyCode3" name="CompanyCode3" type="text" class="easyui-validatebox textbox" maxlength="3"  />
                     </td>
                 </tr>
                 <tr>
                     <th>公司二字码：</th>
                     <td>
-                        <input id="CompanyCode2" name="CompanyCode2" type="text"  class="easyui-validatebox textbox" maxlength="2" data-options="required:true" />
+                        <input id="CompanyCode2" name="CompanyCode2" type="text"  class="easyui-validatebox textbox" maxlength="2"  />
                     </td>
                 </tr>
                 <tr>
                     <th>公司名称:</th>
                     <td>
-                          <input id="CompanyName" name="CompanyName" type="text" class="easyui-validatebox textbox" maxlength="30" data-options="required:true" />
+                          <input id="CompanyName" name="CompanyName" type="text" class="easyui-validatebox textbox" maxlength="30"  />
                     </td>
                 </tr>
                 <tr>
@@ -55,7 +55,7 @@
                 <tr>
                     <th>法人姓名：</th>
                     <td>
-                        <input id="LegalPerson" name="LegalPerson" type="text" class="easyui-validatebox textbox" maxlength="10" data-options="required:true" />
+                        <input id="LegalPerson" name="LegalPerson" type="text" class="easyui-validatebox textbox" maxlength="10"  />
                     </td>
                     <th>指定联系人：</th>
                     <td>
@@ -65,7 +65,7 @@
                 <tr>
                     <th>法人身份证号：</th>
                     <td>
-                        <input id="LegalCardNo" name="LegalCardNo" type="text" class="easyui-validatebox textbox" maxlength="18" data-options="required:true" />
+                        <input id="LegalCardNo" name="LegalCardNo" type="text" class="easyui-validatebox textbox" maxlength="18"  />
                     </td>
                     <th>法人身份证地址：</th>
                     <td>
@@ -75,17 +75,17 @@
                 <tr>
                     <th>法人有效联系电话：</th>
                     <td>
-                        <input id="LegalTelePhone" name="LegalTelePhone" type="text"  class="easyui-numberbox" data-options="precision:0,required:true,validType:'length[1,11]'"  style="height:25px;"/>
+                        <input id="LegalTelePhone" name="LegalTelePhone" type="text"  class="easyui-numberbox" data-options="precision:0,validType:'length[1,11]'"  style="height:25px;"/>
                     </td>
                     <th>法人委托人：</th>
                     <td>
-                        <input id="LegalClientele" name="LegalClientele" type="text"  class="easyui-validatebox textbox" maxlength="10" data-options="required:true" />
+                        <input id="LegalClientele" name="LegalClientele" type="text"  class="easyui-validatebox textbox" maxlength="10"  />
                     </td>
                 </tr>
                 <tr>
                     <th>委托人身份证号：</th>
                     <td>
-                        <input id="DelegateCardNo" name="DelegateCardNo" type="text"  class="easyui-validatebox textbox" maxlength="18" data-options="required:true" />
+                        <input id="DelegateCardNo" name="DelegateCardNo" type="text"  class="easyui-validatebox textbox" maxlength="18"  />
                     </td>
                     <th>委托人身份证地址：</th>
                     <td>
@@ -95,7 +95,7 @@
                 <tr>
                     <th>委托人有效联系电话：</th>
                     <td>
-                        <input id="DelegateTelePhone" name="DelegateTelePhone" type="text"  class="easyui-numberbox" data-options="precision:0,required:true,validType:'length[1,11]'"  style="height:25px;"/>
+                        <input id="DelegateTelePhone" name="DelegateTelePhone" type="text"  class="easyui-numberbox" data-options="precision:0,validType:'length[1,11]'"  style="height:25px;"/>
                     </td>
                 </tr>
            <tr>
@@ -137,17 +137,17 @@
                 <tr>
                     <th>许可证编号：</th>
                     <td>
-                        <input id="LicenseNo" name="LicenseNo" type="text"  class="easyui-validatebox textbox" maxlength="30" data-options="required:true" />
+                        <input id="LicenseNo" name="LicenseNo" type="text"  class="easyui-validatebox textbox" maxlength="30"  />
                     </td>
                     <th>企业名称：</th>
                     <td>
-                        <input id="FirmName" name="FirmName" type="text"  class="easyui-validatebox textbox" maxlength="30" data-options="required:true" />
+                        <input id="FirmName" name="FirmName" type="text"  class="easyui-validatebox textbox" maxlength="30"  />
                     </td>
                 </tr>
                 <tr>
                     <th>企业代码：</th>
                     <td>
-                        <input id="FirmCode" name="FirmCode"  style="height:25px;"  class="easyui-numberbox" data-options="precision:0,required:true,validType:'length[1,30]'" />
+                        <input id="FirmCode" name="FirmCode"  style="height:25px;"  class="easyui-numberbox" data-options="precision:0,validType:'length[1,30]'" />
                     </td>
                     <th>企业地址：</th>
                     <td>
@@ -157,7 +157,7 @@
                 <tr>
                     <th>基地机场：</th>
                     <td>
-                        <input id="BaseAirport" name="BaseAirport"  type="text"  class="easyui-validatebox textbox" maxlength="20" data-options="required:true"  />
+                        <input id="BaseAirport" name="BaseAirport"  type="text"  class="easyui-validatebox textbox" maxlength="20"   />
                     </td>
                     <th>基地机场代码：</th>
                     <td>
@@ -187,11 +187,11 @@
                 <tr>
                     <th>有效期限：</th>
                     <td>
-                        <input id="DealLine1" name="DealLine1" type="text"  class="easyui-validatebox textbox" maxlength="10" data-options="required:true" />
+                        <input id="DealLine1" name="DealLine1" type="text"  class="easyui-validatebox textbox" maxlength="10"  />
                     </td>
                     <th>颁发日期：</th>
                     <td>
-                        <input id="PresentationDate" name="PresentationDate"  style="height:25px;" editable="false" class="easyui-datebox" data-options="required:true" />
+                        <input id="PresentationDate" name="PresentationDate"  style="height:25px;" editable="false" class="easyui-datebox"  />
                     </td>
                 </tr>
                 <tr>

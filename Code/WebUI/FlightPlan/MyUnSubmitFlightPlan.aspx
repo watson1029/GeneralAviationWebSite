@@ -106,6 +106,8 @@
 
             //提交按钮事件
             Save: function (uid) {
+                var fileInfo = dj.getCmp("AttchFiles").getUploadedFiles();
+                $("#AttchFilesInfo").val(fileInfo);
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
