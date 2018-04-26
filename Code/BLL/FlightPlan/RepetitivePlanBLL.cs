@@ -45,6 +45,11 @@ namespace BLL.FlightPlan
             var insdal = new DBHelper<vGetRepetitivePlanNodeInstance>();
             return insdal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.PlanID, true);
         }
+        public List<vGetRepetitivePlanNodeInstance> GetNodeInstanceList( Expression<Func<vGetRepetitivePlanNodeInstance, bool>> where)
+        {
+            var insdal = new DBHelper<vGetRepetitivePlanNodeInstance>();
+            return insdal.FindList(where, m => m.ID, true);
+        }
         public List<RepetitivePlan> GetList(Expression<Func<RepetitivePlan, bool>> where)
     {
         return dal.FindList(where, m => m.RepetPlanID, true);

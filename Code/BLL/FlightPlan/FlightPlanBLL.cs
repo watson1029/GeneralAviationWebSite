@@ -9,6 +9,7 @@ namespace BLL.FlightPlan
     public class FlightPlanBLL
     {
         FlightPlanDAL dal = new FlightPlanDAL();
+        DAL.SystemManagement.UserInfoDAL userinfodal = new DAL.SystemManagement.UserInfoDAL();
         public bool Delete(string ids)
         {
             return dal.BatchDelete(ids) > 0;
@@ -53,10 +54,23 @@ namespace BLL.FlightPlan
             var insdal = new DBHelper<vGetFlightPlanNodeInstance>();
             return insdal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.PlanID, true);
         }
+        public List<vGetFlightPlanNodeInstance> GetNodeInstanceList( Expression<Func<vGetFlightPlanNodeInstance, bool>> where)
+        {
+            var insdal = new DBHelper<vGetFlightPlanNodeInstance>();
+            return insdal.FindList(where, m => m.PlanID, true);
+        }
         public vGetFlightPlanNodeInstance GetFlightPlanNodeInstance(Expression<Func<vGetFlightPlanNodeInstance, bool>> where)
         {
             var insdal = new DBHelper<vGetFlightPlanNodeInstance>();
             return insdal.Find(where);
+        }
+        public List<Model.EF.FlightPlan> GetFlightPlanList(int userID,string PlanState)
+        {
+            if (userinfodal.IsAdmin(userID))
+            {
+                return dal.FindList(u => u.FlightPlanID, true).ToList();
+            }
+            return dal.GetFlightPlan(userID,PlanState);
         }
     }
 }

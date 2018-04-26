@@ -177,7 +177,7 @@
             }
         };
     </script>
-    <div id="edit" class="easyui-dialog" style="width: 850px; height: 850px;"
+    <div id="edit" class="easyui-dialog" style="width: 850px; height: 500px;"
         modal="true" closed="true" buttons="#edit-buttons">
                </div>
     <div id="edit-buttons">
