@@ -37,6 +37,9 @@ public partial class FlightPlan_ExportHandler : BasePage
                 case "4":
                     MySubmitRepetPlanExport();
                     break;
+                case "5":
+                    MyFinishAuditFlightPlanExport();
+                    break;
                 default:
                     break;
             }
@@ -344,6 +347,93 @@ public partial class FlightPlan_ExportHandler : BasePage
                               "attachment;filename=" +
                               "长期计划已提交列表" + ".xls");
         Response.ContentEncoding = System.Text.Encoding.UTF8;
+        file.WriteTo(Response.OutputStream);
+        file.Close();
+        Response.End();
+    }
+    private void MyFinishAuditFlightPlanExport()
+    {
+        Expression<Func<vGetFlightPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetFlightPlanNodeInstance>();
+        predicate = predicate.And(m => m.ActorID != m.Creator);
+        predicate = predicate.And(m => m.ActorID == User.ID);
+        predicate = predicate.And(m => m.State == 2 || m.State == 3);
+        if (!string.IsNullOrEmpty(Request.QueryString["plancode"]) )
+        {
+            var val = Request.QueryString["plancode"].Trim();
+            predicate = predicate.And(m => m.PlanCode == val);
+        }
+        List<vGetFlightPlanNodeInstance> listData = fbll.GetNodeInstanceList(predicate);
+
+        #region
+        var hssfworkbook = new HSSFWorkbook();
+        var sheet1 = hssfworkbook.CreateSheet("Sheet1");
+        sheet1.DefaultRowHeight = 15 * 20;
+        sheet1.DefaultColumnWidth = 18;
+
+        //设置样式
+        var styleTop = hssfworkbook.CreateCellStyle();
+        var fontTop = hssfworkbook.CreateFont();
+        fontTop.FontHeightInPoints = 11;
+        fontTop.FontName = "宋体";
+        fontTop.Boldweight = (short)FontBoldWeight.Bold;
+        styleTop.Alignment = HorizontalAlignment.Center;
+        styleTop.SetFont(fontTop);
+
+        //设置样式
+        var style = hssfworkbook.CreateCellStyle();
+        var font = hssfworkbook.CreateFont();
+        font.FontName = "宋体";
+        font.FontHeightInPoints = 11;
+        style.SetFont(font);
+
+        var headerRow = sheet1.CreateRow(0);
+
+        headerRow.CreateCell(0).SetCellValue("申请单编号");
+        headerRow.CreateCell(1).SetCellValue("航空器架数");
+        headerRow.CreateCell(2).SetCellValue("机长（飞行员）姓名");
+        headerRow.CreateCell(3).SetCellValue("通信联络方法");
+        headerRow.CreateCell(4).SetCellValue("起飞时刻");
+        headerRow.CreateCell(5).SetCellValue("降落时刻");
+        headerRow.CreateCell(6).SetCellValue("飞行气象条件");
+        headerRow.CreateCell(7).SetCellValue("空勤组人数");
+        headerRow.CreateCell(8).SetCellValue("二次雷达应答机代码");
+        headerRow.CreateCell(9).SetCellValue("公司名称");
+        headerRow.CreateCell(10).SetCellValue("审核意见");
+        headerRow.CreateCell(11).SetCellValue("审核时间");     
+        int rowIndex = 1;
+        if (listData != null && listData.Count > 0)
+        {
+            foreach (var item in listData)
+            {
+                var dataRow = sheet1.CreateRow(rowIndex);
+                dataRow.CreateCell(0).SetCellValue(item.PlanCode);
+                dataRow.CreateCell(1).SetCellValue(item.AircraftNum.Value);
+                dataRow.CreateCell(2).SetCellValue(item.Pilot);
+                dataRow.CreateCell(3).SetCellValue(item.ContactWay);
+                dataRow.CreateCell(4).SetCellValue(item.SOBT);
+                dataRow.CreateCell(5).SetCellValue(item.SIBT);
+                dataRow.CreateCell(6).SetCellValue(item.WeatherCondition);
+                dataRow.CreateCell(7).SetCellValue(item.AircrewGroupNum.Value);
+                dataRow.CreateCell(8).SetCellValue(item.RadarCode);
+                dataRow.CreateCell(9).SetCellValue(item.CompanyName);
+                dataRow.CreateCell(10).SetCellValue(item.Comments);
+                dataRow.CreateCell(11).SetCellValue(item.ActorTime.Value);
+                rowIndex++;
+            }
+            var dr = sheet1.CreateRow(rowIndex);
+            rowIndex++;
+        }
+
+        #endregion
+        var file = new MemoryStream();
+        hssfworkbook.Write(file);
+        Response.ContentType = "application/vnd.ms-excel";
+        Response.ContentEncoding = Encoding.UTF8;
+        Response.Charset = "";
+        Response.Clear();
+        Response.AppendHeader("Content-Disposition",
+                              "attachment;filename=" +
+                              HttpUtility.UrlEncode("飞行计划已审核列表" + ".xls", System.Text.Encoding.UTF8));
         file.WriteTo(Response.OutputStream);
         file.Close();
         Response.End();
