@@ -12,7 +12,8 @@
     <%--列表 start--%>
         <table id="tab_list">
         </table>
-        <div id="tab_toolbar" style="padding: 2px 2px;height:22px;">      
+        <div id="tab_toolbar" style="padding: 2px 2px;height:22px;">     
+              <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" plain="true" onclick="Main.Export()">导出</a> 
             <div style="float:right">
                         <input id="ipt_search" menu="#search_menu"/>
                         <div id="search_menu" style="width: 200px">
@@ -70,10 +71,10 @@
                           }
                       },
                       {
-                          title: '起飞点', field: 'SOBT', width: 80
+                          title: '起飞时刻', field: 'SOBT', width: 80
                       },
                       {
-                          title: '降落点', field: 'SIBT', width: 80
+                          title: '降落时刻', field: 'SIBT', width: 80
                       },
                       { title: '起飞点', field: 'ADEP', width: 100 },
                       { title: '降落点', field: 'ADES', width: 100 },
@@ -225,6 +226,15 @@
                   },
                   prompt: '请输入要查询的信息'
               });
+          },
+          Export: function () {
+              var selRow = $('#tab_list').datagrid('getData');
+              if (selRow.total == 0) {
+                  $.messager.alert('提示', '无记录导出！', 'info');
+                  return;
+              }
+              console.log($("#ipt_search").val()+"succ");
+              window.open("ExportHandler.aspx?type=4&plancode=" + $('#ipt_search').val());
           }
 
       };

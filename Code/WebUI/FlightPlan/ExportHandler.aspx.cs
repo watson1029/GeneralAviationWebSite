@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -32,6 +33,9 @@ public partial class FlightPlan_ExportHandler : BasePage
                     break;
                 case "3":
                     MySubmitFlightPlanExport();
+                    break;
+                case "4":
+                    MySubmitRepetPlanExport();
                     break;
                 default:
                     break;
@@ -232,6 +236,114 @@ public partial class FlightPlan_ExportHandler : BasePage
         Response.AppendHeader("Content-Disposition",
                               "attachment;filename=" +
                               HttpUtility.UrlEncode("长期计划未提交列表" + ".xls", System.Text.Encoding.UTF8));
+        file.WriteTo(Response.OutputStream);
+        file.Close();
+        Response.End();
+    }
+    private void MySubmitRepetPlanExport()
+    {
+        Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
+        predicate = predicate.And(m => m.PlanState != "0" && m.Creator == User.ID);
+        if (!string.IsNullOrEmpty(Request.QueryString["plancode"]))
+        {
+            var val = Request.QueryString["plancode"].Trim();
+            predicate = predicate.And(m => m.PlanCode == val);
+        }
+        List<RepetitivePlan>ReList=new RepetitivePlanBLL().GetList(predicate);
+        #region
+        var hssfworkbook = new HSSFWorkbook();
+        var sheet1 = hssfworkbook.CreateSheet("Sheet1");
+        sheet1.DefaultRowHeight = 15 * 20;
+        sheet1.DefaultColumnWidth = 18;
+
+        //设置样式
+        var styleTop = hssfworkbook.CreateCellStyle();
+        var fontTop = hssfworkbook.CreateFont();
+        fontTop.FontHeightInPoints = 11;
+        fontTop.FontName = "宋体";
+        fontTop.Boldweight = (short)FontBoldWeight.Bold;
+        styleTop.Alignment = HorizontalAlignment.Center;
+        styleTop.SetFont(fontTop);
+
+        //设置样式
+        var style = hssfworkbook.CreateCellStyle();
+        var font = hssfworkbook.CreateFont();
+        font.FontName = "宋体";
+        font.FontHeightInPoints = 11;
+        style.SetFont(font);
+
+        var headerRow = sheet1.CreateRow(0);
+
+        headerRow.CreateCell(0).SetCellValue("申请单编号");
+        headerRow.CreateCell(1).SetCellValue("任务类型");
+        headerRow.CreateCell(2).SetCellValue("注册号");
+        headerRow.CreateCell(3).SetCellValue("使用机型");
+        headerRow.CreateCell(4).SetCellValue("飞行范围");
+        headerRow.CreateCell(5).SetCellValue("飞行高度");
+        headerRow.CreateCell(6).SetCellValue("预计开始时间");
+        headerRow.CreateCell(7).SetCellValue("预计结束时间");
+        headerRow.CreateCell(8).SetCellValue("起飞时刻");
+        headerRow.CreateCell(9).SetCellValue("降落时刻");
+        headerRow.CreateCell(10).SetCellValue("起飞点");
+        headerRow.CreateCell(11).SetCellValue("降落点");
+        headerRow.CreateCell(12).SetCellValue("备降点");
+        headerRow.CreateCell(13).SetCellValue("周执行计划");
+        headerRow.CreateCell(14).SetCellValue("创建人");
+        headerRow.CreateCell(15).SetCellValue("状态");
+        int rowIndex = 1;
+        if (ReList.Count > 0)
+        {
+            foreach (var item in ReList)
+            {
+                var dataRow = sheet1.CreateRow(rowIndex);
+                dataRow.CreateCell(0).SetCellValue(item.PlanCode);
+                dataRow.CreateCell(1).SetCellValue(item.FlightType);
+                dataRow.CreateCell(2).SetCellValue(item.CallSign);
+                dataRow.CreateCell(3).SetCellValue(item.AircraftType);
+                dataRow.CreateCell(4).SetCellValue(item.FlightArea);
+                dataRow.CreateCell(5).SetCellValue(item.FlightHeight);
+                dataRow.CreateCell(6).SetCellValue(item.StartDate.ToString("yyyy-MM-dd"));
+                dataRow.CreateCell(7).SetCellValue(item.EndDate.ToString("yyyy-MM-dd"));
+                dataRow.CreateCell(8).SetCellValue(item.SOBT.ToString());
+                dataRow.CreateCell(9).SetCellValue(item.SIBT.ToString());
+                dataRow.CreateCell(10).SetCellValue(item.ADEP);
+                dataRow.CreateCell(11).SetCellValue(item.ADES);
+                dataRow.CreateCell(12).SetCellValue(item.Alternate);
+                item.WeekSchedule = item.WeekSchedule.Replace("*","");
+                dataRow.CreateCell(13).SetCellValue("星期"+item.WeekSchedule);
+                dataRow.CreateCell(14).SetCellValue(item.CreatorName);
+                //dataRow.CreateCell(17).SetCellValue(item.PlanState);
+                var str = "";
+                if (item.PlanState == "end")
+                {
+                    str = "审核通过";
+                }
+                else if (item.PlanState == "Deserted")
+                {
+                    str = "审核不通过";
+                }
+                else
+                {
+                    str = item.PlanState + "审核中";
+                }
+                dataRow.CreateCell(15).SetCellValue(str);
+                rowIndex++;
+            }
+            var dr = sheet1.CreateRow(rowIndex);
+            rowIndex++;
+        }
+
+        #endregion
+        var file = new MemoryStream();
+        hssfworkbook.Write(file);
+        Response.ContentType = "application/vnd.ms-excel";
+        Response.ContentEncoding = Encoding.UTF8;
+        Response.Charset = "";
+        Response.Clear();
+        Response.AppendHeader("Content-Disposition",
+                              "attachment;filename=" +
+                              "长期计划已提交列表" + ".xls");
+        Response.ContentEncoding = System.Text.Encoding.UTF8;
         file.WriteTo(Response.OutputStream);
         file.Close();
         Response.End();
