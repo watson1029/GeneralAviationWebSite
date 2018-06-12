@@ -33,8 +33,9 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="9.75" PointY="12.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vFlightPlan" Width="1.5" PointX="0.75" PointY="15.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" Width="1.5" PointX="2.75" PointY="15.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.RepetPlanNew" Width="1.5" PointX="15.375" PointY="9.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlyPlanDemo" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusyTime" Width="1.5" PointX="3.375" PointY="8.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.RepetPlanNew" Width="1.5" PointX="15.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

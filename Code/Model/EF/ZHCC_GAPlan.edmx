@@ -57,6 +57,14 @@
           <Property Name="CompanyCode3" Type="nchar" MaxLength="3" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="BusyTime">
+          <Key>
+            <PropertyRef Name="BusyDate" />
+          </Key>
+          <Property Name="BusyDate" Type="date" Nullable="false" />
+          <Property Name="BusyBeginTime" Type="datetime" />
+          <Property Name="BusyEndTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="CompanyID" />
@@ -343,6 +351,8 @@
           <Property Name="AuditName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Code" Type="varchar" MaxLength="14" />
           <Property Name="CallSign" Type="varchar" MaxLength="8" />
+          <Property Name="IsUrgentTask" Type="bit" Nullable="false" />
+          <Property Name="IsCrossArea" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Resource">
           <Key>
@@ -670,6 +680,7 @@
           <EntitySet Name="ActualSteps" EntityType="Self.ActualSteps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Advertisment" EntityType="Self.Advertisment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Aircraft" EntityType="Self.Aircraft" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusyTime" EntityType="Self.BusyTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanySummary" EntityType="Self.CompanySummary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CurrentFlightPlan" EntityType="Self.CurrentFlightPlan" Schema="dbo" store:Type="Tables" />
@@ -874,8 +885,9 @@
           <EntitySet Name="FlightPlan" EntityType="ZHCC_GAPlanModel.FlightPlan" />
           <EntitySet Name="vFlightPlan" EntityType="ZHCC_GAPlanModel.vFlightPlan" />
           <EntitySet Name="vGetFlightPlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" />
-          <EntitySet Name="RepetPlanNew" EntityType="ZHCC_GAPlanModel.RepetPlanNew" />
           <EntitySet Name="FlyPlanDemo" EntityType="ZHCC_GAPlanModel.FlyPlanDemo" />
+          <EntitySet Name="BusyTime" EntityType="ZHCC_GAPlanModel.BusyTime" />
+          <EntitySet Name="RepetPlanNew" EntityType="ZHCC_GAPlanModel.RepetPlanNew" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -1498,6 +1510,28 @@
           <Property Name="Creator" Type="Int32" Nullable="false" />
           <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="FlyPlanDemo">
+          <Key>
+            <PropertyRef Name="FlyPlanID" />
+          </Key>
+          <Property Name="FlyPlanID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RepetPlanID" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PlanDate" Type="DateTime" Precision="0" />
+          <Property Name="PlanBeginTime" Type="DateTime" Precision="3" />
+          <Property Name="PlanEndTime" Type="DateTime" Precision="3" />
+          <Property Name="AircraftModel" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="TakeOffTime" Type="DateTime" Precision="3" />
+          <Property Name="LandTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="BusyTime">
+          <Key>
+            <PropertyRef Name="BusyDate" />
+          </Key>
+          <Property Name="BusyDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="BusyBeginTime" Type="DateTime" Precision="3" />
+          <Property Name="BusyEndTime" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="RepetPlanNew">
           <Key>
             <PropertyRef Name="RepetPlanID" />
@@ -1515,20 +1549,8 @@
           <Property Name="AuditName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
           <Property Name="CallSign" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="FlyPlanDemo">
-          <Key>
-            <PropertyRef Name="FlyPlanID" />
-          </Key>
-          <Property Name="FlyPlanID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="RepetPlanID" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PlanDate" Type="DateTime" Precision="0" />
-          <Property Name="PlanBeginTime" Type="DateTime" Precision="3" />
-          <Property Name="PlanEndTime" Type="DateTime" Precision="3" />
-          <Property Name="AircraftModel" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="TakeOffTime" Type="DateTime" Precision="3" />
-          <Property Name="LandTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="IsUrgentTask" Type="Boolean" Nullable="false" />
+          <Property Name="IsCrossArea" Type="Boolean" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2118,9 +2140,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="FlyPlanDemo">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.FlyPlanDemo">
+              <MappingFragment StoreEntitySet="FlyPlanDemo">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LandTime" ColumnName="LandTime" />
+                <ScalarProperty Name="TakeOffTime" ColumnName="TakeOffTime" />
+                <ScalarProperty Name="AircraftModel" ColumnName="AircraftModel" />
+                <ScalarProperty Name="PlanEndTime" ColumnName="PlanEndTime" />
+                <ScalarProperty Name="PlanBeginTime" ColumnName="PlanBeginTime" />
+                <ScalarProperty Name="PlanDate" ColumnName="PlanDate" />
+                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
+                <ScalarProperty Name="FlyPlanID" ColumnName="FlyPlanID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BusyTime">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.BusyTime">
+              <MappingFragment StoreEntitySet="BusyTime">
+                <ScalarProperty Name="BusyEndTime" ColumnName="BusyEndTime" />
+                <ScalarProperty Name="BusyBeginTime" ColumnName="BusyBeginTime" />
+                <ScalarProperty Name="BusyDate" ColumnName="BusyDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RepetPlanNew">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.RepetPlanNew">
               <MappingFragment StoreEntitySet="RepetPlanNew">
+                <ScalarProperty Name="IsCrossArea" ColumnName="IsCrossArea" />
+                <ScalarProperty Name="IsUrgentTask" ColumnName="IsUrgentTask" />
                 <ScalarProperty Name="CallSign" ColumnName="CallSign" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="AuditName" ColumnName="AuditName" />
@@ -2134,21 +2182,6 @@
                 <ScalarProperty Name="FlightArea" ColumnName="FlightArea" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FlyPlanDemo">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.FlyPlanDemo">
-              <MappingFragment StoreEntitySet="FlyPlanDemo">
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="LandTime" ColumnName="LandTime" />
-                <ScalarProperty Name="TakeOffTime" ColumnName="TakeOffTime" />
-                <ScalarProperty Name="AircraftModel" ColumnName="AircraftModel" />
-                <ScalarProperty Name="PlanEndTime" ColumnName="PlanEndTime" />
-                <ScalarProperty Name="PlanBeginTime" ColumnName="PlanBeginTime" />
-                <ScalarProperty Name="PlanDate" ColumnName="PlanDate" />
-                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
-                <ScalarProperty Name="FlyPlanID" ColumnName="FlyPlanID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

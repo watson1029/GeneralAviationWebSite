@@ -27,5 +27,7 @@ namespace Model.EF
         public string AuditName { get; set; }
         public string Code { get; set; }
         public string CallSign { get; set; }
+        public bool IsUrgentTask { get; set; }
+        public bool IsCrossArea { get; set; }
     }
 }
