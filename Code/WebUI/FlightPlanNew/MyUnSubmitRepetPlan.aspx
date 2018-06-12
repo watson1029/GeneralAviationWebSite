@@ -58,7 +58,7 @@
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
-                        { title: '注册号', field: 'CallSign', width: 80 },
+                        { title: '航班号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 70 },
                         { title: '飞行范围', field: 'FlightArea', width: 100 },
                          { title: '飞行高度', field: 'FlightHeight', width: 100 },

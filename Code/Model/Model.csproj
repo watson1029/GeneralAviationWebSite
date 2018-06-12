@@ -80,6 +80,9 @@
     <Compile Include="EF\FlightTask.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\FlyPlanDemo.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\LoginLog.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
@@ -96,6 +99,9 @@
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\RepetitivePlan.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\RepetPlanNew.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Resource.cs">
