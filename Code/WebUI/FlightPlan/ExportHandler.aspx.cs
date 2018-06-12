@@ -407,13 +407,13 @@ public partial class FlightPlan_ExportHandler : BasePage
             {
                 var dataRow = sheet1.CreateRow(rowIndex);
                 dataRow.CreateCell(0).SetCellValue(item.PlanCode);
-                dataRow.CreateCell(1).SetCellValue(item.AircraftNum.Value);
+                dataRow.CreateCell(1).SetCellValue(item.AircraftNum==null?0:item.AircraftNum.Value);
                 dataRow.CreateCell(2).SetCellValue(item.Pilot);
                 dataRow.CreateCell(3).SetCellValue(item.ContactWay);
                 dataRow.CreateCell(4).SetCellValue(item.SOBT);
                 dataRow.CreateCell(5).SetCellValue(item.SIBT);
                 dataRow.CreateCell(6).SetCellValue(item.WeatherCondition);
-                dataRow.CreateCell(7).SetCellValue(item.AircrewGroupNum.Value);
+                dataRow.CreateCell(7).SetCellValue(item.AircrewGroupNum==null?0:item.AircrewGroupNum.Value);
                 dataRow.CreateCell(8).SetCellValue(item.RadarCode);
                 dataRow.CreateCell(9).SetCellValue(item.CompanyName);
                 dataRow.CreateCell(10).SetCellValue(item.Comments);
