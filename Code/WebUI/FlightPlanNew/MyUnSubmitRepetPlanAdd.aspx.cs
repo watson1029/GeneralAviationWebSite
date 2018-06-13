@@ -58,7 +58,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
     {
         get
         {
-            return "MyUnSubmitRepetPlanCheck";
+            return "MyUnSubmitRepetPlanNewCheck";
         }
     }
     #endregion

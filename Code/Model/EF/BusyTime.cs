@@ -14,7 +14,8 @@ namespace Model.EF
     
     public partial class BusyTime
     {
-        public System.DateTime BusyDate { get; set; }
+        public int BustID { get; set; }
+        public Nullable<System.DateTime> BusyDate { get; set; }
         public Nullable<System.DateTime> BusyBeginTime { get; set; }
         public Nullable<System.DateTime> BusyEndTime { get; set; }
     }

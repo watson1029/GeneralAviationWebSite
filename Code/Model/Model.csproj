@@ -59,6 +59,9 @@
     <Compile Include="EF\Aircraft.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\BusyTime.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\Company.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>

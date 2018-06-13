@@ -57,45 +57,29 @@
                     ]],
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 180 },
-                        { title: '任务类型', field: 'FlightType', width: 70 },
-                        { title: '航班号', field: 'CallSign', width: 80 },
-                        { title: '使用机型', field: 'AircraftType', width: 70 },
-                        { title: '飞行范围', field: 'FlightArea', width: 100 },
-                         { title: '飞行高度', field: 'FlightHeight', width: 100 },
-                        { title: '预计开始时间', field: 'StartDate',width: 100, formatter: function (value, rec, index) { 
+                        { title: '公司名称', field: 'CompanyName', width: 120 },
+                        { title: '任务类型', field: 'FlightType', width: 100 },
+                        { title: '航班号', field: 'CallSign', width: 100 },
+                        { title: '航空器类型', field: 'AircraftType', width: 100 },
+                        { title: '机场及起降点', field: 'Airport', width: 120 },
+                        { title: '航线及作业区', field: 'FlightArea', width: 120 },
+                        {
+                            title: '预计开始时间', field: 'StartDate', width: 120, formatter: function (value, rec, index) {
                         
                             var timesstamp = new Date(value.dateValFormat());
                             return timesstamp.format("yyyy-MM-dd");
                         
                         } },
                         {
-                            title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) { 
+                            title: '预计结束时间', field: 'EndDate', width: 120, formatter: function (value, rec, index) {
                         
                                 var timesstamp = new Date(value.dateValFormat());
                                 return timesstamp.format("yyyy-MM-dd");
                         
                             }
-                        },
-                        {
-                            title: '起飞时刻', field: 'SOBT', width: 100 },
-                        { title: '降落时刻', field: 'SIBT', width: 100},
-                        { title: '起飞点', field: 'ADEP', width: 80 },
-                        { title: '降落点', field: 'ADES', width: 80 },
-                         { title: '备降点', field: 'Alternate', width: 80 },
-                        {
-                            title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
-                                var array = [];
-                                $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
-                                    array.push("星期" + n);
-                                });
-                              return  array.join(',');
-
-                            }
-                        },
+                        },  
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
-                          { title: '其他需要说明的事项', field: 'Remark', width: 150, hidden: 'true' },
-
-                        { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
+                        { title: '状态', field: 'Status', formatter: function (value, rec, index) { return (value == 1 ? '草稿中' : (value == 2 ? '已提交' : (value == 3 ? '审核通过' : '审核不通过'))) }, width: 50 },
                         {
                             title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" id="sub-btn_' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
@@ -133,30 +117,13 @@
             },
             //提交按钮事件
             Save: function (uid) {
-                if ($("#Remark").val().length > 200)
-                {
-                    $.messager.alert('提示', '"其他需要说明的事项"不能超过200字符！', 'info');
-                    return;
-                }
                 if (!$("#form_edit").form("validate")) {
                     return;
-                }
-               
+                }               
                 var fileInfo = dj.getCmp("AttchFiles").getUploadedFiles();
                 $("#AttchFilesInfo").val(fileInfo);
-                fileInfo = dj.getCmp("OtherAttchFiles").getUploadedFiles();
-                $("#OtherAttchFilesInfo").val(fileInfo);
-                qx = $("input[name='WeekSchedule']").map(function () {
-                    var $this = $(this);
-                    if ($this.is(':checked')) {
-                        return $this.val();
-                    }
-                    else {
-                          return '*';
-                    }
-                }).get().join('');
                 $("#btn_add").attr("disabled", "disabled");
-                var json = $.param({ "id": uid, "action": "save", "qx": qx }) + '&' + $('#form_edit').serialize();
+                var json = $.param({ "id": uid, "action": "save" }) + '&' + $('#form_edit').serialize();
                 $.ajax({
                     type: 'post',
                     url: location.href,
