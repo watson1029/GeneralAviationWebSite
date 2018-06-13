@@ -51,6 +51,7 @@
     <Compile Include="BasicData\FlightTaskDAL.cs" />
     <Compile Include="BasicData\NewDAL.cs" />
     <Compile Include="DBHelper.cs" />
+    <Compile Include="FlightPlan\RepetitivePlanNewDAL.cs" />
     <Compile Include="FlightPlan\VCurrentPlanDAL.cs" />
     <Compile Include="FlightPlan\CurrentFlightPlanDAL.cs" />
     <Compile Include="FlightPlan\FlightPlanDAL.cs" />

@@ -56,6 +56,7 @@
     <Compile Include="BasicData\PilotBLL.cs" />
     <Compile Include="BasicData\Quanlification\CompanyBLL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanBLL.cs" />
+    <Compile Include="FlightPlan\RepetitivePlanNewBLL.cs" />
     <Compile Include="FlightPlan\WorkflowTemplateBLL.cs" />
     <Compile Include="Log\LoginLogBLL.cs" />
     <Compile Include="Log\OperationLogBLL.cs" />
