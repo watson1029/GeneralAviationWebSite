@@ -353,6 +353,7 @@
           <Property Name="CallSign" Type="varchar" MaxLength="8" />
           <Property Name="IsUrgentTask" Type="bit" Nullable="false" />
           <Property Name="IsCrossArea" Type="bit" Nullable="false" />
+          <Property Name="Airport" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Resource">
           <Key>
@@ -416,16 +417,6 @@
           <Property Name="TWFDescription" Type="nvarchar" MaxLength="50" />
           <Property Name="TWFType" Type="tinyint" />
         </EntityType>
-        <EntityType Name="TWFPerson">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
-          <Property Name="AuthorType" Type="nvarchar" MaxLength="50" />
-          <Property Name="TWFID" Type="int" Nullable="false" />
-          <Property Name="StepID" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="TWFSteps">
           <Key>
             <PropertyRef Name="StepID" />
@@ -460,11 +451,6 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
-        <!--生成过程中发现错误:
-警告 6013: 表/视图“ZHCC_GAPlan.dbo.GenerateRandSeed”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
-        <EntityType Name="GenerateRandSeed">
-          <Property Name="RD" Type="float" />
-        </EntityType>-->
         <!--生成过程中发现错误:
 警告 6002: 表/视图“ZHCC_GAPlan.dbo.V_CurrentPlan”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="V_CurrentPlan">
@@ -695,28 +681,6 @@
           <Property Name="FlightHeight" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="OtherAttchFile" Type="nvarchar" MaxLength="200" />
         </EntityType>
-        <Function Name="f_GeneratePlanCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="CompanyCode3" Type="nchar" Mode="In" />
-          <Parameter Name="Kind" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="pro_pageList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="tblName" Type="varchar" Mode="In" />
-          <Parameter Name="strGetFields" Type="varchar" Mode="In" />
-          <Parameter Name="fldName" Type="varchar" Mode="In" />
-          <Parameter Name="PageSize" Type="int" Mode="In" />
-          <Parameter Name="PageIndex" Type="int" Mode="In" />
-          <Parameter Name="doCount" Type="bit" Mode="In" />
-          <Parameter Name="OrderType" Type="bit" Mode="In" />
-          <Parameter Name="strWhere" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="upCatchErrorLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ErrorLogID" Type="int" Mode="InOut" />
-        </Function>
-        <Function Name="upCreateFlightPlanByTimePeriod" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SpecifiedTime" Type="datetime" Mode="In" />
-          <Parameter Name="TimePeriod" Type="float" Mode="In" />
-        </Function>
-        <Function Name="upPrintErrorLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ZHCC_GAPlanModelStoreContainer">
           <EntitySet Name="ActualSteps" EntityType="Self.ActualSteps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Advertisment" EntityType="Self.Advertisment" Schema="dbo" store:Type="Tables" />
@@ -742,7 +706,6 @@
           <EntitySet Name="RoleMenu" EntityType="Self.RoleMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplyDemandInfo" EntityType="Self.SupplyDemandInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TWFLibrary" EntityType="Self.TWFLibrary" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TWFPerson" EntityType="Self.TWFPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TWFSteps" EntityType="Self.TWFSteps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserInfo" EntityType="Self.UserInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
@@ -929,28 +892,9 @@
           <EntitySet Name="FlightPlan" EntityType="ZHCC_GAPlanModel.FlightPlan" />
           <EntitySet Name="vFlightPlan" EntityType="ZHCC_GAPlanModel.vFlightPlan" />
           <EntitySet Name="vGetFlightPlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" />
-          <EntitySet Name="BusyTime" EntityType="ZHCC_GAPlanModel.BusyTime" />
           <EntitySet Name="FlyPlanDemo" EntityType="ZHCC_GAPlanModel.FlyPlanDemo" />
+          <EntitySet Name="BusyTime" EntityType="ZHCC_GAPlanModel.BusyTime" />
           <EntitySet Name="RepetPlanNew" EntityType="ZHCC_GAPlanModel.RepetPlanNew" />
-          <EntitySet Name="TWFPerson" EntityType="ZHCC_GAPlanModel.TWFPerson" />
-          <FunctionImport Name="pro_pageList">
-            <Parameter Name="tblName" Mode="In" Type="String" />
-            <Parameter Name="strGetFields" Mode="In" Type="String" />
-            <Parameter Name="fldName" Mode="In" Type="String" />
-            <Parameter Name="PageSize" Mode="In" Type="Int32" />
-            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
-            <Parameter Name="doCount" Mode="In" Type="Boolean" />
-            <Parameter Name="OrderType" Mode="In" Type="Boolean" />
-            <Parameter Name="strWhere" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="upCatchErrorLog">
-            <Parameter Name="ErrorLogID" Mode="InOut" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="upCreateFlightPlanByTimePeriod">
-            <Parameter Name="SpecifiedTime" Mode="In" Type="DateTime" />
-            <Parameter Name="TimePeriod" Mode="In" Type="Double" />
-          </FunctionImport>
-          <FunctionImport Name="upPrintErrorLog" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -1577,14 +1521,6 @@
           <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="FlightArea" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="BusyTime">
-          <Key>
-            <PropertyRef Name="BusyDate" />
-          </Key>
-          <Property Name="BusyDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="BusyBeginTime" Type="DateTime" Precision="3" />
-          <Property Name="BusyEndTime" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="FlyPlanDemo">
           <Key>
             <PropertyRef Name="FlyPlanID" />
@@ -1598,6 +1534,14 @@
           <Property Name="TakeOffTime" Type="DateTime" Precision="3" />
           <Property Name="LandTime" Type="DateTime" Precision="3" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="BusyTime">
+          <Key>
+            <PropertyRef Name="BusyDate" />
+          </Key>
+          <Property Name="BusyDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="BusyBeginTime" Type="DateTime" Precision="3" />
+          <Property Name="BusyEndTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="RepetPlanNew">
           <Key>
@@ -1618,16 +1562,7 @@
           <Property Name="CallSign" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="IsUrgentTask" Type="Boolean" Nullable="false" />
           <Property Name="IsCrossArea" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TWFPerson">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AuthorType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TWFID" Type="Int32" Nullable="false" />
-          <Property Name="StepID" Type="Int32" Nullable="false" />
+          <Property Name="Airport" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2219,15 +2154,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BusyTime">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.BusyTime">
-              <MappingFragment StoreEntitySet="BusyTime">
-                <ScalarProperty Name="BusyEndTime" ColumnName="BusyEndTime" />
-                <ScalarProperty Name="BusyBeginTime" ColumnName="BusyBeginTime" />
-                <ScalarProperty Name="BusyDate" ColumnName="BusyDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="FlyPlanDemo">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.FlyPlanDemo">
               <MappingFragment StoreEntitySet="FlyPlanDemo">
@@ -2243,9 +2169,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BusyTime">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.BusyTime">
+              <MappingFragment StoreEntitySet="BusyTime">
+                <ScalarProperty Name="BusyEndTime" ColumnName="BusyEndTime" />
+                <ScalarProperty Name="BusyBeginTime" ColumnName="BusyBeginTime" />
+                <ScalarProperty Name="BusyDate" ColumnName="BusyDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RepetPlanNew">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.RepetPlanNew">
               <MappingFragment StoreEntitySet="RepetPlanNew">
+                <ScalarProperty Name="Airport" ColumnName="Airport" />
                 <ScalarProperty Name="IsCrossArea" ColumnName="IsCrossArea" />
                 <ScalarProperty Name="IsUrgentTask" ColumnName="IsUrgentTask" />
                 <ScalarProperty Name="CallSign" ColumnName="CallSign" />
@@ -2264,21 +2200,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TWFPerson">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.TWFPerson">
-              <MappingFragment StoreEntitySet="TWFPerson">
-                <ScalarProperty Name="StepID" ColumnName="StepID" />
-                <ScalarProperty Name="TWFID" ColumnName="TWFID" />
-                <ScalarProperty Name="AuthorType" ColumnName="AuthorType" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="pro_pageList" FunctionName="ZHCC_GAPlanModel.Store.pro_pageList" />
-          <FunctionImportMapping FunctionImportName="upCatchErrorLog" FunctionName="ZHCC_GAPlanModel.Store.upCatchErrorLog" />
-          <FunctionImportMapping FunctionImportName="upCreateFlightPlanByTimePeriod" FunctionName="ZHCC_GAPlanModel.Store.upCreateFlightPlanByTimePeriod" />
-          <FunctionImportMapping FunctionImportName="upPrintErrorLog" FunctionName="ZHCC_GAPlanModel.Store.upPrintErrorLog" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
