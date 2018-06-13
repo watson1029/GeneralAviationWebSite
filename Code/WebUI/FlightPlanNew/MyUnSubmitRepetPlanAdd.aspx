@@ -25,17 +25,9 @@
                 </th>
                 <td>
                       <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" style="height:25px"/>
-
                 </td>
             </tr>
-                <tr>
-                <th>是否紧急任务：
-                </th>
-                <td>
-                 <input id="IsUrgentTask" type="checkbox" name="IsUrgentTask" value="true" style="width:20px"/>紧急任务
-                </td>
-
-            </tr>
+            
             <tr>
                 <th>预计开始日期：
                 </th>
@@ -59,13 +51,33 @@
                     <div id="AttchFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
                 </td>
             </tr>
+             <tr>
+                <th>机场及临时起降点：
+                </th>
+                <td colspan="3">
+                    <input id="Airport" name="Airport"  required="true" style="width: 600px; height: 150px" type="text" maxlength="200" data-options="multiline:true" class="easyui-textbox" />
+                </td>
+            </tr>   
             <tr>
-                <th>飞行范围：
+                <th>航线及作业区：
                 </th>
                 <td colspan="3">
                     <input id="FlightArea" name="FlightArea"  required="true" style="width: 600px; height: 150px" type="text" maxlength="200" data-options="multiline:true" class="easyui-textbox" />
                 </td>
-            </tr>          
+            </tr>   
+            <tr>
+                <th>是否紧急任务：
+                </th>
+                <td>
+                 <input id="IsUrgentTask" type="checkbox" name="IsUrgentTask" value="true" style="width:20px"/>
+                </td>
+                <th>是否跨区飞行：
+                </th>
+                <td>
+                 <input id="IsCrossArea" type="checkbox" name="IsCrossArea" value="true" style="width:20px"/>
+                </td>
+            </tr>       
+       
         </table>
 
     </form>

@@ -57,41 +57,26 @@
                     ]],
                     columns: [[
                         { title: '申请单号', field: 'PlanCode', width: 180 },
+                           { title: '公司名称', field: 'CompanyName', width: 70 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
                         { title: '航班号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 70 },
-                        { title: '飞行范围', field: 'FlightArea', width: 100 },
-                         { title: '飞行高度', field: 'FlightHeight', width: 100 },
+                           { title: '机场及起降点', field: 'Airport', width: 140 },
+                        { title: '航线及作业区', field: 'FlightArea', width: 140 },
                         { title: '预计开始时间', field: 'StartDate',width: 100, formatter: function (value, rec, index) { 
                         
                             var timesstamp = new Date(value.dateValFormat());
-                            return timesstamp.format("yyyy-MM-dd");
+                            return timesstamp.format("yyyy-MM-dd hh:mm:ss");
                         
                         } },
                         {
                             title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) { 
                         
                                 var timesstamp = new Date(value.dateValFormat());
-                                return timesstamp.format("yyyy-MM-dd");
+                                return timesstamp.format("yyyy-MM-dd hh:mm:ss");
                         
                             }
-                        },
-                        {
-                            title: '起飞时刻', field: 'SOBT', width: 100 },
-                        { title: '降落时刻', field: 'SIBT', width: 100},
-                        { title: '起飞点', field: 'ADEP', width: 80 },
-                        { title: '降落点', field: 'ADES', width: 80 },
-                         { title: '备降点', field: 'Alternate', width: 80 },
-                        {
-                            title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
-                                var array = [];
-                                $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
-                                    array.push("星期" + n);
-                                });
-                              return  array.join(',');
-
-                            }
-                        },
+                        },  
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150, hidden: 'true' },
 
