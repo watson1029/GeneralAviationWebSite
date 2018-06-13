@@ -24,11 +24,18 @@ namespace Model.EF
         public string AircraftType { get; set; }
         public int Creator { get; set; }
         public string CreateName { get; set; }
-        public string AuditName { get; set; }
         public string Code { get; set; }
         public string CallSign { get; set; }
         public bool IsUrgentTask { get; set; }
         public bool IsCrossArea { get; set; }
         public string Airport { get; set; }
+        public string AuditName { get; set; }
+        public Nullable<System.DateTime> AuditTime { get; set; }
+        public string AuditComment { get; set; }
+        public Nullable<int> Status { get; set; }
+        public string AttchFile { get; set; }
+        public Nullable<int> AuthorID { get; set; }
+        public string PlanCode { get; set; }
+        public bool IsCrossDay { get; set; }
     }
 }
