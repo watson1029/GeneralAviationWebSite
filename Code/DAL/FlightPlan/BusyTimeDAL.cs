@@ -25,6 +25,14 @@ namespace DAL.FlightPlan
             return linq.FirstOrDefault();
         }
 
+        public BusyTime Get(int id)
+        {
+            var linq = from t in context.BusyTime
+                       where t.BustID == id
+                       select t;
+            return linq.FirstOrDefault();
+        }
+
         public List<BusyTime> GetList()
         {
             var linq = from t in context.BusyTime

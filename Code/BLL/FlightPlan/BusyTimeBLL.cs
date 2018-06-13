@@ -28,6 +28,10 @@ namespace BLL.FlightPlan
         {
             return dal.Get(date);
         }
+        public BusyTime Get(int id)
+        {
+            return dal.Get(id);
+        }
         public List<BusyTime> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<BusyTime, bool>> where)
         {
             return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.BusyDate, false);

@@ -60,7 +60,7 @@
                     title: '繁忙时间段', //表格标题
                     url: location.href, //请求数据的页面
                     sortName: 'BusyDate', //排序字段
-                    idField: 'BusyID', //标识字段,主键
+                    idField: 'BusyDate', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
                     height: $(parent.document).find("#mainPanel").height() - 10 > 0 ? $(parent.document).find("#mainPanel").height() - 10 : 300, //高度
@@ -78,10 +78,7 @@
                         { title: '繁忙时间段开始时间', field: 'BusyBeginTime', width: 250 },
                         { title: '繁忙时间段结束时间', field: 'BusyEndTime', width: 250 },
                         {
-                            title: '操作', field: 'BusyID', width: 250, formatter: function (value, row, index) {
-                                alert(value);
-                                alert(row);
-                                alert(index);
+                            title: '操作', field: 'BustID', width: 250, formatter: function (value, rec) {
                                 var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>';
                                 return str;
                             }
@@ -120,7 +117,6 @@
             },
             //修改链接 事件
             EditData: function (uid) {
-                alert(uid);
                 $("#edit").dialog("open").dialog('setTitle', '编辑');
                 $("#BusyDate").attr("enable", "false");
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")

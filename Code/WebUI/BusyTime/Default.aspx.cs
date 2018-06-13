@@ -84,9 +84,8 @@ public partial class BusyTime_Default : System.Web.UI.Page
     /// </summary>
     private void GetData()
     {
-        DateTime date = DateTime.MinValue;
-        DateTime.TryParse(Request.Form["BusyDate"], out date);
-        var model = bll.Get(date);
+        int id = int.Parse(Request.Form["id"]);
+        var model = bll.Get(id);
         var strJSON = JsonConvert.SerializeObject(model);
         Response.Clear();
         Response.Write(strJSON);
