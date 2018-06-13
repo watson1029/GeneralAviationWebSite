@@ -32,6 +32,9 @@ public partial class FlightPlanNew_FlyPlanDemo : System.Web.UI.Page
                 case "submit":
                     Save();
                     break;
+                case "display":
+                    Display();
+                    break;
                 default:
                     break;
             }
@@ -141,6 +144,16 @@ public partial class FlightPlanNew_FlyPlanDemo : System.Web.UI.Page
 
         Response.Clear();
         Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
+    }
+
+    private void Display()
+    {
+        var model = flybll.GetRepetPlan(Request.Form["id"]);
+        var strJSON = JsonConvert.SerializeObject(model);
+        Response.Clear();
+        Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
     }

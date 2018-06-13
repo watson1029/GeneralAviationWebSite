@@ -71,6 +71,83 @@
         <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a>
         <a href="javascript:;" class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
+    <div id="display" class="easyui-dialog" style="width: 850px; height:800px;"
+        modal="true" closed="true" buttons="#display-buttons">
+        <form id="form_display" method="post">
+            <input type="hidden" name="PlanCode" id="PlanCode" value=""/>
+            <table class="table_edit">
+                <tr>
+                    <th>航班号：</th>
+                    <td>
+                        <input id="CallSign" name="CallSign" readonly="true"  maxlength="30" type="text"  required="true" class="easyui-textbox" style="height:25px"/>
+                    </td>
+                </tr>
+                    <tr>
+                        <th>任务类型：
+                        </th>
+                        <td>
+                             <input id="FlightType" name="FlightType" readonly="true" maxlength="30" type="text"  required="true" class="easyui-textbox" style="height:25px"/>
+                        </td>
+           <th>航空器类型：
+                        </th>
+                        <td>
+                              <input id="AircraftType" name="AircraftType" readonly="true" maxlength="30" type="text"  required="true" class="easyui-textbox" style="height:25px"/>
+                        </td>
+                    </tr>
+            
+                    <tr>
+                        <th>预计开始日期：
+                        </th>
+                        <td>
+                            <input id="StartDate" name="StartDate" editable="false" readonly="true" required="true"  class="easyui-datebox" style="height:25px"/>
+                        </td>
+                        <th>预计结束日期：
+                        </th>
+                        <td>
+                            <input id="EndDate" name="EndDate"  editable="false" readonly="true" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height:25px"/>
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>机场及临时起降点：
+                        </th>
+                        <td colspan="3">
+                            <input id="Airport" name="Airport"  required="true" readonly="true" style="width: 600px; height: 150px" type="text" maxlength="200" data-options="multiline:true" class="easyui-textbox" />
+                        </td>
+                    </tr>   
+                    <tr>
+                        <th>航线及作业区：
+                        </th>
+                        <td colspan="3">
+                            <input id="FlightArea" name="FlightArea" readonly="true" required="true" style="width: 600px; height: 150px" type="text" maxlength="200" data-options="multiline:true" class="easyui-textbox" />
+                        </td>
+                    </tr>   
+                    <tr>
+                        <th>是否紧急任务：
+                        </th>
+                        <td>
+                         <input id="IsUrgentTask" type="checkbox" disabled="disabled" name="IsUrgentTask" value="true" style="width:20px"/>
+                        </td>
+               
+                    </tr>    
+                      <tr>   
+                <th>是否跨区飞行：
+                        </th>
+                        <td>
+                         <input id="IsCrossArea" type="checkbox" disabled="disabled" name="IsCrossArea" value="true" style="width:20px"/>
+                        </td></tr> 
+                    <tr>   
+                <th>飞行日期跨度是否超过7天：
+                        </th>
+                        <td>
+                         <input id="IsCrossDay" type="checkbox" disabled="disabled" name="IsCrossDay" value="true" style="width:20px"/>
+                        </td></tr>
+                </table>
+
+            </form>
+    </div>
+    <div id="display-buttons">
+        <a href="javascript:;" class="easyui-linkbutton"  onclick="$('#display').dialog('close');return false;">确定</a>
+    </div>
     <%--添加 修改 end--%>
 
     <script type="text/javascript">
@@ -222,6 +299,13 @@
                         $("#LandTime").timespinner('setValue', time.getHours() + ":" + time.getMinutes());
                     }
                 });
+            },
+            CheckRepet: function (uid) {
+                $("#display").dialog("open").dialog('setTitle', '查看长期计划');
+                $.post("FlyPlanDemo.aspx", { "action": "display", "id": uid }, function (data) {
+                    $("#form_display").form('load', data);
+                });
+                //$("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
             }
         };
     </script>
