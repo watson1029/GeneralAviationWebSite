@@ -392,14 +392,21 @@ public partial class FlightPlan_ExportHandler : BasePage
         headerRow.CreateCell(1).SetCellValue("航空器架数");
         headerRow.CreateCell(2).SetCellValue("机长（飞行员）姓名");
         headerRow.CreateCell(3).SetCellValue("通信联络方法");
-        headerRow.CreateCell(4).SetCellValue("起飞时刻");
-        headerRow.CreateCell(5).SetCellValue("降落时刻");
-        headerRow.CreateCell(6).SetCellValue("飞行气象条件");
-        headerRow.CreateCell(7).SetCellValue("空勤组人数");
-        headerRow.CreateCell(8).SetCellValue("二次雷达应答机代码");
-        headerRow.CreateCell(9).SetCellValue("公司名称");
-        headerRow.CreateCell(10).SetCellValue("审核意见");
-        headerRow.CreateCell(11).SetCellValue("审核时间");     
+        headerRow.CreateCell(4).SetCellValue("航空器类型");
+        headerRow.CreateCell(5).SetCellValue("飞行高度");
+        headerRow.CreateCell(6).SetCellValue("飞行范围");
+        headerRow.CreateCell(7).SetCellValue("任务类型");
+        headerRow.CreateCell(8).SetCellValue("起落点");
+        headerRow.CreateCell(9).SetCellValue("降落点");
+        headerRow.CreateCell(10).SetCellValue("起飞时刻");
+        headerRow.CreateCell(11).SetCellValue("降落时刻");
+        headerRow.CreateCell(12).SetCellValue("飞行气象条件");
+        headerRow.CreateCell(13).SetCellValue("空勤组人数");
+        headerRow.CreateCell(14).SetCellValue("二次雷达应答机代码");
+        headerRow.CreateCell(15).SetCellValue("公司名称");
+        headerRow.CreateCell(16).SetCellValue("审核意见");     
+        headerRow.CreateCell(17).SetCellValue("审核时间");     
+
         int rowIndex = 1;
         if (listData != null && listData.Count > 0)
         {
@@ -410,14 +417,20 @@ public partial class FlightPlan_ExportHandler : BasePage
                 dataRow.CreateCell(1).SetCellValue(item.AircraftNum==null?0:item.AircraftNum.Value);
                 dataRow.CreateCell(2).SetCellValue(item.Pilot);
                 dataRow.CreateCell(3).SetCellValue(item.ContactWay);
-                dataRow.CreateCell(4).SetCellValue(item.SOBT);
-                dataRow.CreateCell(5).SetCellValue(item.SIBT);
-                dataRow.CreateCell(6).SetCellValue(item.WeatherCondition);
-                dataRow.CreateCell(7).SetCellValue(item.AircrewGroupNum==null?0:item.AircrewGroupNum.Value);
-                dataRow.CreateCell(8).SetCellValue(item.RadarCode);
-                dataRow.CreateCell(9).SetCellValue(item.CompanyName);
-                dataRow.CreateCell(10).SetCellValue(item.Comments);
-                dataRow.CreateCell(11).SetCellValue(item.ActorTime.Value);
+                dataRow.CreateCell(4).SetCellValue(item.AircraftType);
+                dataRow.CreateCell(5).SetCellValue(item.FlightDirHeight);
+                dataRow.CreateCell(6).SetCellValue(item.FlightArea);
+                dataRow.CreateCell(7).SetCellValue(item.FlightType);
+                dataRow.CreateCell(8).SetCellValue(item.ADEP);
+                dataRow.CreateCell(9).SetCellValue(item.ADES);
+                dataRow.CreateCell(10).SetCellValue(item.SOBT==null?"":item.SOBT.ToString());
+                dataRow.CreateCell(11).SetCellValue(item.SIBT==null?"":item.SIBT.ToString());
+                dataRow.CreateCell(12).SetCellValue(item.WeatherCondition);
+                dataRow.CreateCell(13).SetCellValue(item.AircrewGroupNum==null?0:item.AircrewGroupNum.Value);
+                dataRow.CreateCell(14).SetCellValue(item.RadarCode);
+                dataRow.CreateCell(15).SetCellValue(item.CompanyName);
+                dataRow.CreateCell(16).SetCellValue(item.Comments);
+                dataRow.CreateCell(17).SetCellValue(item.ActorTime==null?"":item.ActorTime.Value.ToString());
                 rowIndex++;
             }
             var dr = sheet1.CreateRow(rowIndex);

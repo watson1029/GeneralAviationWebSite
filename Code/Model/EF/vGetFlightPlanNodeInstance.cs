@@ -45,5 +45,7 @@ namespace Model.EF
         public string CompanyName { get; set; }
         public int Creator { get; set; }
         public string CreatorName { get; set; }
+        public string AircraftType { get; set; }
+        public string FlightArea { get; set; }
     }
 }
