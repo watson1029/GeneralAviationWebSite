@@ -200,8 +200,6 @@ public partial class SystemManage_UserInfo : BasePage
     /// <returns></returns>
     private Expression<Func<UserInfo, bool>> GetWhere()
     {
-
-
         Expression<Func<UserInfo, bool>> predicate = PredicateBuilder.True<UserInfo>();
         predicate = predicate.And(m => 1 == 1);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
