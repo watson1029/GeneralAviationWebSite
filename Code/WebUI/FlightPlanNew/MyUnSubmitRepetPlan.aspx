@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true"
-    CodeFile="MyUnSubmitRepetPlan.aspx.cs" Inherits="FlightPlan_MyUnSubmitRepetPlan" %>
+    CodeFile="MyUnSubmitRepetPlan.aspx.cs" Inherits="FlightPlanNew_MyUnSubmitRepetPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
    
@@ -80,10 +80,15 @@
                         },  
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
                         { title: '状态', field: 'Status', formatter: function (value, rec, index) { return (value == 1 ? '草稿中' : (value == 2 ? '已提交' : (value == 3 ? '审核通过' : '审核不通过'))) }, width: 50 },
-                        {
+   { title: '审核意见', field: 'AuditComment', width: 140 },
+                   {
                             title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" id="sub-btn_' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
-                                return str;
+                                if (rec.Status == 1) {
+                                    return '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" id="sub-btn_' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
+                                }
+                                else {
+                                    return '';
+                                }
                             }
                         }
                     ]],

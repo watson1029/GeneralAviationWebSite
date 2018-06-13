@@ -337,9 +337,9 @@
         </EntityType>
         <EntityType Name="RepetPlanNew">
           <Key>
-            <PropertyRef Name="PlanCode" />
+            <PropertyRef Name="RepetPlanID" />
           </Key>
-          <Property Name="RepetPlanID" Type="int" Nullable="false" />
+          <Property Name="RepetPlanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FlightArea" Type="nvarchar(max)" Nullable="false" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
@@ -901,8 +901,8 @@
           <EntitySet Name="vFlightPlan" EntityType="ZHCC_GAPlanModel.vFlightPlan" />
           <EntitySet Name="FlyPlanDemo" EntityType="ZHCC_GAPlanModel.FlyPlanDemo" />
           <EntitySet Name="BusyTime" EntityType="ZHCC_GAPlanModel.BusyTime" />
-          <EntitySet Name="RepetPlanNew" EntityType="ZHCC_GAPlanModel.RepetPlanNew" />
           <EntitySet Name="vGetFlightPlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" />
+          <EntitySet Name="RepetPlanNew" EntityType="ZHCC_GAPlanModel.RepetPlanNew" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -1498,34 +1498,6 @@
           <Property Name="BusyBeginTime" Type="DateTime" Precision="3" />
           <Property Name="BusyEndTime" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="RepetPlanNew">
-          <Key>
-            <PropertyRef Name="PlanCode" />
-          </Key>
-          <Property Name="RepetPlanID" Type="Int32" Nullable="false" />
-          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FlightArea" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="Creator" Type="Int32" Nullable="false" />
-          <Property Name="CreateName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
-          <Property Name="CallSign" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="IsUrgentTask" Type="Boolean" Nullable="false" />
-          <Property Name="IsCrossArea" Type="Boolean" Nullable="false" />
-          <Property Name="Airport" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="AuditName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AuditTime" Type="DateTime" Precision="3" />
-          <Property Name="AuditComment" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="AttchFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AuthorID" Type="Int32" />
-          <Property Name="PlanCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsCrossDay" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="vGetFlightPlanNodeInstance">
           <Key>
             <PropertyRef Name="ID" />
@@ -1579,6 +1551,34 @@
           <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="FlightArea" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RepetPlanNew">
+          <Key>
+            <PropertyRef Name="RepetPlanID" />
+          </Key>
+          <Property Name="RepetPlanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FlightArea" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Creator" Type="Int32" Nullable="false" />
+          <Property Name="CreateName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="CallSign" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="IsUrgentTask" Type="Boolean" Nullable="false" />
+          <Property Name="IsCrossArea" Type="Boolean" Nullable="false" />
+          <Property Name="Airport" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AuditName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AuditTime" Type="DateTime" Precision="3" />
+          <Property Name="AuditComment" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="AttchFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorID" Type="Int32" />
+          <Property Name="PlanCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsCrossDay" Type="Boolean" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2156,35 +2156,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RepetPlanNew">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.RepetPlanNew">
-              <MappingFragment StoreEntitySet="RepetPlanNew">
-                <ScalarProperty Name="IsCrossDay" ColumnName="IsCrossDay" />
-                <ScalarProperty Name="PlanCode" ColumnName="PlanCode" />
-                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
-                <ScalarProperty Name="AttchFile" ColumnName="AttchFile" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="AuditComment" ColumnName="AuditComment" />
-                <ScalarProperty Name="AuditTime" ColumnName="AuditTime" />
-                <ScalarProperty Name="AuditName" ColumnName="AuditName" />
-                <ScalarProperty Name="Airport" ColumnName="Airport" />
-                <ScalarProperty Name="IsCrossArea" ColumnName="IsCrossArea" />
-                <ScalarProperty Name="IsUrgentTask" ColumnName="IsUrgentTask" />
-                <ScalarProperty Name="CallSign" ColumnName="CallSign" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="CreateName" ColumnName="CreateName" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
-                <ScalarProperty Name="AircraftType" ColumnName="AircraftType" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="FlightType" ColumnName="FlightType" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="FlightArea" ColumnName="FlightArea" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vGetFlightPlanNodeInstance">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance">
               <MappingFragment StoreEntitySet="vGetFlightPlanNodeInstance">
@@ -2221,6 +2192,35 @@
                 <ScalarProperty Name="StepID" ColumnName="StepID" />
                 <ScalarProperty Name="PlanID" ColumnName="PlanID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RepetPlanNew">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.RepetPlanNew">
+              <MappingFragment StoreEntitySet="RepetPlanNew">
+                <ScalarProperty Name="IsCrossDay" ColumnName="IsCrossDay" />
+                <ScalarProperty Name="PlanCode" ColumnName="PlanCode" />
+                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+                <ScalarProperty Name="AttchFile" ColumnName="AttchFile" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AuditComment" ColumnName="AuditComment" />
+                <ScalarProperty Name="AuditTime" ColumnName="AuditTime" />
+                <ScalarProperty Name="AuditName" ColumnName="AuditName" />
+                <ScalarProperty Name="Airport" ColumnName="Airport" />
+                <ScalarProperty Name="IsCrossArea" ColumnName="IsCrossArea" />
+                <ScalarProperty Name="IsUrgentTask" ColumnName="IsUrgentTask" />
+                <ScalarProperty Name="CallSign" ColumnName="CallSign" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CreateName" ColumnName="CreateName" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="AircraftType" ColumnName="AircraftType" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="FlightType" ColumnName="FlightType" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="FlightArea" ColumnName="FlightArea" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
