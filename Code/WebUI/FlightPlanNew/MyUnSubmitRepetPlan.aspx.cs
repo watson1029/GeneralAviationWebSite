@@ -13,7 +13,7 @@ using System.Text;
 using System.Web;
 using Untity;
 using System.Linq;
-public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
+public partial class FlightPlanNew_MyUnSubmitRepetPlan : BasePage
 {
     RepetitivePlanNewBLL bll = new RepetitivePlanNewBLL();
 
@@ -30,7 +30,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                     Save();
                     break;
                 case "submit":
-              //      Submit();
+                    Submit();
                     break;
                 case "del":
                     Delete();
@@ -78,24 +78,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
             model.Creator = User.ID;
             model.CreateName = User.UserName;
             model.CreateTime = DateTime.Now;
-            //if (model.IsUrgentTask)
-            //{ 
-            //    if(model.IsCrossArea)
-            //    {
-            //    model.AuditName="运行管理中心审批";
-            //    }
-            //    else
-            //    {
-            //    model.AuditName=
-            //    }
             
-            //}
-            //    else
-            //    {
-                
-                
-                
-            //    }
             if (bll.Add(model))
             {
                 result.IsSuccess = true;
@@ -121,39 +104,80 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
-    //private void Submit()
-    //{
-    //    AjaxResult result = new AjaxResult();
-    //    result.IsSuccess = false;
-    //    result.Msg = "提交失败！";
-    //    var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+    private void Submit()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "提交失败！";
+        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var model = bll.Get(planid);   
+            try
+            {
+                model.Status = 2;
+                #region 审核部门判断
+                if (model.IsUrgentTask)
+                {
+                    if (model.IsCrossArea)
+                    {
+                        model.AuditName = "运行管理中心审批";
+                    }
+                    else
+                    {
+                        model.AuditName = "分局站审批";
+                    }
 
-    //    if (insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.RepetitivePlan).Count > 0)
-    //    {
-    //        result.Msg = "一条长期计划无法创建两条申请流程，请联系管理员！";
-    //    }
-    //    else
-    //    {
-    //        try
-    //        {
-    //            wftbll.CreateWorkflowInstance((int)TWFTypeEnum.RepetitivePlan, planid, User.ID, User.UserName);
-    //            insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, "", insdal.UpdateRepetPlan);
-    //            result.IsSuccess = true;
-    //            result.Msg = "提交成功！";
-    //        }
-    //        catch(Exception e)
-    //        {
-    //            result.IsSuccess = false;
-    //            result.Msg = "提交失败！";
-    //        }
-    //    }
-    //    Response.Clear();
-    //    Response.Write(result.ToJsonString());
-    //    Response.ContentType = "application/json";
-    //    Response.End();
+                }
+                else
+                {
+                    
+                    //飞行日期跨度是否超过7天
+                    if (model.IsCrossDay)
+                    {
+                        if (model.IsCrossArea)
+                        {
+                            model.AuditName = "运行管理中心审批";
+                        }
+                        else
+                        {
+                            model.AuditName = "分局站审批";
+                        }
+                        model.AuditName += "或空管部审批";
+                    }
+                    else
+                    {
+                        if (model.IsCrossArea)
+                        {
+                            model.AuditName = "运行管理中心审批";
+                        }
+                        else
+                        {
+                            model.AuditName = "分局站审批";
+                        }
+                    }
+                }
+
+                if (bll.Update(model))
+                { 
+                 result.IsSuccess = true;
+                result.Msg = "提交成功！";
+                
+                
+                }
+                #endregion
+               
+            }
+            catch (Exception e)
+            {
+                result.IsSuccess = false;
+                result.Msg = "提交失败！";
+            }
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
 
 
-    //}
+    }
 
 
     /// <summary>
