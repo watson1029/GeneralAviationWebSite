@@ -103,7 +103,6 @@ public partial class FlightPlanNew_MyAuditRepetPlan1 : BasePage
             if (Request.Form["Auditresult"] == "0")
             {
                 model.Status = 3;
-
             }
             else
             {

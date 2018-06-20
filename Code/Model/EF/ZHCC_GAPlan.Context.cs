@@ -56,5 +56,6 @@ namespace Model.EF
         public virtual DbSet<BusyTime> BusyTime { get; set; }
         public virtual DbSet<vGetFlightPlanNodeInstance> vGetFlightPlanNodeInstance { get; set; }
         public virtual DbSet<RepetPlanNew> RepetPlanNew { get; set; }
+        public virtual DbSet<vGetCurrentPlanNodeInstance> vGetCurrentPlanNodeInstance { get; set; }
     }
 }

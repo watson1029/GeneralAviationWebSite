@@ -127,6 +127,20 @@ namespace BLL.FlightPlan
         /// <param name="rowCount"></param>
         /// <param name="where"></param>
         /// <returns></returns>
+        public List<vGetCurrentPlanNodeInstance> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<vGetCurrentPlanNodeInstance, bool>> where)
+        {
+            var insdal = new DBHelper<vGetCurrentPlanNodeInstance>();
+            return insdal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.PlanID, true);
+        }
+        /// <summary>
+        /// 按分页获取记录
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageCount"></param>
+        /// <param name="rowCount"></param>
+        /// <param name="where"></param>
+        /// <returns></returns>
         public List<V_CurrentPlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<V_CurrentPlan, bool>> where)
         {
             return vdal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.FlightPlanID, true);

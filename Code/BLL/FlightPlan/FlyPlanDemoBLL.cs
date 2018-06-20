@@ -55,6 +55,7 @@ namespace BLL.FlightPlan
                         //生成明天的飞行计划
                         FlyPlanDemo model = new FlyPlanDemo()
                         {
+                            CompanyName = repet.CompanyName,
                             FlyPlanID = Guid.NewGuid().ToString("N").ToUpper(),
                             RepetPlanID = repet.RepetPlanID.ToString(),
                             PlanDate = new DateTime(DateTime.Now.AddDays(1).Year, DateTime.Now.AddDays(1).Month, DateTime.Now.AddDays(1).Day),

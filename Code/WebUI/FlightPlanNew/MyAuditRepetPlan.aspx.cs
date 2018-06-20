@@ -109,6 +109,15 @@ public partial class FlightPlanNew_MyAuditRepetPlan : BasePage
             {
                 model.Status = 4;
             }
+
+            if (!model.IsUrgentTask)
+            {
+                TimeSpan ts=model.EndDate - model.StartDate;
+                if (ts.Days > 7)
+                {
+                    model.EndDate = model.StartDate.AddDays(7);
+                }
+            }
             model.AuditTime = DateTime.Now;
             model.AuditComment = Request.Form["AuditComment"] ?? "";
             if (bll.Update(model))

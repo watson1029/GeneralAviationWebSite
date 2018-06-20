@@ -20,7 +20,7 @@ namespace Untity
         /// </summary>
         CurrentPlan=2,
         /// <summary>
-        /// 当日飞行计划流程
+        /// 次日飞行计划流程
         /// </summary>
         FlightPlan = 3,
         /// <summary>

@@ -48,6 +48,14 @@
                         <input id="AircraftModel" name="AircraftModel" type="text" class="easyui-validatebox textbox" style="height:20px;"/>
                     </td>
                 </tr>
+                 <tr>
+                    <td>
+                        飞行员：
+                    </td>
+                    <td>
+                        <input id="Pilot" name="Pilot" type="text" class="easyui-validatebox textbox" style="height:20px;"/>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         实际起飞时间：
@@ -173,6 +181,7 @@
                     remoteSort: true, //定义是否从服务器给数据排序
                     fitColumns: true,
                     columns: [[
+                         { title: '公司名称', field: 'CompanyName', width: 200, align: 'center' },
                         {
                             title: '飞行日期', field: 'PlanDate', width: 200, align: 'center', formatter: function (value, rec) {
                                 if (!value || value == '')

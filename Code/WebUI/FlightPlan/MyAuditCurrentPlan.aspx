@@ -53,7 +53,7 @@
                         { title: '通信联络方法', field: 'ContactWay', width: 100 },
                         { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                         { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
-                        { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
+                        { title: '应答机代码', field: 'RadarCode', width: 150 },
 
                         { title: '公司三字码', field: 'CompanyCode3', width: 100 },
                          { title: '创建人', field: 'CreatorName', width: 60 },
@@ -110,8 +110,8 @@
                     $("#FlightHeight").html(data.FlightHeight);
                     $("#ADEP").html(data.ADEP);
                     $("#ADES").html(data.ADES);
-                    $("#SOBT").html(new Date(data.SOBT).toDateString());
-                    $("#SIBT").html(new Date(data.SIBT).toDateString());
+                    $("#SOBT").html(data.SOBT);
+                    $("#SIBT").html(data.SIBT);
                     $("#Remark").html(data.Remark);
                     $("#AircraftNum").html(data.AircraftNum);
                     $("#Pilot").html(data.Pilot);
@@ -237,7 +237,7 @@
                  <tr>
                     <th>空勤组人数：</th>
                     <td id="AircrewGroupNum"></td>
-                    <th>二次雷达应答机代码：</th>
+                    <th>应答机代码：</th>
                     <td id="RadarCode"></td>
                 </tr>
                 <tr>
