@@ -33,7 +33,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
     /// </summary>
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Request.Form["id"] != null ? Guid.Parse(Request.Form["id"]) : Guid.NewGuid();
         var plan = bll.Get(planid);
         var strJSON = "";
         if (plan != null)

@@ -108,15 +108,15 @@ public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
         try
         {
 
-            var instance = null;// insdal.GetNodeInstance(User.ID, (int)TWFTypeEnum.FlightPlan, planid);
-            if (instance != null)
-            {
-                if (insdal.UpdateComment(instance.ID, Request.Form["AuditComment"] ?? ""))
-                {
-                    result.IsSuccess = true;
-                    result.Msg = "保存成功！";
-                }
-            }
+            //var instance = null;// insdal.GetNodeInstance(User.ID, (int)TWFTypeEnum.FlightPlan, planid);
+            //if (instance != null)
+            //{
+            //    if (insdal.UpdateComment(instance.ID, Request.Form["AuditComment"] ?? ""))
+            //    {
+            //        result.IsSuccess = true;
+            //        result.Msg = "保存成功！";
+            //    }
+            //}
         }
         catch (Exception)
         {
