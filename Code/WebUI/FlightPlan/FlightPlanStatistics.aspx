@@ -102,7 +102,7 @@
                         { title: '飞行架次(数)', field: 'AircraftNum', width: 150 },
                         { title: '起飞时刻', field: 'SOBT', width: 150 },
                         { title: '降落时刻', field: 'SIBT', width: 150 },
-                        { title: '时长', field: 'AircrewGroupNum', width: 150 }
+                        { title: '时长', field: 'StepID', width: 150 }
                     ]],
                     queryParams: { "action": "getinstance", "Creator": uid, "started": $("#started").datebox("getValue"), "ended": $("#ended").datebox("getValue") },
                     pagination: true, //是否开启分页

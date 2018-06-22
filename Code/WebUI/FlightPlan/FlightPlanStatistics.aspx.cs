@@ -59,7 +59,7 @@ public partial class FlightPlan_FlightPlanStatistics : BasePage
         List<vGetCurrentPlanNodeInstance> pageList = currPlanBll.GetList(page, size,out rowCount,Creator, DateTime.Parse(Request.Form["started"]), DateTime.Parse(Request.Form["ended"]));
         foreach (var item in pageList)
         {
-            item.AircrewGroupNum =Convert.ToInt32(item.SIBT.Subtract(item.SOBT).TotalSeconds);
+            item.StepID =Convert.ToInt32(item.ActualEndTime.Value.Subtract(item.ActualStartTime.Value).TotalSeconds);//用StepID代表时长
         }
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
