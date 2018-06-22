@@ -11,6 +11,7 @@
             <input id="started" class="easyui-datebox"  name="started" data-options="required:true,validType:'equaldDate1[\'#ended\']'" style="width: 250px" label="开始时间" />
             <input id="ended" class="easyui-datebox" name="ended" data-options="required:true,validType:'equaldDate[\'#started\']'" style="width: 250px" label="结束时间" />
             <a href="#" class="easyui-linkbutton" onclick="query();">查询</a>
+              <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-undo" plain="true" onclick="Main.Export()">导出</a> 
         </div>
     </div>
     <script type="text/javascript">
@@ -82,7 +83,7 @@
             },
 
             //初始化表格
-            InitGird1: function (uid) {
+            InitGirdDetail: function (uid) {
                 $('#tab_list1').datagrid({
                     title: '详情列表', //表格标题
                     url: location.href, //请求数据的页面
@@ -112,20 +113,18 @@
             },
             Detail: function (uid) {
                 $("#detail").dialog("open").dialog('setTitle', '查看');
-                Main.InitGird1(uid);
+                Main.InitGirdDetail(uid);
             },
             ////初始化搜索框
-            //InitSearch: function () {
-            //    $("#ipt_search").searchbox({
-            //        width: 250,
-            //        searcher: function (val, name) {
-            //            $('#tab_list').datagrid('options').queryParams.search_type = name;
-            //            $('#tab_list').datagrid('options').queryParams.search_value = val;
-            //            $('#tab_list').datagrid('reload');
-            //        },
-            //        prompt: '请输入要查询的信息'
-            //    });
-            //}
+            Export: function () {
+                var selRow = $('#tab_list').datagrid('getData');
+                if (selRow.total == 0) {
+                    $.messager.alert('提示', '无记录导出！', 'info');
+                    return;
+                }
+                //console.log($("#ipt_search").val() + "succ");
+                window.open("ExportHandler.aspx?type=FlightPlanStatistics&started=" + $("#started").datebox("getValue") + "&ended=" + $("#ended").datebox("getValue"));
+            }
 
         };
         function query() {
