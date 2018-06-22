@@ -74,7 +74,7 @@ public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             var val = Request.Form["search_value"].Trim();
-            predicate = predicate.And(m => m.PlanCode == val);
+            predicate = predicate.And(m => m.Code == val);
         }
 
         return predicate;
@@ -84,8 +84,7 @@ public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
     /// </summary>
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
-
+        var planid = Guid.Parse(Request.Form["id"]);
         Expression<Func<vGetFlightPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetFlightPlanNodeInstance>();
         predicate = predicate.And(m => m.ActorID != m.Creator);
         predicate = predicate.And(m => m.ActorID == User.ID);
@@ -109,7 +108,7 @@ public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
         try
         {
 
-            var instance = insdal.GetNodeInstance(User.ID, (int)TWFTypeEnum.FlightPlan, planid);
+            var instance = null;// insdal.GetNodeInstance(User.ID, (int)TWFTypeEnum.FlightPlan, planid);
             if (instance != null)
             {
                 if (insdal.UpdateComment(instance.ID, Request.Form["AuditComment"] ?? ""))

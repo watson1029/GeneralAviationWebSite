@@ -75,7 +75,7 @@ public partial class FlightPlan_MyFinishAuditRepetPlan : BasePage
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             var val = Request.Form["search_value"].Trim();
-            predicate = predicate.And(m => m.PlanCode == val);
+            predicate = predicate.And(m => m.Code == val);
         }
 
         return predicate;
@@ -85,7 +85,7 @@ public partial class FlightPlan_MyFinishAuditRepetPlan : BasePage
     /// </summary>
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
 
         Expression<Func<vGetRepetitivePlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetRepetitivePlanNodeInstance>();
         predicate = predicate.And(m => m.ActorID != m.Creator);
@@ -106,7 +106,7 @@ public partial class FlightPlan_MyFinishAuditRepetPlan : BasePage
         AjaxResult result = new AjaxResult();
         result.IsSuccess = false;
         result.Msg = "保存失败！";
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         try
         {
 

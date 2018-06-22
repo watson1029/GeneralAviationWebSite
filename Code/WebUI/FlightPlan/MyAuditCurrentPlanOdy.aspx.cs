@@ -60,7 +60,7 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
         int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
-        var pageList = currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        string pageList = null;// currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -82,7 +82,7 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = u => u.PlanCode == Request.Form["search_value"];
+            predicate = u => u.Code == Request.Form["search_value"];
         }
 
         return predicate;
@@ -92,7 +92,7 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
     /// </summary>
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         var plan = currPlanBll.Get(planid);
         var strJSON = "";
         if (plan != null)
@@ -111,14 +111,14 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
 
         try
         {
-            var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+            var planid = Guid.Parse(Request.Form["id"]);
             var startTime = Request.Form["ActualStartTime"];
             var endTime = Request.Form["ActualEndTime"];
 
             FlightPlan model = flyBLL.Get(planid);
             model.GetEntitySearchPars<RepetitivePlan>(this.Context);
-            model.ActualStartTime = Convert.ToDateTime(startTime);
-            model.ActualEndTime = Convert.ToDateTime(endTime);
+        //    model.ActualStartTime = Convert.ToDateTime(startTime);
+         //   model.ActualEndTime = Convert.ToDateTime(endTime);
             model.ModifyTime = DateTime.Now;
             flyBLL.Update(model);
 

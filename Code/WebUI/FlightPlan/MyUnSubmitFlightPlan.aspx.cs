@@ -69,19 +69,19 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         AjaxResult result = new AjaxResult();
         result.IsSuccess = false;
         result.Msg = "保存失败！";
-        int? id = null;
-        if (!string.IsNullOrEmpty(Request.Form["id"]))
-        { id = Convert.ToInt32(Request.Form["id"]); }
+        //int? id = null;
+        //if (!string.IsNullOrEmpty(Request.Form["id"]))
+        //{ id = Convert.ToInt32(Request.Form["id"]); }
 
         FlightPlan model = null;
-        if (!id.HasValue)//新增
+        if (string.IsNullOrEmpty(Request.Form["id"]))//新增
         {
             model = new FlightPlan();
 
             model.GetEntitySearchPars<FlightPlan>(this.Context);
 
-            model.AttachFile = Request.Params["AttchFilesInfo"];
-            model.PlanCode = Request.Form["PlanCode"] ?? "";
+         //   model.AttachFile = Request.Params["AttchFilesInfo"];
+            model.Code = Request.Form["PlanCode"] ?? "";
             model.PlanState = "0";
             model.CompanyCode3 = User.CompanyCode3 ?? "";
             model.CompanyName = User.CompanyName;
@@ -90,7 +90,6 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
             model.ActorID = User.ID;
             model.CreateTime = DateTime.Now;
             model.ModifyTime = DateTime.Now;
-            model.CreateSource = 2;
             if (bll.Add(model))
             {
                 result.IsSuccess = true;
@@ -99,10 +98,10 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         }
         else//编辑
         {
-            model = bll.Get(id.Value);
+            model = bll.Get(Guid.Parse(Request.Form["id"]));
             if (model != null)
             {
-                model.AttachFile = Request.Params["AttchFilesInfo"];
+          //      model.AttachFile = Request.Params["AttchFilesInfo"];
                 model.GetEntitySearchPars<FlightPlan>(this.Context);
                 if (bll.Update(model))
                 {
@@ -121,7 +120,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         AjaxResult result = new AjaxResult();
         result.IsSuccess = false;
         result.Msg = "提交失败！";
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         if (insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.FlightPlan).Count > 0)
         {
             result.Msg = "一条长期计划无法创建两条申请流程，请联系管理员！";
@@ -131,7 +130,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
             try
             {
                 wftbll.CreateWorkflowInstance((int)TWFTypeEnum.FlightPlan, planid, User.ID, User.UserName);
-                insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan, "", insdal.UpdateFlightPlan);
+                insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan, User.ID,User.UserName,"", insdal.UpdateFlightPlan);
 
                 result.IsSuccess = true;
                 result.Msg = "提交成功！";
@@ -155,7 +154,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
     /// </summary>
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid =Guid.Parse(Request.Form["id"]);
         var plan = bll.GetvFlightPlan(planid);
         var strJSON = "";
         if (plan != null)
@@ -205,7 +204,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             var val = Request.Form["search_value"].Trim();
-            predicate = predicate.And(m => m.PlanCode == val);
+            predicate = predicate.And(m => m.Code == val);
         }
 
         return predicate;

@@ -61,7 +61,7 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
         int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
-        var pageList = currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        string pageList = null;// currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -72,15 +72,15 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<V_CurrentPlan, bool>> GetWhere()
+    private Expression<Func<vCurrentPlan, bool>> GetWhere()
     {
-        Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
+        Expression<Func<vCurrentPlan, bool>> predicate = PredicateBuilder.True<vCurrentPlan>();
         var currDate = DateTime.Now.Date;
         predicate = predicate.And(m => m.ActorID == User.ID && DbFunctions.TruncateTime(m.SOBT) == currDate);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = u => u.PlanCode == Request.Form["search_value"];
+            predicate = u => u.Code == Request.Form["search_value"];
         }
 
         return predicate;
@@ -90,7 +90,7 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
     /// </summary>
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         var plan = currPlanBll.GetByCurrid(planid);
         var strJSON = "";
         if (plan != null)
@@ -105,18 +105,18 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
     }
     private void AuditSubmit()
     {
-        AjaxResult result = new AjaxResult();        
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        AjaxResult result = new AjaxResult();
+        var planid = Guid.Parse(Request.Form["id"]);
 
         try
         {
             if (Request.Form["Auditresult"] == "0")
             {
-                currPlanBll.Audit(planid, Request.Form["AuditComment"] ?? "", User.ID);
+                currPlanBll.Audit(planid, Request.Form["AuditComment"] ?? "", User.ID, User.UserName);
             }
             else
             {
-                currPlanBll.Terminate(planid, Request.Form["AuditComment"] ?? "", User.ID);
+                currPlanBll.Terminate(planid, Request.Form["AuditComment"] ?? "", User.ID,User.UserName);
             }
             result.IsSuccess = true;
             result.Msg = "提交成功！";
@@ -146,14 +146,14 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
                 {
                     foreach (var item in arr)
                     {
-                        currPlanBll.Audit(int.Parse(item), Request.Form["AuditComment"] ?? "", User.ID);
+                        currPlanBll.Audit(Guid.Parse(item), Request.Form["AuditComment"] ?? "", User.ID, User.UserName);
                     }
                 }
                 else
                 {
                     foreach (var item in arr)
                     {
-                        currPlanBll.Terminate(int.Parse(item), Request.Form["AuditComment"] ?? "", User.ID);
+                        currPlanBll.Terminate(Guid.Parse(item), Request.Form["AuditComment"] ?? "", User.ID, User.UserName);
                     }
                 }
                 result.IsSuccess = true;

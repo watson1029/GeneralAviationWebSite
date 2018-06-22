@@ -56,7 +56,7 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
         int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
-        var pageList = currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        string pageList = null;// currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -67,22 +67,22 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<V_CurrentPlan, bool>> GetWhere()
+    private Expression<Func<vCurrentPlan, bool>> GetWhere()
     {
-        Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
+        Expression<Func<vCurrentPlan, bool>> predicate = PredicateBuilder.True<vCurrentPlan>();
         var currDate = DateTime.Now.Date;
         predicate = predicate.And(m => m.CurrentFlightPlanID !=null && m.Creator == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = u => u.PlanCode == Request.Form["search_value"];
+            predicate = u => u.Code == Request.Form["search_value"];
         }
 
         return predicate;
     }
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         var plan = currPlanBll.GetByCurrid(planid);
         var strJSON = JsonConvert.SerializeObject(plan);
         Response.Clear();
@@ -92,7 +92,7 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
     }
     private void GetAllNodeInstance()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         
         var list = insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.CurrentPlan).Where(u => u.ActorID != User.ID).ToList();
         var strJSON = Serializer.JsonDate(new { rows = list, total = list.Count });

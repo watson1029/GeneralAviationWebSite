@@ -49,7 +49,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlanAdd : BasePage
 
     private void GetRepetPlanData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid =Guid.Parse(Request.Form["id"]);
         var plan = rpbll.Get(planid);
         var strJSON = "";
         if (plan != null)
@@ -78,7 +78,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlanAdd : BasePage
         ArrayList arr = new ArrayList();
         foreach (var item in list)
         {
-            arr.Add(new { id = item.RepetPlanID, text = item.PlanCode });
+            arr.Add(new { id = item.RepetPlanID, text = item.Code });
         }
         Response.Clear();
         Response.Write(JsonConvert.SerializeObject(arr));
