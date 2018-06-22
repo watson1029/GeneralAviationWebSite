@@ -28,8 +28,8 @@ public partial class BackLog : BasePage
         List<RepetitivePlan> RepetitivePlanList = GetMenuStatisData(predicate);
         Expression<Func<FlightPlan, bool>> Fpredicate = PredicateBuilder.True<FlightPlan>();
         List<FlightPlan> FlightPlanList = GetFlightPlanData(Fpredicate);
-        Expression<Func<V_CurrentPlan, bool>> vcpredicate = PredicateBuilder.True<V_CurrentPlan>();
-        List<V_CurrentPlan> VCurrentPlanList = GetCurrentPlanData(vcpredicate);
+        Expression<Func<vCurrentPlan, bool>> vcpredicate = PredicateBuilder.True<vCurrentPlan>();
+        List<vCurrentPlan> VCurrentPlanList = GetCurrentPlanData(vcpredicate);
         if (menuListJson.Contains("MyUnSubmitRepetPlan.aspx")) //长期计划列表(待提交)
         {
             MenuStatis statis = new MenuStatis("待提交长期计划", "MyUnSubmitRepetPlan.aspx", 0, "Rpundo.jpg");
@@ -81,7 +81,7 @@ public partial class BackLog : BasePage
         var FlightPlanList = new FlightPlanBLL().GetList(predicate);
         return FlightPlanList;
     }
-    List<V_CurrentPlan> GetCurrentPlanData(Expression<Func<V_CurrentPlan, bool>> predicate)
+    List<vCurrentPlan> GetCurrentPlanData(Expression<Func<vCurrentPlan, bool>> predicate)
     {
         return new CurrentPlanBLL().GetList(predicate);
     }
