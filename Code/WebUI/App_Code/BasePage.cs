@@ -34,7 +34,7 @@ public class BasePage : Page
     /// <summary>
     /// 当前登录的用户
     /// </summary>
-    protected new UserInfoCookie User
+    public new UserInfoCookie User
     {
         get
         {
