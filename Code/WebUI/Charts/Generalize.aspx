@@ -10,6 +10,7 @@
     <script type="text/javascript">
         var chart, option;
         $(function () {
+            alert("ok");
             ReSize();
             $(window).resize(function () {
                 ReSize();
@@ -17,7 +18,9 @@
                 chart.setOption(option);
             });
             // 获取图表数据
-            var result = $.parseJSON('<%=GetData()%>');
+            alert("ok");
+            var result = '<%=GetData()%>';
+            alert(result);
             if (result.NameItem.length > 0) {
                 // 基于准备好的dom，初始化echarts实例
                 chart = echarts.init(document.getElementById('chart'));
