@@ -15,6 +15,7 @@ namespace Model.EF
     public partial class FlyPlanDemo
     {
         public string FlyPlanID { get; set; }
+        public string CompanyName { get; set; }
         public string RepetPlanID { get; set; }
         public Nullable<System.DateTime> PlanDate { get; set; }
         public Nullable<System.DateTime> PlanBeginTime { get; set; }
@@ -23,7 +24,6 @@ namespace Model.EF
         public Nullable<System.DateTime> TakeOffTime { get; set; }
         public Nullable<System.DateTime> LandTime { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string CompanyName { get; set; }
         public string Pilot { get; set; }
     }
 }

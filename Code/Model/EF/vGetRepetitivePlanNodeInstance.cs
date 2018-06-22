@@ -15,7 +15,7 @@ namespace Model.EF
     public partial class vGetRepetitivePlanNodeInstance
     {
         public System.Guid ID { get; set; }
-        public int PlanID { get; set; }
+        public System.Guid PlanID { get; set; }
         public int StepID { get; set; }
         public int TWFID { get; set; }
         public Nullable<System.Guid> PrevID { get; set; }
@@ -27,25 +27,19 @@ namespace Model.EF
         public string Comments { get; set; }
         public Nullable<System.DateTime> ActorTime { get; set; }
         public string ActorName { get; set; }
-        public string PlanCode { get; set; }
         public string FlightType { get; set; }
         public string AircraftType { get; set; }
-        public string FlightDirHeight { get; set; }
+        public string Code { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public string CompanyCode3 { get; set; }
-        public System.TimeSpan SOBT { get; set; }
-        public System.TimeSpan SIBT { get; set; }
         public string Remark { get; set; }
         public string WeekSchedule { get; set; }
-        public string ADEP { get; set; }
-        public string ADES { get; set; }
+        public string AirportText { get; set; }
+        public string AirlineWorkText { get; set; }
+        public string AttachFile { get; set; }
         public string CreatorName { get; set; }
-        public int Creator { get; set; }
-        public string CallSign { get; set; }
+        public Nullable<int> Creator { get; set; }
         public string CompanyName { get; set; }
-        public string FlightArea { get; set; }
-        public string FlightHeight { get; set; }
-        public string OtherAttchFile { get; set; }
     }
 }

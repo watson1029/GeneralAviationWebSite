@@ -10,7 +10,7 @@ using Untity.DB;
 
 namespace DAL.FlightPlan
 {
-    public class WorkflowTplNodeDAL:DBHelper<TWFSteps>
+    public class WorkflowTplNodeDAL : DBHelper<TWFSteps>
     {
         /// <summary>
         /// 根据模板获取节点
@@ -32,25 +32,25 @@ namespace DAL.FlightPlan
         private WorkflowTplNode ExecReader(TWFSteps entity)
         {
             WorkflowTplNode wfNode = new WorkflowTplNode();
-                wfNode.StepId = entity.StepID;
-                wfNode.TWFID = entity.TWFID;
-                wfNode.StepName =entity.StepName??"";
+            wfNode.StepId = entity.StepID;
+            wfNode.TWFID = entity.TWFID;
+            wfNode.StepName = entity.StepName ?? "";
             if (entity.PrevID.HasValue)
                 wfNode.PrevId = entity.PrevID.Value;
             if (entity.NextID.HasValue)
                 wfNode.NextId = entity.NextID.Value;
-                wfNode.AuthorType = entity.AuthorType??"";
+            wfNode.AuthorType = entity.AuthorType ?? "";
             return wfNode;
         }
-       /// <summary>
-       /// 创建流程实例
-       /// </summary>
-       /// <param name="tnode"></param>
-       /// <param name="applyId"></param>
-       /// <returns></returns>
-        public WorkflowNodeInstance CreateNodeInstance(WorkflowTplNode tnode, int planId)
+        /// <summary>
+        /// 创建流程实例
+        /// </summary>
+        /// <param name="tnode"></param>
+        /// <param name="applyId"></param>
+        /// <returns></returns>
+        public WorkflowNodeInstance CreateNodeInstance(WorkflowTplNode tnode, Guid planId)
         {
-            var guid=Guid.NewGuid();
+            var guid = Guid.NewGuid();
             var date = DateTime.Now;
             WorkflowNodeInstance nodeInst = new WorkflowNodeInstance();
 

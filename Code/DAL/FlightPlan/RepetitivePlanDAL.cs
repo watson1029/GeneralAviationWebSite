@@ -8,7 +8,7 @@ using System;
 
 namespace DAL.FlightPlan
 {
-    public class RepetitivePlanDAL : DBHelper<RepetitivePlan> 
+    public class RepetitivePlanDAL : DBHelper<RepetitivePlan>
     {
         public List<TemplateClass4StatisticResult> getCollect(DateTime startTime, DateTime endTime, int type, string companyCode3 = "")
         {
@@ -20,7 +20,7 @@ namespace DAL.FlightPlan
                     var res = from a in context.RepetitivePlan
                               where a.CreateTime >= startTime
                               where a.CreateTime <= endTime
-                              
+
                               group a by new { a.CreateTime.Year, a.CompanyCode3 } into b
 
                               join d in context.Company on b.Key.CompanyCode3 equals d.CompanyCode3 into e
@@ -146,7 +146,7 @@ namespace DAL.FlightPlan
             }
         }
 
-        public List<TemplateClass4StatisticResult> getStatisticResult(DateTime startTime, DateTime endTime, string companyCode3 = "") 
+        public List<TemplateClass4StatisticResult> getStatisticResult(DateTime startTime, DateTime endTime, string companyCode3 = "")
         {
             //TemplateClass4StatisticResult:CompanyCode CompanyName Count CreateTime            
             if (string.IsNullOrEmpty(companyCode3))
@@ -184,6 +184,102 @@ namespace DAL.FlightPlan
                           };
                 return res.ToList();
             }
+        }
+        public override int BatchDelete(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return 0;
+
+            var temp = context.Set<RepetitivePlan>().Find(Guid.Parse(id));
+            if (temp != null) context.Entry(temp).State = EntityState.Deleted;
+            return context.SaveChanges();
+        }
+
+        /// <summary>
+        /// 获取长期计划未提交数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetUnSubmitNum(int userId)
+        {
+            var linq = from t in context.RepetitivePlan
+                       where t.Creator == userId
+                       where t.PlanState == "0"
+                       select t;
+            return linq.Count();
+        }
+
+        /// <summary>
+        /// 获取长期计划提交数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetSubmitNum(int userId)
+        {
+            var linq = from t in context.RepetitivePlan
+                       where t.Creator == userId
+                       where t.PlanState != "0"
+                       select t;
+            return linq.Count();
+        }
+
+        /// <summary>
+        /// 获取长期计划提交数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetSubmitNum(int userId, DateTime beginTime, DateTime endTime)
+        {
+            var linq = from t in context.RepetitivePlan
+                       where t.Creator == userId
+                       where t.PlanState != "0"
+                       where t.CreateTime > beginTime
+                       where t.CreateTime < endTime
+                       select t;
+            return linq.Count();
+        }
+
+        /// <summary>
+        /// 获取长期计划待审核数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetUnAuditNum(int userId)
+        {
+            var linq = from t in context.vGetRepetitivePlanNodeInstance
+                       where t.ActorID == userId
+                       where t.State == 1
+                       select t;
+            return linq.Count();
+        }
+
+        /// <summary>
+        /// 获取长期计划审核数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetAuditNum(int userId)
+        {
+            var linq = from t in context.vGetRepetitivePlanNodeInstance
+                       where t.ActorID == userId
+                       where t.State == 2 || t.State == 3
+                       select t;
+            return linq.Count();
+        }
+
+        /// <summary>
+        /// 获取长期计划审核数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetAuditNum(int userId, DateTime beginTime, DateTime endTime)
+        {
+            var linq = from t in context.vGetRepetitivePlanNodeInstance
+                       where t.ActorID == userId
+                       where t.State == 2 || t.State == 3
+                       where t.ActorTime > beginTime
+                       where t.ActorTime < endTime
+                       select t;
+            return linq.Count();
         }
     }
 }

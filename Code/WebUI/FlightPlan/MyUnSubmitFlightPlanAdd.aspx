@@ -144,7 +144,7 @@
                 <td>
                     <input id="AircrewGroupNum" name="AircrewGroupNum" style="height: 25px" maxlength="4" type="text" data-options="min:1,max:100" class="easyui-numberbox" />
                 </td>
-                <th style="width: 160px;">二次雷达应答机代码：
+                <th style="width: 160px;">应答机代码：
                     </th>
                 <td>
                     <input id="RadarCode" name="RadarCode" maxlength="4" type="text" class="easyui-validatebox textbox" />

@@ -12,9 +12,8 @@ namespace Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class V_CurrentPlan
+    public partial class FlightPlanOld
     {
-        public Nullable<int> CurrentFlightPlanID { get; set; }
         public int FlightPlanID { get; set; }
         public string PlanCode { get; set; }
         public string FlightType { get; set; }
@@ -44,6 +43,9 @@ namespace Model.EF
         public string CompanyName { get; set; }
         public int RepetPlanID { get; set; }
         public byte CreateSource { get; set; }
-        public string AttachFIle { get; set; }
+        public string FlightArea { get; set; }
+        public string FlightHeight { get; set; }
+        public string Alternate { get; set; }
+        public string AttachFile { get; set; }
     }
 }

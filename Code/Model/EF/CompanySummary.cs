@@ -15,6 +15,7 @@ namespace Model.EF
     public partial class CompanySummary
     {
         public int ID { get; set; }
+        public string CompanyName { get; set; }
         public string Title { get; set; }
         public string Summary { get; set; }
         public string ModifiedByName { get; set; }
@@ -23,6 +24,5 @@ namespace Model.EF
         public string SummaryCode { get; set; }
         public string State { get; set; }
         public Nullable<int> ActorID { get; set; }
-        public string CompanyName { get; set; }
     }
 }

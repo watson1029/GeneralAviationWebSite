@@ -45,12 +45,16 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="ViewModel">
+      <HintPath>..\ViewModel\bin\Debug\ViewModel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adv\AdvertismentBLL.cs" />
     <Compile Include="BasicData\AircraftBLL.cs" />
     <Compile Include="BasicData\FlightTaskBLL.cs" />
     <Compile Include="BasicData\NewBLL.cs" />
+    <Compile Include="FlightPlan\AirportInfoBLL.cs" />
     <Compile Include="FlightPlan\BusyTimeBLL.cs" />
     <Compile Include="FlightPlan\CurrentPlanBLL.cs" />
     <Compile Include="FlightPlan\FlightPlanBLL.cs" />

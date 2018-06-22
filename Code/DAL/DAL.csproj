@@ -44,6 +44,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
+    <Reference Include="ViewModel">
+      <HintPath>..\ViewModel\bin\Debug\ViewModel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adv\AdvertismentDAL.cs" />
@@ -51,15 +54,21 @@
     <Compile Include="BasicData\FlightTaskDAL.cs" />
     <Compile Include="BasicData\NewDAL.cs" />
     <Compile Include="DBHelper.cs" />
+    <Compile Include="FlightPlan\AirportInfoDAL.cs" />
+    <Compile Include="FlightPlan\FileAirportDAL.cs" />
+    <Compile Include="FlightPlan\FileDetailDAL.cs" />
+    <Compile Include="FlightPlan\FileFlightPlanMasterDAL.cs" />
+    <Compile Include="FlightPlan\FileMasterDAL.cs" />
     <Compile Include="FlightPlan\FlyPlanDemoDAL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanNewDAL.cs" />
     <Compile Include="FlightPlan\BusyTimeDAL.cs" />
-    <Compile Include="FlightPlan\VCurrentPlanDAL.cs" />
     <Compile Include="FlightPlan\CurrentFlightPlanDAL.cs" />
     <Compile Include="FlightPlan\FlightPlanDAL.cs" />
     <Compile Include="BasicData\PilotDAL.cs" />
     <Compile Include="BasicData\Quanlification\CompanyDAL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanDAL.cs" />
+    <Compile Include="FlightPlan\vCurrentPlanDAL.cs" />
+    <Compile Include="FlightPlan\vRepetitivePlanAirportDAL.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstanceDAL.cs" />
     <Compile Include="FlightPlan\WorkflowTplNodeDAL.cs" />
     <Compile Include="Log\LoginLogDAL.cs" />

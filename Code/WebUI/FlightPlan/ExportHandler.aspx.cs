@@ -186,7 +186,7 @@ public partial class FlightPlan_ExportHandler : BasePage
         headerRow.CreateCell(13).SetCellValue("通信联络方法");
         headerRow.CreateCell(14).SetCellValue("飞行气象条件");
         headerRow.CreateCell(15).SetCellValue("空勤组人数");
-        headerRow.CreateCell(16).SetCellValue("二次雷达应答机代码");
+        headerRow.CreateCell(16).SetCellValue("应答机代码");
         headerRow.CreateCell(17).SetCellValue("状态");
         int rowIndex = 1;
         if (listData != null && listData.Count > 0)
@@ -402,7 +402,7 @@ public partial class FlightPlan_ExportHandler : BasePage
         headerRow.CreateCell(11).SetCellValue("降落时刻");
         headerRow.CreateCell(12).SetCellValue("飞行气象条件");
         headerRow.CreateCell(13).SetCellValue("空勤组人数");
-        headerRow.CreateCell(14).SetCellValue("二次雷达应答机代码");
+        headerRow.CreateCell(14).SetCellValue("应答机代码");
         headerRow.CreateCell(15).SetCellValue("公司名称");
         headerRow.CreateCell(16).SetCellValue("审核意见");     
         headerRow.CreateCell(17).SetCellValue("审核时间");     
