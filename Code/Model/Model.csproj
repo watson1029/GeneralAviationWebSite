@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Charts\GeneralizeModel.cs" />
     <Compile Include="EF\ActualSteps.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>

@@ -547,7 +547,5 @@ public class RepetitivePlanBLL
         {
             return detaildal.FindList(where, m => m.Sort, true);
         }
-
-        
-    }
+        }
 }
