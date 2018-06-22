@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Charts\FlyNumModel.cs" />
+    <Compile Include="Charts\FlyTimeModel.cs" />
     <Compile Include="Charts\GeneralizeModel.cs" />
     <Compile Include="EF\ActualSteps.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>

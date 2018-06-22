@@ -155,7 +155,7 @@
                 <%-- <h1>通航服务站</h1>--%>
                 <div style="width:100%;text-align:center;float:left">
                     <iframe id="generalize" class="NFine_iframe" style="width:49%;float:left;" src="BackLog.aspx" frameborder="0" data-menucode="MyUnSubmitRepetPlanCheck"></iframe>
-                    <iframe id="generalize-chart" class="NFine_iframe" style="width:49%;margin-left:20px;margin-top:20px;float:right;" src="/Charts/Generalize" frameborder="0"></iframe>
+                    <iframe id="generalize-chart" class="NFine_iframe" style="width:49%;margin-left:20px;margin-top:20px;float:right;" src="/Charts/Generalize.aspx" frameborder="0"></iframe>
                 </div>
                 <%--<div style="width:100%;">
                     <iframe id="pie-chart" class="NFine_iframe" style="width:49%;margin-left:20px;margin-top:20px;float:left;" src="/Charts/Pie/Index" frameborder="0"></iframe>
@@ -175,6 +175,7 @@
 
         function ReSize() {
             $("#generalize").css("height", (window.innerHeight - 150) / 2);
+            $("#generalize-chart").css("height", (window.innerHeight - 150) / 2);
             $("#pie-chart").css("height", (window.innerHeight - 150) / 2);
             $("#bar-chart").css("height", (window.innerHeight - 150) / 2);
         }

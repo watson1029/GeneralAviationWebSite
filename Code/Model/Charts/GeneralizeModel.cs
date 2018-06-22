@@ -20,13 +20,13 @@ namespace Model.Charts
         public List<string> ColorItem { get; set; }
         public List<string> TimeItem { get; set; }
         public List<DateTime> TimeParse { get; set; }
-        public List<GeneralizeData> BarData { get; set; }
+        public List<GeneralizeData> GeneralizeData { get; set; }
         public GeneralizeModel()
         {
             this.NameItem = new List<string>();
             this.ColorItem = new List<string>();
             this.TimeItem = new List<string>();
-            this.BarData = new List<GeneralizeData>();
+            this.GeneralizeData = new List<GeneralizeData>();
             this.TimeParse = new List<DateTime>();
             TimeItem.Add($"{DateTime.Now.AddDays(-27).ToString("MM月dd日")} - {DateTime.Now.AddDays(-21).ToString("MM月dd日")}");
             TimeItem.Add($"{DateTime.Now.AddDays(-20).ToString("MM月dd日")} - {DateTime.Now.AddDays(-14).ToString("MM月dd日")}");

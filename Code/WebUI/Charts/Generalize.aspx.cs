@@ -33,7 +33,7 @@ public partial class Charts_Generalize : BasePage
             {
                 pie.data.Add(repetBll.GetRepetSubmitNum(User.ID, t, t.AddDays(7)));
             }
-            data.BarData.Add(pie);
+            data.GeneralizeData.Add(pie);
         }
         //获取长期计划审批数量
         if (menuBll.JudgeMenuRole(User.ID, "MyAuditRepetPlanCheck"))
@@ -46,7 +46,7 @@ public partial class Charts_Generalize : BasePage
             {
                 pie.data.Add(repetBll.GetRepetAuditNum(User.ID, t, t.AddDays(7)));
             }
-            data.BarData.Add(pie);
+            data.GeneralizeData.Add(pie);
         }
         //获取飞行计划提交数量
         if (menuBll.JudgeMenuRole(User.ID, "MyUnSubmitFlightPlanCheck"))
@@ -59,7 +59,7 @@ public partial class Charts_Generalize : BasePage
             {
                 pie.data.Add(flyBll.GetFlySubmitNum(User.ID, t, t.AddDays(7)));
             }
-            data.BarData.Add(pie);
+            data.GeneralizeData.Add(pie);
         }
         //获取飞行计划审批数量
         if (menuBll.JudgeMenuRole(User.ID, "MyAuditFlightPlanCheck"))
@@ -72,7 +72,7 @@ public partial class Charts_Generalize : BasePage
             {
                 pie.data.Add(flyBll.GetFlyAuditNum(User.ID, t, t.AddDays(7)));
             }
-            data.BarData.Add(pie);
+            data.GeneralizeData.Add(pie);
         }
         return JsonConvert.SerializeObject(data);
     }

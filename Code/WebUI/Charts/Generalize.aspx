@@ -5,7 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <script src="../js/echarts/echarts.min.js"></script>
+    <script src="/js/echarts/echarts.min.js"></script>
+    <script src="/js/jquery-1.10.2.min.js"></script>
     <title></title>
     <script type="text/javascript">
         var chart, option;
@@ -17,7 +18,8 @@
                 chart.setOption(option);
             });
             // 获取图表数据
-            var result = $.parseJSON('<%=GetData()%>');
+            var json = '<%=GetData()%>';
+            var result = $.parseJSON(json);
             if (result.NameItem.length > 0) {
                 // 基于准备好的dom，初始化echarts实例
                 chart = echarts.init(document.getElementById('chart'));
@@ -46,7 +48,7 @@
                         type: 'category',
                         data: result.TimeItem
                     },
-                    series: result.BarData
+                    series: result.GeneralizeData
                 };
                 // 使用刚指定的配置项和数据显示图表。
                 chart.setOption(option);

@@ -17,14 +17,15 @@
                 chart.setOption(option);
             });
             // 获取图表数据
-            var result = $.parseJSON('<%=GetData()%>');
+            var json = '<%=GetData()%>';
+            var result = $.parseJSON(json);
             if (result.NameItem.length > 0) {
                 // 基于准备好的dom，初始化echarts实例
                 chart = echarts.init(document.getElementById('chart'));
                 // 指定图表的配置项和数据
                 option = {
                     title: {
-                        text: '计划服务数据统计-柱状图'
+                        text: '飞行时长数据统计-柱状图'
                     },
                     tooltip: {
                         trigger: 'axis',
