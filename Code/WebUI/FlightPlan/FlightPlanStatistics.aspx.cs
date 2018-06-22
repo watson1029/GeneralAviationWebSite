@@ -19,10 +19,10 @@ public partial class FlightPlan_FlightPlanStatistics : BasePage
             switch (Request.Form["action"])
             {
                 case "query"://查询数据
-                    //QueryData();
+                    QueryData();
                     break;
                 case "getinstance":
-                  //  GetAllNodeInstance();
+                    GetAllNodeInstance();
                     break;
                 default:
                     break;
@@ -30,42 +30,42 @@ public partial class FlightPlan_FlightPlanStatistics : BasePage
         }
     }
 
-    //private void QueryData()
-    //{
-    //    int page = Request.Form["page"] != null ? Convert.ToInt32(Request.Form["page"]) : 0;
-    //    int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
-    //    if (page < 1) return;
-    //    int rowCount = 0;
-    //    DateTime started = Request.Form["started"] != null ? Convert.ToDateTime(Request.Form["started"]) : DateTime.Now;
-    //    DateTime ended= Request.Form["ended"] != null ? Convert.ToDateTime(Request.Form["ended"]) : DateTime.Now;
-    //    var pageList = currPlanBll.GetList(page, size,out rowCount,started,ended);
-    //    var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
-    //    Response.Write(strJSON);
-    //    Response.ContentType = "application/json";
-    //    Response.End();
-    //}
-    //private void GetAllNodeInstance()
-    //{
-    //    int page = Request.Form["page"] != null ? Convert.ToInt32(Request.Form["page"]) : 0;
-    //    int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
-    //    string sort = Request.Form["sort"] ?? "";
-    //    string order = Request.Form["order"] ?? "";
-    //    if (page < 1) return;
-    //    //int pageCount = 0;
-    //    int rowCount = 0;
-    //    string orderField = sort.Replace("JSON_", "");
-    //    int Creator = Request.Form["Creator"] != null ? Convert.ToInt32(Request.Form["Creator"]) : 0;
-    //    //var strWhere = GetWhere(Creator);
-    //    List<vGetCurrentPlanNodeInstance> pageList = currPlanBll.GetList(page, size,out rowCount,Creator, DateTime.Parse(Request.Form["started"]), DateTime.Parse(Request.Form["ended"]));
-    //    foreach (var item in pageList)
-    //    {
-    //        item.AircrewGroupNum =Convert.ToInt32(item.SIBT.Subtract(item.SOBT).TotalSeconds);
-    //    }
-    //    var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
-    //    Response.Write(strJSON);
-    //    Response.ContentType = "application/json";
-    //    Response.End();
-    //}
+    private void QueryData()
+    {
+        int page = Request.Form["page"] != null ? Convert.ToInt32(Request.Form["page"]) : 0;
+        int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
+        if (page < 1) return;
+        int rowCount = 0;
+        DateTime started = Request.Form["started"] != null ? Convert.ToDateTime(Request.Form["started"]) : DateTime.Now;
+        DateTime ended= Request.Form["ended"] != null ? Convert.ToDateTime(Request.Form["ended"]) : DateTime.Now;
+        var pageList = currPlanBll.GetList(page, size,out rowCount,started,ended);
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
+        Response.Write(strJSON);
+        Response.ContentType = "application/json";
+        Response.End();
+    }
+    private void GetAllNodeInstance()
+    {
+        int page = Request.Form["page"] != null ? Convert.ToInt32(Request.Form["page"]) : 0;
+        int size = Request.Form["rows"] != null ? Convert.ToInt32(Request.Form["rows"]) : 0;
+        string sort = Request.Form["sort"] ?? "";
+        string order = Request.Form["order"] ?? "";
+        if (page < 1) return;
+        //int pageCount = 0;
+        int rowCount = 0;
+        string orderField = sort.Replace("JSON_", "");
+        int Creator = Request.Form["Creator"] != null ? Convert.ToInt32(Request.Form["Creator"]) : 0;
+        //var strWhere = GetWhere(Creator);
+        List<vGetCurrentPlanNodeInstance> pageList = currPlanBll.GetList(page, size,out rowCount,Creator, DateTime.Parse(Request.Form["started"]), DateTime.Parse(Request.Form["ended"]));
+        foreach (var item in pageList)
+        {
+            item.StepID =Convert.ToInt32(item.ActualEndTime.Value.Subtract(item.ActualStartTime.Value).TotalSeconds);//用StepID代表时长
+        }
+        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
+        Response.Write(strJSON);
+        Response.ContentType = "application/json";
+        Response.End();
+    }
     /// <summary>
     /// 组合搜索条件
     /// </summary>

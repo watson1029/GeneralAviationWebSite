@@ -8,7 +8,6 @@
             </ul>
         </div>
         <div class="step-content" id="wizard-steps" style="border-left: none; border-bottom: none; border-right: none;">
-
             <div class="step-pane active" id="step-1" style="margin: 10px; margin-bottom: 0px;">
                 <div class="alert alert-danger" style="text-align: left; margin-bottom: 10px;">
                     <i class="fa fa-warning alert-dismissible" style="position: relative; top: 1px; font-size: 15px; padding-right: 5px;"></i>
@@ -244,6 +243,9 @@
         color:red;
     }
 </style>
+ <script src="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.js")%>" type="text/javascript"></script>
+  <link href="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.css")%>" rel="stylesheet" type="text/css" />
+ <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
     <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
     <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
     <link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
