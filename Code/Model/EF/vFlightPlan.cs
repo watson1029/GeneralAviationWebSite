@@ -14,41 +14,35 @@ namespace Model.EF
     
     public partial class vFlightPlan
     {
-        public int FlightPlanID { get; set; }
-        public string PlanCode { get; set; }
+        public System.Guid FlightPlanID { get; set; }
         public string FlightType { get; set; }
         public string AircraftType { get; set; }
-        public string FlightDirHeight { get; set; }
         public System.DateTime CreateTime { get; set; }
-        public System.DateTime ModifyTime { get; set; }
+        public Nullable<System.DateTime> ModifyTime { get; set; }
         public string CompanyCode3 { get; set; }
         public string PlanState { get; set; }
         public Nullable<int> ActorID { get; set; }
-        public int Creator { get; set; }
+        public Nullable<int> Creator { get; set; }
         public string Remark { get; set; }
         public System.DateTime SOBT { get; set; }
         public System.DateTime SIBT { get; set; }
         public string ADEP { get; set; }
         public string ADES { get; set; }
-        public string RadarCode { get; set; }
-        public Nullable<int> AircraftNum { get; set; }
-        public string Pilot { get; set; }
-        public string ContactWay { get; set; }
-        public string WeatherCondition { get; set; }
-        public Nullable<int> AircrewGroupNum { get; set; }
         public string CreatorName { get; set; }
         public string CallSign { get; set; }
-        public Nullable<System.DateTime> ActualStartTime { get; set; }
-        public Nullable<System.DateTime> ActualEndTime { get; set; }
         public string CompanyName { get; set; }
-        public int RepetPlanID { get; set; }
-        public byte CreateSource { get; set; }
-        public string RepPlanCode { get; set; }
+        public string RepetPlanID { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
-        public string FlightArea { get; set; }
-        public string FlightHeight { get; set; }
-        public string Alternate { get; set; }
-        public string AttachFile { get; set; }
+        public string Code { get; set; }
+        public string SsrCode { get; set; }
+        public int AircraftNumber { get; set; }
+        public Nullable<System.DateTime> ALDT { get; set; }
+        public Nullable<System.DateTime> ATOT { get; set; }
+        public Nullable<System.DateTime> AOBT { get; set; }
+        public string ALTN1 { get; set; }
+        public string ALTN2 { get; set; }
+        public string AirportText { get; set; }
+        public string AirlineWorkText { get; set; }
     }
 }

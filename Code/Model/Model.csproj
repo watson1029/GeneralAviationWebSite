@@ -74,6 +74,9 @@
     <Compile Include="EF\CurrentFlightPlan.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\CurrentFlightPlanOld.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\CustomControlArea.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
@@ -152,13 +155,13 @@
     <Compile Include="EF\TWFSteps.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\ufSplitStr_Result.cs">
-      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
-    </Compile>
     <Compile Include="EF\UserInfo.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\UserRole.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\vCurrentPlan.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\vFlightPlan.cs">
@@ -176,9 +179,6 @@
     <Compile Include="EF\vRepetitivePlanAirport.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\V_CurrentPlan.cs">
-      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
-    </Compile>
     <Compile Include="EF\ZHCC_GAPlan.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -194,7 +194,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ZHCC_GAPlan.edmx</DependentUpon>
     </Compile>
-    <Compile Include="FlightPlan\FlightPlanStatistics.cs" />
     <Compile Include="FlightPlan\TWFPlan.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstance.cs" />
     <Compile Include="FlightPlan\WorkflowPlan.cs" />

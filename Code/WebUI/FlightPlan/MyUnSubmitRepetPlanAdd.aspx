@@ -1,13 +1,8 @@
-﻿ <%@ Page Language="C#" AutoEventWireup="true" CodeFile="MyUnSubmitRepetPlanAdd.aspx.cs" Inherits="FlightPlan_MyUnSubmitRepetPlanAdd" %> 
+﻿ <%@ Page Language="C#" AutoEventWireup="true" CodeFile="MyUnSubmitRepetPlanAdd.aspx.cs" Inherits="FlightPlan1_MyUnSubmitRepetPlanAdd" %> 
   <form id="form_edit" method="post">
       <input type="hidden" name="PlanCode" id="PlanCode" value=""/>
         <table class="table_edit">
             <tr id="basicInfo">
-                <th>申请单号：
-                </th>
-                <td id="code">
-                
-                </td>
                  <th>填写单位：
                 </th>
                 <td id="name">
@@ -21,43 +16,10 @@
                     <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200" required="true" class="easyui-combobox" style="height:25px"/>
                 </td>
-  <th>航空器类型：
+  <th>使用机型：
                 </th>
                 <td>
                       <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" style="height:25px"/>
- <%--                   <input id="AircraftType" name="AircraftType" editable="false" data-options="url:'GetComboboxData.ashx?type=2',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200"
-                        required="true" class="easyui-combobox" style="height:25px"/>--%>
-                </td>
-            </tr>
-
-            <tr>
-                <th>起飞点：
-                </th>
-                <td>
-                    <input id="ADEP" name="ADEP" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
-                </td>
- <th>降落点：
-                </th>
-                <td>
-                    <input id="ADES" name="ADES" maxlength="30" type="text"   required="true" class="easyui-validatebox textbox" />
-                </td>
-            </tr> 
-            <tr>
-<%--                <th>航线走向和飞行高度：
-                </th>
-                <td>
-                    <input id="FlightDirHeight" name="FlightDirHeight" maxlength="30"  type="text" required="true" class="easyui-validatebox textbox" />
-                </td>--%>
-  <th>注册号：
-                </th>
-                <td>
-                    <input id="CallSign" name="CallSign" maxlength="30" type="text"  class="easyui-validatebox textbox" />
-                </td>
-                  <th>备降点：
-                </th>
-                <td>
-                    <input id="Alternate" name="Alternate" maxlength="30" type="text"  class="easyui-validatebox textbox" />
                 </td>
             </tr>         
             <tr>
@@ -72,26 +34,7 @@
                     <input id="EndDate" name="EndDate"  editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height:25px"/>
                 </td>
             </tr>
-            <tr>
-                <th >起飞时刻：
-                </th>
-                <td>
-                    <input id="SOBT" name="SOBT"  required="true" class="easyui-timespinner" showSeconds="true" style="height:25px"/>
-                </td>
-<th>降落时刻：
-                </th>
-                <td >
-                    <input id="SIBT" name="SIBT"  required="true" class="easyui-timespinner" showSeconds="true" style="height:25px"/>
-                </td>
-
-            </tr>
-            <tr>
-  <th>飞行高度（米）：
-                </th>
-                <td>
-                 <input id="FlightHeight" name="FlightHeight" style="height:25px" maxlength="50" type="text" required="true" class="easyui-validatebox textbox" />
-                </td>
-            </tr>
+            
             <tr>
                 <th>批件：
                 </th>
@@ -103,7 +46,7 @@
                     <div id="AttchFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
                 </td>
             </tr>
-               <tr>
+            <tr>
                 <th>其他批件：
                 </th>
                 <td colspan="3">
@@ -129,7 +72,7 @@
 
             </tr>
 
-              <tr>
+            <tr>
                 <th>飞行范围：
                 </th>
                 <td colspan="3">
@@ -162,7 +105,6 @@
             if (pid) {
                 $.post("MyUnSubmitRepetPlanAdd.aspx", { "action": "queryone", "id": pid }, function (data) {
                     $("#form_edit").form('load', data);
-                    $("#code").html(data.PlanCode);
                     $("#name").html(data.CompanyName);
                     $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
                         $("#d" + n).prop({ checked: true });
@@ -193,11 +135,7 @@
             }
             else {
                 $("#name").html('<%=User.CompanyName %>');
-                $.post("MyUnSubmitRepetPlanAdd.aspx", { "action": "getplancode" }, function (data) {
-                    $("#code").html(data);
-                    $("#PlanCode").val(data);
-                 
-                });
+   
                 new dj.upload({
                         id: "AttchFiles",
                         maxSize: 5,

@@ -8,7 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
+public partial class FlightPlan1_MyUnSubmitRepetPlanAdd : BasePage
 {
     RepetitivePlanBLL bll = new RepetitivePlanBLL();
     protected void Page_Load(object sender, EventArgs e)
@@ -20,9 +20,9 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
                 case "queryone"://获取一条记录
                     GetData();
                     break;
-                case "getplancode":
-                    GetPlanCode();
-                    break;
+                //case "getplancode":
+                //    GetPlanCode();
+                //    break;
                 default:
                     break;
             }
@@ -46,13 +46,13 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
-    private void GetPlanCode()
-    {
-        Response.Clear();
-        Response.Write(OrderHelper.GenerateId(OrderTypeEnum.RP, User.CompanyCode3));
-        Response.ContentType = "text/plain";
-        Response.End();
-    }
+    //private void GetPlanCode()
+    //{
+    //    Response.Clear();
+    //    Response.Write(OrderHelper.GenerateId(OrderTypeEnum.RP, User.CompanyCode3));
+    //    Response.ContentType = "text/plain";
+    //    Response.End();
+    //}
     #region 权限编码
     public override string PageRightCode
     {

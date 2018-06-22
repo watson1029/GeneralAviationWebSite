@@ -13,7 +13,7 @@ namespace BLL.FlightPlan
         private WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
         private WorkflowTplNodeDAL wtndal = new WorkflowTplNodeDAL();
 
-        public Guid CreateWorkflowInstance(int twfId, int planId, int userID, string userName)
+        public Guid CreateWorkflowInstance(int twfId, Guid planId, int userID, string userName)
         {
             Guid firstStepId = Guid.Empty;
             List<WorkflowNodeInstance> tempNodesInst = new List<WorkflowNodeInstance>();

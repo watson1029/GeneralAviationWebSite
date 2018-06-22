@@ -232,7 +232,7 @@
                  <tr>
                     <th>空勤组人数：</th>
                     <td id="AircrewGroupNum"></td>
-                    <th>二次雷达应答机代码：</th>
+                    <th>应答机代码：</th>
                     <td id="RadarCode"></td>
                 </tr>
                 

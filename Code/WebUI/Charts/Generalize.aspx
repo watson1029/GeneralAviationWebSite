@@ -17,7 +17,8 @@
                 chart.setOption(option);
             });
             // 获取图表数据
-            var result;
+            var result = '<%=GetData()%>';
+            alert(result);
             $.ajax({
                 url: "/Charts/Bar/BarData",
                 type: "post",

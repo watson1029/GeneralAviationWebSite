@@ -14,11 +14,18 @@ namespace Model.EF
     
     public partial class CurrentFlightPlan
     {
-        public int CurrentFlightPlanID { get; set; }
+        public System.Guid CurrentFlightPlanID { get; set; }
+        public string RepetPlanID { get; set; }
+        public string Code { get; set; }
+        public Nullable<System.DateTime> ActualStartTime { get; set; }
+        public Nullable<System.DateTime> ActualEndTime { get; set; }
         public string PlanState { get; set; }
         public Nullable<int> ActorID { get; set; }
-        public int FlightPlanID { get; set; }
-        public Nullable<int> CreateUserId { get; set; }
-        public Nullable<System.DateTime> CreateTime { get; set; }
+        public bool DeletedFlag { get; set; }
+        public int Creator { get; set; }
+        public string CreatorName { get; set; }
+        public System.DateTime CreateTime { get; set; }
+        public string FlightPlanID { get; set; }
+        public string Pilot { get; set; }
     }
 }

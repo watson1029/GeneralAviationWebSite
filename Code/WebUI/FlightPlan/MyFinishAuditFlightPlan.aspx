@@ -61,7 +61,7 @@
                       },
                         { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                         { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
-                        { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
+                        { title: '应答机代码', field: 'RadarCode', width: 150 },
 
                         { title: '公司三字码', field: 'CompanyCode3', width: 100, hidden: 'true' },
                            { title: '公司名称', field: 'CompanyName', width: 100 },
@@ -238,7 +238,7 @@
                 <tr>
                     <th>空勤组人数：</th>
                     <td id="AircrewGroupNum"></td>
-                    <th>二次雷达应答机代码：</th>
+                    <th>应答机代码：</th>
                     <td id="RadarCode"></td>
                 </tr>
                 <tr>

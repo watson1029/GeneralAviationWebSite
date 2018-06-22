@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true"
-    CodeFile="MyUnSubmitRepetPlan.aspx.cs" Inherits="FlightPlan_MyUnSubmitRepetPlan" %>
+    CodeFile="MyUnSubmitRepetPlan.aspx.cs" Inherits="FlightPlan1_MyUnSubmitRepetPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
    
@@ -58,32 +58,28 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '申请单号', field: 'PlanCode', width: 180 },
+                        { title: '公司名称', field: 'CompanyName', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
-                        { title: '注册号', field: 'CallSign', width: 80 },
+                        { title: '航班号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 70 },
                         { title: '飞行范围', field: 'FlightArea', width: 100 },
                          { title: '飞行高度', field: 'FlightHeight', width: 100 },
-                        { title: '预计开始时间', field: 'StartDate',width: 100, formatter: function (value, rec, index) { 
+                        {
+                            title: '执行开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
                         
                             var timesstamp = new Date(value.dateValFormat());
                             return timesstamp.format("yyyy-MM-dd");
                         
-                        } },
+                        }
+                        },
                         {
-                            title: '预计结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) { 
+                            title: '执行结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) {
                         
                                 var timesstamp = new Date(value.dateValFormat());
                                 return timesstamp.format("yyyy-MM-dd");
                         
                             }
                         },
-                        {
-                            title: '起飞时刻', field: 'SOBT', width: 100 },
-                        { title: '降落时刻', field: 'SIBT', width: 100},
-                        { title: '起飞点', field: 'ADEP', width: 80 },
-                        { title: '降落点', field: 'ADES', width: 80 },
-                         { title: '备降点', field: 'Alternate', width: 80 },
                         {
                             title: '周执行计划', field: 'WeekSchedule', width: 150, formatter: function (value, rec, index) {
                                 var array = [];
@@ -146,8 +142,6 @@
                
                 var fileInfo = dj.getCmp("AttchFiles").getUploadedFiles();
                 $("#AttchFilesInfo").val(fileInfo);
-                fileInfo = dj.getCmp("OtherAttchFiles").getUploadedFiles();
-                $("#OtherAttchFilesInfo").val(fileInfo);
                 qx = $("input[name='WeekSchedule']").map(function () {
                     var $this = $(this);
                     if ($this.is(':checked')) {
