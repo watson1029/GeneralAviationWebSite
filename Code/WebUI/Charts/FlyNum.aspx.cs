@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Charts_FlyNum : System.Web.UI.Page
+public partial class Charts_FlyNum : BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -13,6 +13,10 @@ public partial class Charts_FlyNum : System.Web.UI.Page
     }
     protected string GetData()
     {
+        if (string.IsNullOrEmpty(User.CompanyCode3))
+        { }
+        else
+        { }
         return string.Empty;
     }
 }

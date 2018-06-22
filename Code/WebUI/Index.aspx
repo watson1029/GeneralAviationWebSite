@@ -175,6 +175,7 @@
 
         function ReSize() {
             $("#generalize").css("height", (window.innerHeight - 150) / 2);
+            $("#generalize-chart").css("height", (window.innerHeight - 150) / 2);
             $("#pie-chart").css("height", (window.innerHeight - 150) / 2);
             $("#bar-chart").css("height", (window.innerHeight - 150) / 2);
         }
