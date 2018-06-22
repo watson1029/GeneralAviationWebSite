@@ -36,5 +36,7 @@ namespace Model.EF
         public string PlanState { get; set; }
         public bool DeletedFlag { get; set; }
         public System.DateTime Expr2 { get; set; }
+        public Nullable<int> AircraftNum { get; set; }
+        public string Pilot { get; set; }
     }
 }

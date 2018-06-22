@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZHCC_GAPlanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActualSteps">
           <Key>
             <PropertyRef Name="ID" />
@@ -173,6 +173,7 @@
           <Property Name="CreateTime" Type="smalldatetime" Nullable="false" />
           <Property Name="FlightPlanID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Pilot" Type="nvarchar" MaxLength="36" />
+          <Property Name="AircraftNum" Type="int" />
         </EntityType>
         <EntityType Name="CurrentFlightPlanOld">
           <Key>
@@ -627,11 +628,6 @@
           <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6013: 表/视图“ZHCC_GAPlan.dbo.GenerateRandSeed”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
-        <EntityType Name="GenerateRandSeed">
-          <Property Name="RD" Type="float" />
-        </EntityType>-->
-        <!--生成过程中发现错误:
 警告 6002: 表/视图“ZHCC_GAPlan.dbo.vCurrentPlan”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="vCurrentPlan">
           <Key>
@@ -675,6 +671,7 @@
           <Property Name="ALTN2" Type="char" MaxLength="4" />
           <Property Name="ALTN1" Type="char" MaxLength="4" />
           <Property Name="Remark" Type="nvarchar" MaxLength="2000" />
+          <Property Name="AircraftNum" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“ZHCC_GAPlan.dbo.vFlightPlan”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -762,6 +759,8 @@
           <Property Name="PlanState" Type="nvarchar" MaxLength="36" Nullable="false" />
           <Property Name="DeletedFlag" Type="bit" Nullable="false" />
           <Property Name="Expr2" Type="smalldatetime" Nullable="false" />
+          <Property Name="AircraftNum" Type="int" />
+          <Property Name="Pilot" Type="nvarchar" MaxLength="36" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“ZHCC_GAPlan.dbo.vGetFlightPlanNodeInstance”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -879,7 +878,7 @@
           <Property Name="Longitude" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Sort" Type="int" Nullable="false" />
         </EntityType>
-          <Function Name="f_GetGEOAreaByPointString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" 
+         <Function Name="f_GetGEOAreaByPointString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" 
 
 ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
 		<CommandText> 
@@ -973,7 +972,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     [vCurrentPlan].[AirlineWorkText] AS [AirlineWorkText], 
     [vCurrentPlan].[ALTN2] AS [ALTN2], 
     [vCurrentPlan].[ALTN1] AS [ALTN1], 
-    [vCurrentPlan].[Remark] AS [Remark]
+    [vCurrentPlan].[Remark] AS [Remark], 
+    [vCurrentPlan].[AircraftNum] AS [AircraftNum]
     FROM [dbo].[vCurrentPlan] AS [vCurrentPlan]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vFlightPlan" EntityType="Self.vFlightPlan" store:Type="Views" store:Schema="dbo">
@@ -1033,7 +1033,9 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     [vGetCurrentPlanNodeInstance].[ActualEndTime] AS [ActualEndTime], 
     [vGetCurrentPlanNodeInstance].[PlanState] AS [PlanState], 
     [vGetCurrentPlanNodeInstance].[DeletedFlag] AS [DeletedFlag], 
-    [vGetCurrentPlanNodeInstance].[Expr2] AS [Expr2]
+    [vGetCurrentPlanNodeInstance].[Expr2] AS [Expr2], 
+    [vGetCurrentPlanNodeInstance].[AircraftNum] AS [AircraftNum], 
+    [vGetCurrentPlanNodeInstance].[Pilot] AS [Pilot]
     FROM [dbo].[vGetCurrentPlanNodeInstance] AS [vGetCurrentPlanNodeInstance]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vGetFlightPlanNodeInstance" EntityType="Self.vGetFlightPlanNodeInstance" store:Type="Views" store:Schema="dbo">
@@ -1337,6 +1339,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FlightPlanID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Pilot" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="AircraftNum" Type="Int32" />
         </EntityType>
         <EntityType Name="CurrentFlightPlanOld">
           <Key>
@@ -1832,6 +1835,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="ALTN2" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="ALTN1" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="AircraftNum" Type="Int32" />
         </EntityType>
         <EntityType Name="vFlightPlan">
           <Key>
@@ -1915,6 +1919,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="PlanState" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
           <Property Name="DeletedFlag" Type="Boolean" Nullable="false" />
           <Property Name="Expr2" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AircraftNum" Type="Int32" />
+          <Property Name="Pilot" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vGetFlightPlanNodeInstance">
           <Key>
@@ -2194,6 +2200,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySetMapping Name="CurrentFlightPlan">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.CurrentFlightPlan">
               <MappingFragment StoreEntitySet="CurrentFlightPlan">
+                <ScalarProperty Name="AircraftNum" ColumnName="AircraftNum" />
                 <ScalarProperty Name="Pilot" ColumnName="Pilot" />
                 <ScalarProperty Name="FlightPlanID" ColumnName="FlightPlanID" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
@@ -2694,6 +2701,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySetMapping Name="vCurrentPlan">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vCurrentPlan">
               <MappingFragment StoreEntitySet="vCurrentPlan">
+                <ScalarProperty Name="AircraftNum" ColumnName="AircraftNum" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="ALTN1" ColumnName="ALTN1" />
                 <ScalarProperty Name="ALTN2" ColumnName="ALTN2" />
@@ -2767,6 +2775,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySetMapping Name="vGetCurrentPlanNodeInstance">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance">
               <MappingFragment StoreEntitySet="vGetCurrentPlanNodeInstance">
+                <ScalarProperty Name="Pilot" ColumnName="Pilot" />
+                <ScalarProperty Name="AircraftNum" ColumnName="AircraftNum" />
                 <ScalarProperty Name="Expr2" ColumnName="Expr2" />
                 <ScalarProperty Name="DeletedFlag" ColumnName="DeletedFlag" />
                 <ScalarProperty Name="PlanState" ColumnName="PlanState" />

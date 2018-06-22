@@ -27,5 +27,6 @@ namespace Model.EF
         public System.DateTime CreateTime { get; set; }
         public string FlightPlanID { get; set; }
         public string Pilot { get; set; }
+        public Nullable<int> AircraftNum { get; set; }
     }
 }
