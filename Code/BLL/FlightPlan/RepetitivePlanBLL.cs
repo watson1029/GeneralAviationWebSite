@@ -204,9 +204,9 @@ public class RepetitivePlanBLL
                             Sort = i
                         };
                         i++;
-                        context.File_Airport.Add(airport);
-                        context.SaveChanges();
-                    }
+                        context.File_Airport.Add(airport);  
+                    } 
+                    context.SaveChanges();
                     #endregion
                     #region 航线
                     if (!string.IsNullOrEmpty(airlineText))
@@ -547,34 +547,6 @@ public class RepetitivePlanBLL
             return detaildal.FindList(where, m => m.Sort, true);
         }
 
-        public int GetRepetUnSubmitNum(int userId)
-        {
-            return dal.GetRepetUnSubmitNum(userId);
-        }
-
-        public int GetRepetUnAuditNum(int userId)
-        {
-            return dal.GetRepetUnAuditNum(userId);
-        }
-
-        public int GetRepetSubmitNum(int userId)
-        {
-            return dal.GetRepetSubmitNum(userId);
-        }
-
-        public int GetRepetAuditNum(int userId)
-        {
-            return dal.GetRepetAuditNum(userId);
-        }
-
-        public int GetRepetSubmitNum(int userId, DateTime beginTime, DateTime endTime)
-        {
-            return dal.GetRepetSubmitNum(userId, beginTime, endTime);
-        }
-
-        public int GetRepetAuditNum(int userId, DateTime beginTime, DateTime endTime)
-        {
-            return dal.GetRepetAuditNum(userId, beginTime, endTime);
-        }
+        
     }
 }

@@ -112,10 +112,10 @@ namespace BLL.SupplyDemandInformation
         //{
         //    return dal.Find(u => u.ID == id);
         //}
-        //public List<SupplyDemandInfo> GetTopList(int top, Expression<Func<SupplyDemandInfo, bool>> where)
-        //{
-        //    ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
-        //    return context.Set<SupplyDemandInfo>().Where(where).OrderByDescending(m => m.CreateTime).AsNoTracking().Take(top).ToList();
-        //}
+        public List<SupplyDemandInfo> GetTopList(int top, Expression<Func<SupplyDemandInfo, bool>> where)
+        {
+            ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
+            return context.Set<SupplyDemandInfo>().Where(where).OrderByDescending(m => m.CreateTime).AsNoTracking().Take(top).ToList();
+        }
     }
 }
