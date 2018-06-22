@@ -15,7 +15,7 @@ using Untity;
 using System.Linq;
 using ViewModel.FlightPlan;
 using System.Collections.Generic;
-public partial class FlightPlan1_MyUnSubmitRepetPlan : BasePage
+public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
 {
     RepetitivePlanBLL bll = new RepetitivePlanBLL();
     WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();

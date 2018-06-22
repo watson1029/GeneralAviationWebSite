@@ -8,7 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class FlightPlan1_MyUnSubmitRepetPlanAdd : BasePage
+public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
 {
     RepetitivePlanBLL bll = new RepetitivePlanBLL();
     protected void Page_Load(object sender, EventArgs e)

@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true"
-    CodeFile="MyUnSubmitRepetPlan.aspx.cs" Inherits="FlightPlan1_MyUnSubmitRepetPlan" %>
+    CodeFile="MyUnSubmitRepetPlan.aspx.cs" Inherits="FlightPlan_MyUnSubmitRepetPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
    
