@@ -114,8 +114,8 @@ public partial class FlightPlan_ExportHandler : BasePage
                 dataRow.CreateCell(8).SetCellValue(item.ADES);
                 dataRow.CreateCell(9).SetCellValue(item.StartDate.ToString());
                 dataRow.CreateCell(10).SetCellValue(item.EndDate.ToString());
-                dataRow.CreateCell(11).SetCellValue(item.SOBT.ToString());
-                dataRow.CreateCell(12).SetCellValue(item.SIBT.ToString());
+                dataRow.CreateCell(11).SetCellValue(item.StartDate.ToString());
+                dataRow.CreateCell(12).SetCellValue(item.EndDate.ToString());
                 dataRow.CreateCell(13).SetCellValue(item.WeekSchedule);
                 dataRow.CreateCell(14).SetCellValue(item.Remark);
                 rowIndex++;
@@ -313,8 +313,8 @@ public partial class FlightPlan_ExportHandler : BasePage
                 dataRow.CreateCell(5).SetCellValue(item.FlightHeight);
                 dataRow.CreateCell(6).SetCellValue(item.StartDate.ToString("yyyy-MM-dd"));
                 dataRow.CreateCell(7).SetCellValue(item.EndDate.ToString("yyyy-MM-dd"));
-                dataRow.CreateCell(8).SetCellValue(item.SOBT.ToString());
-                dataRow.CreateCell(9).SetCellValue(item.SIBT.ToString());
+                dataRow.CreateCell(8).SetCellValue(item.StartDate.ToString());
+                dataRow.CreateCell(9).SetCellValue(item.EndDate.ToString());
                 dataRow.CreateCell(10).SetCellValue(item.ADEP);
                 dataRow.CreateCell(11).SetCellValue(item.ADES);
                 dataRow.CreateCell(12).SetCellValue(item.Alternate);
