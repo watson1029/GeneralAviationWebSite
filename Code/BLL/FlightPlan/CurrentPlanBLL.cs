@@ -8,6 +8,8 @@ using Untity;
 using System.Linq.Expressions;
 using Model.EF;
 using System.Transactions;
+using Model.FlightPlan;
+using Newtonsoft.Json;
 
 namespace BLL.FlightPlan
 { 
@@ -166,6 +168,30 @@ namespace BLL.FlightPlan
         public V_CurrentPlan GetByCurrid(int id)
         {
             return vdal.Find(u => u.CurrentFlightPlanID == id);
+        }
+        public List<FlightPlanStatistics> GetList(int pageIndex, int pageSize, out int pageCount, DateTime started, DateTime ended)
+        {
+            try
+            {
+                List<FlightPlanStatistics> fplist = JsonConvert.DeserializeObject<List<FlightPlanStatistics>>(JsonConvert.SerializeObject(new FlightPlanDAL().GetFullTimeFlightStatistics(started, ended)));
+                fplist= JsonConvert.DeserializeObject<List<FlightPlanStatistics>>(JsonConvert.SerializeObject(fplist.GroupBy(x => new { x.Creator, x.CompanyName }).Select(group => new {
+                    Creator = group.Key.Creator,
+                    CompanyName=group.Key.CompanyName,
+                    AircraftNum=group.Sum(p=>p.AircraftNum),
+                    SecondDiff=group.Sum(p=>p.SecondDiff)
+                }).ToList()));
+                pageCount = fplist.Count;
+                fplist = fplist.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                return fplist;
+            }
+            catch (Exception ex)
+            {
+                throw (new Exception(ex.Message));
+            }
+        }
+        public List<vGetCurrentPlanNodeInstance> GetList(int pageIndex, int pageSize, out int rowCount,int Creator, DateTime started, DateTime ended)
+        {
+           return new FlightPlanDAL().GetCurrentPlanNodeInstanceList(pageIndex,pageSize,out rowCount,Creator,started,ended);
         }
     }
 }
