@@ -81,7 +81,7 @@ public partial class BackLog : BasePage
         var FlightPlanList = new FlightPlanBLL().GetList(predicate);
         return FlightPlanList;
     }
-    List<V_CurrentPlan> GetCurrentPlanData(Expression<Func<V_CurrentPlan, bool>> predicate)
+    List<vCurrentPlan> GetCurrentPlanData(Expression<Func<vCurrentPlan, bool>> predicate)
     {
         return new CurrentPlanBLL().GetList(predicate);
     }

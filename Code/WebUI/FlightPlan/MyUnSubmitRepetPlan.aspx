@@ -24,8 +24,8 @@
                         <input id="ipt_search" menu="#search_menu"/>
                        <input id="ssPlanCode" name="ssPlanCode"  type="hidden" value=""/>
                         <div id="search_menu" style="width: 200px">
-                            <div name="PlanCode">
-                                申请单号
+                            <div name="Code">
+                                临专号
                             </div>
                         </div>
 </div>
@@ -62,8 +62,8 @@
                         { title: '任务类型', field: 'FlightType', width: 70 },
                         { title: '航班号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 70 },
-                        { title: '飞行范围', field: 'FlightArea', width: 100 },
-                         { title: '飞行高度', field: 'FlightHeight', width: 100 },
+                        //{ title: '飞行范围', field: 'FlightArea', width: 100 },
+                         //{ title: '飞行高度', field: 'FlightHeight', width: 100 },
                         {
                             title: '执行开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
                         

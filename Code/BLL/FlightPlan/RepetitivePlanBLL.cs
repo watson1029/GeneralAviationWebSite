@@ -205,8 +205,9 @@ public class RepetitivePlanBLL
                         };
                         i++;
                         context.File_Airport.Add(airport);  
+                        context.SaveChanges();
                     } 
-                    context.SaveChanges();
+                    
                     #endregion
                     #region 航线
                     if (!string.IsNullOrEmpty(airlineText))
