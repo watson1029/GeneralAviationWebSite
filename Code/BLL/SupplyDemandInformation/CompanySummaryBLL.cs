@@ -109,11 +109,11 @@ namespace BLL.SupplyDemandInformation
         //    return dal.Find(u => u.ID == id);
         //}
 
-        //public List<CompanySummary> GetTopList(int top, Expression<Func<CompanySummary, bool>> where)
-        //{
-        //    ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
-        //    return context.Set<CompanySummary>().Where(where).OrderByDescending(m => m.ID).AsNoTracking().Take(top).ToList();
-        //}
+        public List<CompanySummary> GetTopList(int top, Expression<Func<CompanySummary, bool>> where)
+        {
+            ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
+            return context.Set<CompanySummary>().Where(where).OrderByDescending(m => m.ID).AsNoTracking().Take(top).ToList();
+        }
 
         //public List<CompanySummary> GetList(Expression<Func<CompanySummary, bool>> where)
         //{

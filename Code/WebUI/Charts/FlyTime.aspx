@@ -1,12 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Generalize.aspx.cs" Inherits="Charts_Generalize" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="FlyTime.aspx.cs" Inherits="Charts_FlyTime" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <script src="../js/echarts/echarts.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+    <script src="../js/echarts/echarts.min.js"></script>
     <script type="text/javascript">
         var chart, option;
         $(function () {
