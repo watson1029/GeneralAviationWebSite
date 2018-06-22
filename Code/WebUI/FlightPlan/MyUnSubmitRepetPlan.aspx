@@ -269,7 +269,7 @@
     </script>
 
         <%--添加 修改 start--%>
-   <div id="edit" class="easyui-dialog" style="width: 850px; height:800px;"
+   <div id="edit" class="easyui-dialog" style="width: 850px; height:600px;"
         modal="true" closed="true" buttons="#edit-buttons">
         
     </div>

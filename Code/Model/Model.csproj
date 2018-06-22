@@ -134,6 +134,9 @@
     <Compile Include="EF\vFlightPlan.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\vGetCurrentPlanNodeInstance.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\vGetFlightPlanNodeInstance.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>

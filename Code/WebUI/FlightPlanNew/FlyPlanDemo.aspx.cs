@@ -10,7 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class FlightPlanNew_FlyPlanDemo : System.Web.UI.Page
+public partial class FlightPlanNew_FlyPlanDemo :BasePage
 {
     private FlyPlanDemoBLL flybll = new FlyPlanDemoBLL();
     private BusyTimeBLL busybll = new BusyTimeBLL();
@@ -126,6 +126,7 @@ public partial class FlightPlanNew_FlyPlanDemo : System.Web.UI.Page
                 model.PlanBeginTime = begintime;
                 model.PlanEndTime = endtime;
                 model.AircraftModel = Request.Form["AircraftModel"];
+                model.Pilot = Request.Form["Pilot"];
                 model.TakeOffTime = string.IsNullOrEmpty(Request.Form["TakeOffTime"]) ? (DateTime?)null : new DateTime(model.PlanDate.Value.Year, model.PlanDate.Value.Month, model.PlanDate.Value.Day, int.Parse(Request.Form["TakeOffTime"].Split(':')[0]), int.Parse(Request.Form["TakeOffTime"].Split(':')[1]), 0);
                 model.LandTime = string.IsNullOrEmpty(Request.Form["LandTime"]) ? (DateTime?)null : new DateTime(model.PlanDate.Value.Year, model.PlanDate.Value.Month, model.PlanDate.Value.Day, int.Parse(Request.Form["LandTime"].Split(':')[0]), int.Parse(Request.Form["LandTime"].Split(':')[1]), 0);
 
@@ -157,4 +158,13 @@ public partial class FlightPlanNew_FlyPlanDemo : System.Web.UI.Page
         Response.ContentType = "application/json";
         Response.End();
     }
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "FlyPlanDemoCheck";
+        }
+    }
+    #endregion
 }

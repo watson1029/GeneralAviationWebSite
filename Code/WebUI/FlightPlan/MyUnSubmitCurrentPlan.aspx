@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <table id="tab_list">
     </table>
-    <div id="tab_toolbar" style="padding: 2px 2px;">
+    <div id="tab_toolbar" style="padding: 2px 2px;height:22px;">
         <!--<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>-->
         <div style="float: right">
@@ -52,7 +52,7 @@
                         { title: '任务类型', field: 'FlightType', width: 60 },
                         { title: '注册号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 60 },
-                        { title: 'FlightHeight', field: 'FlightArea', width: 100 },
+                        { title: '飞行范围', field: 'FlightArea', width: 100 },
                         { title: '飞行高度', field: 'FlightHeight', width: 100 },
                         //{ title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
                         {

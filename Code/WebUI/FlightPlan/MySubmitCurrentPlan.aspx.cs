@@ -71,7 +71,7 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
     {
         Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
         var currDate = DateTime.Now.Date;
-        predicate = predicate.And(m => m.PlanState != "0" && m.Creator == User.ID && DbFunctions.TruncateTime(m.SOBT) == currDate);
+        predicate = predicate.And(m => m.CurrentFlightPlanID !=null && m.Creator == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

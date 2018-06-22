@@ -13,7 +13,7 @@
     <%--列表 start--%>
     <table id="tab_list">
     </table>
-    <div id="tab_toolbar" style="padding: 2px 2px;">
+    <div id="tab_toolbar" style="padding: 2px 2px;height: 22px;">
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
@@ -69,7 +69,7 @@
                         },
                         { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                         { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
-                        { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
+                        { title: '应答机代码', field: 'RadarCode', width: 150 },
 
                         { title: '公司三字码', field: 'CompanyCode3', width: 100 },
                            { title: '公司名称', field: 'CompanyName', width: 100 },

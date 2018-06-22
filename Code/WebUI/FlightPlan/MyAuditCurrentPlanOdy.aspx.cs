@@ -71,12 +71,14 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<V_CurrentPlan, bool>> GetWhere()
+    private Expression<Func<vGetCurrentPlanNodeInstance, bool>> GetWhere()
     {
-        Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
+        Expression<Func<vGetCurrentPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetCurrentPlanNodeInstance>();
         //var currDate = DateTime.Now.Date;
         //&& DbFunctions.TruncateTime(m.SOBT) == currDate
-        predicate = predicate.And(m => m.ActorID == null && m.PlanState == "end");
+        predicate = predicate.And(m => m.ActorID != m.Creator);
+        predicate = predicate.And(m => m.ActorID == User.ID);
+        predicate = predicate.And(m => m.State == 2 || m.State == 3);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

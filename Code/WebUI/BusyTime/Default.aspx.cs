@@ -10,7 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class BusyTime_Default : System.Web.UI.Page
+public partial class BusyTime_Default : BasePage
 {
     private BusyTimeBLL bll = new BusyTimeBLL();
     protected void Page_Load(object sender, EventArgs e)
@@ -134,4 +134,13 @@ public partial class BusyTime_Default : System.Web.UI.Page
         //}
         return predicate;
     }
+    #region 权限编码
+    public override string PageRightCode
+    {
+        get
+        {
+            return "BusyTimeCheck";
+        }
+    }
+    #endregion
 }

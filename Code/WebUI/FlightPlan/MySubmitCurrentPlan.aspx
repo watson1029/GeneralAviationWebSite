@@ -63,7 +63,7 @@
                       },
                       { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                       { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
-                      { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
+                      { title: '应答机代码', field: 'RadarCode', width: 150 },
                        { title: '创建人', field: 'CreatorName', width: 80 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
