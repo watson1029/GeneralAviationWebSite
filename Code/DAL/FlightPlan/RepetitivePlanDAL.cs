@@ -185,5 +185,93 @@ namespace DAL.FlightPlan
                 return res.ToList();
             }
         }
+
+        /// <summary>
+        /// 获取长期计划未提交数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetUnSubmitNum(int userId)
+        {
+            var linq = from t in context.RepetPlanNew
+                       where t.Creator == userId
+                       where t.Status == 0
+                       select t;
+            return linq.Count();
+        }
+
+        /// <summary>
+        /// 获取长期计划提交数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetSubmitNum(int userId)
+        {
+            var linq = from t in context.RepetPlanNew
+                       where t.Creator == userId
+                       where t.Status != 0
+                       select t;
+            return linq.Count();
+        }
+
+        /// <summary>
+        /// 获取长期计划提交数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetSubmitNum(int userId, DateTime beginTime, DateTime endTime)
+        {
+            var linq = from t in context.RepetPlanNew
+                       where t.Creator == userId
+                       where t.Status != 0
+                       where t.CreateTime > beginTime
+                       where t.CreateTime < endTime
+                       select t;
+            return linq.Count();
+        }
+
+        /// <summary>
+        /// 获取长期计划待审核数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetUnAuditNum(int userId)
+        {
+            var linq = from t in context.vGetRepetitivePlanNodeInstance
+                       where t.ActorID == userId
+                       where t.State == 1
+                       select t;
+            return linq.Count();
+        }
+
+        /// <summary>
+        /// 获取长期计划审核数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetAuditNum(int userId)
+        {
+            var linq = from t in context.vGetRepetitivePlanNodeInstance
+                       where t.ActorID == userId
+                       where t.State == 2 || t.State == 3
+                       select t;
+            return linq.Count();
+        }
+
+        /// <summary>
+        /// 获取长期计划审核数量
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetRepetAuditNum(int userId, DateTime beginTime, DateTime endTime)
+        {
+            var linq = from t in context.vGetRepetitivePlanNodeInstance
+                       where t.ActorID == userId
+                       where t.State == 2 || t.State == 3
+                       where t.ActorTime > beginTime
+                       where t.ActorTime < endTime
+                       select t;
+            return linq.Count();
+        }
     }
 }

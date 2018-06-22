@@ -72,5 +72,35 @@ namespace BLL.FlightPlan
             }
             return dal.GetFlightPlan(userID,PlanState);
         }
+
+        public int GetFlyUnSubmitNum(int userId)
+        {
+            return dal.GetFlyUnSubmitNum(userId);
+        }
+
+        public int GetFlyUnAuditNum(int userId)
+        {
+            return dal.GetFlyUnAuditNum(userId);
+        }
+
+        public int GetFlySubmitNum(int userId)
+        {
+            return dal.GetFlySubmitNum(userId);
+        }
+
+        public int GetFlyAuditNum(int userId)
+        {
+            return dal.GetFlyAuditNum(userId);
+        }
+
+        public int GetFlySubmitNum(int userId, DateTime beginTime, DateTime endTime)
+        {
+            return dal.GetFlySubmitNum(userId, beginTime, endTime);
+        }
+
+        public int GetFlyAuditNum(int userId, DateTime beginTime, DateTime endTime)
+        {
+            return dal.GetFlyAuditNum(userId, beginTime, endTime);
+        }
     }
 }

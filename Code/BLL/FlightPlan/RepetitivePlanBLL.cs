@@ -67,5 +67,35 @@ namespace BLL.FlightPlan
         {
             return dal.Find(u => u.PlanCode == code);
         }
+
+        public int GetRepetUnSubmitNum(int userId)
+        {
+            return dal.GetRepetUnSubmitNum(userId);
+        }
+
+        public int GetRepetUnAuditNum(int userId)
+        {
+            return dal.GetRepetUnAuditNum(userId);
+        }
+
+        public int GetRepetSubmitNum(int userId)
+        {
+            return dal.GetRepetSubmitNum(userId);
+        }
+
+        public int GetRepetAuditNum(int userId)
+        {
+            return dal.GetRepetAuditNum(userId);
+        }
+
+        public int GetRepetSubmitNum(int userId, DateTime beginTime, DateTime endTime)
+        {
+            return dal.GetRepetSubmitNum(userId, beginTime, endTime);
+        }
+
+        public int GetRepetAuditNum(int userId, DateTime beginTime, DateTime endTime)
+        {
+            return dal.GetRepetAuditNum(userId, beginTime, endTime);
+        }
     }
 }
