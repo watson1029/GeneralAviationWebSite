@@ -78,7 +78,7 @@
             $(".easyui-accordion1").accordion();
         }
 
-        function GetUserData() {
+        <%--function GetUserData() {
             var json = '<%=GetUserDataJson()%>';
             var html = "";
             $.each($.parseJSON(json), function (i,n) {
@@ -110,11 +110,11 @@
                 //json.MenuImgUrl
             });
             $(".row").html(html);
-        }
+        }--%>
 
         $(function () {
             InitLeftMenu();
-            GetUserData();
+            //GetUserData();
             $('#loginOut').click(function () {
                 $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function (r) {
                     if (r) {
@@ -153,14 +153,31 @@
         <div id="tabs" class="easyui-tabs" fit="true" border="false">
             <div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
                 <%-- <h1>通航服务站</h1>--%>
-                <div class="row" >
+                <div style="width:100%;text-align:center;float:left">
+                    <iframe id="generalize" class="NFine_iframe" style="width:49%;float:left;" src="BackLog.aspx" frameborder="0" data-menucode="MyUnSubmitRepetPlanCheck"></iframe>
+                    <iframe id="generalize-chart" class="NFine_iframe" style="width:49%;margin-left:20px;margin-top:20px;float:right;" src="/Charts/Generalize" frameborder="0"></iframe>
                 </div>
+                <%--<div style="width:100%;">
+                    <iframe id="pie-chart" class="NFine_iframe" style="width:49%;margin-left:20px;margin-top:20px;float:left;" src="/Charts/Pie/Index" frameborder="0"></iframe>
+                    <iframe id="bar-chart" class="NFine_iframe" style="width:49%;margin-top:20px;float:right;" src="/Charts/Bar/Index" frameborder="0"></iframe>
+                </div>--%>
             </div>
         </div>
 
     </div>
     <script type="text/javascript">
+        $(function () {
+            ReSize();
+            $(window).resize(function () {
+                ReSize();
+            });
+        });
 
+        function ReSize() {
+            $("#generalize").css("height", (window.innerHeight - 150) / 2);
+            $("#pie-chart").css("height", (window.innerHeight - 150) / 2);
+            $("#bar-chart").css("height", (window.innerHeight - 150) / 2);
+        }
     </script>
 </body>
 </html>
