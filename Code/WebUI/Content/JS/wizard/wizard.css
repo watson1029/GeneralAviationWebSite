@@ -37,8 +37,8 @@
 .wizard ul li.complete .step{color: #449d44;border-color: #449d44;}
 .wizard ul li.complete .step:before{display: block;position: absolute;top: 0;left: 0;bottom: 0;right: 0;line-height: 20px;text-align: center;border-radius: 100%;content: "";background-color: #fff;z-index: 3;font-family: FontAwesome;font-size: 12px;color: #449d44;}
 .wizard ul li.active{background: #fff;color: #262626;}
-.wizard ul li.active .step{border-color: #1ABC9C;color: #1ABC9C;}
-.wizard ul li.active:before{display: block;content: "";position: absolute;bottom: 0;left: 0;right: -1px;height: 2px;max-height: 2px;overflow: hidden;background-color: #1ABC9C;z-index: 10000;}
+.wizard ul li.active .step{border-color: #95B8E7;color:#95B8E7;}
+.wizard ul li.active:before{display: block;content: "";position: absolute;bottom: 0;left: 0;right: -1px;height: 2px;max-height: 2px;overflow: hidden;background-color:#95B8E7;z-index: 10000;}
 .wizard ul li.active .chevron:before{border-left: 14px solid #fff;}
 .wizard ul li .badge{margin-right: 8px;}
 .wizard ul li:first-child{-webkit-border-radius: 2px 0 0 0;-webkit-background-clip: padding-box;-moz-border-radius: 2px 0 0 0;-moz-background-clip: padding;border-radius: 2px 0 0 0;background-clip: padding-box;padding-left: 20px;}

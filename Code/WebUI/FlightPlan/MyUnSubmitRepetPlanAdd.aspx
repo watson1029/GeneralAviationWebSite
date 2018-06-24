@@ -244,7 +244,7 @@
     }
 </style>
  <script src="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.js")%>" type="text/javascript"></script>
-  <link href="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.css")%>" rel="stylesheet" type="text/css" />
+  <link href="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.css?v=1.1")%>" rel="stylesheet" type="text/css" />
  <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
     <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
     <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
