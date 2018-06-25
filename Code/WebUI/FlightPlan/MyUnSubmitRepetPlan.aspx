@@ -102,7 +102,7 @@
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
                             title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                var str ="<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.EditData('"+value+"');$(this).parent().click();return false;\">修改</a>&nbsp;&nbsp;<a style=\"color:red\" id=\"sub-btn_' + value + '\" href=\"javascript:;\" onclick=\"Main.Submit('"+value+"');$(this).parent().click();return false;\">提交</a>";
+                                var str ="<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.EditData('"+value+"');$(this).parent().click();return false;\">修改</a>&nbsp;&nbsp;<a style=\"color:red\" id=\"sub-btn_'" + value + "'\" href=\"javascript:;\" onclick=\"Main.Submit('"+value+"');$(this).parent().click();return false;\">提交</a>";
                                 return str;
                             }
                         }

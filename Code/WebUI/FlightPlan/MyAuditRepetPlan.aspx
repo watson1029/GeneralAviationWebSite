@@ -14,12 +14,12 @@
     <table id="tab_list">
     </table>
     <div id="tab_toolbar" style="padding: 2px 2px;">
-       <a href="javascript:void(0)" class="easyui-linkbutton" style="width:78px;" iconcls="icon-save" plain="true" onclick="Main.BatchAudit()">批量审核</a>
+       <a href="javascript:void(0)" class="easyui-linkbutton" style="width:90px;" iconcls="icon-save" plain="true" onclick="Main.BatchAudit()">批量审核</a>
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
-                <div name="PlanCode">
-                    申请单号
+                <div name="Code">
+                    临专号
                 </div>
             </div>
         </div>
@@ -54,10 +54,9 @@
     { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                           { title: '公司名称', field: 'CompanyName', width: 80 },
-                        { title: '任务类型', field: 'FlightType', width: 60 },
-                        { title: '使用机型', field: 'AircraftType', width: 80 },
-                         { title: '注册号', field: 'CallSign', width: 70 },
+                           { title: '公司名称', field: 'CompanyName', width: 180 },
+                        { title: '任务类型', field: 'FlightType', width: 70 },
+                        { title: '使用机型', field: 'AircraftType', width: 100 },
                         {
                             title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
 
@@ -89,6 +88,14 @@
                          { title: '机场及起降点', field: 'AirportText', width: 200 },
                           { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                          { title: '创建人', field: 'CreatorName', width: 60 },
+                          {
+                              title: '创建时间', field: 'CreateTime', width: 120, formatter: function (value, rec, index) {
+
+                                  var timesstamp = new Date(value.dateValFormat());
+                                  return timesstamp.format("yyyy-MM-dd HH:mm:ss");
+
+                              }
+                          },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150, hidden: 'true' },
                            {
                                title: '状态', field: 'PlanState', formatter: function (value, rec, index) {
@@ -97,7 +104,7 @@
                            },
                              {
                                  title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                     var str = '<a style="color:red" href="javascript:;" onclick="Main.Audit(' + value + ');$(this).parent().click();return false;">审核</a>';
+                                     var str = "<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.Audit('" + value + "');$(this).parent().click();return false;\">审核</a>";
                                      return str;
                                  }
                              }
@@ -135,8 +142,8 @@
             },
             //审核
             Audit: function (uid) {
-                $("#audit").dialog("open").dialog('setTitle', '审核').dialog('refresh', 'RepetPlanForm.aspx');
-                $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
+                $("#audit").dialog("open").dialog('setTitle', '审核').dialog('refresh', 'RepetPlanAuditForm.aspx?id=' + uid);
+                $("#btn_audit").attr("onclick", "Main.AuditSubmit('" + uid + "');")
             },
             AuditSubmit: function (uid) {
                 if ($("#AuditComment").val().length > 200) {
@@ -190,13 +197,11 @@
                         });
                     }
                 });
-
         }
-
         };
     </script>
 
-    <div id="audit" class="easyui-dialog" style="width: 850px; height: 600px;"
+    <div id="audit" class="easyui-dialog" style="width:1000px; height:800px;"
         modal="true" closed="true" buttons="#audit-buttons">
     </div>
     <div id="audit-buttons">

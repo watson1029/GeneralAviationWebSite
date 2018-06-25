@@ -73,7 +73,7 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
     {
 
         Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
-        predicate = predicate.And(m => m.ActorID == User.ID);
+        predicate = predicate.And(m => User.RoleName.Contains(m.ActorName));
         predicate = predicate.And(m => m.Creator != User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

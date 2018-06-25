@@ -33,4 +33,8 @@ public class UserInfoCookie
     /// 通航企业
     /// </summary>
     public string CompanyName{ get; set; }
+    /// <summary>
+    /// 角色名称
+    /// </summary>
+    public List<string> RoleName { get; set; }
 }

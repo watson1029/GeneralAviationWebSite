@@ -74,7 +74,7 @@
                             <tr>
                                 <th class="formTitle">周执行计划</th>
                                 <td colspan="3" class="formValue">
-                                    <input id="d1" type="checkbox" name="WeekSchedule" value="1" style="width: 20px" />星期一
+                                    <input id="d1" type="checkbox" checked name="WeekSchedule" value="1" style="width: 20px" />星期一
                              <input id="d2" type="checkbox" name="WeekSchedule" value="2" style="width: 20px" />星期二
                              <input id="d3" type="checkbox" name="WeekSchedule" value="3" style="width: 20px" />星期三
                              <input id="d4" type="checkbox" name="WeekSchedule" value="4" style="width: 20px" />星期四
@@ -167,7 +167,7 @@
                                 </td>
                             </tr>
                             <tr style="padding: 2px;">
-                                <th valign="top" style="padding-top: 5px;">作业区
+                                <th  style="padding-top: 5px;">作业区
                                 </th>
                                 <td colspan="3">
                                     <ul class="nav nav-tabs" style="padding-top: 10px;">
@@ -307,7 +307,6 @@
 </style>
 <script src="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.js")%>" type="text/javascript"></script>
 <link href="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.css?v=1.3")%>" rel="stylesheet" type="text/css" />
-<script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
 <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
 <script src="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
 <link href="<%=Page.ResolveUrl("~/Content/JS/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />

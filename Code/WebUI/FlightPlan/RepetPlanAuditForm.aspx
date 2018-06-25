@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RepetPlanAuditForm.aspx.cs" Inherits="FlightPlan_RepetPlanAuditForm" %>
 
-<link href="<%=Page.ResolveUrl("~/Content/js/jqgrid/jqgrid.css")%>" rel="stylesheet" />
 <script src="<%=Page.ResolveUrl("~/Content/js/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
 <script src="<%=Page.ResolveUrl("~/Content/js/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
 <link href="<%=Page.ResolveUrl("~/Content/js/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
@@ -8,46 +7,28 @@
 
 <script>
     $(function () {
-        initControl();
         var pid = '<%=Request.QueryString["id"] %>';
-        if (!!pid) {
+        if (!!pid) {  
             $.ajax({
-                url: "MySubmitRepetPlan.aspx",
+                url: "MyAuditRepetPlan.aspx",
                 data: { id: pid,"action": "queryone" },
                 type:'post',
                 dataType: "json",
                 async: false,
                 success: function (data) {
                     $("#name").text(data.CompanyName);
-                    $("#code").text(data.Code);
-                    $("#form1").formSerialize(data);
+                    $("#form_audit").form('load', data);
                     $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
                         $("#d" + n).prop({ checked: true });
                     });
-                    //$("#form1").find('.form-control,select,input').attr('readonly', 'readonly');
-                    //$("#form1").find('div.ckbox label').attr('for', '');
+                    $("#form_audit").find('select,input').not("#Auditresult,#AuditComment").attr('readonly', 'readonly');
 
 
                 }
             });
         }
     })
-    function initControl() {
-        $('#wizard').wizard().on('change', function (e, data) {
-            var $next = $("#btn_next");
-            if (data.direction == "next") {
-                switch (data.step) {
-                    case 1:
-                        $next.attr('disabled', 'disabled');
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                $next.removeAttr('disabled');
-            }
-        });
-    }
+  
 </script>
 <form id="form_audit">
                 <div class="panel panel-default">
@@ -60,10 +41,6 @@
                                 <th class="formTitle">公司名称</th>
                                 <td class="formValue" style="color:red">
                                     <span id="name"></span>
-                                </td>
-                                <th class="formTitle">临专号</th>
-                                <td class="formValue">
-                                    <span id="code"></span>
                                 </td>
                             </tr>
                             <tr>
@@ -102,7 +79,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                                <th class="formTitle" style="padding-top: 5px;">
                                     机场及临时起降点
                                 </th>
                                 <td class="formValue" colspan="3">
@@ -110,7 +87,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                                <th class="formTitle" style="padding-top: 5px;">
                                     航线及作业区
                                 </th>
                                 <td class="formValue" colspan="3">
@@ -118,7 +95,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                                <th class="formTitle" style="padding-top: 5px;">
                                     其他说明的事项
                                 </th>
                                 <td class="formValue" colspan="3">
@@ -126,18 +103,18 @@
                                 </td>
                             </tr>
                               <tr>
-                                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                                <th class="formTitle" style="padding-top: 5px;">
                                     审核结果
                                 </th>
                                 <td class="formValue">
-                           <select class="easyui-combobox" editable="false" name="Auditresult" required="true" panelheight="auto" style="width: 200px;">
+                           <select id="Auditresult" class="easyui-combobox" editable="false" name="Auditresult" required="true" panelheight="auto" style="width: 200px;">
                             <option value="0" selected="true">通过</option>
                             <option value="1">不通过</option>
                         </select>
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                                <th class="formTitle" style="padding-top: 5px;">
                                     审核意见
                                 </th>
                                 <td class="formValue">
