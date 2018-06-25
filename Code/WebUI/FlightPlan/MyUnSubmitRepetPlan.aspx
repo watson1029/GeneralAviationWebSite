@@ -90,7 +90,7 @@
                           { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
                            {
-                               title: '创建时间', field: 'CreateTime', width: 100, formatter: function (value, rec, index) {
+                               title: '创建时间', field: 'CreateTime', width: 120, formatter: function (value, rec, index) {
 
                                    var timesstamp = new Date(value.dateValFormat());
                                    return timesstamp.format("yyyy-MM-dd HH:mm:ss");
@@ -102,7 +102,7 @@
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
                             title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" id="sub-btn_' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
+                                var str ="<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.EditData('"+value+"');$(this).parent().click();return false;\">修改</a>&nbsp;&nbsp;<a style=\"color:red\" id=\"sub-btn_' + value + '\" href=\"javascript:;\" onclick=\"Main.Submit('"+value+"');$(this).parent().click();return false;\">提交</a>";
                                 return str;
                             }
                         }
@@ -181,6 +181,7 @@
 
             //修改链接 事件
             EditData: function (uid) {
+                alert(2);
                 $("#edit").dialog("open").dialog('setTitle', '编辑长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx?id=' + uid);
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
             },
@@ -239,6 +240,7 @@
             },
    
             Submit: function (uid) {
+                alert(1);
                 $.messager.confirm('提示', '确认提交该条长期计划？', function (r) {
                     if (r) {
                         $("#sub-btn_" + uid).removeAttr("onclick");

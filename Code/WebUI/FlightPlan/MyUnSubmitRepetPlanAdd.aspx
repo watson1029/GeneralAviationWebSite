@@ -383,32 +383,8 @@
     };
     $(function () {
         initControl();
-
-        var pid = '<%=Request.QueryString["id"] %>';
         new dj.upload(obj);
         new dj.analysis(obj1);
-        if (pid) {
-            //$.post("MyUnSubmitRepetPlanAdd.aspx", { "action": "queryone", "id": pid }, function (data) {
-            //    $("#form_edit").form('load', data);
-            //    $("#name").html(data.CompanyName);
-            //    $.each(data.WeekSchedule.replace(/*/g, '').toCharArray(), function (i, n) {
-            //        $("#d" + n).prop({ checked: true });
-            //    });
-            //    new dj.upload({
-            //        id: "AttchFiles",
-            //        maxSize: 5,
-            //        multi: true,
-            //        queueId: "AttchFiles-fileQueue",
-            //        listId: "AttchFiles-fileList",
-            //        truncate: "30",
-            //        maxCount: "1",
-            //        uploadPath: "Files/RepetPlan/",
-            //        uploadedFiles: data.AttchFile
-            //    });
-
-            //});
-        }
-        else {
             $("#name").html('<%=User.CompanyName %>');
             new dj.upload({
                 id: "AttchFiles",
@@ -421,8 +397,6 @@
                 uploadPath: "Files/RepetPlan/",
                 uploadedFiles: ""
             });
-
-        }
     });
      function SubmitForm() {
         if ($("#Remark").val().length > 200)
@@ -447,13 +421,6 @@
         }).get().join('');
         var postData = $("#form_edit").serialize();
 
-        //postData["qx"] = qx;
-        //postData["AirportText"] = repetPlan.newairportobj.getJsonData();
-        //postData["AirlineText"] = repetPlan.newairlineobj.getJsonData();
-        //postData["CWorkText"] = repetPlan.newworkobj.getCWorkJsonData();
-        //postData["PWorkText"] = repetPlan.newworkobj.getPWorkJsonData();
-        //postData["HWorkText"] = repetPlan.newworkobj.getHWorkJsonData();
-        //postData["action"] = "save";
         $("#btn_finish").attr("disabled", "disabled");
         var json = $.param({ "action": "save", "qx": qx, "AirportText": repetPlan.newairportobj.getJsonData(), "AirlineText": repetPlan.newairlineobj.getJsonData(), "CWorkText": repetPlan.newworkobj.getCWorkJsonData(), "PWorkText": repetPlan.newworkobj.getPWorkJsonData(), "HWorkText": repetPlan.newworkobj.getHWorkJsonData() }) + '&' + $('#form_edit').serialize();
         $.ajax({
