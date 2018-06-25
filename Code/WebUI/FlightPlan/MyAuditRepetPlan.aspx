@@ -2,7 +2,7 @@
     CodeFile="MyAuditRepetPlan.aspx.cs" Inherits="FlightPlan_MyAuditRepetPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
-
+    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <%-- <div class="gridsearch">
@@ -32,6 +32,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
+            baiduMap.init();
         });
         Main = {
             //初始化表格
@@ -43,7 +44,7 @@
                     idField: 'RepetPlanID', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
-                    height: $(parent.document).find("#mainPanel").height() - 10 > 0 ? $(parent.document).find("#mainPanel").height() - 10 : 300, //高度
+                    height: $(parent.document).find("#mainPanel").height() - 450 > 0 ? $(parent.document).find("#mainPanel").height() - 450 : 300, //高度
                     nowrap: false, //是否换行，True 就会把数据显示在一行里
                     striped: true, //True 奇偶行使用不同背景色
                     singleSelect: false,
@@ -103,7 +104,11 @@
                     pagination: true, //是否开启分页
                     pageNumber: 1, //默认索引页
                     pageSize: 10, //默认一页数据条数
-                    rownumbers: true //行号
+                    rownumbers: true, //行号
+                    onClickRow: function (index, row) {
+                        var keyValue = row["RepetPlanID"];
+                        zhccMap.addRepetPlan(keyValue);
+                    }
                 });
             },
 
@@ -363,4 +368,5 @@
         <a id="btn_batchaudit" href="javascript:;" class="easyui-linkbutton" onclick="Main.BatchAuditSubmit()">提交</a> <a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#batchaudit').dialog('close');return false;">取消</a>
     </div>
+    <div id="map" style="height:400px;"></div>
 </asp:Content>
