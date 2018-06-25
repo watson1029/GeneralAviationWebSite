@@ -90,6 +90,11 @@
                           { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                          { title: '创建人', field: 'CreatorName', width: 60 },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150, hidden: 'true' },
+                           {
+                               title: '状态', field: 'PlanState', formatter: function (value, rec, index) {
+                                   return '<font color=\'red\'>待审核</font>';
+                               }, width: 50
+                           },
                              {
                                  title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
                                      var str = '<a style="color:red" href="javascript:;" onclick="Main.Audit(' + value + ');$(this).parent().click();return false;">审核</a>';
@@ -130,68 +135,8 @@
             },
             //审核
             Audit: function (uid) {
-                $("#audit").dialog("open").dialog('setTitle', '审核');
+                $("#audit").dialog("open").dialog('setTitle', '审核').dialog('refresh', 'RepetPlanForm.aspx');
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit(" + uid + ");")
-                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
-                    //    $("#form_audit").form('load', data);
-                    $("#PlanCode").html(data.PlanCode);
-                    $("#CompanyName").html(data.CompanyName);
-                    $("#FlightType").html(data.FlightType);
-                    $("#AircraftType").html(data.AircraftType);
-                    $("#FlightArea").html(data.FlightArea);
-                    $("#FlightHeight").html(data.FlightHeight);
-                    //$("#FlightDirHeight").html(data.FlightDirHeight);
-                    $("#ADEP").html(data.ADEP);
-                    $("#ADES").html(data.ADES);
-                    $("#StartDate").html(new Date(data.StartDate.dateValFormat()).format("yyyy-MM-dd"));
-                    $("#EndDate").html(new Date(data.EndDate.dateValFormat()).format("yyyy-MM-dd"));
-                    $("#SOBT").html(data.SOBT);
-                    $("#SIBT").html(data.SIBT);
-                    $("#Alternate").html(data.Alternate);
-                    $("#Remark").html(data.Remark);
-                    if (!!data.AttchFile) {
-                        var fileArray = data.AttchFile.split('|');
-                        for (var i = 0; i < fileArray.length; i++) {
-                            var info = fileArray[i].split(','),
-                            filepath = dj.root + info[0];
-                            $("#AttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath, info[1], info[1]));
-                        }
-                    }
-                    else {
-                        $("#AttchFile").html('');
-                    }
-                    if (!!data.OtherAttchFile) {
-                        var fileArray1 = data.OtherAttchFile.split('|');
-                        for (var i = 0; i < fileArray1.length; i++) {
-                            var info1 = fileArray1[i].split(','),
-                            filepath1 = dj.root + info1[0];
-                            $("#OtherAttchFile").html('<a href="{0}" target="_blank" class="upload-filename" title="{1}">{2}</a>'.format(filepath1, info1[1], info1[1]));
-                        }
-                    }
-                    else {
-                        $("#OtherAttchFile").html('');
-                    }
-
-                    
-                    
-                        //var str = "";
-                        //if (data.PlanState == "end")
-                        //{
-                        //    str = "审核通过";
-                        //}
-                        //else if (data.PlanState == "Deserted") {
-                        //    str = "审核不通过";
-                        //}
-                        //else {
-                        //    str = data.PlanState + '审核中';
-                        //}
-                        //$("#WeekSchedule").html(str);
-                    var arr=[];
-                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
-                        arr.push("星期"+n);
-                    });
-                    $("#WeekSchedule").html(arr.join(','));
-            });
             },
             AuditSubmit: function (uid) {
                 if ($("#AuditComment").val().length > 200) {
@@ -253,84 +198,6 @@
 
     <div id="audit" class="easyui-dialog" style="width: 850px; height: 600px;"
         modal="true" closed="true" buttons="#audit-buttons">
-        <form id="form_audit" method="post">
-            <table class="table_edit">
-                  <tr>
-                    <th>申请单号：</th>
-                    <td id="PlanCode" style="color:red"></td>
-                    <th>公司名称：</th>
-                    <td id="CompanyName" style="color:red"></td>
-                </tr>
-                <tr>
-                    <th>任务类型：</th>
-                    <td id="FlightType"></td>
-                    <th>航空器类型：</th>
-                    <td id="AircraftType"></td>
-                </tr>
-                 <tr>
-                    <th>飞行范围：</th>
-                    <td id="FlightArea"></td>
-                    <th>飞行高度（米）：</th>
-                    <td id="FlightHeight"></td>
-                </tr>
-            <tr>
-              <%--      <th style="width:140px;">航线走向和飞行高度：</th>
-                    <td id="FlightDirHeight"></td>--%>
-                    <th>批件：</th>
-                    <td id="AttchFile"></td>
-                                    <th>其他批件：</th>
-                    <td id="OtherAttchFile"></td>
-                </tr>
-                  <tr>
-              <th>起飞点：</th>
-                    <td id="ADEP"></td>
-                    <th>降落点：
-                    </th>
-                    <td id="ADES"></td>
-                </tr>
-                <tr>
-                    <th>预计开始日期：</th>
-                    <td id="StartDate"></td>
-                    <th>预计结束日期：</th>
-                    <td id="EndDate"></td>
-                </tr>
-                <tr>
-                    <th>起飞时刻：</th>
-                    <td id="SOBT"></td>
-                    <th>降落时刻：</th>
-                    <td id="SIBT"></td>
-                </tr> 
-                <tr>  <th>备降点：</th>
-                      <td id="Alternate"></td></tr>
-                      <tr>
-                      <th>周执行计划：</th>
-                    <td id="WeekSchedule" colspan="3">
-                    </td>
-                     </tr>
-
-              
-                <tr>
-                    <th style="width:160px;">其他需要说明的事项：</th>
-                    <td id="Remark"></td>
-                </tr>
-                <tr>
-                    <th>审核结果：</th>
-                    <td >
-                        <select class="easyui-combobox" editable="false" name="Auditresult" required="true" panelheight="auto" style="width: 200px;">
-                            <option value="0" selected="true">通过</option>
-                            <option value="1">不通过</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>审核意见：</th>
-                    <td colspan="3">
-                        <input id="AuditComment" name="AuditComment" required="true" maxlength="400" style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
-                    </td>
-
-                </tr>
-            </table>
-        </form>
     </div>
     <div id="audit-buttons">
         <a id="btn_audit" href="javascript:;" class="easyui-linkbutton">提交</a> <a href="javascript:;"

@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="MyUnSubmitRepetPlanAdd.aspx.cs" Inherits="FlightPlan_MyUnSubmitRepetPlanAdd" %>
-
-<form id="form_edit" method="post">
+   <form id="form_edit" method="post">
     <div class="widget-body">
         <div id="wizard" class="wizard" data-target="#wizard-steps" style="border-left: none; border-top: none; border-right: none;">
             <ul class="steps">
@@ -279,8 +278,11 @@
                             <tr style="height: 80px">
                                 <th>附件上传</th>
                                 <td>
-                                    <input type="hidden" name="AttachFilesInfo" id="AttachFilesInfo" />
-
+                                      <input type="hidden" name="AttchFilesInfo" id="AttchFilesInfo" />
+                    <input type="file" id="AttchFiles" name="AttchFiles" />
+                    <a id="btn_upload1" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('AttchFiles').uploadFiles()">上传</a>
+                    <div id="AttchFiles-fileQueue"></div>
+                    <div id="AttchFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
                                 </td>
                             </tr>
                         </table>
@@ -290,84 +292,14 @@
         </div>
 
     </div>
-
-    <%--<table class="table_edit">
-            <tr id="basicInfo">
-                 <th>填写单位：
-                </th>
-                <td id="name">
-                
-                </td>
-            </tr>
-            <tr>
-                <th>任务类型：
-                </th>
-                <td>
-                    <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200" required="true" class="easyui-combobox" style="height:25px"/>
-                </td>
-  <th>使用机型：
-                </th>
-                <td>
-                      <input id="AircraftType" name="AircraftType"  maxlength="30" type="text"  required="true" class="easyui-textbox" style="height:25px"/>
-                </td>
-            </tr>         
-            <tr>
-                <th>预计开始日期：
-                </th>
-                <td>
-                    <input id="StartDate" name="StartDate" editable="false"  required="true"  class="easyui-datebox" style="height:25px"/>
-                </td>
-                <th>预计结束日期：
-                </th>
-                <td>
-                    <input id="EndDate" name="EndDate"  editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height:25px"/>
-                </td>
-            </tr>
-            
-            <tr>
-                <th>批件：
-                </th>
-                <td colspan="3">
-                    <input type="hidden" name="AttchFilesInfo" id="AttchFilesInfo" />
-                    <input type="file" id="AttchFiles" name="AttchFiles" />
-                    <a id="btn_upload" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('AttchFiles').uploadFiles()">上传</a>
-                    <div id="AttchFiles-fileQueue"></div>
-                    <div id="AttchFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
-                </td>
-            </tr>
-
-            <tr>
-                <th>周执行计划：
-                </th>
-                <td  colspan="3">
-                    <input id="d1" type="checkbox" name="WeekSchedule" value="1" style="width:20px"/>星期一
-                             <input id="d2" type="checkbox" name="WeekSchedule" value="2" style="width:20px"/>星期二
-                             <input id="d3" type="checkbox" name="WeekSchedule" value="3" style="width:20px"/>星期三
-                             <input id="d4" type="checkbox" name="WeekSchedule" value="4" style="width:20px"/>星期四
-                             <input id="d5" type="checkbox" name="WeekSchedule" value="5" style="width:20px"/>星期五
-                             <input id="d6" type="checkbox" name="WeekSchedule" value="6" style="width:20px"/>星期六
-                             <input id="d7" type="checkbox" name="WeekSchedule" value="7" style="width:20px"/>星期日
-                </td>
-
-            </tr>
-
-            <tr>
-                <th>飞行范围：
-                </th>
-                <td colspan="3">
-                    <input id="FlightArea" name="FlightArea"  required="true" style="width: 600px; height: 150px" type="text" maxlength="200" data-options="multiline:true" class="easyui-textbox" />
-                </td>
-            </tr>
-            <tr>
-                <th>其他需要说明的事项：
-                </th>
-                <td colspan="3">
-                    <input id="Remark" name="Remark"  style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
-                </td>
-            </tr>
-        </table>--%>
-</form>
+</form> 
+<div id="add-buttons">
+                    <div class="form-button" id="wizard-actions">
+                <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
+                <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
+                <a id="btn_finish" class="easyui-linkbutton" style="display: none;" onclick="SubmitForm()">完成</a>                     
+        </div>
+            </div>
 <style type="text/css">
     .table_edit tr#basicInfo td {
         color: red;
@@ -492,6 +424,59 @@
 
         }
     });
+     function SubmitForm() {
+        if ($("#Remark").val().length > 200)
+        {
+            $.messager.alert('提示', '"其他需要说明的事项"不能超过200字符！', 'info');
+            return;
+        }
+        if (!$("#form_edit").form("validate")) {
+            return;
+        }
+               
+        var fileInfo = dj.getCmp("AttchFiles").getUploadedFiles();
+        $("#AttchFilesInfo").val(fileInfo);
+        qx = $("input[name='WeekSchedule']").map(function () {
+            var $this = $(this);
+            if ($this.is(':checked')) {
+                return $this.val();
+            }
+            else {
+                return '*';
+            }
+        }).get().join('');
+        var postData = $("#form_edit").serialize();
+
+        //postData["qx"] = qx;
+        //postData["AirportText"] = repetPlan.newairportobj.getJsonData();
+        //postData["AirlineText"] = repetPlan.newairlineobj.getJsonData();
+        //postData["CWorkText"] = repetPlan.newworkobj.getCWorkJsonData();
+        //postData["PWorkText"] = repetPlan.newworkobj.getPWorkJsonData();
+        //postData["HWorkText"] = repetPlan.newworkobj.getHWorkJsonData();
+        //postData["action"] = "save";
+        $("#btn_finish").attr("disabled", "disabled");
+        var json = $.param({ "action": "save", "qx": qx, "AirportText": repetPlan.newairportobj.getJsonData(), "AirlineText": repetPlan.newairlineobj.getJsonData(), "CWorkText": repetPlan.newworkobj.getCWorkJsonData(), "PWorkText": repetPlan.newworkobj.getPWorkJsonData(), "HWorkText": repetPlan.newworkobj.getHWorkJsonData() }) + '&' + $('#form_edit').serialize();
+        $.ajax({
+            type: 'post',
+            url: 'MyUnSubmitRepetPlan.aspx',
+            data: json,
+            success: function (data) {
+                $.messager.alert('提示', data.msg, 'info', function () {
+                    if (data.isSuccess) {
+                        $("#tab_list").datagrid("reload");
+                        $("#add").dialog("close");
+                    }
+                    $("#btn_finish").removeAttr("disabled");
+                });
+            },
+            error: function (xhr, err) {
+                $("#btn_finish").removeAttr("disabled");
+                $.messager.alert('提示', '系统繁忙，请稍后再试！', 'info');
+            }
+        });
+    }
+
+
     function initControl() {
         $('#wizard').wizard().on('change', function (e, data) {
             var $finish = $("#btn_finish");

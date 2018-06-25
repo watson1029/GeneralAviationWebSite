@@ -1,5 +1,6 @@
 ﻿using BLL.BasicData;
 using BLL.FlightPlan;
+using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,9 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
                 case "queryone"://获取一条记录
                     GetData();
                     break;
+                case "save":
+                    Save();
+                    break;
                 case "readfile":
                     ReadFileText();
                     break;
@@ -36,6 +40,77 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
                     break;
             }
         }
+    }
+    private void Save()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "保存失败！";
+        AirportInfoBLL airportbll = new AirportInfoBLL();
+        var idList = new List<string>();
+        var airportText = "";
+        var airlineworkText = "";
+        if (!string.IsNullOrEmpty(Request.Form["AirportText"]))
+        {
+            var airportList = (AirportFillTotal)JsonConvert.DeserializeObject(Request.Form["AirportText"], typeof(AirportFillTotal));
+            idList = airportbll.AddOrUpdateAirport(airportList.airportArray, User.ID, ref airportText);
+        }
+        RepetitivePlan entity = null;
+        if (string.IsNullOrEmpty(Request.Form["id"]))//新增
+        {
+            entity = new RepetitivePlan();
+            entity.GetEntitySearchPars<RepetitivePlan>(this.Context);
+            entity.RepetPlanID = Guid.NewGuid();
+            entity.WeekSchedule = Request.Form["qx"];
+            entity.AttachFile = Request.Params["AttchFilesInfo"];
+            entity.PlanState = "0";
+            entity.CompanyCode3 = User.CompanyCode3 ?? "";
+            entity.CompanyName = User.CompanyName;
+            entity.Creator = User.ID;
+            entity.CreatorName = User.UserName;
+            entity.ActorID = User.ID;
+            entity.CreateTime = DateTime.Now;
+            entity.ModifyTime = DateTime.Now;
+            entity.AirportText = airportText;
+            #region 机场起降点、航线、作业区
+            bll.AddRepetitivePlanOther(idList, Request.Form["AirlineText"], Request.Form["CWorkText"], Request.Form["PWorkText"], Request.Form["HWorkText"], entity.RepetPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+            #endregion
+            entity.AirlineWorkText = airlineworkText;
+            if (bll.Add(entity))
+            {
+                result.IsSuccess = true;
+                result.Msg = "增加成功！";
+            }
+        }
+        else//编辑
+        {
+            entity = bll.Get(Guid.Parse(Request.Form["id"]));
+            if (entity != null)
+            {
+                entity.AircraftType = Request.Form["AircraftType"];
+                entity.FlightType = Request.Form["FlightType"];
+                entity.StartDate = DateTime.Parse(Request.Form["StartDate"]);
+                entity.EndDate = DateTime.Parse(Request.Form["EndDate"]);
+                entity.ModifyTime = DateTime.Now;
+                entity.Remark = Request.Form["Remark"];
+                entity.AttachFile = Request.Params["AttachFilesInfo"];
+                entity.WeekSchedule = Request.Form["qx"];
+                entity.AirportText = airportText;
+                #region 机场、起降点航线
+                bll.AddRepetitivePlanOther(idList, Request.Form["AirlineText"], Request.Form["CWorkText"], Request.Form["PWorkText"], Request.Form["HWorkText"], entity.RepetPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+                entity.AirlineWorkText = airlineworkText;
+                #endregion
+                if (bll.Update(entity))
+                {
+                    result.IsSuccess = true;
+                    result.Msg = "更新成功！";
+                }
+            }
+        };
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
     }
     /// <summary>
     /// 获取指定ID的数据
