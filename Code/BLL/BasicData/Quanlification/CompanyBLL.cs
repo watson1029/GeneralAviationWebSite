@@ -115,5 +115,10 @@ namespace BLL.BasicData
             ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
             return context.Set<Company>().Where(where).OrderByDescending(m => m.Catalog == 1 && m.State == "end").AsNoTracking().Take(top).ToList();
         }
+
+        public List<string> GetAllCode3()
+        {
+            return _dal.GetAllCode3();
+        }
     }
 }

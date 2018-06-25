@@ -1,5 +1,6 @@
 ﻿using Model.EF;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 namespace DAL.FlightPlan
@@ -101,6 +102,54 @@ namespace DAL.FlightPlan
                        where t.ActorTime < endTime
                        select t;
             return linq.Count();
+        }
+
+        public int GetFlyNum(string company)
+        {
+            var linq = from t in context.CurrentFlightPlan
+                       join f in context.FlightPlan on t.FlightPlanID equals f.FlightPlanID.ToString()
+                       where f.CompanyCode3 == company
+                       select t;
+            return linq.Count();
+        }
+
+        public int GetFlyNum(string company, DateTime begin, DateTime end)
+        {
+            var linq = from t in context.CurrentFlightPlan
+                       join f in context.FlightPlan on t.FlightPlanID equals f.FlightPlanID.ToString()
+                       where f.CompanyCode3 == company
+                       where t.ActualStartTime > begin && t.ActualStartTime < end
+                       select t;
+            return linq.Count();
+        }
+
+        public int GetFlyTime(string company)
+        {
+            var linq = from t in context.CurrentFlightPlan
+                       join f in context.FlightPlan on t.FlightPlanID equals f.FlightPlanID.ToString()
+                       where f.CompanyCode3 == company
+                       select t;
+            int sum = 0;
+            foreach (var c in linq.ToList())
+            {
+                sum += (c.ActualEndTime.Value - c.ActualStartTime.Value).Minutes;
+            }
+            return sum;
+        }
+
+        public int GetFlyTime(string company, DateTime begin, DateTime end)
+        {
+            var linq = from t in context.CurrentFlightPlan
+                       join f in context.FlightPlan on t.FlightPlanID equals f.FlightPlanID.ToString()
+                       where f.CompanyCode3 == company
+                       where t.ActualStartTime > begin && t.ActualStartTime < end
+                       select t;
+            int sum = 0;
+            foreach (var c in linq.ToList())
+            {
+                sum += (c.ActualEndTime.Value - c.ActualStartTime.Value).Minutes;
+            }
+            return sum;
         }
     }
 }

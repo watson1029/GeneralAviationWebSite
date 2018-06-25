@@ -202,5 +202,25 @@ namespace BLL.FlightPlan
         {
             return new FlightPlanDAL().GetCurrentPlanNodeInstanceList(pageIndex, pageSize, out rowCount, Creator, started, ended);
         }
+
+        public int GetFlyNum(string company)
+        {
+            return dal.GetFlyNum(company);
+        }
+
+        public int GetFlyNum(string company, DateTime begin, DateTime end)
+        {
+            return dal.GetFlyNum(company, begin, end);
+        }
+
+        public int GetFlyTime(string company)
+        {
+            return dal.GetFlyTime(company);
+        }
+
+        public int GetFlyTime(string company, DateTime begin, DateTime end)
+        {
+            return dal.GetFlyTime(company, begin, end);
+        }
     }
 }

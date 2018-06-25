@@ -6,7 +6,8 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    <script src="../js/echarts/echarts.min.js"></script>
+    <script src="/js/echarts/echarts.min.js"></script>
+    <script src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
         var chart, option;
         $(function () {
@@ -33,7 +34,7 @@
                             type: 'shadow'
                         }
                     },
-                    color: result.ColorItem,
+                    color: ["#1B9AF7", "#FF4351", "#FEAE1B", "#7B72E9", "#222", "#A5DE37"],
                     grid: {
                         left: '3%',
                         right: '4%',
@@ -45,9 +46,9 @@
                     },
                     xAxis: {
                         type: 'category',
-                        data: result.TimeItem
+                        data: result.NameItem
                     },
-                    series: result.BarData
+                    series: result.FlyTimeData
                 };
                 // 使用刚指定的配置项和数据显示图表。
                 chart.setOption(option);
