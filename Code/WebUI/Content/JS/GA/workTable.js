@@ -64,7 +64,7 @@
         addCWorkRow: function () {
             if (this.cRowIndex < this.cMaxRowCount) {
                 this.cRowIndex++;
-                j("#" + this.cconid).append("<tr><td class=\"formValue\"><input id='CFlyHeight" + this.cRowIndex + "' name='CFlyHeight" + this.cRowIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='CRadius" + this.cRowIndex + "' name='CRadius" + this.cRowIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='CWorkName" + this.cRowIndex + "'  name='CWorkName" + this.cRowIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='CLatLong" + this.cRowIndex + "' name='CLatLong" + this.cRowIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td></tr>");
+                j("#" + this.cconid).append("<tr><td class=\"formValue\"><input id='CFlyHeight" + this.cRowIndex + "' name='CFlyHeight" + this.cRowIndex + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='CRadius" + this.cRowIndex + "' name='CRadius" + this.cRowIndex + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='CWorkName" + this.cRowIndex + "'  name='CWorkName" + this.cRowIndex + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='CLatLong" + this.cRowIndex + "' name='CLatLong" + this.cRowIndex + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td></tr>");
             }
             else {
                 $.modalAlert('行数不能超过' + this.cMaxRowCount, 'warning');
@@ -79,9 +79,9 @@
         addPWorkRow: function () {
             if (this.pRowIndex < this.pMaxRowCount) {
                 this.pRowIndex++;
-                var str = "<tr><td class=\"formValue\"><input id='PFlyHeight_row" + this.pRowIndex + "' name='PFlyHeight_row" + this.pRowIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td>";
+                var str = "<tr><td class=\"formValue\"><input id='PFlyHeight_row" + this.pRowIndex + "' name='PFlyHeight_row" + this.pRowIndex + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td>";
                 for (var i = 1; i <= this.pColIndex; i++) {
-                    str += "<td class=\"formValue\"><input id='PWorkName_row" + this.pRowIndex + "_col" + i + "'  name='PWorkName_row" + this.pRowIndex + "_col" + i + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='PWorkLatLong_row" + this.pRowIndex + "_col" + i + "' name='PWorkLatLong_row" + this.pRowIndex + "_col" + i + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td>";
+                    str += "<td class=\"formValue\"><input id='PWorkName_row" + this.pRowIndex + "_col" + i + "'  name='PWorkName_row" + this.pRowIndex + "_col" + i + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='PWorkLatLong_row" + this.pRowIndex + "_col" + i + "' name='PWorkLatLong_row" + this.pRowIndex + "_col" + i + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td>";
                 }
                 str += "</tr>";
                 j("#" + this.pconid).append(str);
@@ -102,7 +102,7 @@
             if (this.pColIndex < this.pMaxColCount) {
                 this.pColIndex++;
                 for (var i = 0; i < this.pRowIndex; i++) {
-                    j("#" + this.pconid + " tr:eq(" + i + ") ").append("<td class=\"formValue\"><input id='PWorkName_row" + (i + 1) + "_col" + this.pColIndex + "'  name='PWorkName_row" + (i + 1) + "_col" + this.pColIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='PWorkLatLong_row" + (i + 1) + "_col" + this.pColIndex + "' name='PWorkLatLong_row" + (i + 1) + "_col" + this.pColIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td>");
+                    j("#" + this.pconid + " tr:eq(" + i + ") ").append("<td class=\"formValue\"><input id='PWorkName_row" + (i + 1) + "_col" + this.pColIndex + "'  name='PWorkName_row" + (i + 1) + "_col" + this.pColIndex + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='PWorkLatLong_row" + (i + 1) + "_col" + this.pColIndex + "' name='PWorkLatLong_row" + (i + 1) + "_col" + this.pColIndex + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td>");
                 }
                 j("#" + this.plistid + " thead tr ").append("<th style=\"text-align:center\">中文名" + this.pColIndex + "</th><th style=\"text-align:center\">经纬度" + this.pColIndex + "</th>");
             }
@@ -124,10 +124,10 @@
         addHWorkRow: function () {
             if (this.hRowIndex < this.hMaxRowCount) {
                 this.hRowIndex++;
-                var str = "<tr><td class=\"formValue\"><input id='HFlyHeight_row" + this.hRowIndex + "' name='HFlyHeight_row" + this.hRowIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td>";
-                str += "<td class=\"formValue\"><input id='HDistance_row" + this.hRowIndex + "' name='HDistance_row" + this.hRowIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td>";
+                var str = "<tr><td class=\"formValue\"><input id='HFlyHeight_row" + this.hRowIndex + "' name='HFlyHeight_row" + this.hRowIndex + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td>";
+                str += "<td class=\"formValue\"><input id='HDistance_row" + this.hRowIndex + "' name='HDistance_row" + this.hRowIndex + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td>";
                 for (var i = 1; i <= this.hColIndex; i++) {
-                    str += "<td class=\"formValue\"><input id='HWorkName_row" + this.hRowIndex + "_col" + i + "'  name='HWorkName_row" + this.hRowIndex + "_col" + i + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='HWorkLatLong_row" + this.hRowIndex + "_col" + i + "' name='HWorkLatLong_row" + this.hRowIndex + "_col" + i + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td>";
+                    str += "<td class=\"formValue\"><input id='HWorkName_row" + this.hRowIndex + "_col" + i + "'  name='HWorkName_row" + this.hRowIndex + "_col" + i + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='HWorkLatLong_row" + this.hRowIndex + "_col" + i + "' name='HWorkLatLong_row" + this.hRowIndex + "_col" + i + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td>";
                 }
                 str += "</tr>";
                 j("#" + this.hconid).append(str);
@@ -148,7 +148,7 @@
             if (this.hColIndex < this.hMaxColCount) {
                 this.hColIndex++;
                 for (var i = 0; i < this.hRowIndex; i++) {
-                    j("#" + this.hconid + " tr:eq(" + i + ") ").append("<td class=\"formValue\"><input id='HWorkName_row" + (i + 1) + "_col" + this.hColIndex + "'  name='HWorkName_row" + (i + 1) + "_col" + this.hColIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='HWorkLatLong_row" + (i + 1) + "_col" + this.hColIndex + "' name='HWorkLatLong_row" + (i + 1) + "_col" + this.hColIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td>");
+                    j("#" + this.hconid + " tr:eq(" + i + ") ").append("<td class=\"formValue\"><input id='HWorkName_row" + (i + 1) + "_col" + this.hColIndex + "'  name='HWorkName_row" + (i + 1) + "_col" + this.hColIndex + "'  class=\"easyui-textbox\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='HWorkLatLong_row" + (i + 1) + "_col" + this.hColIndex + "' name='HWorkLatLong_row" + (i + 1) + "_col" + this.hColIndex + "' type=\"text\" class=\"easyui-textbox\" maxlength=\"50\"/></td>");
                 }
                 j("#" + this.hlistid + " thead tr ").append("<th style=\"text-align:center\">中文名" + this.hColIndex + "</th><th style=\"text-align:center\">经纬度" + this.hColIndex + "</th>");
             }
@@ -171,7 +171,6 @@
         init: function () {
             var that = this;
             //遍历圆作业区
-            console.log(that.cworkdata);
             j.each(that.cworkdata, function (n, value) {
                 if (n > 0) {
                     that.addCWorkRow();

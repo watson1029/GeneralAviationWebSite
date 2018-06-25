@@ -91,6 +91,14 @@
                             }
                         },
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
+                           {
+                               title: '创建时间', field: 'CreateTime', width: 100, formatter: function (value, rec, index) {
+
+                                   var timesstamp = new Date(value.dateValFormat());
+                                   return timesstamp.format("yyyy-MM-dd hh:mm:ss");
+
+                               }
+                           },
                           { title: '其他需要说明的事项', field: 'Remark', width: 150, hidden: 'true' },
 
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
@@ -126,8 +134,8 @@
 
             //打开添加窗口
             OpenWin: function () {
-                $("#edit").dialog("open").dialog('setTitle', '新增长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx');
-                $("#btn_add").attr("onclick", "Main.Save();")
+                $("#add").dialog("open").dialog('setTitle', '新增长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx');
+                //$("#btn_add").attr("onclick", "Main.Save();")
             },
             //提交按钮事件
             Save: function (uid) {
@@ -263,15 +271,25 @@
     </script>
 
         <%--添加 修改 start--%>
-   <div id="edit" class="easyui-dialog" style="width: 850px; height:600px;"
+   <div id="edit" class="easyui-dialog" style="width: 1000px; height:600px;"
         modal="true" closed="true" buttons="#edit-buttons">
         
     </div>
     <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
+        <a id="btn_edit" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
             class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
-
+       <div id="add" class="easyui-dialog" style="width: 1200px; height:650px;"
+        modal="true" closed="true" buttons="#add-buttons">
+        
+    </div>
+        <div id="add-buttons">
+                    <div class="form-button" id="wizard-actions">
+                <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
+                <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
+                <a id="btn_finish" class="easyui-linkbutton" style="display: none;" onclick="Save()">完成</a>                     
+        </div>
+            </div>
      <div id="batchimport" class="easyui-dialog" style="width: 500px; height:300px;"
         modal="true" closed="true" buttons="#batchimport-buttons">
         

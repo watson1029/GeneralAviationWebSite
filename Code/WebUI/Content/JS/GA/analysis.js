@@ -139,7 +139,7 @@
                 this.flag = false;
                 this.el.uploadify({
                     'uploader': this.url("Content/JS/JqueryUpload/uploadify2.swf"),
-                    'script': dj.root + "UploadFile/Swfupload?filePath=" + this.uploadPath,
+                    'script': dj.root + "Upload.ashx?filePath=" + this.uploadPath,
                     'cancelImg': this.url("Content/JS/JqueryUpload/cancel.png"),
                     //'folder': '@Url.Content("~/Content/JS/JqueryUpload/TempImg")',
                     'queueID': this.queueId,
@@ -157,8 +157,9 @@
                     'onComplete': function (e, queueId, fileObj, uploadFileName, other) {
                         if (uploadFileName) {
                             $.ajax({
-                                url: dj.root + "FlightPlan/RepetPlanNew/ReadFileText",
-                                data: { PlanFilesPath: uploadFileName },
+                                url: dj.root + "FlightPlan/MyUnSubmitRepetPlanAdd.aspx",
+                                type: 'post',
+                                data: { PlanFilesPath: uploadFileName, "action": "readfile" },
                                 dataType: "text",
                                 async: false,
                                 success: function (data) {

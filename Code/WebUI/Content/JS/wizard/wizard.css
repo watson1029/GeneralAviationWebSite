@@ -25,7 +25,7 @@
 .wizard ul.previous-disabled li.complete{cursor: default;}
 .wizard ul.previous-disabled li.complete:hover{background: #f3f3f3;cursor: default;}
 .wizard ul.previous-disabled li.complete:hover .chevron:before{border-left-color: #f3f3f3;}
-.wizard ul li{float: left;margin: 0;padding: 0 20px 0 30px;line-height: 46px;position: relative;background: #f5f5f5;color: #d0d0d0;font-size: 15px;cursor: default;-webkit-transition: all .218s ease;-moz-transition: all .218s ease;-o-transition: all .218s ease;transition: all .218s ease;}
+.wizard ul li{float: left;margin: 0;padding: 0 20px 1px 30px;line-height: 46px;position: relative;background: #f5f5f5;color: #d0d0d0;font-size: 15px;cursor: default;-webkit-transition: all .218s ease;-moz-transition: all .218s ease;-o-transition: all .218s ease;transition: all .218s ease;}
 .wizard ul li .step{border: 2px solid #e5e5e5;color: #ccc;font-size: 13px;border-radius: 100%;position: relative;z-index: 2;display: inline-block;width: 24px;height: 24px;line-height: 20px;text-align: center;margin-right: 10px;}
 .wizard ul li .chevron{border: 24px solid transparent;border-left: 14px solid #d4d4d4;border-right: 0;display: block;position: absolute;right: -14px;top: 0;z-index: 1;}
 .wizard ul li .chevron:before{border: 24px solid transparent;border-left: 14px solid #f5f5f5;border-right: 0;content: "";display: block;position: absolute;right: 1px;top: -24px;-webkit-transition: all .218s ease;-moz-transition: all .218s ease;-o-transition: all .218s ease;transition: all .218s ease;}
@@ -34,11 +34,11 @@
 .wizard ul li.complete:hover{background: #eee;cursor: pointer;}
 .wizard ul li.complete:hover .chevron:before{border-left: 14px solid #eee;}
 .wizard ul li.complete .chevron:before{border-left: 14px solid #f5f5f5;}
-.wizard ul li.complete .step{color: #449d44;border-color: #449d44;}
+.wizard ul li.complete .step{color: #15428B;border-color: #15428B;}
 .wizard ul li.complete .step:before{display: block;position: absolute;top: 0;left: 0;bottom: 0;right: 0;line-height: 20px;text-align: center;border-radius: 100%;content: "";background-color: #fff;z-index: 3;font-family: FontAwesome;font-size: 12px;color: #449d44;}
 .wizard ul li.active{background: #fff;color: #262626;}
-.wizard ul li.active .step{border-color: #1ABC9C;color: #1ABC9C;}
-.wizard ul li.active:before{display: block;content: "";position: absolute;bottom: 0;left: 0;right: -1px;height: 2px;max-height: 2px;overflow: hidden;background-color: #1ABC9C;z-index: 10000;}
+.wizard ul li.active .step{border-color: #95B8E7;color:#95B8E7;}
+.wizard ul li.active:before{display: block;content: "";position: absolute;bottom: 0;left: 0;right: -1px;height: 2px;max-height: 2px;overflow: hidden;background-color:#95B8E7;z-index: 10000;}
 .wizard ul li.active .chevron:before{border-left: 14px solid #fff;}
 .wizard ul li .badge{margin-right: 8px;}
 .wizard ul li:first-child{-webkit-border-radius: 2px 0 0 0;-webkit-background-clip: padding-box;-moz-border-radius: 2px 0 0 0;-moz-background-clip: padding;border-radius: 2px 0 0 0;background-clip: padding-box;padding-left: 20px;}
