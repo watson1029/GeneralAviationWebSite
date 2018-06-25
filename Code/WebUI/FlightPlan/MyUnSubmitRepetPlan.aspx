@@ -181,7 +181,6 @@
 
             //修改链接 事件
             EditData: function (uid) {
-                alert(2);
                 $("#edit").dialog("open").dialog('setTitle', '编辑长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx?id=' + uid);
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
             },
@@ -240,7 +239,6 @@
             },
    
             Submit: function (uid) {
-                alert(1);
                 $.messager.confirm('提示', '确认提交该条长期计划？', function (r) {
                     if (r) {
                         $("#sub-btn_" + uid).removeAttr("onclick");
