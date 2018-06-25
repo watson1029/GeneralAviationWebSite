@@ -6,7 +6,8 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    <script src="../js/echarts/echarts.min.js"></script>
+    <script src="/js/echarts/echarts.min.js"></script>
+    <script src="/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
         var chart, option;
         $(function () {
@@ -44,7 +45,7 @@
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '60%'],
-                            data: result.PieData,
+                            data: result.FlyNumData,
                             itemStyle: {
                                 emphasis: {
                                     shadowBlur: 10,

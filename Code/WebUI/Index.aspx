@@ -157,10 +157,10 @@
                     <iframe id="generalize" class="NFine_iframe" style="width:49%;float:left;" src="BackLog.aspx" frameborder="0" data-menucode="MyUnSubmitRepetPlanCheck"></iframe>
                     <iframe id="generalize-chart" class="NFine_iframe" style="width:49%;margin-left:20px;margin-top:20px;float:right;" src="/Charts/Generalize.aspx" frameborder="0"></iframe>
                 </div>
-                <%--<div style="width:100%;">
-                    <iframe id="pie-chart" class="NFine_iframe" style="width:49%;margin-left:20px;margin-top:20px;float:left;" src="/Charts/Pie/Index" frameborder="0"></iframe>
-                    <iframe id="bar-chart" class="NFine_iframe" style="width:49%;margin-top:20px;float:right;" src="/Charts/Bar/Index" frameborder="0"></iframe>
-                </div>--%>
+                <div style="width:100%;">
+                    <iframe id="flynum-chart" class="NFine_iframe" style="width:49%;margin-left:20px;margin-top:20px;float:left;" src="/Charts/FlyNum.aspx" frameborder="0"></iframe>
+                    <iframe id="flytime-chart" class="NFine_iframe" style="width:49%;margin-top:20px;float:right;" src="/Charts/FlyTime.aspx" frameborder="0"></iframe>
+                </div>
             </div>
         </div>
 
@@ -176,8 +176,8 @@
         function ReSize() {
             $("#generalize").css("height", (window.innerHeight - 150) / 2);
             $("#generalize-chart").css("height", (window.innerHeight - 150) / 2);
-            $("#pie-chart").css("height", (window.innerHeight - 150) / 2);
-            $("#bar-chart").css("height", (window.innerHeight - 150) / 2);
+            $("#flynum-chart").css("height", (window.innerHeight - 150) / 2);
+            $("#flytime-chart").css("height", (window.innerHeight - 150) / 2);
         }
     </script>
 </body>
