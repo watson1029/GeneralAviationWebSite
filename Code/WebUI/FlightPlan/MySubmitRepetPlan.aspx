@@ -5,32 +5,32 @@
    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-   <%-- <div class="gridsearch">
+    <%-- <div class="gridsearch">
         <label>用户名：</label>
         <input type="text" id="s_UserName" name="s_UserName" class="easyui-validatebox" />
         <input type="button" class="searchbotton easyui-linkbutton " style="margin-left:60px" iconcls="icon-search" value="查询" onclick="Main.FunSearchData()" />
     </div>--%>
     <%--列表 start--%>
-        <table id="tab_list">
-        </table>
-   
-        <div id="tab_toolbar" style="padding: 2px 2px;" >
+    <table id="tab_list">
+    </table>
 
-            
-            <div style="float:right">
-                        <input id="ipt_search" menu="#search_menu"/>
-                       <input id="ssPlanCode" name="ssPlanCode"  type="hidden" value=""/>
-                        <div id="search_menu" style="width: 200px">
-                            <div name="Code">
-                                临专号
-                            </div>
-                        </div>
-</div>
+    <div id="tab_toolbar" style="padding: 2px 2px;height:22px;"">
+
+
+        <div style="float: right">
+            <input id="ipt_search" menu="#search_menu" />
+            <input id="ssPlanCode" name="ssPlanCode" type="hidden" value="" />
+            <div id="search_menu" style="width: 200px">
+                <div name="Code">
+                    临专号
+                </div>
+            </div>
         </div>
+    </div>
     <%--列表 end--%>
 
-  <script type="text/javascript">
-      $(function () {
+    <script type="text/javascript">
+        $(function () {
             Main.InitGird();
             Main.InitSearch();
             baiduMap.init();
@@ -62,18 +62,18 @@
                         { title: '使用机型', field: 'AircraftType', width: 70 },
                         {
                             title: '执行开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
-                        
-                            var timesstamp = new Date(value.dateValFormat());
-                            return timesstamp.format("yyyy-MM-dd");
-                        
-                        }
+
+                                var timesstamp = new Date(value.dateValFormat());
+                                return timesstamp.format("yyyy-MM-dd");
+
+                            }
                         },
                         {
                             title: '执行结束时间', field: 'EndDate', width: 100, formatter: function (value, rec, index) {
-                        
+
                                 var timesstamp = new Date(value.dateValFormat());
                                 return timesstamp.format("yyyy-MM-dd");
-                        
+
                             }
                         },
                         {
@@ -82,10 +82,12 @@
                                 $.each(value.replace(/\*/g, '').toCharArray(), function (i, n) {
                                     array.push("星期" + n);
                                 });
-                              return  array.join(',');
+                                return array.join(',');
 
                             }
                         },
+                          { title: '机场及起降点', field: 'AirportText', width: 200 },
+                          { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
                           {
                               title: '创建时间', field: 'CreateTime', width: 100, formatter: function (value, rec, index) {
@@ -112,12 +114,12 @@
                                 return str;
                             }, width: 50
                         },
-                        {
-                            title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" id="sub-btn_' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
-                                return str;
-                            }
-                        }
+                                                                          {
+                                                                              title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
+                                                                                  var str = "<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.Detail('" + value + "');$(this).parent().click();return false;\">查看</a>";
+                                                                                  return str;
+                                                                              }
+                                                                          }
                     ]],
                     toolbar: "#tab_toolbar",
                     queryParams: { "action": "query" },
@@ -131,8 +133,8 @@
                     }
                 });
             },
-            EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '查看长期计划').dialog('refresh', 'SubmitDetail.aspx?id=' + uid);
+            Detail: function (uid) {
+                $("#detail").dialog("open").dialog('setTitle', '查看长期计划').dialog('refresh', 'SubmitDetail.aspx?id=' + uid);
             },
             //初始化搜索框
             InitSearch: function () {
@@ -151,22 +153,15 @@
             OpenWin: function () {
                 $("#add").dialog("open").dialog('setTitle', '新增长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx');
                 //$("#btn_add").attr("onclick", "Main.Save();")
-            }  
+            }
         };
     </script>
- <div id="detail" class="easyui-dialog" style="width: 1000px; height:700px;"
+    <div id="detail" class="easyui-dialog" style="width: 1200px; height: 800px;"
         modal="true" closed="true" buttons="#detail-buttons">
-        <div class="form-button" id="wizard-actions">
-                <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
-                <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
-        </div>
-    </div>
-    <div id="detail-buttons">
- <a href="javascript:;"
-            class="easyui-linkbutton" onclick="$('#detail').dialog('close');return false;">取消</a>
-    </div>
-     
 
-        <%--添加 修改 end--%>
+    </div>      
+              
+
+    <%--添加 修改 end--%>
     <div id="map" style="height:400px;"></div>
 </asp:Content>

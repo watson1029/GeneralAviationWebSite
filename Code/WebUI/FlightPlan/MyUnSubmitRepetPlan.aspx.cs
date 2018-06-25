@@ -85,7 +85,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         if (string.IsNullOrEmpty(Request.Form["id"]))//新增
         {
             entity = new RepetitivePlan();
-            entity.GetEntitySearchPars<RepetitivePlanVM>(this.Context);
+            entity.GetEntitySearchPars<RepetitivePlan>(this.Context);
             entity.RepetPlanID = Guid.NewGuid();
             entity.WeekSchedule = Request.Form["qx"];
             entity.AttachFile = Request.Params["AttchFilesInfo"];

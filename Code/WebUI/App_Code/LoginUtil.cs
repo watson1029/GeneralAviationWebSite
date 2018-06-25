@@ -52,8 +52,8 @@ public class LoginUtil
                 CreateTime = user.CreateTime,
                 Status = user.Status,
                 IsGeneralAviation = user.IsGeneralAviation,
-                CompanyCode3 = user.CompanyCode3
-
+                CompanyCode3 = user.CompanyCode3,
+                RoleName = bll.GetRoleNameList(user.ID)
             };
             if (!string.IsNullOrEmpty(user.CompanyCode3))
             {

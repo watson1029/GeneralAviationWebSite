@@ -61,11 +61,7 @@
                     columns: [[
                         { title: '公司名称', field: 'CompanyName', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
-                        { title: '航班号', field: 'CallSign', width: 80 },
-                        { title: '使用机型', field: 'AircraftType', width: 70 },
-                        //{ title: '飞行范围', field: 'FlightArea', width: 100 },
-                         //{ title: '飞行高度', field: 'FlightHeight', width: 100 },
-                        {
+                        { title: '使用机型', field: 'AircraftType', width: 100 },       {
                             title: '执行开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
                         
                             var timesstamp = new Date(value.dateValFormat());
@@ -91,12 +87,14 @@
 
                             }
                         },
+                          { title: '机场及起降点', field: 'AirportText', width: 200 },
+                          { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
                            {
-                               title: '创建时间', field: 'CreateTime', width: 100, formatter: function (value, rec, index) {
+                               title: '创建时间', field: 'CreateTime', width: 120, formatter: function (value, rec, index) {
 
                                    var timesstamp = new Date(value.dateValFormat());
-                                   return timesstamp.format("yyyy-MM-dd hh:mm:ss");
+                                   return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
                                }
                            },
@@ -105,7 +103,7 @@
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
                             title: '操作', field: 'RepetPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" href="javascript:;" onclick="Main.EditData(' + value + ');$(this).parent().click();return false;">修改</a>&nbsp;&nbsp;<a style="color:red" id="sub-btn_' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
+                                var str ="<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.EditData('"+value+"');$(this).parent().click();return false;\">修改</a>&nbsp;&nbsp;<a style=\"color:red\" id=\"sub-btn_'" + value + "'\" href=\"javascript:;\" onclick=\"Main.Submit('"+value+"');$(this).parent().click();return false;\">提交</a>";
                                 return str;
                             }
                         }
@@ -164,7 +162,7 @@
                           return '*';
                     }
                 }).get().join('');
-                $("#btn_add").attr("disabled", "disabled");
+                $("#btn_finish").attr("disabled", "disabled");
                 var json = $.param({ "id": uid, "action": "save", "qx": qx }) + '&' + $('#form_edit').serialize();
                 $.ajax({
                     type: 'post',
@@ -288,13 +286,7 @@
         modal="true" closed="true" buttons="#add-buttons">
         
     </div>
-        <div id="add-buttons">
-                    <div class="form-button" id="wizard-actions">
-                <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
-                <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
-                <a id="btn_finish" class="easyui-linkbutton" style="display: none;" onclick="Save()">完成</a>                     
-        </div>
-            </div>
+        
      <div id="batchimport" class="easyui-dialog" style="width: 500px; height:300px;"
         modal="true" closed="true" buttons="#batchimport-buttons">
         
