@@ -63,6 +63,7 @@
     <Compile Include="FlightPlan\FlyPlanDemoBLL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanBLL.cs" />
     <Compile Include="FlightPlan\RepetitivePlanNewBLL.cs" />
+    <Compile Include="FlightPlan\SuperMapBLL.cs" />
     <Compile Include="FlightPlan\WorkflowTemplateBLL.cs" />
     <Compile Include="Log\LoginLogBLL.cs" />
     <Compile Include="Log\OperationLogBLL.cs" />
