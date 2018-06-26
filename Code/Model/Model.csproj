@@ -116,6 +116,9 @@
     <Compile Include="EF\LoginLog.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\LZCodeGenerate.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\Menu.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>

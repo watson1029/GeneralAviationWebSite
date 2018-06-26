@@ -32,7 +32,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            baiduMap.init();
+          //  baiduMap.init();
         });
         Main = {
             //初始化表格

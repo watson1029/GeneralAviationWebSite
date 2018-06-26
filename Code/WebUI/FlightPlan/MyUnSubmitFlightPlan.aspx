@@ -33,7 +33,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            baiduMap.init();
+          //  baiduMap.init();
         });
         Main = {
             //初始化表格
@@ -198,12 +198,9 @@
             }
         };
     </script>
-    <div id="edit" class="easyui-dialog" style="width: 850px; height: 500px;"
+    <div id="edit" class="easyui-dialog" style="width: 1000px; height: 800px;"
         modal="true" closed="true" buttons="#edit-buttons">
                </div>
-    <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;"  class="easyui-linkbutton">保存</a><a href="javascript:;"
-            class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
-    </div>
+
     <div id="map" style="height:400px;"></div>
 </asp:Content>

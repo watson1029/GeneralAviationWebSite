@@ -47,5 +47,7 @@ namespace Model.EF
         public string CompanyName { get; set; }
         public Nullable<int> Creator { get; set; }
         public string CreatorName { get; set; }
+        public string AirlineWorkText { get; set; }
+        public string AirportText { get; set; }
     }
 }

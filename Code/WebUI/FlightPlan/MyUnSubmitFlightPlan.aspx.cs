@@ -73,24 +73,25 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         //if (!string.IsNullOrEmpty(Request.Form["id"]))
         //{ id = Convert.ToInt32(Request.Form["id"]); }
 
-        FlightPlan model = null;
+        FlightPlan entity = null;
+        var airlineworkText = "";
         if (string.IsNullOrEmpty(Request.Form["id"]))//新增
         {
-            model = new FlightPlan();
+            entity = new FlightPlan();
 
-            model.GetEntitySearchPars<FlightPlan>(this.Context);
-
-         //   model.AttachFile = Request.Params["AttchFilesInfo"];
-            model.Code = Request.Form["PlanCode"] ?? "";
-            model.PlanState = "0";
-            model.CompanyCode3 = User.CompanyCode3 ?? "";
-            model.CompanyName = User.CompanyName;
-            model.Creator = User.ID;
-            model.CreatorName = User.UserName;
-            model.ActorID = User.ID;
-            model.CreateTime = DateTime.Now;
-            model.ModifyTime = DateTime.Now;
-            if (bll.Add(model))
+            entity.GetEntitySearchPars<FlightPlan>(this.Context);
+            entity.FlightPlanID = Guid.NewGuid();
+            entity.PlanState = "0";
+            entity.CompanyCode3 = User.CompanyCode3 ?? "";
+            entity.CompanyName = User.CompanyName;
+            entity.Creator = User.ID;
+            entity.CreatorName = User.UserName;
+            entity.ActorID = User.ID;
+            entity.CreateTime = DateTime.Now;
+            entity.ModifyTime = DateTime.Now;
+            bll.AddFlightPlanOther(Request.Form["MasterIDs"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+            entity.AirlineWorkText = airlineworkText;
+            if (bll.Add(entity))
             {
                 result.IsSuccess = true;
                 result.Msg = "增加成功！";
@@ -98,12 +99,12 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         }
         else//编辑
         {
-            model = bll.Get(Guid.Parse(Request.Form["id"]));
-            if (model != null)
+            entity = bll.Get(Guid.Parse(Request.Form["id"]));
+            if (entity != null)
             {
-          //      model.AttachFile = Request.Params["AttchFilesInfo"];
-                model.GetEntitySearchPars<FlightPlan>(this.Context);
-                if (bll.Update(model))
+                //      model.AttachFile = Request.Params["AttchFilesInfo"];
+                entity.GetEntitySearchPars<FlightPlan>(this.Context);
+                if (bll.Update(entity))
                 {
                     result.IsSuccess = true;
                     result.Msg = "更新成功！";
