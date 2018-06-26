@@ -12,9 +12,15 @@ baiduMap = {
         map = new BMap.Map("map");
         map.enableScrollWheelZoom();
         this.setCenter(new BMap.Point(113.28, 23.12));
+        this.addMapType();
     },
     setCenter: function (point) {
         map.centerAndZoom(point, 8);
+    },
+    addMapType: function () {
+        var mapType = new BMap.MapTypeControl({ mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP] });
+        map.addControl(mapType);
+        map.setMapType(BMAP_HYBRID_MAP);
     },
     addMarker: function (point, content) {
         var marker = new BMap.Marker(point);
