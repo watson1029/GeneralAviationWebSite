@@ -35,12 +35,12 @@ public partial class Charts_FlyTime : BasePage
         else
         {
             flyList.NameItem.Add("各月份飞行时长(分钟)");
-            for (int i = 1; i <= 6; i++)
+            for (int i = 0; i < 6; i++)
             {
-                var begin = new DateTime(DateTime.Now.AddMonths(-i).Year, DateTime.Now.AddMonths(-i).Month, DateTime.Now.AddMonths(-i).Day);
-                var end = new DateTime(begin.AddMonths(1).Year, begin.AddMonths(1).Month, begin.AddMonths(1).Day);
+                var begin = new DateTime(DateTime.Now.AddMonths(-i).Year, DateTime.Now.AddMonths(-i).Month, 1);
+                var end = new DateTime(begin.AddMonths(1).Year, begin.AddMonths(1).Month, 1);
                 var fly = new FlyTimeData();
-                fly.name = begin.ToString("yyyy年MM月dd号") + "-" + end.ToString("yyyy年MM月dd号");
+                fly.name = begin.ToString("yyyy年MM月");
                 fly.data.Add(new CurrentPlanBLL().GetFlyTime(User.CompanyCode3, begin, end));
                 flyList.FlyTimeData.Add(fly);
             }

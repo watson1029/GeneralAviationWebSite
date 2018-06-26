@@ -41,7 +41,7 @@
                     },
                     series: [
                         {
-                            name: '数量',
+                            name: '飞行架次',
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '60%'],
