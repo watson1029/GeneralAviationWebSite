@@ -131,7 +131,7 @@
                     <div class="panel-body" style="width: 98%;">
                         <table class="form">
                             <tr>
-                                <th valign="top" style="padding-top: 5px; width: 50px">航线
+                                <th style="padding-top: 5px; width: 50px">航线
                                 </th>
                                 <td colspan="3">
                                     <table id="airline-List" class="table table-bordered" style="width: 100%;">
