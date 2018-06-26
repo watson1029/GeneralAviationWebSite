@@ -60,7 +60,7 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
         int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
-        var pageList = currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        string pageList = null;// currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -71,16 +71,18 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<V_CurrentPlan, bool>> GetWhere()
+    private Expression<Func<vGetCurrentPlanNodeInstance, bool>> GetWhere()
     {
-        Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
+        Expression<Func<vGetCurrentPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetCurrentPlanNodeInstance>();
         //var currDate = DateTime.Now.Date;
         //&& DbFunctions.TruncateTime(m.SOBT) == currDate
-        predicate = predicate.And(m => m.ActorID == null && m.PlanState == "end");
+        predicate = predicate.And(m => m.ActorID != m.Creator);
+        predicate = predicate.And(m => m.ActorID == User.ID);
+        predicate = predicate.And(m => m.State == 2 || m.State == 3);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
-            predicate = u => u.PlanCode == Request.Form["search_value"];
+            predicate = u => u.Code == Request.Form["search_value"];
         }
 
         return predicate;
@@ -90,7 +92,7 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
     /// </summary>
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         var plan = currPlanBll.Get(planid);
         var strJSON = "";
         if (plan != null)
@@ -109,14 +111,14 @@ public partial class FlightPlan_MyAuditCurrentPlanOdy : BasePage
 
         try
         {
-            var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+            var planid = Guid.Parse(Request.Form["id"]);
             var startTime = Request.Form["ActualStartTime"];
             var endTime = Request.Form["ActualEndTime"];
 
             FlightPlan model = flyBLL.Get(planid);
             model.GetEntitySearchPars<RepetitivePlan>(this.Context);
-            model.ActualStartTime = Convert.ToDateTime(startTime);
-            model.ActualEndTime = Convert.ToDateTime(endTime);
+        //    model.ActualStartTime = Convert.ToDateTime(startTime);
+         //   model.ActualEndTime = Convert.ToDateTime(endTime);
             model.ModifyTime = DateTime.Now;
             flyBLL.Update(model);
 

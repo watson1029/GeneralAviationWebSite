@@ -67,7 +67,7 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             var val = Request.Form["search_value"].Trim();
-            predicate = predicate.And(m => m.PlanCode == val);
+            predicate = predicate.And(m => m.Code == val);
         }
         return predicate;
     }
@@ -76,7 +76,7 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
     /// </summary>
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         var plan = bll.Get(planid);
         var strJSON = JsonConvert.SerializeObject(plan);
         Response.Clear();
@@ -86,7 +86,7 @@ public partial class FlightPlan_MySubmitFlightPlan : BasePage
     }
     private void GetAllNodeInstance()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         var list = insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.FlightPlan).Where(u => u.ActorID != User.ID).ToList();
         var strJSON = Serializer.JsonDate(new { rows = list, total = list.Count });
         Response.Write(strJSON);

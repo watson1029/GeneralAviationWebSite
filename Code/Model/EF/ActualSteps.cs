@@ -15,7 +15,7 @@ namespace Model.EF
     public partial class ActualSteps
     {
         public System.Guid ID { get; set; }
-        public int PlanID { get; set; }
+        public System.Guid PlanID { get; set; }
         public int StepID { get; set; }
         public int TWFID { get; set; }
         public Nullable<System.Guid> PrevID { get; set; }

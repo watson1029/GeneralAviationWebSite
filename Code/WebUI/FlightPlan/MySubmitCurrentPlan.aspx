@@ -2,6 +2,7 @@
     CodeFile="MySubmitCurrentPlan.aspx.cs" Inherits="FlightPlan_MySubmitCurrentPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
    <%-- <div class="gridsearch">
@@ -31,6 +32,7 @@
       $(function () {
           Main.InitGird();
           Main.InitSearch();
+          baiduMap.init();
       });
       Main = {
           //初始化表格
@@ -42,7 +44,7 @@
                   idField: 'CurrentFlightPlanID', //标识字段,主键
                   iconCls: '', //标题左边的图标
                   width: '99%', //宽度
-                  height: $(parent.document).find("#mainPanel").height() - 10 > 0 ? $(parent.document).find("#mainPanel").height() - 10 : 300, //高度
+                  height: $(parent.document).find("#mainPanel").height() - 450 > 0 ? $(parent.document).find("#mainPanel").height() - 450 : 300, //高度
                   nowrap: false, //是否换行，True 就会把数据显示在一行里
                   striped: true, //True 奇偶行使用不同背景色
                   singleSelect: false,
@@ -63,7 +65,7 @@
                       },
                       { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
                       { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
-                      { title: '二次雷达应答机代码', field: 'RadarCode', width: 150 },
+                      { title: '应答机代码', field: 'RadarCode', width: 150 },
                        { title: '创建人', field: 'CreatorName', width: 80 },
                         { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
@@ -94,7 +96,11 @@
                   pagination: true, //是否开启分页
                   pageNumber: 1, //默认索引页
                   pageSize: 10, //默认一页数据条数
-                  rownumbers: true //行号
+                  rownumbers: true, //行号
+                  onClickRow: function (index, row) {
+                        var keyValue = row["FlightPlanID"];
+                        zhccMap.addFlyPlan(keyValue);
+                    }
               });
           },
           //初始化表格
@@ -144,7 +150,9 @@
                   $("#PlanCode").html(data.PlanCode);
                   $("#FlightType").html(data.FlightType);
                   $("#AircraftType").html(data.AircraftType);
-                  $("#FlightDirHeight").html(data.FlightDirHeight);
+                  $("#FlightArea").html(data.FlightArea);
+                  $("#FlightHeight").html(data.FlightHeight);
+                //  $("#FlightDirHeight").html(data.FlightDirHeight);
                   $("#ADEP").html(data.ADEP);
                   $("#ADES").html(data.ADES);
                   $("#SOBT").html(data.SOBT);
@@ -186,14 +194,21 @@
                     <th>航空器类型：</th>
                     <td id="AircraftType"></td>
                 </tr>
-            <tr>
+           <%-- <tr>
                     <th style="width:176px;">航线走向和飞行高度：</th>
                     <td id="FlightDirHeight"></td>
+                </tr>--%>
+                   <tr>
+              <th>飞行范围：</th>
+                    <td id="FlightArea"></td>
+                    <th>飞行高度：
+                    </th>
+                    <td id="FlightHeight"></td>
                 </tr>
                   <tr>
-              <th>起飞机场：</th>
+              <th>起飞点：</th>
                     <td id="ADEP"></td>
-                    <th>降落机场：
+                    <th>降落点：
                     </th>
                     <td id="ADES"></td>
                 </tr>
@@ -223,7 +238,7 @@
                  <tr>
                     <th>空勤组人数：</th>
                     <td id="AircrewGroupNum"></td>
-                    <th>二次雷达应答机代码：</th>
+                    <th>应答机代码：</th>
                     <td id="RadarCode"></td>
                 </tr>
                 
@@ -238,4 +253,5 @@
  <a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#detail').dialog('close');return false;">取消</a>
     </div>
+    <div id="map" style="height:400px;"></div>
 </asp:Content>

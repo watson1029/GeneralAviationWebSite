@@ -14,29 +14,27 @@ namespace Model.EF
     
     public partial class RepetitivePlan
     {
-        public int RepetPlanID { get; set; }
-        public string PlanCode { get; set; }
+        public System.Guid RepetPlanID { get; set; }
         public string FlightType { get; set; }
+        public string Code { get; set; }
         public string AircraftType { get; set; }
-        public string FlightDirHeight { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public System.DateTime CreateTime { get; set; }
-        public System.DateTime ModifyTime { get; set; }
+        public Nullable<System.DateTime> ModifyTime { get; set; }
         public string CompanyCode3 { get; set; }
-        public string AttchFile { get; set; }
+        public string AttachFile { get; set; }
         public string PlanState { get; set; }
         public Nullable<int> ActorID { get; set; }
-        public int Creator { get; set; }
+        public Nullable<int> Creator { get; set; }
         public string Remark { get; set; }
-        public System.TimeSpan SOBT { get; set; }
-        public System.TimeSpan SIBT { get; set; }
-        public string WeekSchedule { get; set; }
-        public string ADEP { get; set; }
-        public string ADES { get; set; }
         public string CreatorName { get; set; }
-        public string CallSign { get; set; }
         public string CompanyName { get; set; }
-        public Nullable<bool> IsGenFlightPlan { get; set; }
+        public string DocuText { get; set; }
+        public string WeekSchedule { get; set; }
+        public string AirportText { get; set; }
+        public string AirlineWorkText { get; set; }
+        public string ActorName { get; set; }
+        public string CallSign { get; set; }
     }
 }

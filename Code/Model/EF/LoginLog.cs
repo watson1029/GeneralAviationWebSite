@@ -15,10 +15,10 @@ namespace Model.EF
     public partial class LoginLog
     {
         public int ID { get; set; }
+        public Nullable<int> UserID { get; set; }
         public string UserName { get; set; }
         public Nullable<System.DateTime> LoginTime { get; set; }
         public string IPAddress { get; set; }
         public string Msg { get; set; }
-        public Nullable<int> UserID { get; set; }
     }
 }

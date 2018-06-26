@@ -15,7 +15,7 @@ namespace Model.EF
     public partial class vGetFlightPlanNodeInstance
     {
         public System.Guid ID { get; set; }
-        public int PlanID { get; set; }
+        public System.Guid PlanID { get; set; }
         public int StepID { get; set; }
         public int TWFID { get; set; }
         public Nullable<System.Guid> PrevID { get; set; }
@@ -27,23 +27,27 @@ namespace Model.EF
         public string Comments { get; set; }
         public Nullable<System.DateTime> ActorTime { get; set; }
         public string ActorName { get; set; }
-        public string PlanCode { get; set; }
         public string FlightType { get; set; }
-        public string FlightDirHeight { get; set; }
+        public string AircraftType { get; set; }
         public string CompanyCode3 { get; set; }
         public System.DateTime SOBT { get; set; }
         public System.DateTime SIBT { get; set; }
         public string ADEP { get; set; }
         public string ADES { get; set; }
-        public string RadarCode { get; set; }
-        public Nullable<int> AircraftNum { get; set; }
-        public string Pilot { get; set; }
-        public string ContactWay { get; set; }
-        public string WeatherCondition { get; set; }
-        public Nullable<int> AircrewGroupNum { get; set; }
+        public string SsrCode { get; set; }
+        public Nullable<System.DateTime> ATOT { get; set; }
+        public Nullable<System.DateTime> ALDT { get; set; }
+        public Nullable<System.DateTime> AOBT { get; set; }
+        public string ALTN1 { get; set; }
+        public string ALTN2 { get; set; }
+        public string RepetPlanID { get; set; }
+        public string Code { get; set; }
+        public int AircraftNumber { get; set; }
         public string CallSign { get; set; }
         public string CompanyName { get; set; }
-        public int Creator { get; set; }
+        public Nullable<int> Creator { get; set; }
         public string CreatorName { get; set; }
+        public string AirlineWorkText { get; set; }
+        public string AirportText { get; set; }
     }
 }

@@ -7,6 +7,8 @@ using System.Linq.Expressions;
 using Newtonsoft.Json;
 using DAL.FlightPlan;
 using System.Linq;
+using ViewModel.FlightPlan;
+
 public partial class FlightPlan_MySubmitRepetPlan :BasePage
 {
     RepetitivePlanBLL bll = new RepetitivePlanBLL();
@@ -64,27 +66,23 @@ public partial class FlightPlan_MySubmitRepetPlan :BasePage
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             var val = Request.Form["search_value"].Trim();
-            predicate = predicate.And(m => m.PlanCode == val);
+            predicate = predicate.And(m => m.Code == val);
         }
         return predicate;
     }
-    /// <summary>
-    /// 获取指定ID的数据
-    /// </summary>
+   
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         var plan = bll.Get(planid);
         var strJSON = JsonConvert.SerializeObject(plan);
-        Response.Clear();
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
     }
-
     private void GetAllNodeInstance()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         var list = insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.RepetitivePlan).Where(u => u.ActorID != User.ID).ToList();
        var strJSON = Serializer.JsonDate(new { rows = list, total = list.Count });
         Response.Write(strJSON);

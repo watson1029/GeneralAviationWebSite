@@ -15,7 +15,7 @@ namespace Model.EF
     public partial class TWFSteps
     {
         public int StepID { get; set; }
-        public string TWFID { get; set; }
+        public int TWFID { get; set; }
         public string StepName { get; set; }
         public Nullable<int> PrevID { get; set; }
         public Nullable<int> NextID { get; set; }

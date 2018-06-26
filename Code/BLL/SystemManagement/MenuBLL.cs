@@ -108,5 +108,15 @@ namespace BLL.SystemManagement
             }
             return JsonConvert.SerializeObject(menuList);
         }
+        /// <summary>
+        /// 判断菜单权限
+        /// </summary>
+        /// <param name="menuId"></param>
+        /// <returns></returns>
+        public bool JudgeMenuRole(int userId, string menuCode)
+        {
+            var list = userInforBLL.GetUserPermissions(userId);
+            return list.Contains(menuCode);
+        }
     }
 }

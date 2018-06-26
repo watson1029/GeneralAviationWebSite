@@ -131,6 +131,14 @@ namespace BLL.SystemManagement
             }
             return company;
         }
-
+        public List<string> GetRoleNameList(int userID)
+        {
+            var context = new  ZHCC_GAPlanEntities();
+            var role = (from a in context.UserRole
+                        from b in context.Role
+                        where a.RoleID == b.ID && a.UserID == userID
+                        select b.RoleName).ToList();
+            return role;
+        }
     }
 }

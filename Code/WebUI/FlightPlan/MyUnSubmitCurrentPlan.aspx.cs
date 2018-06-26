@@ -50,7 +50,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
     private void Submit()
     {
         AjaxResult result = new AjaxResult();        
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
 
         try
         {
@@ -103,7 +103,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
     /// </summary>
     private void GetData()
     {
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         var plan = currPlanBll.Get(planid);
         var strJSON = "";
         if (plan != null)
@@ -132,10 +132,10 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
-        var pageList = new List<V_CurrentPlan>();
+        var pageList = new List<vCurrentPlan>();
         try
         {
-            pageList = currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+            pageList = null;// currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
         }
         catch (Exception ex)
         {
@@ -152,17 +152,17 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<V_CurrentPlan, bool>> GetWhere()
+    private Expression<Func<vCurrentPlan, bool>> GetWhere()
     {
-        Expression<Func<V_CurrentPlan, bool>> predicate = PredicateBuilder.True<V_CurrentPlan>();
+        Expression<Func<vCurrentPlan, bool>> predicate = PredicateBuilder.True<vCurrentPlan>();
         try
         {            
             var currDate = DateTime.Now.Date;
-            predicate = predicate.And(m => m.CurrentFlightPlanID == null && DbFunctions.TruncateTime(m.SOBT) == currDate);
+            predicate = predicate.And(m => m.CurrentFlightPlanID == null && DbFunctions.TruncateTime(m.SOBT) == currDate&&m.Creator == User.ID);
 
             if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
             {
-                predicate = u => u.PlanCode == Request.Form["search_value"];
+                predicate = u => u.Code == Request.Form["search_value"];
             }
         }
         catch(Exception ex)

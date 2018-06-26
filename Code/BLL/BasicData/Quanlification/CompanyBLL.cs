@@ -43,27 +43,27 @@ namespace BLL.BasicData
         }
         public List<Company> GetList(Expression<Func<Company, bool>> where)
         {
-            return _dal.FindList(where ,m => m.CompanyID, false);
+            return _dal.FindList(where, m => m.CompanyID, false);
         }
 
         #region 审核流程
         public bool Submit(int id, int userid, string username)
         {
-            try
-            {
-                insdal.DeleteActualSteps(id, (int)TWFTypeEnum.CompanySummary);
-                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CompanySummary, id, userid, username);
-                insdal.Submit(id, (int)TWFTypeEnum.CompanySummary, "", t =>
-                {
-                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
-                });
+            //try
+            //{
+            //    insdal.DeleteActualSteps(id, (int)TWFTypeEnum.CompanySummary);
+            //    wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CompanySummary, id, userid, username);
+            //    insdal.Submit(id, (int)TWFTypeEnum.CompanySummary, "", t =>
+            //    {
+            //        _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
+            //    });
 
                 return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
 
         /// <summary>
@@ -74,18 +74,18 @@ namespace BLL.BasicData
         /// <returns></returns>
         public bool Audit(int id, string comment)
         {
-            try
-            {
-                insdal.Submit(id, (int)TWFTypeEnum.CompanySummary, comment, t =>
-                {
-                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
-                });
+            //try
+            //{
+            //    insdal.Submit(id, (int)TWFTypeEnum.CompanySummary, comment, t =>
+            //    {
+            //        _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
+            //    });
                 return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
 
         /// <summary>
@@ -96,24 +96,29 @@ namespace BLL.BasicData
         /// <returns></returns>
         public bool Terminate(int id, string comment)
         {
-            try
-            {
-                insdal.Terminate(id, (int)TWFTypeEnum.CompanySummary, comment, t =>
-                {
-                    _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
-                });
+            //try
+            //{
+            //    insdal.Terminate(id, (int)TWFTypeEnum.CompanySummary, comment, t =>
+            //    {
+            //        _dal.Update(new Model.EF.Company { ActorID = t.Actor, State = t.PlanState, CompanyID = t.PlanID }, "ActorID", "State");
+            //    });
                 return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
         #endregion
         public List<Company> GetTopList(int top, Expression<Func<Company, bool>> where)
         {
             ZHCC_GAPlanEntities context = new ZHCC_GAPlanEntities();
-            return context.Set<Company>().Where(where).OrderByDescending(m => m.Catalog==1&&m.State=="end").AsNoTracking().Take(top).ToList();
+            return context.Set<Company>().Where(where).OrderByDescending(m => m.Catalog == 1 && m.State == "end").AsNoTracking().Take(top).ToList();
+        }
+
+        public List<string> GetAllCode3()
+        {
+            return _dal.GetAllCode3();
         }
     }
 }

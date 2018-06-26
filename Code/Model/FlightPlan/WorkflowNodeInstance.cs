@@ -16,7 +16,7 @@ namespace Model.FlightPlan
             Deserted
         };//前1-5是申请单生成，审核中，审核过，取消。 
         public Guid Id { get; set; }
-        public int PlanID { get; set; }
+        public Guid PlanID { get; set; }
         public int StepId { get; set; }
         public int TWFID { get; set; }
         public StepStateType State { get; set; }

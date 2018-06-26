@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Charts\FlyNumModel.cs" />
+    <Compile Include="Charts\FlyTimeModel.cs" />
+    <Compile Include="Charts\GeneralizeModel.cs" />
     <Compile Include="EF\ActualSteps.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
@@ -57,6 +60,12 @@
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Aircraft.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\AirportInfo.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\BusyTime.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Company.cs">
@@ -68,16 +77,46 @@
     <Compile Include="EF\CurrentFlightPlan.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\CurrentFlightPlanOld.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\CustomControlArea.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Dictionary.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\ErrorLog.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\File_Airport.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\File_Detail.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\File_FlightPlanMaster.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\File_Master.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\FlightPlan.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\FlightPlanOld.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\FlightTask.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\FlyPlanDemo.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\LoginLog.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\LZCodeGenerate.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Menu.cs">
@@ -95,6 +134,12 @@
     <Compile Include="EF\RepetitivePlan.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\RepetitivePlanOld.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\RepetPlanNew.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\Resource.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
@@ -110,6 +155,9 @@
     <Compile Include="EF\TWFLibrary.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\TWFPerson.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\TWFSteps.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
@@ -119,7 +167,13 @@
     <Compile Include="EF\UserRole.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\vCurrentPlan.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\vFlightPlan.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\vGetCurrentPlanNodeInstance.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\vGetFlightPlanNodeInstance.cs">
@@ -128,7 +182,7 @@
     <Compile Include="EF\vGetRepetitivePlanNodeInstance.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\V_CurrentPlan.cs">
+    <Compile Include="EF\vRepetitivePlanAirport.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\ZHCC_GAPlan.Context.cs">
@@ -146,6 +200,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ZHCC_GAPlan.edmx</DependentUpon>
     </Compile>
+    <Compile Include="FlightPlan\FlightPlanStatistics.cs" />
     <Compile Include="FlightPlan\TWFPlan.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstance.cs" />
     <Compile Include="FlightPlan\WorkflowPlan.cs" />

@@ -39,20 +39,20 @@ namespace BLL.SupplyDemandInformation
 
         public bool Submit(int id, int userid, string username)
         {
-            try
-            {
-                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
-                insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, "", t =>
-                {
-                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
-                });
+            //try
+            //{
+            //    wftbll.CreateWorkflowInstance((int)TWFTypeEnum.SupplyDemand, id, userid, username);
+            //    insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, "", t =>
+            //    {
+            //        dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
+            //    });
 
                 return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
 
         /// <summary>
@@ -63,18 +63,18 @@ namespace BLL.SupplyDemandInformation
         /// <returns></returns>
         public bool Audit(int id, string comment)
         {
-            try
-            {
-                insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, comment ?? "", t =>
-                {
-                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
-                });
+            //try
+            //{
+            //    insdal.Submit(id, (int)TWFTypeEnum.SupplyDemand, comment ?? "", t =>
+            //    {
+            //        dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
+            //    });
                 return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
 
         /// <summary>
@@ -85,18 +85,18 @@ namespace BLL.SupplyDemandInformation
         /// <returns></returns>
         public bool Terminate(int id, string comment)
         {
-            try
-            {
-                insdal.Terminate(id, (int)TWFTypeEnum.SupplyDemand, comment, t =>
-                {
-                    dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
-                });
+            //try
+            //{
+            //    insdal.Terminate(id, (int)TWFTypeEnum.SupplyDemand, comment, t =>
+            //    {
+            //        dal.Update(new Model.EF.SupplyDemandInfo { ActorID = t.Actor, State = t.PlanState, ID = t.PlanID }, "ActorID", "State");
+            //    });
                 return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
         }
 
         public List<SupplyDemandInfo> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<SupplyDemandInfo, bool>> where)
@@ -105,7 +105,7 @@ namespace BLL.SupplyDemandInformation
         }
         public List<SupplyDemandInfo> GetList(Expression<Func<SupplyDemandInfo, bool>> where)
         {
-            return dal.FindList(where,m=>m.CreateTime, false);
+            return dal.FindList(where, m => m.CreateTime, false);
         }
 
         public SupplyDemandInfo Get(int id)

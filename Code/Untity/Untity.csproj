@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AjaxResult.cs" />
+    <Compile Include="Collections\PagedList.cs" />
     <Compile Include="DB\SqlDbHelper.cs" />
     <Compile Include="EntityExtension.cs" />
     <Compile Include="EnumerableExtension.cs" />
@@ -86,8 +87,8 @@
     <Compile Include="ObjectExtension.cs" />
     <Compile Include="OfficeTools.cs" />
     <Compile Include="OrderHelper.cs" />
-    <Compile Include="Pager\PagedList.cs" />
     <Compile Include="PredicateBuilder.cs" />
+    <Compile Include="SpecialFunctions.cs" />
     <Compile Include="TemplateClass4StatisticResult.cs" />
     <Compile Include="TWFType.cs" />
     <Compile Include="PasswordCheckResult.cs" />

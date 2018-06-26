@@ -169,3 +169,70 @@ a {
     .table_edit tr th, .table_edit tr td {
         font-size: 14px;
     }
+    .alert {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+    .alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+    .panel-default {
+    border-color: #ddd;
+}
+    .panel-heading {
+    padding: 6px 10px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+    .panel-default>.panel-heading {
+    color: #475059;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+    .panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: inherit;
+}
+
+    .form {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    border-collapse: collapse;
+    border-width: 3px 1px 1px;
+    table-layout: fixed;
+}
+    .form .formTitle {
+    position: relative;
+    left: 0px;
+    text-align: right;
+    white-space: nowrap;
+    font-weight: normal;
+    width: 100px;
+    padding-right: 15px;
+}
+    .form .formValue {
+    position: relative;
+    padding: 5px;
+    width: auto;
+}
+    
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+.table-bordered {
+     border: 1px solid #ddd; 
+}
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+     border: 1px solid #ddd; 
+}
