@@ -137,7 +137,7 @@
             <a href="/Default.aspx" style="cursor: pointer; text-decoration: none;">主页</a>&nbsp;&nbsp;
             <a href="javascript:void()" id="loginOut" style="cursor: pointer; text-decoration: none;">退出</a>
         </span>
-        <img style="padding-left:10px;height:80px;vertical-align:middle;" src="Content/Img/index_logo.png" />
+        <img style="padding-left:50px;height:80px;vertical-align:middle;" src="Content/Img/index_logo.png" />
     </div>
     <div region="south" split="true" style="height: 30px; background: #D2E0F2;">
         <div class="footer">
