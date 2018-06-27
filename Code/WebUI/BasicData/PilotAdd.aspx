@@ -73,7 +73,7 @@
         </tr>
         <tr>
             <th>执照复印件：</th>
-            <td>
+            <td colspan="3">
                    <input type="hidden" name="LicenseImgsInfo" id="LicenseImgsInfo" />
                     <input type="file" id="LicenseImgs" name="LicenseImgs" />
                     <a id="btn_upload" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('LicenseImgs').uploadFiles()">上传</a>
