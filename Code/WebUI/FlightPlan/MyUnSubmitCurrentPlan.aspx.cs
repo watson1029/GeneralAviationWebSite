@@ -135,7 +135,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         var pageList = new List<vCurrentPlan>();
         try
         {
-            pageList = null;// currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+            pageList=currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
         }
         catch (Exception ex)
         {
@@ -158,7 +158,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         try
         {            
             var currDate = DateTime.Now.Date;
-            predicate = predicate.And(m => m.CurrentFlightPlanID == null && DbFunctions.TruncateTime(m.SOBT) == currDate&&m.Creator == User.ID);
+            predicate = predicate.And(m => m.CurrentFlightPlanID == null && DbFunctions.TruncateTime(m.SOBT) == currDate&&m.Creator1 == User.ID);
 
             if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
             {

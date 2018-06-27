@@ -46,5 +46,6 @@ namespace Model.EF
         public string ALTN1 { get; set; }
         public string Remark { get; set; }
         public Nullable<int> AircraftNum { get; set; }
+        public Nullable<int> Creator1 { get; set; }
     }
 }

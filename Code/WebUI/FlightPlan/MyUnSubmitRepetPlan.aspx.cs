@@ -43,6 +43,9 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                 case "batchImport":
                    // BatchImport();
                     break;
+                case "queryone":
+                    GetData();
+                    break;
                 default:
                     break;
             }
@@ -56,6 +59,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
         result.Msg = "删除失败！";
         if (Request.Form["cbx_select"] != null)
         {
+            var str=Request.Form["cbx_select"].ToString();
             if (bll.Delete(Request.Form["cbx_select"].ToString()))
             {
                 result.IsSuccess = true;
@@ -212,6 +216,90 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
 
         return predicate;
     }
+    private void GetData()
+    {
+        var planid= Request.Form["id"];
+        RepetitivePlanVM model = new RepetitivePlanVM();
+        var data = bll.Get(Guid.Parse(planid));
+        if (data != null)
+        {
+            model.FillObject(data);
+            var airportList = bll.GetRepetitivePlanAirport(Guid.Parse(planid));
+            if (airportList != null && airportList.Any())
+            {
+                model.airportList.AddRange(airportList.Select(u => new AirportVM()
+                {
+                    Name = u.Name,
+                    Code4 = u.Code4,
+                    LatLong = (!string.IsNullOrEmpty(u.Latitude) && !string.IsNullOrEmpty(u.Longitude)) ? string.Concat("N", SpecialFunctions.ConvertDigitalToDegrees(u.Latitude), "E", SpecialFunctions.ConvertDigitalToDegrees(u.Longitude)) : ""
+                }));
+            }
+            var masterList = bll.GetFileMasterList(u => u.RepetPlanID.Equals(planid));
+            var airlinelist = masterList.Where(u => u.WorkType.Equals("airline"));
+            if (airlinelist != null && airlinelist.Any())
+            {
+                foreach (var item in airlinelist)
+                {
+                    var airlinevm = new AirlineVM();
+                    airlinevm.FlyHeight = item.FlyHeight;
+                    var detailList = bll.GetFileDetailList(o => o.MasterID == item.ID && o.RepetPlanID.Equals(planid));
+                    airlinevm.pointList.AddRange(detailList.Select(u => new PointVM()
+                    {
+                        Name = u.PointName,
+                        LatLong = (!string.IsNullOrEmpty(u.Latitude) && !string.IsNullOrEmpty(u.Longitude)) ? string.Concat("N", SpecialFunctions.ConvertDigitalToDegrees(u.Latitude), "E", SpecialFunctions.ConvertDigitalToDegrees(u.Longitude)) : ""
+                    }));
+                    if (airlinevm.pointList.Count > model.airLineMaxCol)
+                    {
+                        model.airLineMaxCol = airlinevm.pointList.Count;
+                    }
+                    model.airlineList.Add(airlinevm);
+                };
+            }
+            var worklist = masterList.Where(u => u.WorkType.Equals("circle") || u.WorkType.Equals("airlinelr") || u.WorkType.Equals("area"));
+            if (worklist != null && worklist.Any())
+            {
+                foreach (var item in worklist)
+                {
+                    var workvm = new WorkVM();
+                    workvm.FlyHeight = item.FlyHeight;
+                    workvm.Raidus = (item.RaidusMile ?? 0).ToString();
+                    var detailList = bll.GetFileDetailList(o => o.MasterID == item.ID && o.RepetPlanID.Equals(planid));
+                    workvm.pointList.AddRange(detailList.Select(u => new PointVM()
+                    {
+                        Name = u.PointName,
+                        LatLong = (!string.IsNullOrEmpty(u.Latitude) && !string.IsNullOrEmpty(u.Longitude)) ? string.Concat("N", SpecialFunctions.ConvertDigitalToDegrees(u.Latitude), "E", SpecialFunctions.ConvertDigitalToDegrees(u.Longitude)) : ""
+                    }));
+
+                    switch (item.WorkType.ToLower())
+                    {
+                        case "circle":
+                            model.cworkList.Add(workvm);
+                            break;
+                        case "airlinelr":
+                            if (workvm.pointList.Count > model.hworkMaxCol)
+                            {
+                                model.hworkMaxCol = workvm.pointList.Count;
+                            }
+                            model.hworkList.Add(workvm);
+                            break;
+                        case "area":
+                            if (workvm.pointList.Count > model.pworkMaxCol)
+                            {
+                                model.pworkMaxCol = workvm.pointList.Count;
+                            }
+                            model.pworkList.Add(workvm);
+                            break;
+                        default:
+                            break;
+                    }
+
+                };
+            }
+        }
+        Response.Write(JsonConvert.SerializeObject(model));
+        Response.ContentType = "application/json";
+        Response.End();
+    }
     ///// <summary>
     ///// 导入
     ///// </summary>
@@ -255,7 +343,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
     //            for (int j = 0; j < rowobj.ItemArray.Length; j++)
     //            {
     //                var colobj =rowobj.ItemArray[j].ToString();
-                    
+
     //                switch (j)
     //                {
     //                    case 0:

@@ -2,7 +2,7 @@
     CodeFile="MyFinishAuditRepetPlan.aspx.cs" Inherits="FlightPlan_MyFinishAuditRepetPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
-    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
+   <%-- <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
    <%-- <div class="gridsearch">
@@ -18,7 +18,7 @@
                         <input id="ipt_search" menu="#search_menu"/>
                         <div id="search_menu" style="width: 200px">
                             <div name="PlanCode">
-                                申请单号
+                                临专号
                             </div>
                         </div>
 </div>
@@ -29,7 +29,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            baiduMap.init();
+           // baiduMap.init();
         });
         Main = {
             //初始化表格
@@ -124,7 +124,7 @@
             EditData: function (uid) {
                 $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'RepetPlanFinishAuditForm.aspx?id=' + uid);
   
-                $("#btn_edit").attr("onclick", "Main.Save(" + uid + ");")
+                $("#btn_edit").attr("onclick", "Main.Save('" + uid + "');")
             },
             Save: function (uid) {
                 if ($("#Comments").val().length > 200) {

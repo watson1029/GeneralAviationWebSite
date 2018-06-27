@@ -104,19 +104,19 @@ public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
         AjaxResult result = new AjaxResult();
         result.IsSuccess = false;
         result.Msg = "保存失败！";
-        var planid = Request.Form["id"] != null ? Convert.ToInt32(Request.Form["id"]) : 0;
+        var planid = Guid.Parse(Request.Form["id"]);
         try
         {
 
-            //var instance = null;// insdal.GetNodeInstance(User.ID, (int)TWFTypeEnum.FlightPlan, planid);
-            //if (instance != null)
-            //{
-            //    if (insdal.UpdateComment(instance.ID, Request.Form["AuditComment"] ?? ""))
-            //    {
-            //        result.IsSuccess = true;
-            //        result.Msg = "保存成功！";
-            //    }
-            //}
+            var instance = insdal.GetNodeInstance(User.ID, (int)TWFTypeEnum.FlightPlan, planid);
+            if (instance != null)
+            {
+                if (insdal.UpdateComment(instance.ID, Request.Form["Comments"] ?? ""))
+                {
+                    result.IsSuccess = true;
+                    result.Msg = "保存成功！";
+                }
+            }
         }
         catch (Exception)
         {

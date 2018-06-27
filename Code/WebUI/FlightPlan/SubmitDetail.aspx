@@ -66,7 +66,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">基础信息</h3>
                     </div>
-                    <div class="panel-body" >
+                    <div class="panel-body" style="padding: 15px;width: 97%;">
                         <table class="form">
                             <tr>
                                 <th class="formTitle">公司名称</th>
@@ -83,22 +83,22 @@
                                 <td class="formValue">
                                   <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
-                                        required="true" class="easyui-combobox" style="height: 25px" />
+                                        required="true" class="easyui-combobox" style="width: 250px" />
                                 </td>
                                 <th class="formTitle">使用机型</th>
                                 <td class="formValue">
-                                    <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="width: 250px" />
                                 </td>
                             </tr>
 
                             <tr>
                                 <th class="formTitle">预计开始日期</th>
                                 <td class="formValue">
-                                   <input id="StartDate" name="StartDate" editable="false" required="true" class="easyui-datebox" style="height: 25px" />
+                                   <input id="StartDate" name="StartDate" editable="false" required="true" class="easyui-datebox" style="width: 250px"  />
                                 </td>
                                 <th class="formTitle">预计结束日期</th>
                                 <td class="formValue">
-                                    <input id="EndDate" name="EndDate" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height: 25px" />
+                                    <input id="EndDate" name="EndDate" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="width: 250px"  />
                                 </td>
                             </tr>
                             <tr>
@@ -114,7 +114,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                                <th class="formTitle"  style="padding-top: 5px;">
                                     机场及临时起降点
                                 </th>
                                 <td class="formValue" colspan="3">
@@ -122,7 +122,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                                <th class="formTitle" style="padding-top: 5px;">
                                     航线及作业区
                                 </th>
                                 <td class="formValue" colspan="3">
@@ -130,7 +130,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                                <th class="formTitle" style="padding-top: 5px;">
                                     其他说明的事项
                                 </th>
                                 <td class="formValue" colspan="3">
@@ -171,7 +171,7 @@
         
     </div>
 </form>
-<div class="detail-button" id="wizard-actions">
+<div class="detail-button" id="wizard-actions" style="padding:2px;float:right">
                <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
                 <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
         </div>

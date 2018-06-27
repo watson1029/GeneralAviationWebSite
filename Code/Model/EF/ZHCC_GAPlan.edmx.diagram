@@ -43,12 +43,12 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.UserInfo" Width="1.5" PointX="18.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.UserRole" Width="1.5" PointX="18.75" PointY="4.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vCurrentPlan" Width="1.5" PointX="18.75" PointY="7.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vFlightPlan" Width="1.5" PointX="14.75" PointY="18.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance" Width="1.5" PointX="18.75" PointY="15.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance" Width="1.5" PointX="20.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vRepetitivePlanAirport" Width="1.5" PointX="20.75" PointY="7.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.LZCodeGenerate" Width="1.5" PointX="0.75" PointY="21.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" Width="1.5" PointX="5.375" PointY="19.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance" Width="1.5" PointX="17.375" PointY="18.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vFlightPlan" Width="1.5" PointX="13.375" PointY="19.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

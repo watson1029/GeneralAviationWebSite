@@ -2,7 +2,7 @@
     CodeFile="MySubmitRepetPlan.aspx.cs" Inherits="FlightPlan_MySubmitRepetPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
-   <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
+<%--   <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <%-- <div class="gridsearch">
@@ -33,7 +33,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            baiduMap.init();
+         //   baiduMap.init();
         });
         Main = {
             //初始化表格

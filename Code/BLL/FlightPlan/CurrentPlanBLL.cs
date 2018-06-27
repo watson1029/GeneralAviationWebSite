@@ -118,9 +118,9 @@ namespace BLL.FlightPlan
         /// <param name="rowCount"></param>
         /// <param name="where"></param>
         /// <returns></returns>
-        public List<vCurrentPlan> GetList(Pagination pg, Expression<Func<vCurrentPlan, bool>> where)
+        public List<vCurrentPlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<vCurrentPlan, bool>> where)
         {
-            return vdal.FindPagedList(pg, where, m => m.CreateTime, true);
+            return vdal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.FlightPlanID, true);
         }
         /// <summary>
         /// 按条件获取记录
