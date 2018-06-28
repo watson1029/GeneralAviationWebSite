@@ -14,7 +14,7 @@ namespace Model.FlightPlan
             Processing, 
             Processed, 
             Deserted
-        };//前1-5是申请单生成，审核中，审核过，取消。 
+        };//前1-4是申请单生成，审核中，审核过，取消。 
         public Guid Id { get; set; }
         public Guid PlanID { get; set; }
         public int StepId { get; set; }

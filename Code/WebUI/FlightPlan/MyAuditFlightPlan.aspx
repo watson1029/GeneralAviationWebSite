@@ -14,12 +14,12 @@
     <table id="tab_list">
     </table>
     <div id="tab_toolbar" style="padding: 2px 2px;">
-       <a href="javascript:void(0)" class="easyui-linkbutton" style="width:78px;" iconcls="icon-save" plain="true" onclick="Main.BatchAudit()">批量审核</a>
+       <a href="javascript:void(0)" class="easyui-linkbutton" style="width:85px;" iconcls="icon-save" plain="true" onclick="Main.BatchAudit()">批量审核</a>
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
                 <div name="PlanCode">
-                    申请单号
+                    临专号
                 </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
             //审核
             Audit: function (uid) {
                 $("#audit").dialog("open").dialog('setTitle', '审核').dialog('refresh', 'FlightPlanAuditForm.aspx?id=' + uid);
-                $("#btn_audit").attr("onclick", "Main.AuditSubmit('" + uid + "');")
+                $("#btn_audit").attr("onclick", "Main.AuditSubmit('" + uid + "');");
               
             },
             AuditSubmit: function (uid) {

@@ -1,27 +1,20 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RepetPlanAuditForm.aspx.cs" Inherits="FlightPlan_RepetPlanAuditForm" %>
-
-<script src="<%=Page.ResolveUrl("~/Content/js/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
-<script src="<%=Page.ResolveUrl("~/Content/js/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
-<link href="<%=Page.ResolveUrl("~/Content/js/JqueryUpload/uploadify.css")%>" rel="stylesheet" type="text/css" />
-<script src="<%=Page.ResolveUrl("~/Content/js/ga/upload.js")%>" type="text/javascript"></script>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CurrentPlanAuditForm.aspx.cs" Inherits="FlightPlan_CurrentPlanAuditForm" %>
 
 <script>
     $(function () {
         var pid = '<%=Request.QueryString["id"] %>';
         if (!!pid) {  
             $.ajax({
-                url: "MyAuditRepetPlan.aspx",
+                url: "MyAuditCurrentPlan.aspx",
                 data: { id: pid,"action": "queryone" },
                 type:'post',
                 dataType: "json",
                 async: false,
                 success: function (data) {
                     $("#name").text(data.CompanyName);
+                    $("#code").text(data.Code);
                     $("#form_audit").form('load', data);
-                    $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
-                        $("#d" + n).prop({ checked: true });
-                    });
-                    $("#form_audit").find('select,input').not("#Auditresult,#AuditComment,#ControlDep").attr('readonly', 'readonly');
+                    $("#form_audit").find('select,input').not("#Auditresult,#AuditComment").attr('readonly', 'readonly');
 
 
                 }
@@ -38,10 +31,15 @@
                     <div class="panel-body" style="width: 96%;">
                         <table class="form">
                             <tr>
+                             
                                 <th class="formTitle">公司名称</th>
                                 <td class="formValue" style="color:red">
                                     <span id="name"></span>
-                                </td>
+                                </td>  
+                                 <th class="formTitle">临专号</th>
+                        <td class="formValue" style="color:red">
+                            <span id="code"></span>
+                        </td>
                             </tr>
                             <tr>
                                 <th class="formTitle">任务类型</th>
@@ -55,35 +53,50 @@
                                     <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
-
-                            <tr>
-                                <th class="formTitle">预计开始日期</th>
+                              <tr>
+                                <th class="formTitle">航班号</th>
                                 <td class="formValue">
-                                   <input id="StartDate" name="StartDate" editable="false" required="true" class="easyui-datebox" style="height: 25px" />
+                                    <input id="CallSign" name="CallSign" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
-                                <th class="formTitle">预计结束日期</th>
+                                <th class="formTitle">应答机编码</th>
                                 <td class="formValue">
-                                    <input id="EndDate" name="EndDate" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height: 25px" />
+                                    <input id="SsrCode" name="SsrCode" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                </td>
+                            </tr>
+                               <tr>
+                                <th class="formTitle">计划撤轮挡时间</th>
+                                <td class="formValue">
+                                    <input id="SOBT" name="SOBT" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                </td>
+                                <th class="formTitle">计划挡轮挡时间</th>
+                                <td class="formValue">
+                                    <input id="SIBT" name="SIBT" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle" style="height: 35px;">周执行计划</th>
-                                <td class="formValue"  colspan="3">
-                                     <input id="d1" type="checkbox" name="WeekSchedule" value="1" style="width: 20px" />星期一
-                             <input id="d2" type="checkbox" name="WeekSchedule" value="2" style="width: 20px" />星期二
-                             <input id="d3" type="checkbox" name="WeekSchedule" value="3" style="width: 20px" />星期三
-                             <input id="d4" type="checkbox" name="WeekSchedule" value="4" style="width: 20px" />星期四
-                             <input id="d5" type="checkbox" name="WeekSchedule" value="5" style="width: 20px" />星期五
-                             <input id="d6" type="checkbox" name="WeekSchedule" value="6" style="width: 20px" />星期六
-                             <input id="d7" type="checkbox" name="WeekSchedule" value="7" style="width: 20px" />星期日
+                                <th class="formTitle">起飞机场</th>
+                                <td class="formValue">
+                                    <input id="ADEP" name="ADEP" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                </td>
+                                <th class="formTitle">目的地机场</th>
+                                <td class="formValue">
+                                    <input id="ADES" name="ADES" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
-                            <tr>
-                                <th class="formTitle" style="padding-top: 5px;">
-                                    机场及临时起降点
-                                </th>
-                                <td class="formValue" colspan="3">
-                                            <input id="AirportText" name="AirportText" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                           <tr>
+                                <th class="formTitle">备降机场I</th>
+                                <td class="formValue">
+                                    <input id="ALTN1" name="ALTN1" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                </td>
+                                <th class="formTitle">备降机场II</th>
+                                <td class="formValue">
+                                    <input id="ALTN2" name="ALTN2" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                </td>
+                            </tr>
+                              <tr>
+                                <th class="formTitle">航空器数量</th>
+                                <td class="formValue">
+                                    <input id="AircraftNumber" name="AircraftNumber" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
                             <tr>
@@ -111,24 +124,8 @@
                             <option value="0" selected="true">通过</option>
                             <option value="1">不通过</option>
                         </select>
-                                </td> 
-                                   <%if(User.RoleName.Contains("河南分局")){  %>
-                         
-                                <th class="formTitle" style="padding-top: 5px;">
-                                    管制部门
-                                </th>
-                                <td class="formValue">
-                           <select id="ControlDep" class="easyui-combobox" editable="false" name="ControlDep"  panelheight="auto" style="width: 200px;">
-                                  <option value="无" selected="true"></option>
-                            <option value="1" >区管</option>
-                            <option value="2">进近</option>
-                                 <option value="3">塔台</option>
-                        </select>
-                                </td>       <%   } %>
+                                </td>
                             </tr>
-                            
-                            
-                       
                             <tr>
                                 <th class="formTitle" style="padding-top: 5px;">
                                     审核意见
@@ -141,3 +138,4 @@
                     </div>
                 </div>
 </form>
+

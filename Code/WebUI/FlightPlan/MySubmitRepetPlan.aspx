@@ -149,11 +149,7 @@
                     prompt: '请输入要查询的信息'
                 });
             },
-            //打开添加窗口
-            OpenWin: function () {
-                $("#add").dialog("open").dialog('setTitle', '新增长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx');
-                //$("#btn_add").attr("onclick", "Main.Save();")
-            }
+
         };
     </script>
     <div id="detail" class="easyui-dialog" style="width: 1200px; height: 800px;"

@@ -143,7 +143,7 @@
             </div>
             <div class="step-pane" id="step-2" style="margin: 10px; margin-bottom: 0px;">
                 <div class="panel-body" style="width: 96%;">
-                    <table id="gridList" class="ui-jqgrid-htable ui-common-table table table-bordered" style="width: 100%;">
+                <table class="form">
                         <thead>
                             <tr>
                                 <th>审核人</th>
@@ -153,15 +153,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in ViewBag.list)
-                            {
+                            <% foreach(var item in auditList){  %>
+                           
                                 <tr>
-                                    <td>@item.ActorName</td>
-                                    <td>@((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))</td>
-                                    <td>@item.ActorTime</td>
-                                    <td>@item.Comments</td>
+                                    <td><%=item.ActorName%></td>
+                                    <td><%=((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                    <td><%=item.ActorTime%></td>
+                                    <td><%=item.Comments%></td>
                                 </tr>
-                            }
+                          <%   } %>
                         </tbody>
 
                     </table>

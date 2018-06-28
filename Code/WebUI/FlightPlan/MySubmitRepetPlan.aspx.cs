@@ -8,13 +8,15 @@ using Newtonsoft.Json;
 using DAL.FlightPlan;
 using System.Linq;
 using ViewModel.FlightPlan;
+using Model.FlightPlan;
 
-public partial class FlightPlan_MySubmitRepetPlan :BasePage
+public partial class FlightPlan_MySubmitRepetPlan : BasePage
 {
     RepetitivePlanBLL bll = new RepetitivePlanBLL();
     WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
     protected void Page_Load(object sender, EventArgs e)
     {
+
         if (Request.Form["action"] != null)
         {
             switch (Request.Form["action"])
@@ -41,8 +43,8 @@ public partial class FlightPlan_MySubmitRepetPlan :BasePage
     {
         int page = Convert.ToInt32(Request.Form["page"] ?? "0");
         int size = Convert.ToInt32(Request.Form["rows"] ?? "0");
-       // string sort = Request.Form["sort"] ?? "";
-       // string order = Request.Form["order"] ?? "";
+        // string sort = Request.Form["sort"] ?? "";
+        // string order = Request.Form["order"] ?? "";
         if (page < 1) return;
         int pageCount = 0;
         int rowCount = 0;
@@ -70,7 +72,7 @@ public partial class FlightPlan_MySubmitRepetPlan :BasePage
         }
         return predicate;
     }
-   
+
     private void GetData()
     {
         var planid = Guid.Parse(Request.Form["id"]);
@@ -80,6 +82,7 @@ public partial class FlightPlan_MySubmitRepetPlan :BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
+
     private void GetAllNodeInstance()
     {
         var planid = Guid.Parse(Request.Form["id"]);

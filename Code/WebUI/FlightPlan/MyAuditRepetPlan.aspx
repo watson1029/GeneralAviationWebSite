@@ -52,7 +52,7 @@
                     sortOrder: 'desc', //排序类型
                     remoteSort: true, //定义是否从服务器给数据排序
                     frozenColumns: [[//冻结的列，不会随横向滚动轴移动
-    { field: 'cbx', checkbox: true },
+                    { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
                            { title: '公司名称', field: 'CompanyName', width: 180 },

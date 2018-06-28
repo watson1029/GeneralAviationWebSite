@@ -58,7 +58,7 @@ namespace DAL.FlightPlan
                 throw ex;
             }
         }
-        public WorkflowNodeInstance Submit(Guid planId, int twfid, int userID, string userName, string comments, Action<WorkflowPlan> action)
+        public WorkflowNodeInstance Submit(Guid planId, int twfid, int userID, string userName, string comments, Action<WorkflowPlan> action, int controlDep=0)
         {
             List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId, twfid);
             var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
@@ -77,6 +77,20 @@ namespace DAL.FlightPlan
                         //var auhtor = int.Parse(tnode.AuthorType);
                         //var userInfo = context.Set<UserInfo>().Where(u => u.ID == auhtor).FirstOrDefault();
                         //int actor = userInfo.ID;
+                        switch (controlDep)
+                        {
+                            case (int)ControlDepartmentEnum.区管:
+                                tnode.AuthorType=ControlDepartmentEnum.区管.ToString();
+                                break;
+                            case (int)ControlDepartmentEnum.塔台:
+                                tnode.AuthorType = ControlDepartmentEnum.塔台.ToString();
+                                break;
+                            case (int)ControlDepartmentEnum.进近:
+                                tnode.AuthorType = ControlDepartmentEnum.进近.ToString();
+                                break;
+                            default:
+                                break;
+                        }
                         var roleInfo = context.Set<Role>().Where(u => u.RoleName.Contains(tnode.AuthorType)).FirstOrDefault();
                         //判断节点的活动所有者类型
 

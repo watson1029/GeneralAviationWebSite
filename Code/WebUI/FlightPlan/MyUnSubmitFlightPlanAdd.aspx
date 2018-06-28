@@ -97,7 +97,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">长期计划信息</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="padding: 15px;width:98%;">
                         <table class="form" id="reptfrom">
                             <tr>
                                 <th class="formTitle">公司名称</th>
@@ -124,7 +124,7 @@
         
                          $('#MasterIDs').combobox('reload','GetComboboxData.ashx?type=5&id='+rec.id);
                     }
-                });  }"  required="true" class="easyui-combobox" style="height: 25px;" />
+                });  }"  class="easyui-combobox" style="height: 25px;" />
                                 </td>
                             </tr>
 
@@ -176,7 +176,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">基础信息</h3>
                     </div>
-                    <div class="panel-body" >
+                    <div class="panel-body" style="padding: 15px;width: 97%;">
                         <table class="form">
                             <tr>
                                 <th class="formTitle">航班号</th>
@@ -231,8 +231,8 @@
                 </div>
             </div>
         </div>
-        <div class="edit-buttons" id="wizard-actions">
-            <a id="btn_last" disabled class="btn-prev easyui-linkbutton">上一步</a>
+        <div class="edit-buttons" id="wizard-actions" style="padding:2px;float:right">
+            <a id="btn_last" disabled class="btn-prev easyui-linkbutton" >上一步</a>
             <a id="btn_next" class="btn-next easyui-linkbutton">下一步</a>
             <a id="btn_finish" class="easyui-linkbutton" style="display: none;" onclick="submitForm()">完成</a>
         </div>

@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="FlightPlanFinishAuditForm.aspx.cs" Inherits="FlightPlan_FlightPlanFinishAuditForm" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CurrentPlanFinishAuditForm.aspx.cs" Inherits="FlightPlan_CurrentPlanFinishAuditForm" %>
+
 
 
 
@@ -7,7 +8,7 @@
         var pid = '<%=Request.QueryString["id"] %>';
         if (!!pid) {
             $.ajax({
-                url: "MyFinishAuditFlightPlan.aspx",
+                url: "MyFinishAuditCurrentPlan.aspx",
                 data: { id: pid, "action": "queryone" },
                 type: 'post',
                 dataType: "json",
