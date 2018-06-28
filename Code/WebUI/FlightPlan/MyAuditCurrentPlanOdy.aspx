@@ -18,7 +18,7 @@
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
                 <div name="PlanCode">
-                    申请单号
+                    临专号
                 </div>
             </div>
         </div>
@@ -52,33 +52,41 @@
                     remoteSort: true, //定义是否从服务器给数据排序
 
                     columns: [[
-                        { title: '申请单号', field: 'PlanCode', width: 200 },
-                        { title: '航空器架数', field: 'AircraftNum', width: 100 },
-                        { title: '机长（飞行员）姓名', field: 'Pilot', width: 150 },
-                        { title: '通信联络方法', field: 'ContactWay', width: 100 },
+                      { title: '公司名称', field: 'CompanyName', width: 200 },
+                        { title: '临专号', field: 'Code', width: 200 },
+                        { title: '任务类型', field: 'FlightType', width: 80 },
+                        { title: '航班号', field: 'CallSign', width: 80 },
+                        { title: '使用机型', field: 'AircraftType', width: 80 },
+                        { title: '起飞机场', field: 'ADEP', width: 80 },
+                        { title: '目的地机场', field: 'ADES', width: 80 },
+                        { title: '应答机编码', field: 'SsrCode', width: 80 },
+                        { title: '航空器数量', field: 'AircraftNumber', width: 80 },
+                        { title: '备降机场I', field: 'ALTN1', width: 80 },
+                        { title: '备降机场II', field: 'ALTN2', width: 80 },
                         {
-                            title: '起飞时刻', field: 'SOBT', width: 100
-                        },
-                        {
-                            title: '降落时刻', field: 'SIBT', width: 100
-                        },
-                        {
-                            title: '实际开始时间', field: 'ActualStartTime', width: 100
-                        },
-                        {
-                            title: '实际结束时间', field: 'ActualEndTime', width: 100
-                        },
-                        { title: '飞行气象条件', field: 'WeatherCondition', width: 100 },
-                        { title: '空勤组人数', field: 'AircrewGroupNum', width: 100 },
-                        { title: '应答机代码', field: 'RadarCode', width: 150 },
+                            title: '计划撤轮挡时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
+                                var timesstamp = new Date(value.dateValFormat());
+                                return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
-                        { title: '公司三字码', field: 'CompanyCode3', width: 100 },
-                           { title: '公司名称', field: 'CompanyName', width: 100 },
-                         { title: '创建人', field: 'CreatorName', width: 80 },
+                            }
+                        },
+                          {
+                              title: '计划挡轮挡时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
+                                  var timesstamp = new Date(value.dateValFormat());
+                                  return timesstamp.format("yyyy-MM-dd HH:mm:ss");
+
+                              }
+                          },
+                                                     { title: '机场及起降点', field: 'AirportText', width: 200 },
+                          { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
+                        { title: '创建人', field: 'CreatorName', width: 80 },
+
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
+                                             { title: '审核意见', field: 'Comments', width: 120 },
+                          { title: '审核时间', field: 'ActorTime', width: 120 },
                              {
                                  title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
-                                     var str = '<a style="color:red" href="javascript:;" onclick="Main.Edit(' + value + ');$(this).parent().click();return false;">编辑</a>';
+                                     var str ="<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.Edit('" + value + "');$(this).parent().click();return false;\">编辑</a>";
                                      return str;
                                  }
                              },
@@ -112,29 +120,29 @@
             },
             //审核
             Edit: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑');
-                $("#btn_save").attr("onclick", "Main.Save(" + uid + ");")
-                $.post(location.href, { "action": "queryone", "id": uid }, function (data) {
-                    $("#PlanCode").html(data.PlanCode);
-                    $("#CompanyName").html(data.CompanyName);
-                    $("#FlightType").html(data.FlightType);
-                    $("#AircraftType").html(data.AircraftType);
-                    $("#FlightArea").html(data.FlightArea);
-                    $("#FlightHeight").html(data.FlightHeight);
-                  //  $("#FlightDirHeight").html(data.FlightDirHeight);
-                    $("#ADEP").html(data.ADEP);
-                    $("#ADES").html(data.ADES);
-                    $("#SOBT").html(data.SOBT);
-                    $("#SIBT").html(data.SIBT);
-                    $("#Remark").html(data.Remark);
-                    $("#AircraftNum").html(data.AircraftNum);
-                    $("#Pilot").html(data.Pilot);
-                    $("#ContactWay").html(data.ContactWay);
-                    $("#WeatherCondition").html(data.WeatherCondition);
-                    $("#AircrewGroupNum").html(data.AircrewGroupNum);
-                    $("#RadarCode").html(data.RadarCode);
+                $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'CurrentPlanFinishAuditForm.aspx?id=' + uid);
+                $("#btn_save").attr("onclick", "Main.Save('" + uid + "');")
+                //$.post(location.href, { "action": "queryone", "id": uid }, function (data) {
+                //    $("#PlanCode").html(data.PlanCode);
+                //    $("#CompanyName").html(data.CompanyName);
+                //    $("#FlightType").html(data.FlightType);
+                //    $("#AircraftType").html(data.AircraftType);
+                //    $("#FlightArea").html(data.FlightArea);
+                //    $("#FlightHeight").html(data.FlightHeight);
+                //  //  $("#FlightDirHeight").html(data.FlightDirHeight);
+                //    $("#ADEP").html(data.ADEP);
+                //    $("#ADES").html(data.ADES);
+                //    $("#SOBT").html(data.SOBT);
+                //    $("#SIBT").html(data.SIBT);
+                //    $("#Remark").html(data.Remark);
+                //    $("#AircraftNum").html(data.AircraftNum);
+                //    $("#Pilot").html(data.Pilot);
+                //    $("#ContactWay").html(data.ContactWay);
+                //    $("#WeatherCondition").html(data.WeatherCondition);
+                //    $("#AircrewGroupNum").html(data.AircrewGroupNum);
+                //    $("#RadarCode").html(data.RadarCode);
 
-                });
+                //});
             },
             Save: function (uid) {
 
@@ -159,7 +167,7 @@
     <%--添加 修改 start--%>
     <div id="edit" class="easyui-dialog" style="width: 800px; height: 700px;"
         modal="true" closed="true" buttons="#edit-buttons">
-        <form id="form_edit" method="post">
+        <%--<form id="form_edit" method="post">
             <table class="table_edit">
                   <tr>
                     <th>申请单号：</th>
@@ -246,7 +254,7 @@
 
             </tr>
             </table>
-        </form>
+        </form>--%>
     </div>
     <div id="edit-buttons">
         <a id="btn_save" href="javascript:;" class="easyui-linkbutton">保存</a> 

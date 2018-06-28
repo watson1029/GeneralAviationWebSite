@@ -106,9 +106,14 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         {
             var code = LZCodeUnitity.GetLZCode();
             bll.Update(new RepetitivePlan { Code = code, RepetPlanID = planid }, "Code");
+            int ControlDep = 0;
             if (Request.Form["Auditresult"] == "0")
             {
-                insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
+                if (!string.IsNullOrEmpty(Request.Form["ControlDep"]))
+                {
+                    ControlDep = int.Parse(Request.Form["ControlDep"]);
+                }
+                    insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan, ControlDep);
             }
             else
             {

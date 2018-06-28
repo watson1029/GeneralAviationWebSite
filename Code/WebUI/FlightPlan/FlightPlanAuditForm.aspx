@@ -31,14 +31,15 @@
                     <div class="panel-body" style="width: 96%;">
                         <table class="form">
                             <tr>
-                                <th class="formTitle">临专号</th>
-                        <td class="formValue" style="color:red">
-                            <span id="code"></span>
-                        </td>
+                             
                                 <th class="formTitle">公司名称</th>
                                 <td class="formValue" style="color:red">
                                     <span id="name"></span>
-                                </td>
+                                </td>  
+                                 <th class="formTitle">临专号</th>
+                        <td class="formValue" style="color:red">
+                            <span id="code"></span>
+                        </td>
                             </tr>
                             <tr>
                                 <th class="formTitle">任务类型</th>

@@ -200,6 +200,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ZHCC_GAPlan.edmx</DependentUpon>
     </Compile>
+    <Compile Include="FlightPlan\ControlDepartment.cs" />
     <Compile Include="FlightPlan\FlightPlanStatistics.cs" />
     <Compile Include="FlightPlan\TWFPlan.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstance.cs" />

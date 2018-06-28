@@ -74,6 +74,8 @@
 
                               }
                           },
+                             { title: '机场及起降点', field: 'AirportText', width: 200 },
+                          { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                         { title: '创建人', field: 'CreatorName', width: 80 },
              
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
