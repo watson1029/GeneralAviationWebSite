@@ -78,6 +78,102 @@ baiduMap = {
     }
 };
 
+zhccMap = {
+    addRepetPlan: function (keyValue) {
+        $.ajax({
+            url: "/Ajax/Map/GetRepetPlanData.ashx",
+            type: "get",
+            data: { "keyValue": keyValue },
+            dataType: "json",
+            async: true,
+            error: function (xml, msg) {
+                alert(msg);
+            },
+            success: function (data) {
+                zhccMap.addFeature(data);
+            }
+        });
+    },
+    addFlyPlan: function (keyValue) {
+        $.ajax({
+            url: "/Ajax/Map/GetFlyPlanData.ashx",
+            type: "get",
+            data: { "keyValue": keyValue },
+            dataType: "json",
+            async: true,
+            error: function (xml, msg) {
+                alert(msg);
+            },
+            success: function (data) {
+                zhccMap.addFeature(data);
+            }
+        });
+    },
+    addFeature: function (data) {
+        // 移除覆盖物
+        baiduMap.removeFeature();
+        // 设置地图中心
+        if (data.length > 0)
+            baiduMap.setCenter(new BMap.Point(parseFloat(data[0].Location[0].Longitude), parseFloat(data[0].Location[0].Latitude)));
+        else
+            baiduMap.setCenter(new BMap.Point(113.28, 23.12));
+        // 添加覆盖物
+        for (var i = 0; i < data.length; i++) {
+            switch (data[i].WorkType) {
+                case "airline":
+                    var points = new Array();
+                    for (var j = 0; j < data[i].Location.length; j++) {
+                        baiduMap.addMarker(new BMap.Point(parseFloat(data[i].Location[j].Longitude), parseFloat(data[i].Location[j].Latitude)), this.markerContent(data[i], data[i].Location[j]));
+                        points.push(new BMap.Point(parseFloat(data[i].Location[j].Longitude), parseFloat(data[i].Location[j].Latitude)));
+                    }
+                    baiduMap.addLine(points);
+                    break;
+                case "circle":
+                    baiduMap.addCircle(new BMap.Point(parseFloat(data[i].Location[0].Longitude), parseFloat(data[i].Location[0].Latitude)), data[i].RaidusMile * 1000);
+                    baiduMap.addMarker(new BMap.Point(parseFloat(data[i].Location[0].Longitude), parseFloat(data[i].Location[0].Latitude)), this.markerContent(data[i], data[i].Location[0]));
+                    break;
+                case "area":
+                    var points = new Array();
+                    for (var j = 0; j < data[i].Location.length; j++) {
+                        baiduMap.addMarker(new BMap.Point(parseFloat(data[i].Location[j].Longitude), parseFloat(data[i].Location[j].Latitude)), this.markerContent(data[i], data[i].Location[j]));
+                        points.push(new BMap.Point(parseFloat(data[i].Location[j].Longitude), parseFloat(data[i].Location[j].Latitude)));
+                    }
+                    baiduMap.addArea(points);
+                    break;
+                case "airlineCircle":
+                    baiduMap.addCircle(new BMap.Point(parseFloat(data[i].Location[0].Longitude), parseFloat(data[i].Location[0].Latitude)), data[i].RaidusMile * 1000);
+                    baiduMap.addMarker(new BMap.Point(parseFloat(data[i].Location[0].Longitude), parseFloat(data[i].Location[0].Latitude)), this.markerContent(data[i], data[i].Location[0]));
+                    break;
+                case "airlineRectangle":
+                    var points = new Array();
+                    for (var j = 0; j < data[i].Location.length; j++) {
+                        points.push(new BMap.Point(parseFloat(data[i].Location[j].Longitude), parseFloat(data[i].Location[j].Latitude)));
+                    }
+                    baiduMap.addArea(points);
+                    break;
+            }
+        }
+    },
+    markerContent: function (data, location) {
+        var content = "<div><p>当前地点：" + location.PointName + "</p><p>当前坐标：【 " + parseFloat(location.Longitude).toFixed(2) + " , " + parseFloat(location.Latitude).toFixed(2) + " 】</p><p>当前范围：";
+        switch (data.WorkType) {
+            case "airline":
+                content += "两点间航线</p></div>";
+                break;
+            case "circle":
+                content += "半径" + data.RaidusMile + "公里内</p></div>";
+                break;
+            case "area":
+                content += "多点形成闭合环</p></div>";
+                break;
+            case "airlineCircle":
+                content += "航线左右" + data.RaidusMile + "公里内</p></div>";
+                break;
+        }
+        return content;
+    }
+};
+
 var areaOption =  { strokeColor: "#E15E1B", strokeWeight: 4, strokeOpacity: 1 };
 flyDataOfMap = {
     dataInit: function() {
@@ -830,101 +926,5 @@ flyDataOfMap = {
     },
     addAirport: function() {
 
-    }
-};
-
-zhccMap = {
-    addRepetPlan: function (keyValue) {
-        $.ajax({
-            url: "/Ajax/Map/GetRepetPlanData.ashx",
-            type: "get",
-            data: { "keyValue": keyValue },
-            dataType: "json",
-            async: true,
-            error: function (xml, msg) {
-                alert(msg);
-            },
-            success: function (data) {
-                zhccMap.addFeature(data);
-            }
-        });
-    },
-    addFlyPlan: function (keyValue) {
-        $.ajax({
-            url: "/Ajax/Map/GetFlyPlanData.ashx",
-            type: "get",
-            data: { "keyValue": keyValue },
-            dataType: "json",
-            async: true,
-            error: function (xml, msg) {
-                alert(msg);
-            },
-            success: function (data) {
-                zhccMap.addFeature(data);
-            }
-        });
-    },
-    addFeature: function (data) {
-        // 移除覆盖物
-        baiduMap.removeFeature();
-        // 设置地图中心
-        if (data.length > 0)
-            baiduMap.setCenter(new BMap.Point(parseFloat(data[0].Location[0].Longitude), parseFloat(data[0].Location[0].Latitude)));
-        else
-            baiduMap.setCenter(new BMap.Point(113.28, 23.12));
-        // 添加覆盖物
-        for (var i = 0; i < data.length; i++) {
-            switch (data[i].WorkType) {
-                case "airline":
-                    var points = new Array();
-                    for (var j = 0; j < data[i].Location.length; j++) {
-                        baiduMap.addMarker(new BMap.Point(parseFloat(data[i].Location[j].Longitude), parseFloat(data[i].Location[j].Latitude)), this.markerContent(data[i], data[i].Location[j]));
-                        points.push(new BMap.Point(parseFloat(data[i].Location[j].Longitude), parseFloat(data[i].Location[j].Latitude)));
-                    }
-                    baiduMap.addLine(points);
-                    break;
-                case "circle":
-                    baiduMap.addCircle(new BMap.Point(parseFloat(data[i].Location[0].Longitude), parseFloat(data[i].Location[0].Latitude)), data[i].RaidusMile * 1000);
-                    baiduMap.addMarker(new BMap.Point(parseFloat(data[i].Location[0].Longitude), parseFloat(data[i].Location[0].Latitude)), this.markerContent(data[i], data[i].Location[0]));
-                    break;
-                case "area":
-                    var points = new Array();
-                    for (var j = 0; j < data[i].Location.length; j++) {
-                        baiduMap.addMarker(new BMap.Point(parseFloat(data[i].Location[j].Longitude), parseFloat(data[i].Location[j].Latitude)), this.markerContent(data[i], data[i].Location[j]));
-                        points.push(new BMap.Point(parseFloat(data[i].Location[j].Longitude), parseFloat(data[i].Location[j].Latitude)));
-                    }
-                    baiduMap.addArea(points);
-                    break;
-                case "airlineCircle":
-                    baiduMap.addCircle(new BMap.Point(parseFloat(data[i].Location[0].Longitude), parseFloat(data[i].Location[0].Latitude)), data[i].RaidusMile * 1000);
-                    baiduMap.addMarker(new BMap.Point(parseFloat(data[i].Location[0].Longitude), parseFloat(data[i].Location[0].Latitude)), this.markerContent(data[i], data[i].Location[0]));
-                    break;
-                case "airlineRectangle":
-                    var points = new Array();
-                    for (var j = 0; j < data[i].Location.length; j++) {
-                        points.push(new BMap.Point(parseFloat(data[i].Location[j].Longitude), parseFloat(data[i].Location[j].Latitude)));
-                    }
-                    baiduMap.addArea(points);
-                    break;
-            }
-        }
-    },
-    markerContent: function (data, location) {
-        var content = "<div><p>当前地点：" + location.PointName + "</p><p>当前坐标：【 " + parseFloat(location.Longitude).toFixed(2) + " , " + parseFloat(location.Latitude).toFixed(2) + " 】</p><p>当前范围：";
-        switch (data.WorkType) {
-            case "airline":
-                content += "两点间航线</p></div>";
-                break;
-            case "circle":
-                content += "半径" + data.RaidusMile + "公里内</p></div>";
-                break;
-            case "area":
-                content += "多点形成闭合环</p></div>";
-                break;
-            case "airlineCircle":
-                content += "航线左右" + data.RaidusMile + "公里内</p></div>";
-                break;
-        }
-        return content;
     }
 };
