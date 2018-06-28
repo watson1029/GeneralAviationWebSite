@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="MyUnSubmitRepetPlanAdd.aspx.cs" Inherits="FlightPlan_MyUnSubmitRepetPlanAdd" %>
-   <form id="form_edit" method="post">
+
+<form id="form_edit" method="post">
     <div class="widget-body">
         <div id="wizard" class="wizard" data-target="#wizard-steps" style="border-left: none; border-top: none; border-right: none;">
             <ul class="steps">
@@ -24,7 +25,7 @@
                                     <div id="PlanFiles-fileQueue"></div>
                                     <div id="PlanFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
                                     <div>
-                                        <textarea id="PlanFiles-textArea" name="PlanFiles-textArea" style="height: 500px; width: 800px"></textarea>
+                                        <textarea id="PlanFiles-textArea" name="PlanFiles-textArea" style="height: 500px; width: 1000px"></textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -40,7 +41,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">基础信息</h3>
                     </div>
-                    <div class="panel-body" style="padding: 15px;">
+                    <div class="panel-body" style="padding: 15px;width: 97%;">
                         <table class="form">
                             <tr>
                                 <th class="formTitle">公司名称</th>
@@ -50,13 +51,13 @@
                             <tr>
                                 <th class="formTitle">任务类型</th>
                                 <td class="formValue">
-                                    <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                                    <input id="FlightType" name="FlightType" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
-                                        required="true" class="easyui-combobox" style="height: 25px" />
+                                        required="true" class="easyui-combobox" style="width: 250px" />
                                 </td>
                                 <th class="formTitle">使用机型</th>
                                 <td class="formValue">
-                                    <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="width: 250px" />
                                 </td>
 
                             </tr>
@@ -64,23 +65,23 @@
                             <tr>
                                 <th class="formTitle">执行开始日期</th>
                                 <td class="formValue">
-                                    <input id="StartDate" name="StartDate" editable="false" required="true" class="easyui-datebox" style="height: 25px" />
+                                    <input id="StartDate" name="StartDate" editable="false" required="true" class="easyui-datebox" style="width: 250px"  />
                                 </td>
                                 <th class="formTitle">执行结束日期</th>
                                 <td class="formValue">
-                                    <input id="EndDate" name="EndDate" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height: 25px" />
+                                    <input id="EndDate" name="EndDate" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="width: 250px" />
                                 </td>
                             </tr>
                             <tr>
                                 <th class="formTitle">周执行计划</th>
                                 <td colspan="3" class="formValue">
                                     <input id="d1" type="checkbox" checked name="WeekSchedule" value="1" style="width: 20px" />星期一
-                             <input id="d2" type="checkbox" name="WeekSchedule" value="2" style="width: 20px" />星期二
-                             <input id="d3" type="checkbox" name="WeekSchedule" value="3" style="width: 20px" />星期三
-                             <input id="d4" type="checkbox" name="WeekSchedule" value="4" style="width: 20px" />星期四
-                             <input id="d5" type="checkbox" name="WeekSchedule" value="5" style="width: 20px" />星期五
-                             <input id="d6" type="checkbox" name="WeekSchedule" value="6" style="width: 20px" />星期六
-                             <input id="d7" type="checkbox" name="WeekSchedule" value="7" style="width: 20px" />星期日
+                             <input id="d2" type="checkbox" checked name="WeekSchedule" value="2" style="width: 20px" />星期二
+                             <input id="d3" type="checkbox" checked name="WeekSchedule" value="3" style="width: 20px" />星期三
+                             <input id="d4" type="checkbox" checked name="WeekSchedule" value="4" style="width: 20px" />星期四
+                             <input id="d5" type="checkbox" checked name="WeekSchedule" value="5" style="width: 20px" />星期五
+                             <input id="d6" type="checkbox" checked name="WeekSchedule" value="6" style="width: 20px" />星期六
+                             <input id="d7" type="checkbox" checked name="WeekSchedule" value="7" style="width: 20px" />星期日
                                 </td>
                             </tr>
                             <tr>
@@ -98,16 +99,16 @@
                                         <tbody id="airport-Con">
                                             <tr>
                                                 <td class="formValue">
-                                                    <input id="AirportName1" name="AirportName1" required="true" maxlength="50" style="height: 25px" /></td>
+                                                    <input id="AirportName1" name="AirportName1" required="true"  type="text" maxlength="50" style="height: 25px;width:200px" /></td>
                                                 <td class="formValue">
-                                                    <input id="CodeF1" name="CodeF1" maxlength="50" style="height: 25px" /></td>
+                                                    <input id="CodeF1" name="CodeF1" maxlength="50" type="text" style="height: 25px;width:200px" /></td>
                                                 <td class="formValue">
-                                                    <input id="LatLong1" name="LatLong1" maxlength="50" style="height: 25px" /></td>
+                                                    <input id="LatLong1" name="LatLong1" maxlength="50" type="text" style="height: 25px;width:200px" /></td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <a id="addid" class="btn btn-default" style="margin-top: 40px; margin-left: 5px;">+</a>
-                                    <a id="minusid" class="btn btn-default" style="margin-top: 40px;">-</a>
+                                    <a id="airport-Add" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增行</a>
+                                    <a id="airport-Minus" class="easyui-linkbutton" style="margin-top: 20px;margin-left: 5px;">删除行</a>
                                 </td>
 
                             </tr>
@@ -116,7 +117,7 @@
                                 <th class="formTitle">其他需要说明的事项
                                 </th>
                                 <td colspan="3" class="formValue">
-                                    <input id="Remark" name="Remark" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                                    <input id="Remark" name="Remark" style="width: 900px; height: 230px" type="text" data-options="multiline:true" class="easyui-textbox" />
                                 </td>
                             </tr>
                         </table>
@@ -128,7 +129,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">其他</h3>
                     </div>
-                    <div class="panel-body" style="width: 98%;">
+                    <div class="panel-body" style="padding: 15px;width: 97%;">
                         <table class="form">
                             <tr>
                                 <th style="padding-top: 5px; width: 50px">航线
@@ -160,10 +161,10 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <a id="airline-Add" class="btn btn-default" style="margin-top: 40px; margin-left: 5px;">新增行</a>
-                                    <a id="airline-Minus" class="btn btn-default" style="margin-top: 40px;">删除行</a>
-                                    <a id="airline-AddCol" class="btn btn-default" style="margin-top: 40px; margin-left: 5px;">新增列</a>
-                                    <a id="airline-MinusCol" class="btn btn-default" style="margin-top: 40px;">删除列</a>
+                                    <a id="airline-Add" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增行</a>
+                                    <a id="airline-Minus" class="easyui-linkbutton" style="margin-top: 20px;">删除行</a>
+                                    <a id="airline-AddCol" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增列</a>
+                                    <a id="airline-MinusCol" class="easyui-linkbutton" style="margin-top: 20px;">删除列</a>
                                 </td>
                             </tr>
                             <tr style="padding: 2px;">
@@ -201,8 +202,8 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <a id="cwork-Add" class="btn btn-default" style="margin-top: 40px; margin-left: 5px;">+</a>
-                                            <a id="cwork-Minus" class="btn btn-default" style="margin-top: 40px;">-</a>
+                                            <a id="cwork-Add" class="easyui-linkbutton" style="margin-top: 40px; margin-left: 5px;">新增行</a>
+                                            <a id="cwork-Minus" class="easyui-linkbutton" style="margin-top: 40px;">删除行</a>
                                         </div>
                                         <div style="padding-top: 20px; margin-right: 30px; display: none">
                                             <table id="pwork-List" class="table table-bordered" style="width: 100%;">
@@ -231,10 +232,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <a id="pwork-Add" class="btn btn-default" style="margin-top: 40px; margin-left: 5px;">新增行</a>
-                                            <a id="pwork-Minus" class="btn btn-default" style="margin-top: 40px;">删除行</a>
-                                            <a id="pwork-AddCol" class="btn btn-default" style="margin-top: 40px; margin-left: 5px;">新增列</a>
-                                            <a id="pwork-MinusCol" class="btn btn-default" style="margin-top: 40px;">删除列</a>
+                                            <a id="pwork-Add" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增行</a>
+                                            <a id="pwork-Minus" class="easyui-linkbutton" style="margin-top: 20px;">删除行</a>
+                                            <a id="pwork-AddCol" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增列</a>
+                                            <a id="pwork-MinusCol" class="easyui-linkbutton" style="margin-top: 20px;">删除列</a>
                                         </div>
                                         <div style="padding-top: 20px; margin-right: 30px; display: none">
                                             <table id="hwork-List" class="table table-bordered" style="width: 100%;">
@@ -267,10 +268,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <a id="hwork-Add" class="btn btn-default" style="margin-top: 40px; margin-left: 5px;">新增行</a>
-                                            <a id="hwork-Minus" class="btn btn-default" style="margin-top: 40px;">删除行</a>
-                                            <a id="hwork-AddCol" class="btn btn-default" style="margin-top: 40px; margin-left: 5px;">新增列</a>
-                                            <a id="hwork-MinusCol" class="btn btn-default" style="margin-top: 40px;">删除列</a>
+                                            <a id="hwork-Add" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增行</a>
+                                            <a id="hwork-Minus" class="easyui-linkbutton" style="margin-top: 20px;">删除行</a>
+                                            <a id="hwork-AddCol" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增列</a>
+                                            <a id="hwork-MinusCol" class="easyui-linkbutton" style="margin-top: 20px;">删除列</a>
                                         </div>
                                     </div>
                                 </td>
@@ -292,14 +293,7 @@
         </div>
 
     </div>
-</form> 
-<div id="add-buttons">
-                    <div class="form-button" id="wizard-actions">
-                <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
-                <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
-                <a id="btn_finish" class="easyui-linkbutton" style="display: none;" onclick="SubmitForm()">完成</a>                     
-        </div>
-            </div>
+</form>   
 <style type="text/css">
     .table_edit tr#basicInfo td {
         color: red;
@@ -381,7 +375,6 @@
         newworkobj: null
     };
     $(function () {
-        initControl();
         new dj.upload(obj);
         new dj.analysis(obj1);
             $("#name").html('<%=User.CompanyName %>');
@@ -443,14 +436,13 @@
     }
 
 
-    function initControl() {
         $('#wizard').wizard().on('change', function (e, data) {
             var $finish = $("#btn_finish");
             var $next = $("#btn_next");
             if (data.direction == "next") {
                 switch (data.step) {
                     case 1:
-                        var fileInfo = dj.getCmp("PlanFiles").getUploadedFiles();
+                        var fileInfo = dj.getCmp("PlanFiles").getUploadedFiles();                     
                         if (fileInfo != "") {
                             $.ajax({
                                 url: dj.root + "FlightPlan/MyUnSubmitRepetPlanAdd.aspx",
@@ -460,6 +452,9 @@
                                 async: false,
                                 success: function (data) {
                                     $("#form_edit").form('load', data);
+                                    $.each("1234567".replace(/\*/g, '').toCharArray(), function (i, n) {
+                                        $("#d" + n).prop({ checked: true });
+                                    });
                                     $("#name").html('<%=User.CompanyName%>');
                                     airportobj['airportdata'] = data.airportList;
                                     airlineobj['airlinedata'] = data.airlineList;
@@ -494,6 +489,13 @@
                 $next.show();
             }
         });
-    }
+    
 
-</script>
+</script> 
+
+
+                    <div class="form-button" id="wizard-actions" style="padding:2px;float:right">
+                <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
+                <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
+                <a id="btn_finish" class="easyui-linkbutton" style="display: none;" onclick="SubmitForm()">完成</a>                     
+        </div>

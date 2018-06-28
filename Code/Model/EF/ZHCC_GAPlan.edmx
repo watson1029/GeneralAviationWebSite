@@ -373,6 +373,14 @@
           <Property Name="IPAddress" Type="varchar" MaxLength="50" />
           <Property Name="Msg" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="LZCodeGenerate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LZCode" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="CurrentDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="ID" />
@@ -672,6 +680,7 @@
           <Property Name="ALTN1" Type="char" MaxLength="4" />
           <Property Name="Remark" Type="nvarchar" MaxLength="2000" />
           <Property Name="AircraftNum" Type="int" />
+          <Property Name="Creator1" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“ZHCC_GAPlan.dbo.vFlightPlan”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -815,6 +824,8 @@
           <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
           <Property Name="Creator" Type="int" />
           <Property Name="CreatorName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AirlineWorkText" Type="nvarchar" MaxLength="2000" />
+          <Property Name="AirportText" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“ZHCC_GAPlan.dbo.vGetRepetitivePlanNodeInstance”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -878,8 +889,7 @@
           <Property Name="Longitude" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Sort" Type="int" Nullable="false" />
         </EntityType>
-         <Function Name="f_GetGEOAreaByPointString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" 
-
+          <Function Name="f_GetGEOAreaByPointString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" 
 ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
 		<CommandText> 
 			select dbo.f_GetGEOAreaByPointString(@pointString,@type)
@@ -887,7 +897,6 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
 		<Parameter Name="pointString" Type="nvarchar(max)" Mode="In" />
           	<Parameter Name="type" Type="int" Mode="In" />
         </Function>
-
         <Function Name="ufSplitStr" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="InputStr" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="Separator" Type="nvarchar" Mode="In" />
@@ -924,6 +933,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySet Name="FlightTask" EntityType="Self.FlightTask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FlyPlanDemo" EntityType="Self.FlyPlanDemo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoginLog" EntityType="Self.LoginLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LZCodeGenerate" EntityType="Self.LZCodeGenerate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OperationLog" EntityType="Self.OperationLog" Schema="dbo" store:Type="Tables" />
@@ -973,7 +983,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     [vCurrentPlan].[ALTN2] AS [ALTN2], 
     [vCurrentPlan].[ALTN1] AS [ALTN1], 
     [vCurrentPlan].[Remark] AS [Remark], 
-    [vCurrentPlan].[AircraftNum] AS [AircraftNum]
+    [vCurrentPlan].[AircraftNum] AS [AircraftNum], 
+    [vCurrentPlan].[Creator1] AS [Creator1]
     FROM [dbo].[vCurrentPlan] AS [vCurrentPlan]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vFlightPlan" EntityType="Self.vFlightPlan" store:Type="Views" store:Schema="dbo">
@@ -1072,7 +1083,9 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     [vGetFlightPlanNodeInstance].[CallSign] AS [CallSign], 
     [vGetFlightPlanNodeInstance].[CompanyName] AS [CompanyName], 
     [vGetFlightPlanNodeInstance].[Creator] AS [Creator], 
-    [vGetFlightPlanNodeInstance].[CreatorName] AS [CreatorName]
+    [vGetFlightPlanNodeInstance].[CreatorName] AS [CreatorName], 
+    [vGetFlightPlanNodeInstance].[AirlineWorkText] AS [AirlineWorkText], 
+    [vGetFlightPlanNodeInstance].[AirportText] AS [AirportText]
     FROM [dbo].[vGetFlightPlanNodeInstance] AS [vGetFlightPlanNodeInstance]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vGetRepetitivePlanNodeInstance" EntityType="Self.vGetRepetitivePlanNodeInstance" store:Type="Views" store:Schema="dbo">
@@ -1166,10 +1179,11 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySet Name="UserRole" EntityType="ZHCC_GAPlanModel.UserRole" />
           <EntitySet Name="vCurrentPlan" EntityType="ZHCC_GAPlanModel.vCurrentPlan" />
           <EntitySet Name="vFlightPlan" EntityType="ZHCC_GAPlanModel.vFlightPlan" />
-          <EntitySet Name="vGetCurrentPlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance" />
-          <EntitySet Name="vGetFlightPlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" />
           <EntitySet Name="vGetRepetitivePlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance" />
           <EntitySet Name="vRepetitivePlanAirport" EntityType="ZHCC_GAPlanModel.vRepetitivePlanAirport" />
+          <EntitySet Name="LZCodeGenerate" EntityType="ZHCC_GAPlanModel.LZCodeGenerate" />
+          <EntitySet Name="vGetFlightPlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" />
+          <EntitySet Name="vGetCurrentPlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance" />
         </EntityContainer>
         <EntityType Name="ActualSteps">
           <Key>
@@ -1836,6 +1850,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="ALTN1" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AircraftNum" Type="Int32" />
+          <Property Name="Creator1" Type="Int32" />
         </EntityType>
         <EntityType Name="vFlightPlan">
           <Key>
@@ -1881,98 +1896,6 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="ALTN2" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="AirportText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AirlineWorkText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vGetCurrentPlanNodeInstance">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="PlanID" />
-            <PropertyRef Name="StepID" />
-            <PropertyRef Name="TWFID" />
-            <PropertyRef Name="CreateTime" />
-            <PropertyRef Name="State" />
-            <PropertyRef Name="RepetPlanID" />
-            <PropertyRef Name="Creator" />
-            <PropertyRef Name="CreatorName" />
-            <PropertyRef Name="PlanState" />
-            <PropertyRef Name="DeletedFlag" />
-            <PropertyRef Name="Expr2" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="PlanID" Type="Guid" Nullable="false" />
-          <Property Name="StepID" Type="Int32" Nullable="false" />
-          <Property Name="TWFID" Type="Int32" Nullable="false" />
-          <Property Name="PrevID" Type="Guid" />
-          <Property Name="NextID" Type="Guid" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="State" Type="Byte" Nullable="false" />
-          <Property Name="ActorID" Type="Int32" />
-          <Property Name="ApplyTime" Type="DateTime" Precision="3" />
-          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ActorTime" Type="DateTime" Precision="3" />
-          <Property Name="ActorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RepetPlanID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Creator" Type="Int32" Nullable="false" />
-          <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ActualStartTime" Type="DateTime" Precision="0" />
-          <Property Name="ActualEndTime" Type="DateTime" Precision="0" />
-          <Property Name="PlanState" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
-          <Property Name="DeletedFlag" Type="Boolean" Nullable="false" />
-          <Property Name="Expr2" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="AircraftNum" Type="Int32" />
-          <Property Name="Pilot" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vGetFlightPlanNodeInstance">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="PlanID" />
-            <PropertyRef Name="StepID" />
-            <PropertyRef Name="TWFID" />
-            <PropertyRef Name="CreateTime" />
-            <PropertyRef Name="State" />
-            <PropertyRef Name="FlightType" />
-            <PropertyRef Name="AircraftType" />
-            <PropertyRef Name="SOBT" />
-            <PropertyRef Name="SIBT" />
-            <PropertyRef Name="ADEP" />
-            <PropertyRef Name="ADES" />
-            <PropertyRef Name="AircraftNumber" />
-            <PropertyRef Name="CallSign" />
-            <PropertyRef Name="CreatorName" />
-          </Key>
-          <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="PlanID" Type="Guid" Nullable="false" />
-          <Property Name="StepID" Type="Int32" Nullable="false" />
-          <Property Name="TWFID" Type="Int32" Nullable="false" />
-          <Property Name="PrevID" Type="Guid" />
-          <Property Name="NextID" Type="Guid" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="State" Type="Byte" Nullable="false" />
-          <Property Name="ActorID" Type="Int32" />
-          <Property Name="ApplyTime" Type="DateTime" Precision="3" />
-          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ActorTime" Type="DateTime" Precision="3" />
-          <Property Name="ActorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="SOBT" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="SIBT" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ADEP" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="ADES" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="SsrCode" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
-          <Property Name="ATOT" Type="DateTime" Precision="0" />
-          <Property Name="ALDT" Type="DateTime" Precision="0" />
-          <Property Name="AOBT" Type="DateTime" Precision="0" />
-          <Property Name="ALTN1" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="ALTN2" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="RepetPlanID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Code" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
-          <Property Name="AircraftNumber" Type="Int32" Nullable="false" />
-          <Property Name="CallSign" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Creator" Type="Int32" />
-          <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vGetRepetitivePlanNodeInstance">
           <Key>
@@ -2031,6 +1954,108 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="Latitude" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Sort" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LZCodeGenerate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LZCode" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="vGetFlightPlanNodeInstance">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="PlanID" />
+            <PropertyRef Name="StepID" />
+            <PropertyRef Name="TWFID" />
+            <PropertyRef Name="CreateTime" />
+            <PropertyRef Name="State" />
+            <PropertyRef Name="FlightType" />
+            <PropertyRef Name="AircraftType" />
+            <PropertyRef Name="SOBT" />
+            <PropertyRef Name="SIBT" />
+            <PropertyRef Name="ADEP" />
+            <PropertyRef Name="ADES" />
+            <PropertyRef Name="AircraftNumber" />
+            <PropertyRef Name="CallSign" />
+            <PropertyRef Name="CreatorName" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="PlanID" Type="Guid" Nullable="false" />
+          <Property Name="StepID" Type="Int32" Nullable="false" />
+          <Property Name="TWFID" Type="Int32" Nullable="false" />
+          <Property Name="PrevID" Type="Guid" />
+          <Property Name="NextID" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="State" Type="Byte" Nullable="false" />
+          <Property Name="ActorID" Type="Int32" />
+          <Property Name="ApplyTime" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActorTime" Type="DateTime" Precision="3" />
+          <Property Name="ActorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FlightType" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="AircraftType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="SOBT" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SIBT" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ADEP" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="ADES" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="SsrCode" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="ATOT" Type="DateTime" Precision="0" />
+          <Property Name="ALDT" Type="DateTime" Precision="0" />
+          <Property Name="AOBT" Type="DateTime" Precision="0" />
+          <Property Name="ALTN1" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="ALTN2" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="RepetPlanID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <Property Name="AircraftNumber" Type="Int32" Nullable="false" />
+          <Property Name="CallSign" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Creator" Type="Int32" />
+          <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AirlineWorkText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="AirportText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vGetCurrentPlanNodeInstance">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="PlanID" />
+            <PropertyRef Name="StepID" />
+            <PropertyRef Name="TWFID" />
+            <PropertyRef Name="CreateTime" />
+            <PropertyRef Name="State" />
+            <PropertyRef Name="RepetPlanID" />
+            <PropertyRef Name="Creator" />
+            <PropertyRef Name="CreatorName" />
+            <PropertyRef Name="PlanState" />
+            <PropertyRef Name="DeletedFlag" />
+            <PropertyRef Name="Expr2" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="PlanID" Type="Guid" Nullable="false" />
+          <Property Name="StepID" Type="Int32" Nullable="false" />
+          <Property Name="TWFID" Type="Int32" Nullable="false" />
+          <Property Name="PrevID" Type="Guid" />
+          <Property Name="NextID" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="State" Type="Byte" Nullable="false" />
+          <Property Name="ActorID" Type="Int32" />
+          <Property Name="ApplyTime" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActorTime" Type="DateTime" Precision="3" />
+          <Property Name="ActorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RepetPlanID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Creator" Type="Int32" Nullable="false" />
+          <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActualStartTime" Type="DateTime" Precision="0" />
+          <Property Name="ActualEndTime" Type="DateTime" Precision="0" />
+          <Property Name="PlanState" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="DeletedFlag" Type="Boolean" Nullable="false" />
+          <Property Name="Expr2" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AircraftNum" Type="Int32" />
+          <Property Name="Pilot" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2701,6 +2726,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySetMapping Name="vCurrentPlan">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vCurrentPlan">
               <MappingFragment StoreEntitySet="vCurrentPlan">
+                <ScalarProperty Name="Creator1" ColumnName="Creator1" />
                 <ScalarProperty Name="AircraftNum" ColumnName="AircraftNum" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="ALTN1" ColumnName="ALTN1" />
@@ -2772,75 +2798,6 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vGetCurrentPlanNodeInstance">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance">
-              <MappingFragment StoreEntitySet="vGetCurrentPlanNodeInstance">
-                <ScalarProperty Name="Pilot" ColumnName="Pilot" />
-                <ScalarProperty Name="AircraftNum" ColumnName="AircraftNum" />
-                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
-                <ScalarProperty Name="DeletedFlag" ColumnName="DeletedFlag" />
-                <ScalarProperty Name="PlanState" ColumnName="PlanState" />
-                <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
-                <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
-                <ScalarProperty Name="CreatorName" ColumnName="CreatorName" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
-                <ScalarProperty Name="ActorName" ColumnName="ActorName" />
-                <ScalarProperty Name="ActorTime" ColumnName="ActorTime" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
-                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="NextID" ColumnName="NextID" />
-                <ScalarProperty Name="PrevID" ColumnName="PrevID" />
-                <ScalarProperty Name="TWFID" ColumnName="TWFID" />
-                <ScalarProperty Name="StepID" ColumnName="StepID" />
-                <ScalarProperty Name="PlanID" ColumnName="PlanID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vGetFlightPlanNodeInstance">
-            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance">
-              <MappingFragment StoreEntitySet="vGetFlightPlanNodeInstance">
-                <ScalarProperty Name="CreatorName" ColumnName="CreatorName" />
-                <ScalarProperty Name="Creator" ColumnName="Creator" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="CallSign" ColumnName="CallSign" />
-                <ScalarProperty Name="AircraftNumber" ColumnName="AircraftNumber" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
-                <ScalarProperty Name="ALTN2" ColumnName="ALTN2" />
-                <ScalarProperty Name="ALTN1" ColumnName="ALTN1" />
-                <ScalarProperty Name="AOBT" ColumnName="AOBT" />
-                <ScalarProperty Name="ALDT" ColumnName="ALDT" />
-                <ScalarProperty Name="ATOT" ColumnName="ATOT" />
-                <ScalarProperty Name="SsrCode" ColumnName="SsrCode" />
-                <ScalarProperty Name="ADES" ColumnName="ADES" />
-                <ScalarProperty Name="ADEP" ColumnName="ADEP" />
-                <ScalarProperty Name="SIBT" ColumnName="SIBT" />
-                <ScalarProperty Name="SOBT" ColumnName="SOBT" />
-                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
-                <ScalarProperty Name="AircraftType" ColumnName="AircraftType" />
-                <ScalarProperty Name="FlightType" ColumnName="FlightType" />
-                <ScalarProperty Name="ActorName" ColumnName="ActorName" />
-                <ScalarProperty Name="ActorTime" ColumnName="ActorTime" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
-                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="NextID" ColumnName="NextID" />
-                <ScalarProperty Name="PrevID" ColumnName="PrevID" />
-                <ScalarProperty Name="TWFID" ColumnName="TWFID" />
-                <ScalarProperty Name="StepID" ColumnName="StepID" />
-                <ScalarProperty Name="PlanID" ColumnName="PlanID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vGetRepetitivePlanNodeInstance">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance">
               <MappingFragment StoreEntitySet="vGetRepetitivePlanNodeInstance">
@@ -2884,6 +2841,86 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="AirportID" ColumnName="AirportID" />
                 <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LZCodeGenerate">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.LZCodeGenerate">
+              <MappingFragment StoreEntitySet="LZCodeGenerate">
+                <ScalarProperty Name="CurrentDate" ColumnName="CurrentDate" />
+                <ScalarProperty Name="LZCode" ColumnName="LZCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vGetFlightPlanNodeInstance">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance">
+              <MappingFragment StoreEntitySet="vGetFlightPlanNodeInstance">
+                <ScalarProperty Name="AirportText" ColumnName="AirportText" />
+                <ScalarProperty Name="AirlineWorkText" ColumnName="AirlineWorkText" />
+                <ScalarProperty Name="CreatorName" ColumnName="CreatorName" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CallSign" ColumnName="CallSign" />
+                <ScalarProperty Name="AircraftNumber" ColumnName="AircraftNumber" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
+                <ScalarProperty Name="ALTN2" ColumnName="ALTN2" />
+                <ScalarProperty Name="ALTN1" ColumnName="ALTN1" />
+                <ScalarProperty Name="AOBT" ColumnName="AOBT" />
+                <ScalarProperty Name="ALDT" ColumnName="ALDT" />
+                <ScalarProperty Name="ATOT" ColumnName="ATOT" />
+                <ScalarProperty Name="SsrCode" ColumnName="SsrCode" />
+                <ScalarProperty Name="ADES" ColumnName="ADES" />
+                <ScalarProperty Name="ADEP" ColumnName="ADEP" />
+                <ScalarProperty Name="SIBT" ColumnName="SIBT" />
+                <ScalarProperty Name="SOBT" ColumnName="SOBT" />
+                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
+                <ScalarProperty Name="AircraftType" ColumnName="AircraftType" />
+                <ScalarProperty Name="FlightType" ColumnName="FlightType" />
+                <ScalarProperty Name="ActorName" ColumnName="ActorName" />
+                <ScalarProperty Name="ActorTime" ColumnName="ActorTime" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
+                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="NextID" ColumnName="NextID" />
+                <ScalarProperty Name="PrevID" ColumnName="PrevID" />
+                <ScalarProperty Name="TWFID" ColumnName="TWFID" />
+                <ScalarProperty Name="StepID" ColumnName="StepID" />
+                <ScalarProperty Name="PlanID" ColumnName="PlanID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vGetCurrentPlanNodeInstance">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance">
+              <MappingFragment StoreEntitySet="vGetCurrentPlanNodeInstance">
+                <ScalarProperty Name="Pilot" ColumnName="Pilot" />
+                <ScalarProperty Name="AircraftNum" ColumnName="AircraftNum" />
+                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
+                <ScalarProperty Name="DeletedFlag" ColumnName="DeletedFlag" />
+                <ScalarProperty Name="PlanState" ColumnName="PlanState" />
+                <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
+                <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
+                <ScalarProperty Name="CreatorName" ColumnName="CreatorName" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="RepetPlanID" ColumnName="RepetPlanID" />
+                <ScalarProperty Name="ActorName" ColumnName="ActorName" />
+                <ScalarProperty Name="ActorTime" ColumnName="ActorTime" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ApplyTime" ColumnName="ApplyTime" />
+                <ScalarProperty Name="ActorID" ColumnName="ActorID" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="NextID" ColumnName="NextID" />
+                <ScalarProperty Name="PrevID" ColumnName="PrevID" />
+                <ScalarProperty Name="TWFID" ColumnName="TWFID" />
+                <ScalarProperty Name="StepID" ColumnName="StepID" />
+                <ScalarProperty Name="PlanID" ColumnName="PlanID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

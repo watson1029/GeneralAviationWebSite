@@ -21,30 +21,33 @@ public class RepetitivePlanBLL
         FileAirportDAL airportdal = new FileAirportDAL();
         FileDetailDAL detaildal = new FileDetailDAL();
         FileMasterDAL masterdal = new FileMasterDAL();
-        public bool Delete(string id)
+        public bool Delete(string ids)
         {
+            var idArray= ids.Split(',');
             var context = new ZHCC_GAPlanEntities();
-                var entity = context.RepetitivePlan.Where(u => u.RepetPlanID.ToString().Equals(id)).FirstOrDefault();
+            foreach (var item in idArray)
+            {
+                var entity = context.RepetitivePlan.Where(u => u.RepetPlanID.ToString().Equals(item)).FirstOrDefault();
                 if (entity != null)
                 {
                     context.RepetitivePlan.Remove(entity);
                 }
-                var airlist = context.File_Airport.Where(u => u.RepetPlanID.Equals(id));
-                foreach (var item in airlist)
+                var airlist = context.File_Airport.Where(u => u.RepetPlanID.Equals(item));
+                foreach (var sitem in airlist)
                 {
-                    context.File_Airport.Remove(item);
+                    context.File_Airport.Remove(sitem);
                 }
-                var masterlist = context.File_Master.Where(u => u.RepetPlanID.Equals(id));
-                foreach (var item in masterlist)
+                var masterlist = context.File_Master.Where(u => u.RepetPlanID.Equals(item));
+                foreach (var sitem in masterlist)
                 {
-                    context.File_Master.Remove(item);
+                    context.File_Master.Remove(sitem);
                 }
-                var detaillist = context.File_Detail.Where(u => u.RepetPlanID.Equals(id));
-                foreach (var item in detaillist)
+                var detaillist = context.File_Detail.Where(u => u.RepetPlanID.Equals(item));
+                foreach (var sitem in detaillist)
                 {
-                    context.File_Detail.Remove(item);
-
+                    context.File_Detail.Remove(sitem);
                 }
+            }
             return context.SaveChanges() > 0;
 
             

@@ -150,7 +150,6 @@
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
-
                 var fileInfo = dj.getCmp("LicenseImgs").getUploadedFiles();
                 $("#LicenseImgsInfo").val(fileInfo);
 

@@ -11,10 +11,11 @@ using BLL.FlightPlan;
 using System.Linq.Expressions;
 using Untity;
 public class GetComboboxData : IHttpHandler {
-    
+
     FlightTaskBLL bll = new FlightTaskBLL();
     AircraftBLL all = new AircraftBLL();
     CompanyBLL cbll = new CompanyBLL();
+    RepetitivePlanBLL rbll = new RepetitivePlanBLL();
     public void ProcessRequest (HttpContext context) {
         if (context.Request.Params["type"] != null)
         {
@@ -22,7 +23,7 @@ public class GetComboboxData : IHttpHandler {
             switch (context.Request.Params["type"])
             {
                 case "1":
-                   strJSON= GetAllFlightTask();
+                    strJSON= GetAllFlightTask();
                     break;
                 case "2":
                     strJSON = GetAllAircraftType();
@@ -30,6 +31,12 @@ public class GetComboboxData : IHttpHandler {
                 case "3":
                     strJSON = GetAllCompany();
                     break;
+                case "4":
+                    strJSON = GetAllRepPlanCode();
+                    break;
+                case "5":
+                    strJSON = GetAllAirlineWork(context.Request.Params["id"]);
+                        break;
             }
             context.Response.Clear();
             context.Response.Write(strJSON);
@@ -37,12 +44,13 @@ public class GetComboboxData : IHttpHandler {
             context.Response.End();
         }
     }
- 
+
     public bool IsReusable {
         get {
             return false;
         }
     }
+
     private string GetAllFlightTask()
     {
         List<FlightTask> list = bll.GetList();
@@ -68,7 +76,7 @@ public class GetComboboxData : IHttpHandler {
     private string GetAllAircraftType()
     {
         var userInfo = UserLoginService.Instance.GetUser();
-        var list = new List<Aircraft>();    
+        var list = new List<Aircraft>();
         if (userInfo != null)
         {
             Expression<Func<Aircraft, bool>> predicate = PredicateBuilder.True<Aircraft>();
@@ -82,5 +90,31 @@ public class GetComboboxData : IHttpHandler {
         }
         return JsonConvert.SerializeObject(arr);
     }
-
+    private string GetAllRepPlanCode()
+    {
+        var userInfo = UserLoginService.Instance.GetUser();
+        var list = new List<RepetitivePlan>();
+        if (userInfo != null)
+        {
+            Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
+            predicate = predicate.And(u => u.PlanState == "end" && u.Creator == userInfo.ID);
+            list = rbll.GetList(predicate);
+        }
+        ArrayList arr = new ArrayList();
+        foreach (var item in list)
+        {
+            arr.Add(new { id =item.RepetPlanID.ToString(), text = item.Code });
+        }
+        return JsonConvert.SerializeObject(arr);
+    }
+    private string GetAllAirlineWork(string id)
+    {
+        var masterlist = rbll.GetFileMasterList(u => u.RepetPlanID.Equals(id));
+        ArrayList arr = new ArrayList();
+        foreach (var item in masterlist)
+        {
+            arr.Add(new { id = item.ID, text = item.LineDescript });
+        }
+        return JsonConvert.SerializeObject(arr);
+    }
 }

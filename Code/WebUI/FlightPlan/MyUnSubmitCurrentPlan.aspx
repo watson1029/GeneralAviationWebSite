@@ -14,7 +14,7 @@
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
                 <div name="PlanCode">
-                    申请单号
+                    临专号
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            baiduMap.init();
+        //    baiduMap.init();
         });
         Main = {
             //初始化表格
@@ -49,37 +49,39 @@
                         { field: 'cbx', checkbox: true },
                     ]],
                     columns: [[
-                        { title: '申请单号', field: 'PlanCode', width: 180 },
-                        { title: '任务类型', field: 'FlightType', width: 60 },
-                        { title: '注册号', field: 'CallSign', width: 80 },
-                        { title: '使用机型', field: 'AircraftType', width: 60 },
-                        { title: '飞行范围', field: 'FlightArea', width: 100 },
-                        { title: '飞行高度', field: 'FlightHeight', width: 100 },
-                        //{ title: '航线走向和飞行高度', field: 'FlightDirHeight', width: 150 },
+                         { title: '公司名称', field: 'CompanyName', width: 200 },
+                        { title: '临专号', field: 'Code', width: 200 },
+                        { title: '任务类型', field: 'FlightType', width: 80 },
+                        { title: '航班号', field: 'CallSign', width: 80 },
+                        { title: '使用机型', field: 'AircraftType', width: 80 },
+                        { title: '起飞机场', field: 'ADEP', width: 80 },
+                        { title: '目的地机场', field: 'ADES', width: 80 },
+                        { title: '应答机编码', field: 'SsrCode', width: 80 },
+                        { title: '航空器数量', field: 'AircraftNumber', width: 80 },
+                        { title: '备降机场I', field: 'ALTN1', width: 80 },
+                        { title: '备降机场II', field: 'ALTN2', width: 80 },
                         {
-                            title: '起飞时刻', field: 'SOBT', width: 100, formatter: function (value, rec, index) {
+                            title: '计划撤轮挡时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
+                                var timesstamp = new Date(value.dateValFormat());
+                                return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
-                                var timesstamp = new Date(value);
-                                return timesstamp.toLocaleDateString();
                             }
                         },
-                        {
-                            title: '降落时刻', field: 'SIBT', width: 100, formatter: function (value, rec, index) {
+                          {
+                              title: '计划挡轮挡时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
+                                  var timesstamp = new Date(value.dateValFormat());
+                                  return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
-                                var timesstamp = new Date(value);
-                                return timesstamp.toLocaleDateString();
-                            }
-                        },
-                        { title: '起飞点', field: 'ADEP', width: 80 },
-                        { title: '降落点', field: 'ADES', width: 80 },
-
-                         { title: '创建人', field: 'CreatorName', width: 60 },
+                              }
+                          },
+                        { title: '创建人', field: 'CreatorName', width: 80 },
+             
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
                             title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
-                                var str = '<a style="color:red" id="sub-btn_' + value + '" href="javascript:;" onclick="Main.Submit(' + value + ');$(this).parent().click();return false;">提交</a>';
+                                var str ="<a style=\"color:red\" id=\"sub-btn_'" + value + "'\" href=\"javascript:;\" onclick=\"Main.Submit('" + value + "');$(this).parent().click();return false;\">提交</a>";
                                 return str;
                             }
                         }
@@ -114,7 +116,7 @@
                 if (!$("#form_edit").form("validate")) {
                     return;
                 }
-                $.messager.confirm('提示', '确认提交该条飞行计划？', function (r) {
+                $.messager.confirm('提示', '确认提交该条起飞申请？', function (r) {
                     if (r) {
                         $.post(location.href, { "action": "submit", "id": uid }, function (data) {
 

@@ -2,7 +2,7 @@
     CodeFile="MyUnSubmitRepetPlan.aspx.cs" Inherits="FlightPlan_MyUnSubmitRepetPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
-   <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
+  <%-- <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
    <%-- <div class="gridsearch">
@@ -36,7 +36,7 @@
       $(function () {
             Main.InitGird();
             Main.InitSearch();
-            baiduMap.init();
+          //  baiduMap.init();
         });
         Main = {
             //初始化表格
@@ -138,7 +138,6 @@
             //打开添加窗口
             OpenWin: function () {
                 $("#add").dialog("open").dialog('setTitle', '新增长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx');
-                //$("#btn_add").attr("onclick", "Main.Save();")
             },
             //提交按钮事件
             Save: function (uid) {
@@ -186,8 +185,7 @@
 
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx?id=' + uid);
-                $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
+                $("#edit").dialog("open").dialog('setTitle', '编辑长期计划').dialog('refresh', 'MyUnSubmitRepetPlanEdit.aspx?id=' + uid);
             },
             BatchImport: function () {
                 $("#batchimport").dialog("open").dialog('setTitle', '文件导入').dialog('refresh', 'UnSubmitRepetPlanBatchImport.aspx');
@@ -274,16 +272,13 @@
     </script>
 
         <%--添加 修改 start--%>
-   <div id="edit" class="easyui-dialog" style="width: 1000px; height:600px;"
-        modal="true" closed="true" buttons="#edit-buttons">
+   <div id="edit" class="easyui-dialog" style="width: 1200px; height:700px;"
+        modal="true" cache="false"  closed="true" >
         
     </div>
-    <div id="edit-buttons">
-        <a id="btn_edit" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
-            class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>
-    </div>
-       <div id="add" class="easyui-dialog" style="width: 1200px; height:650px;"
-        modal="true" closed="true" buttons="#add-buttons">
+
+   <div id="add" class="easyui-dialog" style="width: 1200px; height:700px;"
+        modal="true" cache="false" closed="true">
         
     </div>
         

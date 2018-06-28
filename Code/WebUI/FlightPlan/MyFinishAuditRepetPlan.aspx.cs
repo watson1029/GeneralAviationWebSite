@@ -113,7 +113,7 @@ public partial class FlightPlan_MyFinishAuditRepetPlan : BasePage
            var instance= insdal.GetNodeInstance(User.ID,(int)TWFTypeEnum.RepetitivePlan,planid);
             if(instance!=null)
             {
-            if (insdal.UpdateComment(instance.ID, Request.Form["AuditComment"] ?? ""))
+            if (insdal.UpdateComment(instance.ID, Request.Form["Comments"] ?? ""))
             { 
             result.IsSuccess = true;
             result.Msg = "保存成功！";
