@@ -129,7 +129,7 @@
 <body class="easyui-layout" style="overflow-y: hidden" scroll="no">
     <input type="hidden" id="ipt_UserName" name="ipt_UserName" value="<%=UserName%>" />
 
-    <div region="north" split="true" border="false" style="overflow: hidden; height: 120px; background: url(<%=Page.ResolveUrl("~/")%>Content/Img/index_banner.png); line-height: 120px; color: #fff; font-family: Verdana, 微软雅黑,黑体">
+    <div region="north" split="true" border="false" style="overflow: hidden; height: 60px; background: url(<%=Page.ResolveUrl("~/")%>images/icon06.png) repeat-x; line-height: 60px; color: #fff; font-family: Verdana, 微软雅黑,黑体">
         <span style="float: right; padding-right: 20px;" class="head">
             <%--         <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-tip" plain="true" onclick="Main.Export()">消息</a>--%>
             欢迎
@@ -137,7 +137,7 @@
             <a href="/Default.aspx" style="cursor: pointer; text-decoration: none;">主页</a>&nbsp;&nbsp;
             <a href="javascript:void()" id="loginOut" style="cursor: pointer; text-decoration: none;">退出</a>
         </span>
-        <img style="padding-left:50px;height:80px;vertical-align:middle;" src="Content/Img/index_logo.png" />
+        <img style="padding-left:50px;height:60px;vertical-align:middle;" src="Content/Img/index_logo.png" />
     </div>
     <div region="south" split="true" style="height: 30px; background: #D2E0F2;">
         <div class="footer">
@@ -174,10 +174,10 @@
         });
 
         function ReSize() {
-            $("#generalize").css("height", (window.innerHeight - 200) / 2);
-            $("#generalize-chart").css("height", (window.innerHeight - 200) / 2);
-            $("#flynum-chart").css("height", (window.innerHeight - 200) / 2);
-            $("#flytime-chart").css("height", (window.innerHeight - 200) / 2);
+            $("#generalize").css("height", (window.innerHeight - 150) / 2);
+            $("#generalize-chart").css("height", (window.innerHeight - 150) / 2);
+            $("#flynum-chart").css("height", (window.innerHeight - 150) / 2);
+            $("#flytime-chart").css("height", (window.innerHeight - 150) / 2);
         }
     </script>
 </body>
