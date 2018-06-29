@@ -36,6 +36,7 @@
       $(function () {
             Main.InitGird();
             Main.InitSearch();
+          
           //  baiduMap.init();
         });
         Main = {
@@ -88,7 +89,7 @@
                             }
                         },
                           { title: '机场及起降点', field: 'AirportText', width: 200 },
-                          { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
+                          //{ title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
                            {
                                title: '创建时间', field: 'CreateTime', width: 120, formatter: function (value, rec, index) {

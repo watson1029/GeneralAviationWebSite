@@ -176,7 +176,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">基础信息</h3>
                     </div>
-                    <div class="panel-body" style="padding: 15px;width: 97%;">
+                    <div class="panel-body" style="padding: 15px;width: 96.5%;">
                         <table class="form">
                             <tr>
                                 <th class="formTitle">航班号</th>

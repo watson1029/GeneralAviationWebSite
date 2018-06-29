@@ -31,9 +31,9 @@
         addAirlineRow: function () {
             if (this.rowIndex < this.maxRowCount) {
                 this.rowIndex++;
-                var str = "<tr><td class=\"formValue\"><input id='AirlineFlyHeight_row" + this.rowIndex + "' name='AirlineFlyHeight_row" + this.rowIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td>";
+                var str = "<tr><td class=\"formValue\"><input id='AirlineFlyHeight_row" + this.rowIndex + "' name='AirlineFlyHeight_row" + this.rowIndex + "' type=\"text\"  maxlength=\"50\" style=\"height: 25px;width:80px\"/></td>";
                 for (var i = 1; i <= this.colIndex; i++) {
-                    str += "<td class=\"formValue\"><input id='AirlineName_row" + this.rowIndex + "_col" + i + "'  name='AirlineName_row" + this.rowIndex + "_col" + i + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='AirlineLatLong_row" + this.rowIndex + "_col" + i + "' name='AirlineLatLong_row" + this.rowIndex + "_col" + i + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td>";
+                    str += "<td class=\"formValue\"><input id='AirlineName_row" + this.rowIndex + "_col" + i + "'  name='AirlineName_row" + this.rowIndex + "_col" + i + "' type=\"text\"  maxlength=\"50\" style=\"height: 25px;width:100px\"/></td><td class=\"formValue\"><input id='AirlineLatLong_row" + this.rowIndex + "_col" + i + "' name='AirlineLatLong_row" + this.rowIndex + "_col" + i + "' type=\"text\"  maxlength=\"50\" style=\"height: 25px;width:200px\"/></td>";
                 }
                 str += "</tr>";
                 j("#" + this.conid).append(str);
@@ -54,7 +54,7 @@
             if (this.colIndex < this.maxColCount) {
                 this.colIndex++;
                 for (var i = 0; i < this.rowIndex; i++) {
-                    j("#" + this.conid + " tr:eq(" + i + ") ").append("<td class=\"formValue\"><input id='AirlineName_row" + (i + 1) + "_col" + this.colIndex + "'  name='AirlineName_row" + (i + 1) + "_col" + this.colIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td><td class=\"formValue\"><input id='AirlineLatLong_row" + (i + 1) + "_col" + this.colIndex + "' name='AirlineLatLong_row" + (i + 1) + "_col" + this.colIndex + "' type=\"text\" class=\"form-control\" maxlength=\"50\"/></td>");
+                    j("#" + this.conid + " tr:eq(" + i + ") ").append("<td class=\"formValue\"><input id='AirlineName_row" + (i + 1) + "_col" + this.colIndex + "'  name='AirlineName_row" + (i + 1) + "_col" + this.colIndex + "' type=\"text\"  maxlength=\"50\" style=\"height: 25px;width:100px\"/></td><td class=\"formValue\"><input id='AirlineLatLong_row" + (i + 1) + "_col" + this.colIndex + "' name='AirlineLatLong_row" + (i + 1) + "_col" + this.colIndex + "' type=\"text\" style=\"height: 25px;width:200px\" maxlength=\"50\"/></td>");
                 }
                 j("#" + this.listid + " thead tr ").append("<th style=\"text-align:center\">点中文名" + this.colIndex + "</th><th style=\"text-align:center\">经纬度" + this.colIndex + "</th>");
             }

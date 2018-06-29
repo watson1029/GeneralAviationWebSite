@@ -126,15 +126,15 @@
                                         <tbody id="airline-Con">
                                             <tr>
                                                 <td class="formValue">
-                                                    <input id="AirlineFlyHeight_row1" name="AirlineFlyHeight_row1" type="text" maxlength="20" /></td>
+                                                    <input id="AirlineFlyHeight_row1" name="AirlineFlyHeight_row1" type="text" maxlength="20" style="height: 25px;width:80px"/></td>
                                                 <td class="formValue">
-                                                    <input id="AirlineName_row1_col1" name="AirlineName_row1_col1" type="text" maxlength="50" /></td>
+                                                    <input id="AirlineName_row1_col1" name="AirlineName_row1_col1" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
                                                 <td class="formValue">
-                                                    <input id="AirlineLatLong_row1_col1" name="AirlineLatLong_row1_col1" type="text" maxlength="50" /></td>
+                                                    <input id="AirlineLatLong_row1_col1" name="AirlineLatLong_row1_col1" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
                                                 <td class="formValue">
-                                                    <input id="AirlineName_row1_col2" name="AirlineName_row1_col2" type="text" maxlength="50" /></td>
+                                                    <input id="AirlineName_row1_col2" name="AirlineName_row1_col2" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
                                                 <td class="formValue">
-                                                    <input id="AirlineLatLong_row1_col2" name="AirlineLatLong_row1_col2" type="text" maxlength="50" /></td>
+                                                    <input id="AirlineLatLong_row1_col2" name="AirlineLatLong_row1_col2" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -168,13 +168,13 @@
                                                 <tbody id="cwork-Con">
                                                     <tr>
                                                         <td class="formValue">
-                                                            <input id="CFlyHeight1" name="CFlyHeight1" type="text" maxlength="50" /></td>
+                                                            <input id="CFlyHeight1" name="CFlyHeight1" type="text" maxlength="50" style="height: 25px;width:80px"/></td>
                                                         <td class="formValue">
-                                                            <input id="CRadius1" name="CRadius1" type="text" maxlength="50" /></td>
+                                                            <input id="CRadius1" name="CRadius1" type="text" maxlength="50" style="height: 25px;width:80px"/></td>
                                                         <td class="formValue">
-                                                            <input id="CWorkName1" name="CWorkName1" type="text" maxlength="50" /></td>
+                                                            <input id="CWorkName1" name="CWorkName1" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
                                                         <td class="formValue">
-                                                            <input id="CLatLong1" name="CLatLong1" type="text" maxlength="50" /></td>
+                                                            <input id="CLatLong1" name="CLatLong1" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
 
                                                     </tr>
                                                 </tbody>
@@ -197,15 +197,15 @@
                                                 <tbody id="pwork-Con">
                                                     <tr>
                                                         <td class="formValue">
-                                                            <input id="PFlyHeight_row1" name="PFlyHeight_row1" type="text" maxlength="20" /></td>
+                                                            <input id="PFlyHeight_row1" name="PFlyHeight_row1" type="text" maxlength="20" style="height: 25px;width:80px"/></td>
                                                         <td class="formValue">
-                                                            <input id="PWorkName_row1_col1" name="PWorkName_row1_col1" type="text" maxlength="50" /></td>
+                                                            <input id="PWorkName_row1_col1" name="PWorkName_row1_col1" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
                                                         <td class="formValue">
-                                                            <input id="PWorkLatLong_row1_col1" name="PWorkLatLong_row1_col1" type="text" maxlength="50" /></td>
+                                                            <input id="PWorkLatLong_row1_col1" name="PWorkLatLong_row1_col1" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
                                                         <td class="formValue">
-                                                            <input id="PWorkName_row1_col2" name="PWorkName_row1_col2" type="text" maxlength="50" /></td>
+                                                            <input id="PWorkName_row1_col2" name="PWorkName_row1_col2" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
                                                         <td class="formValue">
-                                                            <input id="PWorkLatLong_row1_col2" name="PWorkLatLong_row1_col2" type="text" maxlength="50" /></td>
+                                                            <input id="PWorkLatLong_row1_col2" name="PWorkLatLong_row1_col2" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -230,17 +230,17 @@
                                                 <tbody id="hwork-Con">
                                                     <tr>
                                                         <td class="formValue">
-                                                            <input id="HFlyHeight_row1" name="HFlyHeight_row1" type="text" maxlength="20" /></td>
+                                                            <input id="HFlyHeight_row1" name="HFlyHeight_row1" type="text" maxlength="20" style="height: 25px;width:200px"/></td>
                                                         <td class="formValue">
-                                                            <input id="HDistance_row1" name="HDistance_row1" type="text" maxlength="20" /></td>
+                                                            <input id="HDistance_row1" name="HDistance_row1" type="text" maxlength="20" style="height: 25px;width:200px"/></td>
                                                         <td class="formValue">
-                                                            <input id="HWorkName_row1_col1" name="HWorkName_row1_col1" type="text" maxlength="50" /></td>
+                                                            <input id="HWorkName_row1_col1" name="HWorkName_row1_col1" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
                                                         <td class="formValue">
-                                                            <input id="HWorkLatLong_row1_col1" name="HWorkLatLong_row1_col1" type="text" maxlength="50" /></td>
+                                                            <input id="HWorkLatLong_row1_col1" name="HWorkLatLong_row1_col1" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
                                                         <td class="formValue">
-                                                            <input id="HWorkName_row1_col2" name="HWorkName_row1_col2" type="text" maxlength="50" /></td>
+                                                            <input id="HWorkName_row1_col2" name="HWorkName_row1_col2" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
                                                         <td class="formValue">
-                                                            <input id="HWorkLatLong_row1_col2" name="HWorkLatLong_row1_col2" type="text" maxlength="50" /></td>
+                                                            <input id="HWorkLatLong_row1_col2" name="HWorkLatLong_row1_col2" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
 
                                                     </tr>
                                                 </tbody>
@@ -256,11 +256,11 @@
                             <tr style="height: 80px">
                                 <th>附件上传</th>
                                 <td>
-                                      <input type="hidden" name="AttchFilesInfo" id="AttchFilesInfo" />
-                    <input type="file" id="AttchFiles" name="AttchFiles" />
-                    <a id="btn_upload1" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('AttchFiles').uploadFiles()">上传</a>
-                    <div id="AttchFiles-fileQueue"></div>
-                    <div id="AttchFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
+                                      <input type="hidden" name="AttachFilesInfo" id="AttachFilesInfo" />
+                    <input type="file" id="AttachFiles" name="AttachFiles" />
+                    <a id="btn_upload1" href="javascript:;" class="easyui-linkbutton" style="margin-top: -15px" onclick="dj.getCmp('AttachFiles').uploadFiles()">上传</a>
+                    <div id="AttachFiles-fileQueue"></div>
+                    <div id="AttachFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
                                 </td>
                             </tr>
                         </table>
@@ -363,7 +363,7 @@
                         $("#d" + n).prop({ checked: true });
                     });
                     obj["uploadedFiles"] = data.AttachFile;
-                    new dj.upload(obj);
+                    
                 }
             });
         }
@@ -373,8 +373,13 @@
         repetPlan.newairlineobj.init();
         repetPlan.newworkobj = new dj.dyWorkTable(workobj);
         repetPlan.newworkobj.init();
-       
+       new dj.upload(obj);
     })
+    $(".nav-tabs li").click(function () {
+        var i = $(this).index();
+        $(this).addClass("active").siblings().removeClass("active");
+        $('#con div').eq(i).show().siblings().hide();
+    });
     function initControl() {
         $('#wizard').wizard().on('change', function (e, data) {
             var $finish = $("#btn_finish");

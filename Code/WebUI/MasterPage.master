@@ -18,7 +18,6 @@
     <link href="<%=Page.ResolveUrl("~/")%>Content/JS/easyUI/themes/icon.css" rel="stylesheet" type="text/css" />
     <link href="<%=Page.ResolveUrl("~/")%>Content/Css/default.css?v=2.0" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
-
         dj.root = "<%=Page.ResolveUrl("~/")%>";
     </script>
 </head>
