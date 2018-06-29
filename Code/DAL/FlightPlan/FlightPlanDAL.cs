@@ -116,17 +116,19 @@ namespace DAL.FlightPlan
             try
             {
                 int? SecondDiff = 0;
-                var fps = (from p in context.vGetCurrentPlanNodeInstance
+                var fps = (from s in context.Company join p
+                     in context.vGetCurrentPlanNodeInstance on s.CompanyName equals p.CreatorName
                            where p.ActorID != p.Creator && (p.State == 2 || p.State == 3) && p.ActualStartTime >= started && p.ActualEndTime <= ended
                            group p by new
                            {
-                               p.Creator,
-                               p.CreatorName
+                               s.CompanyName,
+                               p.Creator
+                               //p.CreatorName
                            } into g
                            select new
                            {
                                Creator = g.Key.Creator,
-                               CompanyName = g.Key.CreatorName,
+                               CompanyName = g.Key.CompanyName,
                                AircraftNum = g.Sum(p => p.AircraftNum),
                                //SecondDiff=g.Sum(EntityFunctions.DiffSeconds(p=>p.SOBT,p=>p.SIBT))
                                SecondDiff = g.Sum(p => DbFunctions.DiffSeconds(p.ActualStartTime, p.ActualEndTime))
@@ -145,7 +147,9 @@ namespace DAL.FlightPlan
                               AircraftNum = g.Sum(p => p.AircraftNum == 0 ? SecondDiff : SecondDiff),
                               SecondDiff = SecondDiff
                           }).Union(
-                            from p in context.vGetCurrentPlanNodeInstance
+                            from s in context.Company
+                            join p
+in context.vGetCurrentPlanNodeInstance on s.CompanyName equals p.CreatorName
                             where p.ActorID != p.Creator && (p.State == 2 || p.State == 3) && p.ActualStartTime < started && p.ActualEndTime <= ended && p.ActualEndTime > started
                             group p by new
                             {
@@ -160,7 +164,8 @@ namespace DAL.FlightPlan
                                 SecondDiff = g.Sum(p => DbFunctions.DiffSeconds(started, p.ActualEndTime))
                             }
                     ).Union(
-                            from p in context.vGetCurrentPlanNodeInstance
+                           from s in context.Company join p
+                     in context.vGetCurrentPlanNodeInstance on s.CompanyName equals p.CreatorName
                             where p.ActorID != p.Creator && (p.State == 2 || p.State == 3) && p.ActualStartTime >= started && p.ActualEndTime > ended && p.ActualStartTime < ended
                             group p by new
                             {
