@@ -157,8 +157,8 @@
         }
     </script>
 
-    <div id="detail" class="easyui-dialog" style="width: 700px; height: 700px;"
-        modal="true" closed="true" buttons="#detail-buttons">
+    <div id="detail" class="easyui-dialog" style="width: 700px; height: 500px;"
+        modal="true" closed="true" buttons="#detail-buttons" >
         <div id="con" style="margin-left: 15px;">
             <div id="tab_list1">
             </div>
