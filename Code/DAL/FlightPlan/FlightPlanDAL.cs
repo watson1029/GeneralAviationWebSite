@@ -1,4 +1,5 @@
 ﻿using Model.EF;
+using Model.FlightPlan;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -115,71 +116,87 @@ namespace DAL.FlightPlan
             //List<FlightPlanStatistics> fpslist = new List<FlightPlanStatistics>();
             try
             {
-                int? SecondDiff = 0;
-                var fps = (from s in context.Company join p
-                     in context.vGetCurrentPlanNodeInstance on s.CompanyName equals p.CreatorName
-                           where p.ActorID != p.Creator && (p.State == 2 || p.State == 3) && p.ActualStartTime >= started && p.ActualEndTime <= ended
-                           group p by new
-                           {
-                               s.CompanyName,
-                               p.Creator
-                               //p.CreatorName
-                           } into g
-                           select new
-                           {
-                               Creator = g.Key.Creator,
-                               CompanyName = g.Key.CompanyName,
-                               AircraftNum = g.Sum(p => p.AircraftNum),
-                               //SecondDiff=g.Sum(EntityFunctions.DiffSeconds(p=>p.SOBT,p=>p.SIBT))
-                               SecondDiff = g.Sum(p => DbFunctions.DiffSeconds(p.ActualStartTime, p.ActualEndTime))
-                           }).Union(
-                          from p in context.vGetCurrentPlanNodeInstance
-                          where p.ActorID != p.Creator && (p.State == 2 || p.State == 3)
-                          group p by new
-                          {
-                              p.Creator,
-                              p.CreatorName
-                          } into g
-                          select new
-                          {
-                              Creator = g.Key.Creator,
-                              CompanyName = g.Key.CreatorName,
-                              AircraftNum = g.Sum(p => p.AircraftNum == 0 ? SecondDiff : SecondDiff),
-                              SecondDiff = SecondDiff
-                          }).Union(
-                            from s in context.Company
-                            join p
-in context.vGetCurrentPlanNodeInstance on s.CompanyName equals p.CreatorName
-                            where p.ActorID != p.Creator && (p.State == 2 || p.State == 3) && p.ActualStartTime < started && p.ActualEndTime <= ended && p.ActualEndTime > started
-                            group p by new
-                            {
-                                p.Creator,
-                                p.CreatorName
-                            } into g
-                            select new
-                            {
-                                Creator = g.Key.Creator,
-                                CompanyName = g.Key.CreatorName,
-                                AircraftNum = g.Sum(p => p.AircraftNum),
-                                SecondDiff = g.Sum(p => DbFunctions.DiffSeconds(started, p.ActualEndTime))
-                            }
-                    ).Union(
-                           from s in context.Company join p
-                     in context.vGetCurrentPlanNodeInstance on s.CompanyName equals p.CreatorName
-                            where p.ActorID != p.Creator && (p.State == 2 || p.State == 3) && p.ActualStartTime >= started && p.ActualEndTime > ended && p.ActualStartTime < ended
-                            group p by new
-                            {
-                                p.Creator,
-                                p.CreatorName
-                            } into g
-                            select new
-                            {
-                                Creator = g.Key.Creator,
-                                CompanyName = g.Key.CreatorName,
-                                AircraftNum = g.Sum(p => p.AircraftNum),
-                                SecondDiff = g.Sum(p => DbFunctions.DiffSeconds(p.ActualStartTime, ended))
-                            }
-                    );
+                string sql =string.Format(@"select d.Creator,p.CompanyName,Sum(isnull(convert(int,AircraftNum),0))AircraftNum,sum(isnull(datediff(ss,ActualStartTime,ActualEndTime),0))SecondDiff
+ from Company p 
+left join vGetCurrentPlanNodeInstance
+d  on p.CompanyID=d.creator and  d.ActorID != d.Creator and (d.State = 2 or d.State = 3) and d.ActualStartTime >= '{0}' 
+and d.ActualEndTime <= '{1}'
+group by p.CompanyName,d.Creator", started,ended);
+                sql += string.Format(@" union select
+d.Creator,p.CompanyName,Sum(isnull(convert(int,AircraftNum),0))AircraftNum,sum(isnull(datediff(ss,ActualStartTime,ActualEndTime),0))SecondDiff
+ from Company p 
+left join vGetCurrentPlanNodeInstance
+d  on p.CompanyID=d.creator and  d.ActorID != d.Creator and (d.State = 2 or d.State = 3) and d.ActualStartTime <'{0}'  
+and d.ActualEndTime <='{1}' and d.ActualEndTime >'{2}' 
+group by p.CompanyName,d.Creator",started,ended,started);
+                sql += string.Format(@" union select
+d.Creator,p.CompanyName,Sum(isnull(convert(int,AircraftNum),0))AircraftNum,sum(isnull(datediff(ss,ActualStartTime,ActualEndTime),0))SecondDiff
+ from Company p 
+left join vGetCurrentPlanNodeInstance
+d  on p.CompanyID=d.creator and  d.ActorID != d.Creator and (d.State = 2 or d.State = 3) and d.ActualStartTime>='{0}'  
+and d.ActualEndTime>'{1}' and d.ActualStartTime<'{2}' 
+group by p.CompanyName,d.Creator",started,ended,ended);
+                var fps=context.Database.SqlQuery<FlightPlanStatistics>(sql);
+                //int? SecondDiff = 0;
+                //var fps = (from s in context.Company
+                //           join p in context.vGetCurrentPlanNodeInstance on s.CompanyName equals p.CreatorName
+                //            into temp
+                //            from tt in temp.DefaultIfEmpty()
+                //           where tt.ActorID != tt.Creator && (tt.State == 2 || tt.State == 3) && tt.ActualStartTime >= started && tt.ActualEndTime <= ended
+                //           group tt by new
+                //           {
+                //               s.CompanyName,
+                //               tt.Creator,
+                //               tt.AircraftNum
+                //               //p.CreatorName
+                //           } into g
+                //           select new
+                //           {
+                //               Creator = g.Key.Creator,
+                //               CompanyName = g.Key.CompanyName,
+                //               AircraftNum = g.Key.AircraftNum,
+                //               //SecondDiff=g.Sum(EntityFunctions.DiffSeconds(p=>p.SOBT,p=>p.SIBT))
+                //               SecondDiff = g.Sum(p => DbFunctions.DiffSeconds(p.ActualStartTime, p.ActualEndTime))
+                //           }
+                //           ).Union(
+                //            from s in context.Company
+                //            join p in context.vGetCurrentPlanNodeInstance on s.CompanyName equals p.CreatorName
+                //              into temp
+                //            from tt in temp.DefaultIfEmpty()
+                //            where tt.ActorID != tt.Creator && (tt.State == 2 || tt.State == 3) && tt.ActualStartTime < started && tt.ActualEndTime <= ended && tt.ActualEndTime > started
+                //            group tt by new
+                //            {
+                //                s.CompanyName,
+                //                tt.Creator,
+                //                tt.AircraftNum
+                //            } into g
+                //            select new
+                //            {
+                //                Creator = g.Key.Creator,
+                //                CompanyName = g.Key.CompanyName,
+                //                AircraftNum = g.Key.AircraftNum,
+                //                SecondDiff = g.Sum(p => DbFunctions.DiffSeconds(started, p.ActualEndTime))
+                //            }                           
+                //    ).Union(
+                //           from s in context.Company
+                //           join p in context.vGetCurrentPlanNodeInstance on s.CompanyName equals p.CreatorName
+                //             into temp
+                //           from tt in temp.DefaultIfEmpty()
+                //           where tt.ActorID != tt.Creator && (tt.State == 2 || tt.State == 3) && tt.ActualStartTime >= started && tt.ActualEndTime > ended && tt.ActualStartTime < ended
+                //           group tt by new
+                //           {
+                //               s.CompanyName,
+                //               tt.Creator,
+                //               tt.AircraftNum
+                //           } into g
+                //           select new
+                //           {
+                //               Creator = g.Key.Creator,
+                //               CompanyName = g.Key.CompanyName,
+                //               AircraftNum = g.Key.AircraftNum,
+                //               SecondDiff = g.Sum(p => DbFunctions.DiffSeconds(p.ActualStartTime, ended))
+                //           }                           
+                //    );
                 //var fpsl = fps.ToList().Skip((pageIndex-1)*pageSize).Take(pageSize).ToList();
                 //rowCount = fps.ToList().Count;
                 return fps.ToList();
