@@ -2,7 +2,7 @@
     CodeFile="MyUnSubmitCurrentPlan.aspx.cs" Inherits="FlightPlan_MyUnSubmitCurrentPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
-    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
+<%--    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <table id="tab_list">
@@ -75,15 +75,15 @@
                               }
                           },
                              { title: '机场及起降点', field: 'AirportText', width: 200 },
-                          { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
-                        { title: '创建人', field: 'CreatorName', width: 80 },
+                          //{ title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
+                        { title: '创建人', field: 'CreatorName1', width: 80 },
              
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
-                            title: '操作', field: 'FlightPlanID', width: 80, formatter: function (value, rec) {
-                                var str ="<a style=\"color:red\" id=\"sub-btn_'" + value + "'\" href=\"javascript:;\" onclick=\"Main.Submit('" + value + "');$(this).parent().click();return false;\">提交</a>";
+                            title: '操作', field: 'FlightPlanID1', width: 80, formatter: function (value, rec) {
+                                var str ="<a style=\"color:red\" id=\"sub-btn_'" + value + "'\" href=\"javascript:;\" onclick=\"Main.Edit('" + value + "');$(this).parent().click();return false;\">补充</a>";
                                 return str;
                             }
                         }
@@ -114,16 +114,23 @@
                 });
             },
 
-            Submit: function (uid) {
-                if (!$("#form_edit").form("validate")) {
+            Edit: function (uid) {
+                $("#form1").form('clear');
+                $("#edit").dialog("open").dialog('setTitle', '补充数据');
+                $("#btn_add").attr("onclick", "Main.Submit('" + uid + "');")
+            },
+            Submit: function (uid)
+            {
+                if (!$("#form1").form("validate")) {
                     return;
                 }
+                var json = $.param({ "action": "submit", "id": uid }) + '&' + $('#form1').serialize();
                 $.messager.confirm('提示', '确认提交该条起飞申请？', function (r) {
                     if (r) {
-                        $.post(location.href, { "action": "submit", "id": uid }, function (data) {
-
+                        $.post(location.href, json, function (data) {
                             if (data.isSuccess) {
                                 $("#tab_list").datagrid("reload");
+                                $("#edit").dialog("close");
                             }
                         });
                     }
@@ -132,11 +139,57 @@
             }
         };
     </script>
-    <div id="edit" class="easyui-dialog" style="width: 850px; height: 612px;"
+    <div id="edit" class="easyui-dialog" style="width: 600px; height: 300px;"
         modal="true" closed="true" buttons="#edit-buttons">
+          <form id="form1"  method="post">
+          <table class="table_edit">
+                    <tr>
+                        <td>飞行员：
+                        </td>
+                        <td>
+                            <input id="Pilot" name="Pilot"  maxlength="30" class="easyui-validatebox textbox"
+                                required="true" style="height:20px;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>联系方式：
+                        </td>
+                        <td>
+                            <input id="ContractWay" name="ContractWay"   maxlength="20" class="easyui-validatebox textbox"
+                                required="true" style="height:20px;"/>
+                        </td>
+                    </tr>
+ <tr>
+                        <td>航空器架数：
+                        </td>
+                        <td>
+
+           
+                    <input id="AircraftNum" name="AircraftNum" style="height: 20px" maxlength="4" type="text" required="true" class="easyui-numberbox" data-options="min:1,max:100" />
+
+                        </td>
+                    </tr>
+               <tr>
+                        <td>实际起飞时间：
+                        </td>
+                        <td>
+                            <input id="ActualStartTime" name="ActualStartTime" maxlength="20" class="easyui-timespinner"
+                                required="true" style="height:20px;"/>
+                        </td>
+                    </tr>
+               <tr>
+                        <td>实际降落时间：
+                        </td>
+                        <td>
+                            <input id="ActualEndTime" name="ActualEndTime" maxlength="20" class="easyui-timespinner"
+                                required="true" style="height:20px;"/>
+                        </td>
+                    </tr>
+                </table>
+             </form>
                </div>
     <div id="edit-buttons">
-        <a id="btn_add" href="javascript:;" onclick="Main.Save();" class="easyui-linkbutton">保存</a><a href="javascript:;"
+        <a id="btn_add" href="javascript:;"  class="easyui-linkbutton">提交</a><a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
     <div id="map" style="height:400px;"></div>

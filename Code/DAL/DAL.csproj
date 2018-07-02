@@ -66,6 +66,7 @@
     <Compile Include="FlightPlan\vCurrentPlanDAL.cs" />
     <Compile Include="FlightPlan\vRepetitivePlanAirportDAL.cs" />
     <Compile Include="FlightPlan\WorkflowNodeInstanceDAL.cs" />
+    <Compile Include="FlightPlan\WorkflowSubTplNodeDAL.cs" />
     <Compile Include="FlightPlan\WorkflowTplNodeDAL.cs" />
     <Compile Include="Log\LoginLogDAL.cs" />
     <Compile Include="Log\OperationLogDAL.cs" />

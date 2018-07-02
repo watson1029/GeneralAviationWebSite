@@ -149,13 +149,16 @@
     <Compile Include="EF\RoleMenu.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\SubActualSteps.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\SubTWFSteps.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\SupplyDemandInfo.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\TWFLibrary.cs">
-      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EF\TWFPerson.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\TWFSteps.cs">

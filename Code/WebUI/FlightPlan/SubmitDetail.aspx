@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="SubmitDetail.aspx.cs" Inherits="FlightPlan_SubmitDetail" %>
+
 <script src="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.js")%>" type="text/javascript"></script>
 <link href="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.css?v=1.3")%>" rel="stylesheet" type="text/css" />
 <script src="<%=Page.ResolveUrl("~/Content/js/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
@@ -13,8 +14,8 @@
         if (!!pid) {
             $.ajax({
                 url: "MySubmitRepetPlan.aspx",
-                data: { id: pid,"action": "queryone" },
-                type:'post',
+                data: { id: pid, "action": "queryone" },
+                type: 'post',
                 dataType: "json",
                 async: false,
                 success: function (data) {
@@ -66,11 +67,11 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">基础信息</h3>
                     </div>
-                    <div class="panel-body" style="padding: 15px;width: 97%;">
+                    <div class="panel-body" style="padding: 15px; width: 97%;">
                         <table class="form">
                             <tr>
                                 <th class="formTitle">公司名称</th>
-                                <td class="formValue" style="color:red">
+                                <td class="formValue" style="color: red">
                                     <span id="name"></span>
                                 </td>
                                 <th class="formTitle">临专号</th>
@@ -81,7 +82,7 @@
                             <tr>
                                 <th class="formTitle">任务类型</th>
                                 <td class="formValue">
-                                  <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                                    <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
                                         required="true" class="easyui-combobox" style="width: 250px" />
                                 </td>
@@ -94,17 +95,17 @@
                             <tr>
                                 <th class="formTitle">预计开始日期</th>
                                 <td class="formValue">
-                                   <input id="StartDate" name="StartDate" editable="false" required="true" class="easyui-datebox" style="width: 250px"  />
+                                    <input id="StartDate" name="StartDate" editable="false" required="true" class="easyui-datebox" style="width: 250px" />
                                 </td>
                                 <th class="formTitle">预计结束日期</th>
                                 <td class="formValue">
-                                    <input id="EndDate" name="EndDate" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="width: 250px"  />
+                                    <input id="EndDate" name="EndDate" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="width: 250px" />
                                 </td>
                             </tr>
                             <tr>
                                 <th class="formTitle" style="height: 35px;">周执行计划</th>
-                                <td class="formValue"  colspan="3">
-                                     <input id="d1" type="checkbox" name="WeekSchedule" value="1" style="width: 20px" />星期一
+                                <td class="formValue" colspan="3">
+                                    <input id="d1" type="checkbox" name="WeekSchedule" value="1" style="width: 20px" />星期一
                              <input id="d2" type="checkbox" name="WeekSchedule" value="2" style="width: 20px" />星期二
                              <input id="d3" type="checkbox" name="WeekSchedule" value="3" style="width: 20px" />星期三
                              <input id="d4" type="checkbox" name="WeekSchedule" value="4" style="width: 20px" />星期四
@@ -114,27 +115,24 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle"  style="padding-top: 5px;">
-                                    机场及临时起降点
+                                <th class="formTitle" style="padding-top: 5px;">机场及临时起降点
                                 </th>
                                 <td class="formValue" colspan="3">
-                                            <input id="AirportText" name="AirportText" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                                    <input id="AirportText" name="AirportText" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle" style="padding-top: 5px;">
-                                    航线及作业区
+                                <th class="formTitle" style="padding-top: 5px;">航线及作业区
                                 </th>
                                 <td class="formValue" colspan="3">
                                     <input id="AirlineWorkText" name="AirlineWorkText" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle" style="padding-top: 5px;">
-                                    其他说明的事项
+                                <th class="formTitle" style="padding-top: 5px;">其他说明的事项
                                 </th>
                                 <td class="formValue" colspan="3">
-                          <input id="Remark" name="Remark" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                                    <input id="Remark" name="Remark" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                                 </td>
                             </tr>
                         </table>
@@ -143,7 +141,7 @@
             </div>
             <div class="step-pane" id="step-2" style="margin: 10px; margin-bottom: 0px;">
                 <div class="panel-body" style="width: 96%;">
-                <table class="form">
+                    <table class="form">
                         <thead>
                             <tr>
                                 <th>审核人</th>
@@ -153,25 +151,44 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% foreach(var item in auditList){  %>
-                           
-                                <tr>
-                                    <td><%=item.ActorName%></td>
-                                    <td><%=((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))%></td>
-                                    <td><%=item.ActorTime%></td>
-                                    <td><%=item.Comments%></td>
-                                </tr>
-                          <%   } %>
+                            <% foreach (var item in auditList)
+                                {
+                                    if (item.IsParallel.HasValue && item.IsParallel.Value)
+                                    {
+                                        foreach (var subitem in item.SubActualStepsList)
+                                        {
+                                            %>
+                             <tr>
+                                <td><%=subitem.ActorName%></td>
+                                <td><%=((int)subitem.State == 1 ? "审核中" : ((int)subitem.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                <td><%=subitem.ActorTime%></td>
+                                <td><%=subitem.Comments%></td>
+                            </tr>
+                                    <%    }
+                                    }
+                                    else
+                                    {
+                            %>
+
+                            <tr>
+                                <td><%=item.ActorName%></td>
+                                <td><%=((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                <td><%=item.ActorTime%></td>
+                                <td><%=item.Comments%></td>
+                            </tr>
+                            <%  
+                                    }
+                                } %>
                         </tbody>
 
                     </table>
                 </div>
             </div>
         </div>
-        
+
     </div>
 </form>
-<div class="detail-button" id="wizard-actions" style="padding:2px;float:right">
-               <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
-                <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
-        </div>
+<div class="detail-button" id="wizard-actions" style="padding: 2px; float: right">
+    <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
+    <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
+</div>

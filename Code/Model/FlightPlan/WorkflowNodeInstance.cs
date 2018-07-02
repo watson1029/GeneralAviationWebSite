@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.EF;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +9,17 @@ namespace Model.FlightPlan
 {
     public class WorkflowNodeInstance
     {
+        public WorkflowNodeInstance() {
+            SubActualStepsList = new List<SubActualSteps>();
+        }
         public enum StepStateType
         {
             Initialized, 
             Processing, 
             Processed, 
-            Deserted
-        };//前1-4是申请单生成，审核中，审核过，取消。 
+            Deserted,
+            NoValid
+        };//前1-4是申请单生成，审核中，审核通过，审核不通过,无效。 
         public Guid Id { get; set; }
         public Guid PlanID { get; set; }
         public int StepId { get; set; }
@@ -28,5 +33,7 @@ namespace Model.FlightPlan
         public string Comments { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime ApplyTime { get; set; }
+        public bool? IsParallel { get; set; }
+        public List<SubActualSteps> SubActualStepsList { get; set; }
     }
 }

@@ -21,12 +21,14 @@ namespace Model.EF
         public Nullable<System.DateTime> ActualEndTime { get; set; }
         public string PlanState { get; set; }
         public Nullable<int> ActorID { get; set; }
-        public bool DeletedFlag { get; set; }
         public int Creator { get; set; }
         public string CreatorName { get; set; }
         public System.DateTime CreateTime { get; set; }
         public string FlightPlanID { get; set; }
         public string Pilot { get; set; }
         public Nullable<int> AircraftNum { get; set; }
+        public bool DeletedFlag { get; set; }
+        public string ContractWay { get; set; }
+        public string ActorName { get; set; }
     }
 }

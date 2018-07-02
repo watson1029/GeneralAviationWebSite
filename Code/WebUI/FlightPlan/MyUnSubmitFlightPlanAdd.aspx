@@ -2,15 +2,23 @@
 
 <script src="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.js")%>" type="text/javascript"></script>
 <link href="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.css?v=1.3")%>" rel="stylesheet" type="text/css" />
+<script src="<%=Page.ResolveUrl("~/Content/JS/GA/airlineTable.js")%>" type="text/javascript"></script>
+<script src="<%=Page.ResolveUrl("~/Content/JS/GA/workTable.js")%>" type="text/javascript"></script>
 <script>
+    repetPlan = {
+        newairportobj: null,
+        newairlineobj: null,
+        newworkobj: null
+    };
     $(function () {
         $("#name").html('<%=User.CompanyName%>');
         initControl();
         var pid = '<%=Request.QueryString["id"] %>';
         if (!!pid) {
             $.ajax({
-                url: "MySubmitFlightPlan.aspx",
-                data: { id: pid },
+                url: "MyUnSubmitFlightPlan.aspx",
+                data: { id: pid, "action": "queryone" },
+                type:"post",
                 dataType: "json",
                 async: false,
                 success: function (data) {
@@ -25,8 +33,43 @@
             });
         }
     })
+    $(".nav-tabs li").click(function () {
+        var i = $(this).index();
+        $(this).addClass("active").siblings().removeClass("active");
+        $('#con div').eq(i).show().siblings().hide();
+    });
     function initControl() {
-
+        var airlineobj = {
+            id: "airline",
+            addid: "airline-Add",
+            minusid: "airline-Minus",
+            addcolid: "airline-AddCol",
+            minuscolid: "airline-MinusCol",
+            listid: "airline-List",
+            conid: "airline-Con"
+        };
+        var workobj = {
+            id: "cwork",
+            caddid: "cwork-Add",
+            cminusid: "cwork-Minus",
+            paddid: "pwork-Add",
+            pminusid: "pwork-Minus",
+            haddid: "hwork-Add",
+            hminusid: "hwork-Minus",
+            plistid: "pwork-List",
+            hlistid: "hwork-List",
+            cconid: "cwork-Con",
+            pconid: "pwork-Con",
+            hconid: "hwork-Con",
+            paddcolid: "pwork-AddCol",
+            pminuscolid: "pwork-MinusCol",
+            haddcolid: "hwork-AddCol",
+            hminuscolid: "hwork-MinusCol"
+        };
+        repetPlan.newairlineobj = new dj.dyAirlineTable(airlineobj);
+        repetPlan.newairlineobj.init();
+        repetPlan.newworkobj = new dj.dyWorkTable(workobj);
+        repetPlan.newworkobj.init();
         $('#wizard').wizard().on('change', function (e, data) {
             var $finish = $("#btn_finish");
             var $next = $("#btn_next");
@@ -56,7 +99,13 @@
         //}
         //var postData = $("#form1").serialize();
         //postData["MasterIDs"] = $("#MasterIDs").val().join(',');
-
+        $("#IsTempFlightPlan").val();
+        alert($("#IsTempFlightPlan").val());
+        //if()
+        //{
+        
+        //}
+        return;
         $("#btn_finish").attr("disabled", "disabled");
         var json = $.param({ "action": "save", "MasterIDs": $("#MasterIDs").combobox('getValues').join(',') }) + '&' + $('#form1').serialize();
         $.ajax({
@@ -120,8 +169,6 @@
                         $('#AircraftType').textbox('setValue',data.AircraftType);
                         $('#Remark').textbox('setValue',data.Remark);
                         $('#AirportText').textbox('setValue',data.AirportText);
-           
-        
                          $('#MasterIDs').combobox('reload','GetComboboxData.ashx?type=5&id='+rec.id);
                     }
                 });  }"  class="easyui-combobox" style="height: 25px;" />
@@ -140,17 +187,23 @@
                                     <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
+                             <tr>
+                                <th class="formTitle">是否临时计划</th>
+                                <td colspan="3" class="formValue">
+                                    <input id="IsTempFlightPlan" type="checkbox"  name="IsTempFlightPlan" value="1" />
+                                </td>
+                            </tr>
                             <tr>
                                 <th class="formTitle">机场及临时起降点</th>
                                 <td class="formValue" colspan="3">
                                     <input id="AirportText" name="AirportText" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                                 </td>
                             </tr>
+
                             <tr>
                                 <th class="formTitle">航线及作业区</th>
                                 <td class="formValue" colspan="3">
-
-                                    <input id="MasterIDs" name="MasterIDs" editable="false" required="true" class="easyui-combobox" data-options="method:'get',multiple:true,valueField:'id',textField:'text',panelHeight:'auto'
+                                    <input id="MasterIDs" name="MasterIDs" editable="false" class="easyui-combobox" data-options="method:'get',multiple:true,valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
                                         style="height: 25px; width: 600px;" />
                                 </td>
@@ -181,51 +234,188 @@
                             <tr>
                                 <th class="formTitle">航班号</th>
                                 <td class="formValue">
-                                    <input id="CallSign" name="CallSign" required="true" class="easyui-textbox" />
+                                    <input id="CallSign" name="CallSign" required="true" class="easyui-textbox" style="height: 25px;width:200px" />
                                 </td>
                                 <th class="formTitle">应答机编码</th>
                                 <td class="formValue">
-                                    <input id="SsrCode" name="SsrCode" maxlength="5" required="true" class="easyui-textbox" />
+                                    <input id="SsrCode" name="SsrCode" maxlength="5" required="true" class="easyui-textbox" style="height: 25px;width:200px" />
                                 </td>
                             </tr>
                             <tr>
                                 <th class="formTitle">计划撤轮挡时间</th>
                                 <td class="formValue">
-                                    <input id="SOBT" name="SOBT" editable="false" required="true" class="easyui-datebox" style="height: 25px" />
+                                    <input id="SOBT" name="SOBT" editable="false" required="true" class="easyui-datebox" style="height: 25px;width:200px" />
                                 </td>
                                 <th class="formTitle">计划挡轮挡时间</th>
                                 <td class="formValue">
-                                    <input id="SIBT" name="SIBT" editable="false" required="true" class="easyui-datebox" style="height: 25px" />
+                                    <input id="SIBT" name="SIBT" editable="false" required="true" class="easyui-datebox" style="height: 25px;width:200px" />
                                 </td>
                             </tr>
                             <tr>
                                 <th class="formTitle">起飞机场</th>
                                 <td class="formValue">
-                                    <input id="ADEP" name="ADEP" type="text" maxlength="4" required="true" class="easyui-textbox" />
+                                    <input id="ADEP" name="ADEP" type="text" maxlength="4" required="true" class="easyui-textbox" style="height: 25px;width:200px"/>
                                 </td>
                                 <th class="formTitle">目的地机场</th>
                                 <td class="formValue">
-                                    <input id="ADES" name="ADES" type="text" maxlength="4" required="true" class="easyui-textbox" />
+                                    <input id="ADES" name="ADES" type="text" maxlength="4" required="true" class="easyui-textbox" style="height: 25px;width:200px"/>
                                 </td>
-                            </tr>
-                            <tr>
-                                <th class="formTitle">航空器数量</th>
-                                <td class="formValue">
-                                    <input id="AircraftNumber" name="AircraftNumber" style="height: 25px" maxlength="4" type="text" required="true" class="easyui-numberbox" data-options="min:1,max:100" />
-                                </td>
-
-                            </tr>
+                            </tr>                       
                             <tr>
                                 <th class="formTitle">备降机场I</th>
                                 <td class="formValue">
-                                    <input id="ALTN1" name="ALTN1"  maxlength="4" class="easyui-textbox" />
+                                    <input id="ALTN1" name="ALTN1"  maxlength="4" class="easyui-textbox" style="height: 25px;width:200px"/>
                                 </td>
                                 <th class="formTitle">备降机场II</th>
                                 <td class="formValue">
-                                    <input id="ALTN2" name="ALTN2"  maxlength="4" class="easyui-textbox" />
+                                    <input id="ALTN2" name="ALTN2"  maxlength="4" class="easyui-textbox" style="height: 25px;width:200px"/>
                                 </td>
                             </tr>
+                                 <tr>
+                                <th style="padding-top: 5px; width: 50px">航线
+                                </th>
+                                <td colspan="3">
+                                    <table id="airline-List" class="table table-bordered" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center">飞行高度</th>
+                                                <th style="text-align: center">点中文名1</th>
+                                                <th style="text-align: center">经纬度1</th>
+                                                <th style="text-align: center">点中文名2</th>
+                                                <th style="text-align: center">经纬度2</th>
 
+                                            </tr>
+                                        </thead>
+                                        <tbody id="airline-Con">
+                                            <tr>
+                                                <td class="formValue">
+                                                    <input id="AirlineFlyHeight_row1" name="AirlineFlyHeight_row1" type="text" maxlength="20" style="height: 25px;width:80px"/></td>
+                                                <td class="formValue">
+                                                    <input id="AirlineName_row1_col1" name="AirlineName_row1_col1" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
+                                                <td class="formValue">
+                                                    <input id="AirlineLatLong_row1_col1" name="AirlineLatLong_row1_col1" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
+                                                <td class="formValue">
+                                                    <input id="AirlineName_row1_col2" name="AirlineName_row1_col2" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
+                                                <td class="formValue">
+                                                    <input id="AirlineLatLong_row1_col2" name="AirlineLatLong_row1_col2" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <a id="airline-Add" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增行</a>
+                                    <a id="airline-Minus" class="easyui-linkbutton" style="margin-top: 20px;">删除行</a>
+                                    <a id="airline-AddCol" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增列</a>
+                                    <a id="airline-MinusCol" class="easyui-linkbutton" style="margin-top: 20px;">删除列</a>
+                                </td>
+                            </tr>
+                            <tr style="padding: 2px;">
+                                <th  style="padding-top: 5px;">作业区
+                                </th>
+                                <td colspan="3">
+                                    <ul class="nav nav-tabs" style="padding-top: 10px;">
+                                        <li class="active"><a href="javascript:void(0)">作业区(圆)</a></li>
+                                        <li><a href="javascript:void(0)">作业区(点连线)</a></li>
+                                        <li><a href="javascript:void(0)">作业区(航线左右)</a></li>
+                                    </ul>
+                                    <div id="con">
+                                        <div style="padding-top: 20px; margin-right: 30px; display: block">
+                                            <table id="cwork-List" class="table table-bordered" style="width: 100%; float: left">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="text-align: center">飞行高度</th>
+                                                        <th style="text-align: center">半径（公里）</th>
+                                                        <th style="text-align: center">点中文名1</th>
+                                                        <th style="text-align: center">经纬度1</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="cwork-Con">
+                                                    <tr>
+                                                        <td class="formValue">
+                                                            <input id="CFlyHeight1" name="CFlyHeight1" type="text" maxlength="50" style="height: 25px;width:80px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="CRadius1" name="CRadius1" type="text" maxlength="50" style="height: 25px;width:80px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="CWorkName1" name="CWorkName1" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="CLatLong1" name="CLatLong1" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <a id="cwork-Add" class="easyui-linkbutton" style="margin-top: 40px; margin-left: 5px;">新增行</a>
+                                            <a id="cwork-Minus" class="easyui-linkbutton" style="margin-top: 40px;">删除行</a>
+                                        </div>
+                                        <div style="padding-top: 20px; margin-right: 30px; display: none">
+                                            <table id="pwork-List" class="table table-bordered" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="text-align: center">飞行高度</th>
+                                                        <th style="text-align: center">点中文名1</th>
+                                                        <th style="text-align: center">经纬度1</th>
+                                                        <th style="text-align: center">点中文名2</th>
+                                                        <th style="text-align: center">经纬度2</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="pwork-Con">
+                                                    <tr>
+                                                        <td class="formValue">
+                                                            <input id="PFlyHeight_row1" name="PFlyHeight_row1" type="text" maxlength="20" style="height: 25px;width:80px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="PWorkName_row1_col1" name="PWorkName_row1_col1" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="PWorkLatLong_row1_col1" name="PWorkLatLong_row1_col1" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="PWorkName_row1_col2" name="PWorkName_row1_col2" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="PWorkLatLong_row1_col2" name="PWorkLatLong_row1_col2" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <a id="pwork-Add" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增行</a>
+                                            <a id="pwork-Minus" class="easyui-linkbutton" style="margin-top: 20px;">删除行</a>
+                                            <a id="pwork-AddCol" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增列</a>
+                                            <a id="pwork-MinusCol" class="easyui-linkbutton" style="margin-top: 20px;">删除列</a>
+                                        </div>
+                                        <div style="padding-top: 20px; margin-right: 30px; display: none">
+                                            <table id="hwork-List" class="table table-bordered" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="text-align: center">飞行高度</th>
+                                                        <th style="text-align: center">距离</th>
+                                                        <th style="text-align: center">点中文名1</th>
+                                                        <th style="text-align: center">经纬度1</th>
+                                                        <th style="text-align: center">点中文名2</th>
+                                                        <th style="text-align: center">经纬度2</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="hwork-Con">
+                                                    <tr>
+                                                        <td class="formValue">
+                                                            <input id="HFlyHeight_row1" name="HFlyHeight_row1" type="text" maxlength="20" style="height: 25px;width:80px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="HDistance_row1" name="HDistance_row1" type="text" maxlength="20" style="height: 25px;width:80px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="HWorkName_row1_col1" name="HWorkName_row1_col1" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="HWorkLatLong_row1_col1" name="HWorkLatLong_row1_col1" type="text" maxlength="50" style="height: 25px;width:200px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="HWorkName_row1_col2" name="HWorkName_row1_col2" type="text" maxlength="50" style="height: 25px;width:100px"/></td>
+                                                        <td class="formValue">
+                                                            <input id="HWorkLatLong_row1_col2" name="HWorkLatLong_row1_col2" type="text" maxlength="50" style="height: 25px;width:200px" /></td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <a id="hwork-Add" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增行</a>
+                                            <a id="hwork-Minus" class="easyui-linkbutton" style="margin-top: 20px;">删除行</a>
+                                            <a id="hwork-AddCol" class="easyui-linkbutton" style="margin-top: 20px; margin-left: 5px;">新增列</a>
+                                            <a id="hwork-MinusCol" class="easyui-linkbutton" style="margin-top: 20px;">删除列</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>

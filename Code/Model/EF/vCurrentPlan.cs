@@ -21,7 +21,6 @@ namespace Model.EF
         public Nullable<System.DateTime> ActualEndTime { get; set; }
         public string PlanState { get; set; }
         public Nullable<int> ActorID { get; set; }
-        public Nullable<bool> DeletedFlag { get; set; }
         public Nullable<int> Creator { get; set; }
         public string CreatorName { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
@@ -33,7 +32,6 @@ namespace Model.EF
         public string ADEP { get; set; }
         public string ADES { get; set; }
         public string SsrCode { get; set; }
-        public int AircraftNumber { get; set; }
         public string CallSign { get; set; }
         public Nullable<System.DateTime> ATOT { get; set; }
         public Nullable<System.DateTime> ALDT { get; set; }
@@ -47,5 +45,9 @@ namespace Model.EF
         public string Remark { get; set; }
         public Nullable<int> AircraftNum { get; set; }
         public Nullable<int> Creator1 { get; set; }
+        public System.Guid FlightPlanID1 { get; set; }
+        public string CreatorName1 { get; set; }
+        public string Pilot { get; set; }
+        public string ContractWay { get; set; }
     }
 }

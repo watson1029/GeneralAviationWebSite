@@ -160,15 +160,34 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% foreach(var item in auditList){  %>
-                                  <tr>
-                                    <td><%=item.ActorName%></td>
-                                    <td><%=((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))%></td>
-                                    <td><%=item.ActorTime%></td>
-                                    <td><%=item.Comments%></td>
-                                             </tr>
-                               <%   } %>
-                            }
+                              <% foreach (var item in auditList)
+                                {
+                                    if (item.IsParallel.HasValue && item.IsParallel.Value)
+                                    {
+                                        foreach (var subitem in item.SubActualStepsList)
+                                        {
+                                            %>
+                             <tr>
+                                <td><%=subitem.ActorName%></td>
+                                <td><%=((int)subitem.State == 1 ? "审核中" : ((int)subitem.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                <td><%=subitem.ActorTime%></td>
+                                <td><%=subitem.Comments%></td>
+                            </tr>
+                                    <%    }
+                                    }
+                                    else
+                                    {
+                            %>
+
+                            <tr>
+                                <td><%=item.ActorName%></td>
+                                <td><%=((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                <td><%=item.ActorTime%></td>
+                                <td><%=item.Comments%></td>
+                            </tr>
+                            <%  
+                                    }
+                                } %>
                         </tbody>
 
                     </table>

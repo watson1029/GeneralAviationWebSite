@@ -14,6 +14,7 @@ using Model.EF;
 using System.IO;
 using System.Data;
 using System.Data.Entity;
+using ViewModel.FlightPlan;
 
 public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
 {
@@ -54,7 +55,14 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
 
         try
         {
-            currPlanBll.Submit(planid,User.ID,User.UserName);
+            CurrentFlightPlanVM model = new CurrentFlightPlanVM() {
+                AircraftNum=int.Parse(Request.Form["AircraftNum"]),
+                ContractWay= Request.Form["ContractWay"],
+                Pilot = Request.Form["Pilot"],
+                ActualStartTime =DateTime.Parse(Request.Form["ActualStartTime"]),
+                ActualEndTime = DateTime.Parse(Request.Form["ActualEndTime"])
+            };
+            currPlanBll.Submit(planid,User.ID,User.UserName, User.RoleName.First(), model);
             result.IsSuccess = true;
             result.Msg = "提交成功！";
         }

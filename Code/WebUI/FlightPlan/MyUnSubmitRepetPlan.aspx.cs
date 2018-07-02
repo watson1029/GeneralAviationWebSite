@@ -158,7 +158,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
             try
             {
                 wftbll.CreateWorkflowInstance((int)TWFTypeEnum.RepetitivePlan, planid, User.ID, User.UserName);
-                insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, User.ID, User.UserName, "", insdal.UpdateRepetPlan);
+                insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan, User.ID, User.UserName,User.RoleName.First(), "", insdal.UpdateRepetPlan);
                 result.IsSuccess = true;
                 result.Msg = "提交成功！";
             }

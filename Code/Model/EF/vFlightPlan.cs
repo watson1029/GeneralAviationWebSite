@@ -36,7 +36,6 @@ namespace Model.EF
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Code { get; set; }
         public string SsrCode { get; set; }
-        public int AircraftNumber { get; set; }
         public Nullable<System.DateTime> ALDT { get; set; }
         public Nullable<System.DateTime> ATOT { get; set; }
         public Nullable<System.DateTime> AOBT { get; set; }

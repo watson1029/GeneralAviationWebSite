@@ -42,7 +42,6 @@ namespace Model.EF
         public string ALTN2 { get; set; }
         public string RepetPlanID { get; set; }
         public string Code { get; set; }
-        public int AircraftNumber { get; set; }
         public string CallSign { get; set; }
         public string CompanyName { get; set; }
         public Nullable<int> Creator { get; set; }

@@ -62,7 +62,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlanAdd : BasePage
             entity.GetEntitySearchPars<RepetitivePlan>(this.Context);
             entity.RepetPlanID = Guid.NewGuid();
             entity.WeekSchedule = Request.Form["qx"];
-            entity.AttachFile = Request.Params["AttchFilesInfo"];
+            entity.AttachFile = Request.Params["AttachFilesInfo"];
             entity.PlanState = "0";
             entity.CompanyCode3 = User.CompanyCode3 ?? "";
             entity.CompanyName = User.CompanyName;

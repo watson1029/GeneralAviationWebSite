@@ -2,7 +2,7 @@
     CodeFile="MyUnSubmitFlightPlan.aspx.cs" Inherits="FlightPlan_MyUnSubmitFlightPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
-    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
+<%--    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <%-- <div class="gridsearch">
@@ -107,7 +107,7 @@
                     rownumbers: true, //行号
                     onClickRow: function (index, row) {
                         var keyValue = row["FlightPlanID"];
-                        zhccMap.addFlyPlan(keyValue);
+                       // zhccMap.addFlyPlan(keyValue);
                     }
                 });
             },

@@ -117,7 +117,7 @@
                     rownumbers: true, //行号
                     onClickRow: function (index, row) {
                         var keyValue = row["RepetPlanID"];
-                        zhccMap.addRepetPlan(keyValue);
+                      //  zhccMap.addRepetPlan(keyValue);
                     }
                 });
             },
@@ -138,6 +138,7 @@
 
             //打开添加窗口
             OpenWin: function () {
+                $("#edit").html("");
                 $("#add").dialog("open").dialog('setTitle', '新增长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx');
             },
             //提交按钮事件
@@ -186,6 +187,7 @@
 
             //修改链接 事件
             EditData: function (uid) {
+                $("#add").html("");
                 $("#edit").dialog("open").dialog('setTitle', '编辑长期计划').dialog('refresh', 'MyUnSubmitRepetPlanEdit.aspx?id=' + uid);
             },
             BatchImport: function () {
@@ -277,7 +279,6 @@
         modal="true" cache="false"  closed="true" >
         
     </div>
-
    <div id="add" class="easyui-dialog" style="width: 1200px; height:700px;"
         modal="true" cache="false" closed="true">
         

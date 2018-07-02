@@ -1,4 +1,5 @@
 ﻿using DAL.FlightPlan;
+using Model.EF;
 using Model.FlightPlan;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,13 @@ namespace BLL.FlightPlan
     {
         private WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
         private WorkflowTplNodeDAL wtndal = new WorkflowTplNodeDAL();
-
+        private WorkflowSubTplNodeDAL wsubtndal = new WorkflowSubTplNodeDAL();
         public Guid CreateWorkflowInstance(int twfId, Guid planId, int userID, string userName)
         {
             Guid firstStepId = Guid.Empty;
             List<WorkflowNodeInstance> tempNodesInst = new List<WorkflowNodeInstance>();
             List<WorkflowNodeInstance> nodesInstance = new List<WorkflowNodeInstance>();
+            List<SubActualSteps> subnodesInstance = new List<SubActualSteps>();
             WorkflowNodeInstance firstNodeInst = new WorkflowNodeInstance();
 
             //找出指定流程模板中所有的流程节点，并创建流程节点实例
@@ -27,7 +29,6 @@ namespace BLL.FlightPlan
                 WorkflowNodeInstance ninst = wtndal.CreateNodeInstance(tnode, planId);
                 tempNodesInst.Add(ninst);
             }
-
             //当流程节点实例创建完成后，给实例加上流程链，让实例节点串联起来
             WorkflowTplNode firstTnode = new WorkflowTplNode();
             var query1 = from c in tnodeList where c.PrevId == 0 select c;
@@ -61,6 +62,8 @@ namespace BLL.FlightPlan
                 nodesInstance.Add(nextNodeInst);
                 prevTnode = nextTnode;
                 prevNodeInst = nextNodeInst;
+
+                
             }
 
             //完成流程节点实例的串联工作，更新到数据库

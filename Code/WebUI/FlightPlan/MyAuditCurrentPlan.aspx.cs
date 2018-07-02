@@ -112,11 +112,11 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
         {
             if (Request.Form["Auditresult"] == "0")
             {
-                currPlanBll.Audit(planid, Request.Form["AuditComment"] ?? "", User.ID, User.UserName);
+                currPlanBll.Audit(planid, Request.Form["AuditComment"] ?? "", User.ID, User.UserName,User.RoleName.First());
             }
             else
             {
-                currPlanBll.Terminate(planid, Request.Form["AuditComment"] ?? "", User.ID,User.UserName);
+                currPlanBll.Terminate(planid, Request.Form["AuditComment"] ?? "", User.ID,User.UserName, User.RoleName.First());
             }
             result.IsSuccess = true;
             result.Msg = "提交成功！";
@@ -146,14 +146,14 @@ public partial class FlightPlan_MyAuditCurrentPlan : BasePage
                 {
                     foreach (var item in arr)
                     {
-                        currPlanBll.Audit(Guid.Parse(item), Request.Form["AuditComment"] ?? "", User.ID, User.UserName);
+                        currPlanBll.Audit(Guid.Parse(item), Request.Form["AuditComment"] ?? "", User.ID, User.UserName,User.RoleName.First());
                     }
                 }
                 else
                 {
                     foreach (var item in arr)
                     {
-                        currPlanBll.Terminate(Guid.Parse(item), Request.Form["AuditComment"] ?? "", User.ID, User.UserName);
+                        currPlanBll.Terminate(Guid.Parse(item), Request.Form["AuditComment"] ?? "", User.ID, User.UserName,User.RoleName.First());
                     }
                 }
                 result.IsSuccess = true;

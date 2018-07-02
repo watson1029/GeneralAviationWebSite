@@ -379,7 +379,7 @@ public class DBHelper<T> where T : class
             }
             if (pro.Name.Equals("DeletedFlag"))
             {
-                if (pro.GetValue(entity) == null) pro.SetValue(entity, 0);
+                if (pro.GetValue(entity) == null) pro.SetValue(entity, false);
             }
         }
     }

@@ -12,12 +12,12 @@ namespace Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class TWFPerson
+    public partial class SubTWFSteps
     {
         public int ID { get; set; }
-        public string RoleName { get; set; }
+        public int ParentTWFID { get; set; }
+        public string StepName { get; set; }
+        public string Descrition { get; set; }
         public string AuthorType { get; set; }
-        public int TWFID { get; set; }
-        public int StepID { get; set; }
     }
 }

@@ -58,7 +58,7 @@ namespace DAL.FlightPlan
                 throw ex;
             }
         }
-        public WorkflowNodeInstance Submit(Guid planId, int twfid, int userID, string userName, string comments, Action<WorkflowPlan> action, int controlDep=0)
+        public WorkflowNodeInstance Submit(Guid planId, int twfid, int userID, string userName,string roleName, string comments, Action<WorkflowPlan> action, string controlDepList=null)
         {
             List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId, twfid);
             var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
@@ -67,43 +67,97 @@ namespace DAL.FlightPlan
             {
                 try
                 {
-                    Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processed, Comments = comments, ActorID = userID, ActorName = userName, ActorTime = DateTime.Now, ID = currInst.Id }, "State", "ActorID", "ActorName", "Comments", "ActorTime");
-                    currInst.State = WorkflowNodeInstance.StepStateType.Processed;
+                    if (currInst.IsParallel.HasValue && currInst.IsParallel.Value)
+                    {       
+                        //根据登陆角色获取流程实例
+                        var entity = context.SubActualSteps.FirstOrDefault(u => u.ParentStepID == currInst.Id.ToString() && roleName.Contains(u.ActorName) && u.State == (int)WorkflowNodeInstance.StepStateType.Processing);
+                        if (entity != null)
+                        {
+                            entity.State = (byte)WorkflowNodeInstance.StepStateType.Processed;
+                            entity.Comments = comments;
+                            entity.ActorID = userID;
+                            entity.ActorName = userName;
+                            entity.ActorTime = DateTime.Now;
+                            context.SaveChanges();
+                            if (context.SubActualSteps.Count(u => u.ParentStepID == currInst.Id.ToString() && u.State == (int)WorkflowNodeInstance.StepStateType.Processing) != 0)
+                            {
+                                var repplan = context.RepetitivePlan.Find(planId);
+                                if (repplan != null)
+                                {
+                                    var list = new List<string>(repplan.ActorName.Split(','));
+                                    list.Remove(roleName);
+                                    repplan.ActorName = string.Join(",", list);
+                                    context.SaveChanges();
+                                }
+                                dbContextTransaction.Commit();
+                                return null;
+                            }
+                         }
+                        else
+                        {
+                            throw new Exception("找不到流程实例！");
+                        }
+                    }
+                        Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processed, Comments = comments, ActorID = userID, ActorName = userName, ActorTime = DateTime.Now, ID = currInst.Id }, "State", "ActorID", "ActorName", "Comments", "ActorTime");
+                        currInst.State = WorkflowNodeInstance.StepStateType.Processed;
                     //更新下一个节点状态为处理中
                     if (currInst.NextId != Guid.Empty)
                     {
                         nextInst = GetNodeInstance(currInst.NextId);
                         WorkflowTplNode tnode = _dal.GetNode(nextInst.StepId);
-                        //var auhtor = int.Parse(tnode.AuthorType);
-                        //var userInfo = context.Set<UserInfo>().Where(u => u.ID == auhtor).FirstOrDefault();
-                        //int actor = userInfo.ID;
-                        switch (controlDep)
+                        #region 如果是并行流程
+                        if (tnode.IsParallel.HasValue && tnode.IsParallel.Value)
                         {
-                            case (int)ControlDepartmentEnum.区管:
-                                tnode.AuthorType=ControlDepartmentEnum.区管.ToString();
-                                break;
-                            case (int)ControlDepartmentEnum.塔台:
-                                tnode.AuthorType = ControlDepartmentEnum.塔台.ToString();
-                                break;
-                            case (int)ControlDepartmentEnum.进近:
-                                tnode.AuthorType = ControlDepartmentEnum.进近.ToString();
-                                break;
-                            default:
-                                break;
+                            if (controlDepList != null && !string.IsNullOrEmpty(controlDepList))
+                            {
+                                var controlDepArray = controlDepList.Split(',');
+                                var list = context.SubActualSteps.Where(u => u.ParentStepID == currInst.NextId.ToString());
+                                foreach (var item in list)
+                                {
+                                    if (controlDepArray.Contains(item.ActorName))
+                                    {
+                                        item.State = (byte)WorkflowNodeInstance.StepStateType.Processing;
+                                        item.ApplyTime = DateTime.Now;
+
+                                    }
+                                    else
+                                    {
+                                        item.State = (byte)WorkflowNodeInstance.StepStateType.NoValid;
+                                    }
+                                }
+                                tnode.AuthorType = controlDepList;
+                                context.SaveChanges();
+                            }
+                            else   //将下个节点全部设为无效
+                            {
+
+                                var list = context.SubActualSteps.Where(u => u.ParentStepID == currInst.NextId.ToString());
+                                foreach (var item in list)
+                                {
+                                    item.State = (byte)WorkflowNodeInstance.StepStateType.NoValid;
+                                }
+                                    context.SaveChanges();
+                                
+                                Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.NoValid, ID = currInst.NextId }, "State");
+                                action(new WorkflowPlan { Actor = null, ActorName = null, PlanState = "end", PlanID = planId });
+
+                                dbContextTransaction.Commit();
+                                return null;
+                            }
                         }
-                        var roleInfo = context.Set<Role>().Where(u => u.RoleName.Contains(tnode.AuthorType)).FirstOrDefault();
-                        //判断节点的活动所有者类型
+                            #endregion
 
-                        Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processing, ApplyTime = DateTime.Now, ActorName = roleInfo.RoleName, ID = currInst.NextId }, "State", "ApplyTime", "ActorID", "ActorName");
+                            //判断节点的活动所有者类型
+                            Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processing, ApplyTime = DateTime.Now, ActorName = tnode.AuthorType, ID = currInst.NextId }, "State", "ApplyTime", "ActorID", "ActorName");
+                            action(new WorkflowPlan { ActorName = tnode.AuthorType, PlanState = tnode.AuthorType, PlanID = planId });
 
-                        action(new WorkflowPlan { ActorName = roleInfo.RoleName, PlanState = tnode.StepName, PlanID = planId });
-
-                        nextInst = GetNodeInstance(currInst.NextId);
-                    }
-                    else
-                    {
-                        action(new WorkflowPlan { Actor = null, ActorName = null, PlanState = "end", PlanID = planId });
-                    }
+                            nextInst = GetNodeInstance(currInst.NextId);
+                        }
+                        else
+                        {
+                            action(new WorkflowPlan { Actor = null, ActorName = null, PlanState = "end", PlanID = planId });
+                        }
+                    
                     dbContextTransaction.Commit();
                 }
                 catch (Exception ex)
@@ -121,7 +175,7 @@ namespace DAL.FlightPlan
             var entity = new RepetitivePlan() { ActorName = plan.ActorName, PlanState = plan.PlanState, RepetPlanID = plan.PlanID };
             var entry = context.Entry(entity);
             entry.State = EntityState.Unchanged;
-            foreach (string propertyName in new string[] { "ActorName", "PlanState" })
+            foreach (string propertyName in new string[] {  "ActorName", "PlanState" })
             {
                 entry.Property(propertyName).IsModified = true;
             }
@@ -148,7 +202,7 @@ namespace DAL.FlightPlan
         /// <param name="planId"></param>
         /// <param name="comments"></param>
         /// <returns></returns>
-        public int Terminate(Guid planId, int twfid, int userID, string userName, string comments, Action<WorkflowPlan> func)
+        public int Terminate(Guid planId, int twfid, int userID, string userName,string roleName, string comments, Action<WorkflowPlan> func)
         {
             List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId, twfid);
             var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
@@ -157,7 +211,26 @@ namespace DAL.FlightPlan
             {
                 try
                 {
-                    Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Deserted, ActorID = userID, ActorName = userName, Comments = comments, ID = currInst.Id }, "State", "ActorID", "ActorName", "Comments");
+                    if (currInst.IsParallel.HasValue && currInst.IsParallel.Value)
+                    {
+
+                        //根据登陆角色获取流程实例
+                        var entity = context.SubActualSteps.FirstOrDefault(u => u.ParentStepID == currInst.Id.ToString() && roleName.Contains(u.ActorName) && u.State == (int)WorkflowNodeInstance.StepStateType.Processing);
+                        if (entity != null)
+                        {
+                            entity.State = (byte)WorkflowNodeInstance.StepStateType.Deserted;
+                            entity.Comments = comments;
+                            entity.ActorID = userID;
+                            entity.ActorTime = DateTime.Now;
+                            context.SaveChanges();          
+                        }
+                        else
+                        {
+                            throw new Exception("找不到流程实例！");
+                        }
+                    }
+
+                    Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Deserted, ActorID = userID, ActorName = userName, ActorTime = DateTime.Now, Comments = comments, ID = currInst.Id }, "State", "ActorID", "ActorName", "ActorTime", "Comments");
                     func(new WorkflowPlan { Actor = null, ActorName = null, PlanState = WorkflowNodeInstance.StepStateType.Deserted.ToString(), PlanID = planId });
                     dbContextTransaction.Commit();
                 }
@@ -229,6 +302,14 @@ namespace DAL.FlightPlan
             ninst.Comments = entity.Comments ?? "";
             if (entity.ApplyTime.HasValue)
                 ninst.ApplyTime = entity.ApplyTime.Value;
+            if (entity.IsParallel.HasValue)
+            {
+                ninst.IsParallel = entity.IsParallel.Value;
+                if(ninst.IsParallel.Value)
+                {
+                    ninst.SubActualStepsList = context.SubActualSteps.Where(u=>u.ParentStepID== entity.ID.ToString()&&u.State!=4 && u.State != 0).ToList();
+                }
+            }
             return ninst;
         }
 

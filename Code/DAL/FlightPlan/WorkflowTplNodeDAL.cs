@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Linq.Expressions;
 using Untity.DB;
 
@@ -28,7 +30,6 @@ namespace DAL.FlightPlan
             }
             return _WorkflowTplNodeList;
         }
-
         private WorkflowTplNode ExecReader(TWFSteps entity)
         {
             WorkflowTplNode wfNode = new WorkflowTplNode();
@@ -40,6 +41,9 @@ namespace DAL.FlightPlan
             if (entity.NextID.HasValue)
                 wfNode.NextId = entity.NextID.Value;
             wfNode.AuthorType = entity.AuthorType ?? "";
+            if (entity.IsParallel.HasValue)
+                wfNode.IsParallel = entity.IsParallel.Value;
+            wfNode.SubTWFStepsList = context.Set<SubTWFSteps>().Where(u => u.ParentTWFID == entity.StepID).OrderBy(u => u.ID).AsNoTracking().ToList();
             return wfNode;
         }
         /// <summary>
@@ -63,9 +67,23 @@ namespace DAL.FlightPlan
                 State = 0,
                 PrevID = Guid.Empty,
                 NextID = Guid.Empty,
-                CreateTime = DateTime.Now
+                CreateTime = DateTime.Now,
+               IsParallel= tnode.IsParallel
             };
             context.ActualSteps.Add(_instance);
+            foreach (var item in tnode.SubTWFStepsList)
+            {
+            SubActualSteps _subinstance = new SubActualSteps
+                {
+                    ID = Guid.NewGuid(),
+                    ParentStepID = guid.ToString(),
+                    State = 0,
+                    CreateTime = DateTime.Now,
+                    ActorName= item.AuthorType
+            };
+                context.SubActualSteps.Add(_subinstance);
+                nodeInst.SubActualStepsList.Add(_subinstance);
+            }
             if (context.SaveChanges() > 0)
             {
                 nodeInst.Id = guid;

@@ -131,7 +131,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
             try
             {
                 wftbll.CreateWorkflowInstance((int)TWFTypeEnum.FlightPlan, planid, User.ID, User.UserName);
-                insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan, User.ID,User.UserName,"", insdal.UpdateFlightPlan);
+                insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan, User.ID,User.UserName, User.RoleName.First(), "", insdal.UpdateFlightPlan);
 
                 result.IsSuccess = true;
                 result.Msg = "提交成功！";

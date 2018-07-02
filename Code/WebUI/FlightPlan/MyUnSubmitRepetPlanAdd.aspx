@@ -6,7 +6,7 @@
             <ul class="steps">
                 <li data-target="#step-1" class="active"><span class="step">1</span>文件解析<span class="chevron"></span></li>
                 <li data-target="#step-2"><span class="step">2</span>基本信息<span class="chevron"></span></li>
-                <li data-target="#step-3"><span class="step">3</span>附件上传<span class="chevron"></span></li>
+                <li data-target="#step-3"><span class="step">3</span>航线及作业区<span class="chevron"></span></li>
             </ul>
         </div>
         <div class="step-content" id="wizard-steps" style="border-left: none; border-bottom: none; border-right: none;">
@@ -15,7 +15,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">文件解析</h3>
                     </div>
-                    <div class="panel-body" style="width: 100%;">
+                    <div class="panel-body" style="padding: 15px;width:98%;">
                         <table class="form">
                             <tr>
                                 <th class="formTitle">文档文本</th>
@@ -25,7 +25,7 @@
                                     <div id="PlanFiles-fileQueue"></div>
                                     <div id="PlanFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
                                     <div>
-                                        <textarea id="PlanFiles-textArea" name="PlanFiles-textArea" style="height: 500px; width: 1000px"></textarea>
+                                        <textarea id="PlanFiles-textArea" name="PlanFiles-textArea" style="height: 475px; width: 998px"></textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -390,8 +390,8 @@
             return;
         }
                
-        var fileInfo = dj.getCmp("AttchFiles").getUploadedFiles();
-        $("#AttchFilesInfo").val(fileInfo);
+        var fileInfo = dj.getCmp("AttachFiles").getUploadedFiles();
+        $("#AttachFilesInfo").val(fileInfo);
         qx = $("input[name='WeekSchedule']").map(function () {
             var $this = $(this);
             if ($this.is(':checked')) {

@@ -27,5 +27,6 @@ namespace Model.EF
         public string Comments { get; set; }
         public Nullable<System.DateTime> ActorTime { get; set; }
         public string ActorName { get; set; }
+        public Nullable<bool> IsParallel { get; set; }
     }
 }

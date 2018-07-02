@@ -11,6 +11,7 @@ using Untity;
 using RIPS.Util.Collections;
 using Newtonsoft.Json;
 using Model.FlightPlan;
+using ViewModel.FlightPlan;
 
 namespace BLL.FlightPlan
 {
@@ -61,21 +62,29 @@ namespace BLL.FlightPlan
         /// <param name="userid"></param>
         /// <param name="username"></param>
         /// <returns></returns>
-        public bool Submit(Guid planid, int userid, string username)
+        public bool Submit(Guid planid, int userid, string username,string rolename, CurrentFlightPlanVM model)
         {
             //ActionWithTrans(() =>
             //{
-            CurrentFlightPlan model = new CurrentFlightPlan();
-            model.FlightPlanID = planid.ToString();
-            model.ActorID = userid;
-            model.PlanState = "";
-            dal.Add(model);
+            CurrentFlightPlan entity = new CurrentFlightPlan();
+            entity.CurrentFlightPlanID = Guid.NewGuid();
+            entity.FlightPlanID = planid.ToString();
+            entity.ActorID = userid;
+            entity.PlanState = "";
+            entity.Pilot = model.Pilot;
+            entity.ContractWay = model.ContractWay;
+            entity.AircraftNum = model.AircraftNum;
+            entity.ActualStartTime = model.ActualStartTime;
+            entity.ActualEndTime = model.ActualEndTime;
+            entity.Creator = userid;
+            entity.CreatorName = username;
+            dal.Add(entity);
 
-            var currPlanId = model.CurrentFlightPlanID;
+            var currPlanId = entity.CurrentFlightPlanID;
             wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, currPlanId, userid, username);
-            instal.Submit(currPlanId, (int)TWFTypeEnum.CurrentPlan, userid, username, "", workPlan =>
+            instal.Submit(currPlanId, (int)TWFTypeEnum.CurrentPlan, userid, username, rolename,"", workPlan =>
             {
-                dal.Update(new CurrentFlightPlan { ActorID = workPlan.Actor.Value, PlanState = workPlan.PlanState, CurrentFlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
+                dal.Update(new CurrentFlightPlan { ActorName = workPlan.ActorName, PlanState = workPlan.PlanState, CurrentFlightPlanID = workPlan.PlanID }, "ActorID", "PlanState");
             });
             //});
 
@@ -87,9 +96,9 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Audit(Guid planid, string comment, int userid, string userName)
+        public bool Audit(Guid planid, string comment, int userid, string userName,string roleName)
         {
-            instal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, userid, userName, comment, workPlan =>
+            instal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, userid, userName, roleName, comment, workPlan =>
             {
                 dal.Update(new CurrentFlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, CurrentFlightPlanID = workPlan.PlanID, Creator = userid, CreateTime = DateTime.Now }, "ActorID", "PlanState", "CreateUserId", "CreateTime");
             });
@@ -101,9 +110,9 @@ namespace BLL.FlightPlan
         /// <param name="planid"></param>
         /// <param name="comment"></param>
         /// <returns></returns>
-        public bool Terminate(Guid planid, string comment, int userid, string userName)
+        public bool Terminate(Guid planid, string comment, int userid, string userName,string roleName)
         {
-            instal.Terminate(planid, (int)TWFTypeEnum.CurrentPlan, userid, userName, comment, workPlan =>
+            instal.Terminate(planid, (int)TWFTypeEnum.CurrentPlan, userid, userName, roleName, comment, workPlan =>
             {
                 dal.Update(new CurrentFlightPlan { ActorID = workPlan.Actor, PlanState = workPlan.PlanState, CurrentFlightPlanID = workPlan.PlanID, Creator = userid, CreateTime = DateTime.Now }, "ActorID", "PlanState", "CreateUserId", "CreateTime");
             });

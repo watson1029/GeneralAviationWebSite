@@ -6,7 +6,7 @@
         <div id="wizard" class="wizard" data-target="#wizard-steps" style="border-left: none; border-top: none; border-right: none;">
             <ul class="steps">
                 <li data-target="#step-1" class="active"><span class="step">1</span>基本信息<span class="chevron"></span></li>
-                <li data-target="#step-2"><span class="step">2</span>附件上传<span class="chevron"></span></li>
+                <li data-target="#step-2"><span class="step">2</span>航线及作业区<span class="chevron"></span></li>
             </ul>
         </div>
         <div class="step-content" id="wizard-steps" style="border-left: none; border-bottom: none; border-right: none;">
@@ -180,7 +180,7 @@
                                                 </tbody>
                                             </table>
                                             <a id="cwork-Add" class="easyui-linkbutton" style="margin-top: 40px; margin-left: 5px;">新增行</a>
-                                            <a id="cwork-Minus" class="easyui-linkbutton" style="margin-top: 40px;">删除行</a>
+                                            <a id="cwork-Minus" class="easyui-linkbutton" style="margin-top: 40px; margin-left: 5px;">删除行</a>
                                         </div>
                                         <div style="padding-top: 20px; margin-right: 30px; display: none">
                                             <table id="pwork-List" class="table table-bordered" style="width: 100%;">
@@ -426,7 +426,7 @@
         postData["PWorkText"] = repetPlan.newworkobj.getPWorkJsonData();
         postData["HWorkText"] = repetPlan.newworkobj.getHWorkJsonData();
         $.submitForm({
-            url: "/FlightPlan/RepetPlanNew/SubmitForm?keyValue=" + keyValue,
+            url: "/RepetPlanNew/SubmitForm?keyValue=" + keyValue,
             param: postData,
             success: function () {
                 $.currentWindow().$("#gridList").trigger("reloadGrid");

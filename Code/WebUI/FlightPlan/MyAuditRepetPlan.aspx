@@ -87,7 +87,7 @@
                             }
                         },
                          { title: '机场及起降点', field: 'AirportText', width: 200 },
-                          { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
+                          //{ title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                          { title: '创建人', field: 'CreatorName', width: 60 },
                           {
                               title: '创建时间', field: 'CreateTime', width: 120, formatter: function (value, rec, index) {
@@ -206,7 +206,7 @@
         };
     </script>
 
-    <div id="audit" class="easyui-dialog" style="width:1000px; height:800px;"
+    <div id="audit" class="easyui-dialog" style="width:1200px; height:800px;"
         modal="true" closed="true" buttons="#audit-buttons">
     </div>
     <div id="audit-buttons">

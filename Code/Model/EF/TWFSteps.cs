@@ -22,5 +22,6 @@ namespace Model.EF
         public string Descrition { get; set; }
         public string AuthorType { get; set; }
         public Nullable<bool> Hide { get; set; }
+        public Nullable<bool> IsParallel { get; set; }
     }
 }

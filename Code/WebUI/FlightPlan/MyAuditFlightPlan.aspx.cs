@@ -104,11 +104,11 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
         var planid =Guid.Parse(Request.Form["id"]);
         if (Request.Form["Auditresult"] == "0")
         {
-            insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan,User.ID,User.UserName, Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan);
+            insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan,User.ID,User.UserName,User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan);
         }
         else
         {
-            insdal.Terminate(planid, (int)TWFTypeEnum.FlightPlan,User.ID,User.UserName, Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan);
+            insdal.Terminate(planid, (int)TWFTypeEnum.FlightPlan,User.ID,User.UserName, User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan);
         }
         result.IsSuccess = true;
         result.Msg = "提交成功！";
@@ -138,14 +138,14 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
                 {
                     foreach (var item in arr)
                     {
-                        insdal.Submit(Guid.Parse(item), (int)TWFTypeEnum.FlightPlan, User.ID, User.UserName, auditComment, insdal.UpdateFlightPlan);
+                        insdal.Submit(Guid.Parse(item), (int)TWFTypeEnum.FlightPlan, User.ID, User.UserName, User.RoleName.First(), auditComment, insdal.UpdateFlightPlan);
                     }
                 }
                 else
                 {
                     foreach (var item in arr)
                     {
-                        insdal.Terminate(Guid.Parse(item), (int)TWFTypeEnum.FlightPlan,User.ID,User.UserName, auditComment, insdal.UpdateFlightPlan);
+                        insdal.Terminate(Guid.Parse(item), (int)TWFTypeEnum.FlightPlan,User.ID,User.UserName, User.RoleName.First(), auditComment, insdal.UpdateFlightPlan);
                     }
                 }
                 result.IsSuccess = true;

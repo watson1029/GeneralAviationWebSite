@@ -112,17 +112,16 @@
                             <option value="1">不通过</option>
                         </select>
                                 </td> 
-                                   <%if(User.RoleName.Contains("河南分局")){  %>
+                                   <%if(User.RoleName.Contains("通航服务站")){  %>
                          
                                 <th class="formTitle" style="padding-top: 5px;">
                                     管制部门
                                 </th>
                                 <td class="formValue">
-                           <select id="ControlDep" class="easyui-combobox" editable="false" name="ControlDep"  panelheight="auto" style="width: 200px;">
-                                  <option value="无" selected="true"></option>
-                            <option value="1" >区管</option>
-                            <option value="2">进近</option>
-                                 <option value="3">塔台</option>
+                           <select id="ControlDep" class="easyui-combobox" editable="false" name="ControlDep"  panelheight="auto" style="width: 200px;" multiple="true">
+                            <option value="区管" >区管</option>
+                            <option value="进近">进近</option>
+                                 <option value="塔台">塔台</option>
                         </select>
                                 </td>       <%   } %>
                             </tr>

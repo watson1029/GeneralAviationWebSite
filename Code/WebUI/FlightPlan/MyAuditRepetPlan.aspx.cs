@@ -71,9 +71,9 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
     /// 
     private Expression<Func<RepetitivePlan, bool>> GetWhere()
     {
-
+        var rolename=string.Join(",",User.RoleName);
         Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
-        predicate = predicate.And(m => User.RoleName.Contains(m.ActorName));
+        predicate = predicate.And(m => m.ActorName.IndexOf(rolename)>-1);
         predicate = predicate.And(m => m.Creator != User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -104,20 +104,20 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         var planid = Guid.Parse(Request.Form["id"]);
         try
         {
-            var code = LZCodeUnitity.GetLZCode();
+            var code = "";// LZCodeUnitity.GetLZCode();
             bll.Update(new RepetitivePlan { Code = code, RepetPlanID = planid }, "Code");
-            int ControlDep = 0;
+            string ControlDep = "";
             if (Request.Form["Auditresult"] == "0")
             {
                 if (!string.IsNullOrEmpty(Request.Form["ControlDep"]))
                 {
-                    ControlDep = int.Parse(Request.Form["ControlDep"]);
+                    ControlDep = Request.Form["ControlDep"];
                 }
-                    insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan, ControlDep);
+                    insdal.Submit(planid, (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName,User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan, ControlDep);
             }
             else
             {
-                insdal.Terminate(planid, (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName, Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
+                insdal.Terminate(planid, (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName, User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
             }
             result.IsSuccess = true;
             result.Msg = "提交成功！";
@@ -148,14 +148,14 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
                 {
                     foreach (var item in arr)
                     {
-                        insdal.Submit(Guid.Parse(item), (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName, auditComment, insdal.UpdateRepetPlan);
+                        insdal.Submit(Guid.Parse(item), (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName, User.RoleName.First(), auditComment, insdal.UpdateRepetPlan);
                     }
                 }
                 else
                 {
                     foreach (var item in arr)
                     {
-                        insdal.Terminate(Guid.Parse(item), (int)TWFTypeEnum.RepetitivePlan, User.ID, User.UserName, auditComment, insdal.UpdateRepetPlan);
+                        insdal.Terminate(Guid.Parse(item), (int)TWFTypeEnum.RepetitivePlan, User.ID, User.UserName, User.RoleName.First(), auditComment, insdal.UpdateRepetPlan);
                     }
                 }
                 result.IsSuccess = true;

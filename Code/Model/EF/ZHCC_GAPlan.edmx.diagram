@@ -5,15 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="cee278f8a6fb48aeadf30f9b32aca78e" Name="Diagram1" ZoomLevel="86">
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.ActualSteps" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Advertisment" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Aircraft" Width="1.5" PointX="2.75" PointY="3.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.AirportInfo" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.BusyTime" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Company" Width="1.5" PointX="6.75" PointY="3.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.CompanySummary" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.CurrentFlightPlan" Width="1.5" PointX="8.75" PointY="4.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.CurrentFlightPlanOld" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.CustomControlArea" Width="1.5" PointX="2.75" PointY="9.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.Dictionary" Width="1.5" PointX="8.75" PointY="9.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.ErrorLog" Width="1.5" PointX="10.75" PointY="0.75" />
@@ -21,7 +18,6 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.File_Detail" Width="1.5" PointX="10.75" PointY="7.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.File_FlightPlanMaster" Width="1.5" PointX="10.75" PointY="11.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.File_Master" Width="1.5" PointX="12.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="0.75" PointY="12.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlanOld" Width="1.5" PointX="2.75" PointY="12.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightTask" Width="1.5" PointX="12.75" PointY="4.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlyPlanDemo" Width="1.5" PointX="12.75" PointY="7.75" />
@@ -38,17 +34,22 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.RoleMenu" Width="1.5" PointX="16.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.SupplyDemandInfo" Width="1.5" PointX="16.75" PointY="3.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.TWFLibrary" Width="1.5" PointX="16.75" PointY="8.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.TWFPerson" Width="1.5" PointX="16.75" PointY="11.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.TWFSteps" Width="1.5" PointX="16.75" PointY="14.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.UserInfo" Width="1.5" PointX="18.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.UserRole" Width="1.5" PointX="18.75" PointY="4.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vCurrentPlan" Width="1.5" PointX="18.75" PointY="7.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance" Width="1.5" PointX="20.75" PointY="0.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vRepetitivePlanAirport" Width="1.5" PointX="20.75" PointY="7.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.LZCodeGenerate" Width="1.5" PointX="0.75" PointY="21.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" Width="1.5" PointX="5.375" PointY="19.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance" Width="1.5" PointX="17.375" PointY="18.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vFlightPlan" Width="1.5" PointX="13.375" PointY="19.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vFlightPlan" Width="1.5" PointX="19.375" PointY="11.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="21.375" PointY="11.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.CurrentFlightPlan" Width="1.5" PointX="15.375" PointY="18.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.CurrentFlightPlanOld" Width="1.5" PointX="5.375" PointY="19.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" Width="1.5" PointX="11.375" PointY="21.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance" Width="1.5" PointX="19.375" PointY="19.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vCurrentPlan" Width="1.5" PointX="21.375" PointY="19.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.SubActualSteps" Width="1.5" PointX="5.375" PointY="22.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.SubTWFSteps" Width="1.5" PointX="7.375" PointY="22.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.TWFSteps" Width="1.5" PointX="23.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.ActualSteps" Width="1.5" PointX="23.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

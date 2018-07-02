@@ -12,14 +12,10 @@ namespace Model.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class vGetCurrentPlanNodeInstance
+    public partial class SubActualSteps
     {
         public System.Guid ID { get; set; }
-        public System.Guid PlanID { get; set; }
-        public int StepID { get; set; }
-        public int TWFID { get; set; }
-        public Nullable<System.Guid> PrevID { get; set; }
-        public Nullable<System.Guid> NextID { get; set; }
+        public string ParentStepID { get; set; }
         public System.DateTime CreateTime { get; set; }
         public byte State { get; set; }
         public Nullable<int> ActorID { get; set; }
@@ -27,17 +23,5 @@ namespace Model.EF
         public string Comments { get; set; }
         public Nullable<System.DateTime> ActorTime { get; set; }
         public string ActorName { get; set; }
-        public string RepetPlanID { get; set; }
-        public string Code { get; set; }
-        public int Creator { get; set; }
-        public string CreatorName { get; set; }
-        public Nullable<System.DateTime> ActualStartTime { get; set; }
-        public Nullable<System.DateTime> ActualEndTime { get; set; }
-        public string PlanState { get; set; }
-        public bool DeletedFlag { get; set; }
-        public System.DateTime Expr2 { get; set; }
-        public Nullable<int> AircraftNum { get; set; }
-        public string Pilot { get; set; }
-        public string ContractWay { get; set; }
     }
 }

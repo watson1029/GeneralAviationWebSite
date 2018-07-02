@@ -42,6 +42,7 @@
     <Compile Include="FlightPlan\AirlineVM.cs" />
     <Compile Include="FlightPlan\AirportFillTotal.cs" />
     <Compile Include="FlightPlan\AirportVM.cs" />
+    <Compile Include="FlightPlan\CurrentFlightPlanVM.cs" />
     <Compile Include="FlightPlan\FileAnalysisReg.cs" />
     <Compile Include="FlightPlan\FlightPlanVM.cs" />
     <Compile Include="FlightPlan\RepetitivePlanVM.cs" />

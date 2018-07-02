@@ -56,7 +56,7 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
         int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
-        string pageList = null;// currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
+        var pageList =currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -71,7 +71,7 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
     {
         Expression<Func<vCurrentPlan, bool>> predicate = PredicateBuilder.True<vCurrentPlan>();
         var currDate = DateTime.Now.Date;
-        predicate = predicate.And(m => m.CurrentFlightPlanID !=null && m.Creator == User.ID);
+        predicate = predicate.And(m => m.CurrentFlightPlanID !=null && m.Creator == User.ID && m.PlanState != "0");
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

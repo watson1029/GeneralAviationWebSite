@@ -29,7 +29,6 @@ namespace Model.EF
         public string ADEP { get; set; }
         public string ADES { get; set; }
         public string SsrCode { get; set; }
-        public int AircraftNumber { get; set; }
         public string CreatorName { get; set; }
         public string CallSign { get; set; }
         public Nullable<System.DateTime> ATOT { get; set; }
@@ -43,5 +42,7 @@ namespace Model.EF
         public string AirportText { get; set; }
         public string AirlineWorkText { get; set; }
         public string ActorName { get; set; }
+        public Nullable<bool> DeletedFlag { get; set; }
+        public Nullable<bool> IsTempFlightPlan { get; set; }
     }
 }
