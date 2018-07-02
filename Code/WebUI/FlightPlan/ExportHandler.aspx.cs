@@ -43,9 +43,9 @@ public partial class FlightPlan_ExportHandler : BasePage
                 //    case "5":
                 //        MyFinishAuditFlightPlanExport();
                 //        break;
-                //    case "FlightPlanStatistics":
-                //        FlightPlanStatisticsExport();
-                //        break;
+                case "FlightPlanStatistics":
+                    FlightPlanStatisticsExport();
+                    break;
                 default:
                     break;
             }
@@ -457,74 +457,75 @@ public partial class FlightPlan_ExportHandler : BasePage
     //    file.Close();
     //    Response.End();
     //}
-    //private void FlightPlanStatisticsExport()
-    //{
-    //    var started = Request.QueryString["started"]==null?DateTime.Now:DateTime.Parse(Request.QueryString["started"]);
-    //    var ended= Request.QueryString["ended"]==null?DateTime.Now: DateTime.Parse(Request.QueryString["ended"]);
-    //    List<FlightPlanStatistics> fplist = JsonConvert.DeserializeObject<List<FlightPlanStatistics>>(JsonConvert.SerializeObject(new FlightPlanDAL().GetFullTimeFlightStatistics(started, ended)));
-    //       fplist = JsonConvert.DeserializeObject<List<FlightPlanStatistics>>(JsonConvert.SerializeObject(fplist.GroupBy(x => new { x.Creator, x.CompanyName }).Select(group => new {
-    //        Creator = group.Key.Creator,
-    //        CompanyName = group.Key.CompanyName,
-    //        AircraftNum = group.Sum(p => p.AircraftNum),
-    //        SecondDiff = group.Sum(p => p.SecondDiff)
-    //    }).ToList()));
-    //    #region
-    //    var hssfworkbook = new HSSFWorkbook();
-    //    var sheet1 = hssfworkbook.CreateSheet("Sheet1");
-    //    sheet1.DefaultRowHeight = 15 * 20;
-    //    sheet1.DefaultColumnWidth = 18;
+    private void FlightPlanStatisticsExport()
+    {
+        var started = Request.QueryString["started"] == null ? DateTime.Now : DateTime.Parse(Request.QueryString["started"]);
+        var ended = Request.QueryString["ended"] == null ? DateTime.Now : DateTime.Parse(Request.QueryString["ended"]);
+        List<FlightPlanStatistics> fplist = JsonConvert.DeserializeObject<List<FlightPlanStatistics>>(JsonConvert.SerializeObject(new FlightPlanDAL().GetFullTimeFlightStatistics(started, ended)));
+        fplist = JsonConvert.DeserializeObject<List<FlightPlanStatistics>>(JsonConvert.SerializeObject(fplist.GroupBy(x => new { x.Creator, x.CompanyName }).Select(group => new
+        {
+            Creator = group.Key.Creator,
+            CompanyName = group.Key.CompanyName,
+            AircraftNum = group.Sum(p => p.AircraftNum),
+            SecondDiff = group.Sum(p => p.SecondDiff)
+        }).ToList()));
+        #region
+        var hssfworkbook = new HSSFWorkbook();
+        var sheet1 = hssfworkbook.CreateSheet("Sheet1");
+        sheet1.DefaultRowHeight = 15 * 20;
+        sheet1.DefaultColumnWidth = 18;
 
-    //    //设置样式
-    //    var styleTop = hssfworkbook.CreateCellStyle();
-    //    var fontTop = hssfworkbook.CreateFont();
-    //    fontTop.FontHeightInPoints = 11;
-    //    fontTop.FontName = "宋体";
-    //    fontTop.Boldweight = (short)FontBoldWeight.Bold;
-    //    styleTop.Alignment = HorizontalAlignment.Center;
-    //    styleTop.SetFont(fontTop);
+        //设置样式
+        var styleTop = hssfworkbook.CreateCellStyle();
+        var fontTop = hssfworkbook.CreateFont();
+        fontTop.FontHeightInPoints = 11;
+        fontTop.FontName = "宋体";
+        fontTop.Boldweight = (short)FontBoldWeight.Bold;
+        styleTop.Alignment = HorizontalAlignment.Center;
+        styleTop.SetFont(fontTop);
 
-    //    //设置样式
-    //    var style = hssfworkbook.CreateCellStyle();
-    //    var font = hssfworkbook.CreateFont();
-    //    font.FontName = "宋体";
-    //    font.FontHeightInPoints = 11;
-    //    style.SetFont(font);
+        //设置样式
+        var style = hssfworkbook.CreateCellStyle();
+        var font = hssfworkbook.CreateFont();
+        font.FontName = "宋体";
+        font.FontHeightInPoints = 11;
+        style.SetFont(font);
 
-    //    var headerRow = sheet1.CreateRow(0);
+        var headerRow = sheet1.CreateRow(0);
 
-    //    headerRow.CreateCell(0).SetCellValue("航空公司");
-    //    headerRow.CreateCell(1).SetCellValue("飞行时长");
-    //    headerRow.CreateCell(2).SetCellValue("飞行架次(数)");
+        headerRow.CreateCell(0).SetCellValue("航空公司");
+        headerRow.CreateCell(1).SetCellValue("飞行时长");
+        headerRow.CreateCell(2).SetCellValue("飞行架次(数)");
 
-    //    int rowIndex = 1;
-    //    if (fplist != null && fplist.Count > 0)
-    //    {
-    //        foreach (var item in fplist)
-    //        {
-    //            var dataRow = sheet1.CreateRow(rowIndex);
-    //            dataRow.CreateCell(0).SetCellValue(item.CompanyName);
-    //            dataRow.CreateCell(1).SetCellValue(item.SecondDiff);
-    //            dataRow.CreateCell(2).SetCellValue(item.AircraftNum);
-    //            rowIndex++;
-    //        }
-    //        var dr = sheet1.CreateRow(rowIndex);
-    //        rowIndex++;
-    //    }
+        int rowIndex = 1;
+        if (fplist != null && fplist.Count > 0)
+        {
+            foreach (var item in fplist)
+            {
+                var dataRow = sheet1.CreateRow(rowIndex);
+                dataRow.CreateCell(0).SetCellValue(item.CompanyName);
+                dataRow.CreateCell(1).SetCellValue(item.SecondDiff);
+                dataRow.CreateCell(2).SetCellValue(item.AircraftNum);
+                rowIndex++;
+            }
+            var dr = sheet1.CreateRow(rowIndex);
+            rowIndex++;
+        }
 
-    //    #endregion
-    //    var file = new MemoryStream();
-    //    hssfworkbook.Write(file);
-    //    Response.ContentType = "application/vnd.ms-excel";
-    //    Response.ContentEncoding = Encoding.UTF8;
-    //    Response.Charset = "";
-    //    Response.Clear();
-    //    Response.AppendHeader("Content-Disposition",
-    //                          "attachment;filename=" +
-    //                          HttpUtility.UrlEncode("飞行统计列表" + ".xls", System.Text.Encoding.UTF8));
-    //    file.WriteTo(Response.OutputStream);
-    //    file.Close();
-    //    Response.End();
-    //}
+        #endregion
+        var file = new MemoryStream();
+        hssfworkbook.Write(file);
+        Response.ContentType = "application/vnd.ms-excel";
+        Response.ContentEncoding = Encoding.UTF8;
+        Response.Charset = "";
+        Response.Clear();
+        Response.AppendHeader("Content-Disposition",
+                              "attachment;filename=" +
+                              HttpUtility.UrlEncode("飞行统计列表" + ".xls", System.Text.Encoding.UTF8));
+        file.WriteTo(Response.OutputStream);
+        file.Close();
+        Response.End();
+    }
     ///// <summary>
     ///// 组合搜索条件
     ///// </summary>
