@@ -2,6 +2,7 @@
     CodeFile="MyFinishAuditRepetPlan.aspx.cs" Inherits="FlightPlan_MyFinishAuditRepetPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+    <link href="../css/fademap.css" rel="stylesheet" type="text/css" />
    <%-- <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
@@ -29,7 +30,11 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-           // baiduMap.init();
+            // baiduMap.init();
+            $(".fadediv").fadeToggle();
+            $(".fade").click(function () {
+                $(".fadediv").fadeToggle();
+            });
         });
         Main = {
             //初始化表格
@@ -41,7 +46,7 @@
                     idField: 'PlanID', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
-                    height: $(parent.document).find("#mainPanel").height() - 450 > 0 ? $(parent.document).find("#mainPanel").height() - 450 : 300, //高度
+                    height: $(parent.document).find("#mainPanel").height() - 60 > 0 ? $(parent.document).find("#mainPanel").height() - 60 : 300, //高度
                     nowrap: false, //是否换行，True 就会把数据显示在一行里
                     striped: true, //True 奇偶行使用不同背景色
                     singleSelect: false,
@@ -150,6 +155,7 @@
         <a id="btn_edit" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div></div>
-    <div id="map" style="height:400px;"></div>
+    <div class="fadediv"><div id="map" style="height:400px;"></div></div>
+    <div class="fade"><span>地图显示/隐藏</span></div>
 </asp:Content>
 
