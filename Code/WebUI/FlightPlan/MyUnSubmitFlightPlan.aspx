@@ -110,7 +110,7 @@
                     rownumbers: true, //行号
                     onClickRow: function (index, row) {
                         var keyValue = row["FlightPlanID"];
-                       // zhccMap.addFlyPlan(keyValue);
+                        zhccMap.addFlyPlan(keyValue);
                     }
                 });
             },

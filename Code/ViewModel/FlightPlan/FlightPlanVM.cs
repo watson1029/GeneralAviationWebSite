@@ -10,7 +10,11 @@ namespace ViewModel.FlightPlan
     {
         public FlightPlanVM()
         {
-            airlineList = new List<string>();
+            airlineList = new List<AirlineVM>();
+            cworkList = new List<WorkVM>();
+            pworkList = new List<WorkVM>();
+            hworkList = new List<WorkVM>();
+            airlineworkList = new List<string>();
         }
         public System.Guid FlightPlanID { get; set; }
         public string Code { get; set; }
@@ -43,6 +47,13 @@ namespace ViewModel.FlightPlan
         public string AirportText { get; set; }
         public string AirlineWorkText { get; set; }
         public string MasterIDs { get; set; }
-        public List<string> airlineList { get; set; }
+        public List<AirlineVM> airlineList { get; set; }
+        public List<WorkVM> cworkList { get; set; }
+        public List<WorkVM> pworkList { get; set; }
+        public List<WorkVM> hworkList { get; set; }
+        public List<string> airlineworkList { get; set; }
+        public int airLineMaxCol { get; set; }
+        public int pworkMaxCol { get; set; }
+        public int hworkMaxCol { get; set; }
     }
 }

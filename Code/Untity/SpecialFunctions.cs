@@ -137,7 +137,7 @@ namespace Untity
         /// </summary>
         /// <param name="latLong"></param>
         /// <returns></returns>
-        static public  LatLongModel latLongSplit(string latLong)
+        static public LatLongModel latLongSplit(string latLong)
         {
             LatLongModel model = new LatLongModel();
             if (!string.IsNullOrEmpty(latLong) && latLong.Contains("E"))

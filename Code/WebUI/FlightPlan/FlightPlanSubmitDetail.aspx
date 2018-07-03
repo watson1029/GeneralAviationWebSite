@@ -118,10 +118,6 @@
                                 </td>
                             </tr>
                             <tr>
-                            <th class="formTitle">航空器数量</th>
-                                <td class="formValue">
-                                    <input id="AircraftNumber" name="AircraftNumber" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
-                                </td>
                                          <th class="formTitle">应答机编码</th>
                                 <td class="formValue">
                                     <input id="SsrCode" name="SsrCode" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
