@@ -46,11 +46,129 @@ public partial class FlightPlan_ExportHandler : BasePage
                 case "FlightPlanStatistics":
                     FlightPlanStatisticsExport();
                     break;
+                case "FlightPlanData":
+                    List<string> plancode = Request.QueryString["plancode"].Split('|').ToList();
+                    FlightPlanDataExport(plancode);
+                    break;
                 default:
                     break;
             }
         }
     }
+
+    private void FlightPlanDataExport(List<string> planlist)
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = true;
+        var book = new HSSFWorkbook();
+        //设置默认工作表的默认列宽和行高
+        var sheet = book.CreateSheet("通航计划表-范围内");
+        sheet.DefaultRowHeight = 20 * 20;
+        sheet.DefaultColumnWidth = 12;
+        sheet.SetColumnWidth(5, 60 * 256);
+        //设置标题样式
+        var titleStyle = book.CreateCellStyle();
+        titleStyle.Alignment = HorizontalAlignment.Center;
+        titleStyle.VerticalAlignment = VerticalAlignment.Center;
+        var titleFont = book.CreateFont();
+        titleFont.FontHeightInPoints = 20;
+        titleFont.IsBold = true;
+        titleStyle.SetFont(titleFont);
+        //设置表头样式
+        var headStyle = book.CreateCellStyle();
+        headStyle.Alignment = HorizontalAlignment.Center;
+        headStyle.VerticalAlignment = VerticalAlignment.Center;
+        var headFont = book.CreateFont();
+        headFont.FontHeightInPoints = 14;
+        headFont.IsBold = true;
+        headStyle.SetFont(headFont);
+        //设置标题样式
+        var listStyle = book.CreateCellStyle();
+        listStyle.Alignment = HorizontalAlignment.Center;
+        listStyle.VerticalAlignment = VerticalAlignment.Center;
+        var listFont = book.CreateFont();
+        listFont.FontHeightInPoints = 14;
+        listStyle.SetFont(listFont);
+        //填入标题内容并合并
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 12));
+        var titleRow = sheet.CreateRow(0);
+        titleRow.CreateCell(0).SetCellValue("通航计划表-范围内");
+        titleRow.Cells[0].CellStyle = titleStyle;
+        titleRow.Height = 50 * 20;
+        //填入表头内容并合并
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 0, 0));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 1, 1));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 2, 2));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 3, 3));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 4, 4));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 5, 5));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 6, 6));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 7, 7));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 8, 9));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 10, 11));
+        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 12, 12));
+        var headRow1 = sheet.CreateRow(1);
+        headRow1.CreateCell(0).SetCellValue("序号");
+        headRow1.CreateCell(1).SetCellValue("起降场");
+        headRow1.CreateCell(2).SetCellValue("单位");
+        headRow1.CreateCell(3).SetCellValue("机型/架次");
+        headRow1.CreateCell(4).SetCellValue("机号");
+        headRow1.CreateCell(5).SetCellValue("空域/航线");
+        headRow1.CreateCell(6).SetCellValue("高度");
+        headRow1.CreateCell(7).SetCellValue("任务");
+        headRow1.CreateCell(8).SetCellValue("开飞时间");
+        headRow1.CreateCell(10).SetCellValue("结束时间");
+        headRow1.CreateCell(12).SetCellValue("备注");
+        foreach (var cell in headRow1.Cells)
+        {
+            cell.CellStyle = headStyle;
+        }
+        headRow1.Height = 25 * 20;
+        var headRow2 = sheet.CreateRow(2);
+        headRow2.CreateCell(8).SetCellValue("计划");
+        headRow2.CreateCell(9).SetCellValue("实施");
+        headRow2.CreateCell(10).SetCellValue("计划");
+        headRow2.CreateCell(11).SetCellValue("实施");
+        foreach (var cell in headRow2.Cells)
+        {
+            cell.CellStyle = headStyle;
+        }
+        headRow2.Height = 25 * 20;
+        
+        var exportlist = new ExportDataBLL().FlightPlanDataExport(planlist);
+        for (int i = 0; i < exportlist.Count; i++)
+        {
+            var row = sheet.CreateRow(3 + i);
+            row.CreateCell(0).SetCellValue(i + 1);
+            row.CreateCell(1).SetCellValue(exportlist[i].airport);
+            row.CreateCell(2).SetCellValue(exportlist[i].company);
+            row.CreateCell(3).SetCellValue(exportlist[i].airtype);
+            row.CreateCell(4).SetCellValue(exportlist[i].aircraft);
+            row.CreateCell(5).SetCellValue(exportlist[i].airline);
+            row.CreateCell(6).SetCellValue(exportlist[i].high);
+            row.CreateCell(7).SetCellValue(exportlist[i].airtype);
+            row.CreateCell(8).SetCellValue(exportlist[i].planbegin);
+            row.CreateCell(10).SetCellValue(exportlist[i].planend);
+            row.CreateCell(12).SetCellValue(exportlist[i].remark);
+            foreach (var cell in row.Cells)
+            {
+                cell.CellStyle = listStyle;
+            }
+            //row.Height = 30 * 20;
+        }
+        //生成Excel文件
+        var file = new MemoryStream();
+        book.Write(file);
+        Response.ContentType = "application/vnd.ms-excel";
+        Response.ContentEncoding = Encoding.UTF8;
+        Response.Charset = "";
+        Response.Clear();
+        Response.AppendHeader("Content-Disposition", "attachment;filename=" + HttpUtility.UrlEncode("通航计划表-范围内.xls", Encoding.UTF8));
+        file.WriteTo(Response.OutputStream);
+        file.Close();
+        Response.End();
+    }
+
     //private void MyUnSubmitRepetPlanExport()
     //{
     //    AjaxResult result = new AjaxResult();
