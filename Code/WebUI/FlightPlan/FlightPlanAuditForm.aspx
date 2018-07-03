@@ -14,7 +14,7 @@
                     $("#name").text(data.CompanyName);
                     $("#code").text(data.Code);
                     $("#form_audit").form('load', data);
-                    $("#form_audit").find('select,input').not("#Auditresult,#AuditComment", "#ControlDep").attr('readonly', 'readonly');
+                    $("#form_audit").find('select,input').not("#Auditresult,#AuditComment,#ControlDep").attr('readonly', 'readonly');
 
 
                 }
