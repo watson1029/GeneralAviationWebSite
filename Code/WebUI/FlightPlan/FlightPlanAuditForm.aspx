@@ -14,7 +14,7 @@
                     $("#name").text(data.CompanyName);
                     $("#code").text(data.Code);
                     $("#form_audit").form('load', data);
-                    $("#form_audit").find('select,input').not("#Auditresult,#AuditComment").attr('readonly', 'readonly');
+                    $("#form_audit").find('select,input').not("#Auditresult,#AuditComment", "#ControlDep").attr('readonly', 'readonly');
 
 
                 }
@@ -66,11 +66,11 @@
                                <tr>
                                 <th class="formTitle">计划撤轮挡时间</th>
                                 <td class="formValue">
-                                    <input id="SOBT" name="SOBT" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="SOBT" name="SOBT" maxlength="50" required="true" class="easyui-datebox" style="height: 25px" />
                                 </td>
                                 <th class="formTitle">计划挡轮挡时间</th>
                                 <td class="formValue">
-                                    <input id="SIBT" name="SIBT" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="SIBT" name="SIBT" maxlength="50" required="true" class="easyui-datebox" style="height: 25px" />
                                 </td>
                             </tr>
                             <tr>
@@ -93,12 +93,7 @@
                                     <input id="ALTN2" name="ALTN2" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
-                              <tr>
-                                <th class="formTitle">航空器数量</th>
-                                <td class="formValue">
-                                    <input id="AircraftNumber" name="AircraftNumber" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
-                                </td>
-                            </tr>
+                  
                             <tr>
                                 <th class="formTitle" style="padding-top: 5px;">
                                     航线及作业区
@@ -125,6 +120,18 @@
                             <option value="1">不通过</option>
                         </select>
                                 </td>
+                                       <%if(User.RoleName.Contains("通航服务站")){  %>
+                         
+                                <th class="formTitle" style="padding-top: 5px;">
+                                    管制部门
+                                </th>
+                                <td class="formValue">
+                           <select id="ControlDep" class="easyui-combobox" editable="false" name="ControlDep"  panelheight="auto" style="width: 200px;" multiple="true">
+                            <option value="区管" >区管</option>
+                            <option value="进近">进近</option>
+                                 <option value="塔台">塔台</option>
+                        </select>
+                                </td>       <%   } %>
                             </tr>
                             <tr>
                                 <th class="formTitle" style="padding-top: 5px;">

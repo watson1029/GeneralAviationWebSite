@@ -98,7 +98,7 @@
                               title: '创建时间', field: 'CreateTime', width: 100, formatter: function (value, rec, index) {
 
                                   var timesstamp = new Date(value.dateValFormat());
-                                  return timesstamp.format("yyyy-MM-dd hh:mm:ss");
+                                  return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
                               }
                           },

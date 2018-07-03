@@ -63,10 +63,9 @@
                         { title: '起飞机场', field: 'ADEP', width: 80 },
                         { title: '目的地机场', field: 'ADES', width: 80 },
                         { title: '应答机编码', field: 'SsrCode', width: 80 },
-                        { title: '航空器数量', field: 'AircraftNumber', width: 80 },
                         { title: '备降机场I', field: 'ALTN1', width: 80 },
                         { title: '备降机场II', field: 'ALTN2', width: 80 },
-                          { title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
+                        { title: '机场及起降点', field: 'AirportText', width: 200 },
                         {
                             title: '计划撤轮挡时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
                                 var timesstamp = new Date(value.dateValFormat());

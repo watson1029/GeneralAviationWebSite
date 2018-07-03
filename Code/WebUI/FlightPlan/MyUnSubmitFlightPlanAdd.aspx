@@ -5,6 +5,34 @@
 <script src="<%=Page.ResolveUrl("~/Content/JS/GA/airlineTable.js")%>" type="text/javascript"></script>
 <script src="<%=Page.ResolveUrl("~/Content/JS/GA/workTable.js")%>" type="text/javascript"></script>
 <script>
+    var pid = '<%=Request.QueryString["id"] %>';
+    var airlineobj = {
+        id: "airline",
+        addid: "airline-Add",
+        minusid: "airline-Minus",
+        addcolid: "airline-AddCol",
+        minuscolid: "airline-MinusCol",
+        listid: "airline-List",
+        conid: "airline-Con"
+    };
+    var workobj = {
+        id: "cwork",
+        caddid: "cwork-Add",
+        cminusid: "cwork-Minus",
+        paddid: "pwork-Add",
+        pminusid: "pwork-Minus",
+        haddid: "hwork-Add",
+        hminusid: "hwork-Minus",
+        plistid: "pwork-List",
+        hlistid: "hwork-List",
+        cconid: "cwork-Con",
+        pconid: "pwork-Con",
+        hconid: "hwork-Con",
+        paddcolid: "pwork-AddCol",
+        pminuscolid: "pwork-MinusCol",
+        haddcolid: "hwork-AddCol",
+        hminuscolid: "hwork-MinusCol"
+    };
     repetPlan = {
         newairportobj: null,
         newairlineobj: null,
@@ -13,63 +41,69 @@
     $(function () {
         $("#name").html('<%=User.CompanyName%>');
         initControl();
-        var pid = '<%=Request.QueryString["id"] %>';
+      
         if (!!pid) {
             $.ajax({
                 url: "MyUnSubmitFlightPlan.aspx",
-                data: { id: pid, "action": "queryone" },
+                data: { id: pid, "action": "queryone1" },
                 type:"post",
                 dataType: "json",
                 async: false,
                 success: function (data) {
                     $("#form1").form('load', data);
-                    //$("#MasterIDs").bindSelect({
-                    //    url: "/FlightPlan/FlyPlanNew/GetAllAirlineWork",
-                    //    param: { keyValue: data.RepetPlanID },
-                    //    multiple: true
-                    //});
-                    //$("#MasterIDs").val(data.airlineList).trigger('change');
+
+                    if (data.RepetPlanID == '<%=Guid.Empty%>') {
+                        $("#IsTempFlightPlan").prop({ checked: true, 'disabled': 'disabled' });
+                        $("#Reptr").hide();
+                        $("#Reptd").hide();
+                        $("#work1").hide();
+                        $("#airline2").show();
+                        $("#work2").show();
+                        airlineobj['airlinedata'] = data.airlineList;
+                        workobj['cworkdata'] = data.cworkList;
+                        workobj['pworkdata'] = data.pworkList;
+                        workobj['hworkdata'] = data.hworkList;
+                        airlineobj.maxCol = data.airLineMaxCol;
+                        workobj.pworkMaxCol = data.pworkMaxCol;
+                        workobj.hworkMaxCol = data.hworkMaxCol;
+                    }
+                    else {
+                        $("#MasterIDs").val(data.airlineworkList);
+                    }
+
+                    
                 }
             });
         }
+        repetPlan.newairlineobj = new dj.dyAirlineTable(airlineobj);
+        repetPlan.newairlineobj.init();
+        repetPlan.newworkobj = new dj.dyWorkTable(workobj);
+        repetPlan.newworkobj.init();
     })
     $(".nav-tabs li").click(function () {
         var i = $(this).index();
         $(this).addClass("active").siblings().removeClass("active");
         $('#con div').eq(i).show().siblings().hide();
     });
+    $("#IsTempFlightPlan").click(function () {
+
+        if ($(this).is(":checked")) {
+            $("#Reptr").hide(); $("#Reptd").hide();
+            $("#work1").hide();
+            $("#airline2").show();
+            $("#work2").show();
+
+        }
+        else {
+            $("#Reptr").show(); $("#Reptd").show();
+            $("#work1").show();
+            $("#airline2").hide();
+            $("#work2").hide();
+        }
+
+    });
     function initControl() {
-        var airlineobj = {
-            id: "airline",
-            addid: "airline-Add",
-            minusid: "airline-Minus",
-            addcolid: "airline-AddCol",
-            minuscolid: "airline-MinusCol",
-            listid: "airline-List",
-            conid: "airline-Con"
-        };
-        var workobj = {
-            id: "cwork",
-            caddid: "cwork-Add",
-            cminusid: "cwork-Minus",
-            paddid: "pwork-Add",
-            pminusid: "pwork-Minus",
-            haddid: "hwork-Add",
-            hminusid: "hwork-Minus",
-            plistid: "pwork-List",
-            hlistid: "hwork-List",
-            cconid: "cwork-Con",
-            pconid: "pwork-Con",
-            hconid: "hwork-Con",
-            paddcolid: "pwork-AddCol",
-            pminuscolid: "pwork-MinusCol",
-            haddcolid: "hwork-AddCol",
-            hminuscolid: "hwork-MinusCol"
-        };
-        repetPlan.newairlineobj = new dj.dyAirlineTable(airlineobj);
-        repetPlan.newairlineobj.init();
-        repetPlan.newworkobj = new dj.dyWorkTable(workobj);
-        repetPlan.newworkobj.init();
+
         $('#wizard').wizard().on('change', function (e, data) {
             var $finish = $("#btn_finish");
             var $next = $("#btn_next");
@@ -94,20 +128,24 @@
 
     }
     function submitForm() {
-        //if (!$('#form1').formValid()) {
-        //    return false;
-        //}
+        if (!$("#form1").form("validate")){
+            return false;
+        }
         //var postData = $("#form1").serialize();
         //postData["MasterIDs"] = $("#MasterIDs").val().join(',');
-        $("#IsTempFlightPlan").val();
-        alert($("#IsTempFlightPlan").val());
-        //if()
-        //{
-        
-        //}
-        return;
+       
         $("#btn_finish").attr("disabled", "disabled");
-        var json = $.param({ "action": "save", "MasterIDs": $("#MasterIDs").combobox('getValues').join(',') }) + '&' + $('#form1').serialize();
+        var json ="";
+        if ($("#IsTempFlightPlan").is(":checked"))
+        {
+            json = $.param({ "action": "save", "id": pid,  "AirlineText": repetPlan.newairlineobj.getJsonData(), "CWorkText": repetPlan.newworkobj.getCWorkJsonData(), "PWorkText": repetPlan.newworkobj.getPWorkJsonData(), "HWorkText": repetPlan.newworkobj.getHWorkJsonData() });
+        
+            }
+        else
+        {
+            json = $.param({ "action": "save", "id": pid, "MasterIDs": $("#MasterIDs").combobox('getValues').join(',') });
+        }
+        json += '&' + $('#form1').serialize();
         $.ajax({
             type: 'post',
             url: 'MyUnSubmitFlightPlan.aspx',
@@ -146,15 +184,15 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">长期计划信息</h3>
                     </div>
-                    <div class="panel-body" style="padding: 15px;width:98%;">
+                    <div class="panel-body" style="padding: 15px;width:96.5%;">
+                        <input type="hidden" name="Code" id="Code" value="" />
                         <table class="form" id="reptfrom">
                             <tr>
                                 <th class="formTitle">公司名称</th>
                                 <td class="formValue" style="color: red" id="name"></td>
-                                <th class="formTitle">临专号</th>
-                                <td class="formValue">
-                                    <input type="hidden" name="Code" id="Code" value="" />
-
+                                
+                                <th class="formTitle" id="Reptr">临专号</th>
+                                <td class="formValue" id="Reptd">
                                     <input id="RepetPlanID" name="RepetPlanID" editable="false" data-options="url:'GetComboboxData.ashx?type=4',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200,onSelect:function(rec){     
                                            $.ajax({
@@ -178,6 +216,7 @@
                             <tr>
                                 <th class="formTitle">任务类型</th>
                                 <td class="formValue">
+
                                     <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
                                         required="true" class="easyui-combobox" style="height: 25px" />
@@ -190,7 +229,7 @@
                              <tr>
                                 <th class="formTitle">是否临时计划</th>
                                 <td colspan="3" class="formValue">
-                                    <input id="IsTempFlightPlan" type="checkbox"  name="IsTempFlightPlan" value="1" />
+                                    <input id="IsTempFlightPlan" type="checkbox"  name="IsTempFlightPlan" value="true" />
                                 </td>
                             </tr>
                             <tr>
@@ -200,78 +239,15 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr id ="work1">
                                 <th class="formTitle">航线及作业区</th>
                                 <td class="formValue" colspan="3">
                                     <input id="MasterIDs" name="MasterIDs" editable="false" class="easyui-combobox" data-options="method:'get',multiple:true,valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
                                         style="height: 25px; width: 600px;" />
                                 </td>
-
                             </tr>
-                            <tr>
-                                <th class="formTitle" style="padding-top: 5px;">其他说明的事项
-                                </th>
-                                <td class="formValue" colspan="3">
-                                    <input id="Remark" name="Remark" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="step-pane" id="step-2" style="margin: 10px; margin-bottom: 0px;">
-                <div class="alert alert-danger" style="text-align: left; margin-bottom: 10px;">
-  
-                    请填写飞行计划申报信息！
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">基础信息</h3>
-                    </div>
-                    <div class="panel-body" style="padding: 15px;width: 96.5%;">
-                        <table class="form">
-                            <tr>
-                                <th class="formTitle">航班号</th>
-                                <td class="formValue">
-                                    <input id="CallSign" name="CallSign" required="true" class="easyui-textbox" style="height: 25px;width:200px" />
-                                </td>
-                                <th class="formTitle">应答机编码</th>
-                                <td class="formValue">
-                                    <input id="SsrCode" name="SsrCode" maxlength="5" required="true" class="easyui-textbox" style="height: 25px;width:200px" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="formTitle">计划撤轮挡时间</th>
-                                <td class="formValue">
-                                    <input id="SOBT" name="SOBT" editable="false" required="true" class="easyui-datebox" style="height: 25px;width:200px" />
-                                </td>
-                                <th class="formTitle">计划挡轮挡时间</th>
-                                <td class="formValue">
-                                    <input id="SIBT" name="SIBT" editable="false" required="true" class="easyui-datebox" style="height: 25px;width:200px" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="formTitle">起飞机场</th>
-                                <td class="formValue">
-                                    <input id="ADEP" name="ADEP" type="text" maxlength="4" required="true" class="easyui-textbox" style="height: 25px;width:200px"/>
-                                </td>
-                                <th class="formTitle">目的地机场</th>
-                                <td class="formValue">
-                                    <input id="ADES" name="ADES" type="text" maxlength="4" required="true" class="easyui-textbox" style="height: 25px;width:200px"/>
-                                </td>
-                            </tr>                       
-                            <tr>
-                                <th class="formTitle">备降机场I</th>
-                                <td class="formValue">
-                                    <input id="ALTN1" name="ALTN1"  maxlength="4" class="easyui-textbox" style="height: 25px;width:200px"/>
-                                </td>
-                                <th class="formTitle">备降机场II</th>
-                                <td class="formValue">
-                                    <input id="ALTN2" name="ALTN2"  maxlength="4" class="easyui-textbox" style="height: 25px;width:200px"/>
-                                </td>
-                            </tr>
-                                 <tr>
+                            <tr id ="airline2" style="display:none;">
                                 <th style="padding-top: 5px; width: 50px">航线
                                 </th>
                                 <td colspan="3">
@@ -307,7 +283,7 @@
                                     <a id="airline-MinusCol" class="easyui-linkbutton" style="margin-top: 20px;">删除列</a>
                                 </td>
                             </tr>
-                            <tr style="padding: 2px;">
+                            <tr id ="work2" style="padding: 2px;display:none;">
                                 <th  style="padding-top: 5px;">作业区
                                 </th>
                                 <td colspan="3">
@@ -416,6 +392,69 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr>
+                                <th class="formTitle" style="padding-top: 5px;">其他说明的事项
+                                </th>
+                                <td class="formValue" colspan="3">
+                                    <input id="Remark" name="Remark" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="step-pane" id="step-2" style="margin: 10px; margin-bottom: 0px;">
+                <div class="alert alert-danger" style="text-align: left; margin-bottom: 10px;">
+  
+                    请填写飞行计划申报信息！
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">基础信息</h3>
+                    </div>
+                    <div class="panel-body" style="padding: 15px;width: 96.5%;">
+                        <table class="form">
+                            <tr>
+                                <th class="formTitle">航班号</th>
+                                <td class="formValue">
+                                    <input id="CallSign" name="CallSign" required="true" class="easyui-textbox" style="height: 25px;width:200px" />
+                                </td>
+                                <th class="formTitle">应答机编码</th>
+                                <td class="formValue">
+                                    <input id="SsrCode" name="SsrCode" maxlength="5" required="true" class="easyui-textbox" style="height: 25px;width:200px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="formTitle">计划撤轮挡时间</th>
+                                <td class="formValue">
+                                    <input id="SOBT" name="SOBT" editable="false" required="true" class="easyui-datebox" style="height: 25px;width:200px" />
+                                </td>
+                                <th class="formTitle">计划挡轮挡时间</th>
+                                <td class="formValue">
+                                    <input id="SIBT" name="SIBT" editable="false" required="true" class="easyui-datebox" style="height: 25px;width:200px" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="formTitle">起飞机场</th>
+                                <td class="formValue">
+                                    <input id="ADEP" name="ADEP" type="text" maxlength="4" required="true" class="easyui-textbox" style="height: 25px;width:200px"/>
+                                </td>
+                                <th class="formTitle">目的地机场</th>
+                                <td class="formValue">
+                                    <input id="ADES" name="ADES" type="text" maxlength="4" required="true" class="easyui-textbox" style="height: 25px;width:200px"/>
+                                </td>
+                            </tr>                       
+                            <tr>
+                                <th class="formTitle">备降机场I</th>
+                                <td class="formValue">
+                                    <input id="ALTN1" name="ALTN1"  maxlength="4" class="easyui-textbox" style="height: 25px;width:200px"/>
+                                </td>
+                                <th class="formTitle">备降机场II</th>
+                                <td class="formValue">
+                                    <input id="ALTN2" name="ALTN2"  maxlength="4" class="easyui-textbox" style="height: 25px;width:200px"/>
+                                </td>
+                            </tr>
+     
                         </table>
                     </div>
                 </div>

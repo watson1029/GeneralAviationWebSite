@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
+using ViewModel.FlightPlan;
 
 public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
 {
@@ -30,6 +31,9 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
                     break;
                 case "queryone"://获取一条记录
                     GetData();
+                    break;
+                case "queryone1"://获取一条记录
+                    GetData1();
                     break;
                 case "save":
                     Save();
@@ -69,9 +73,6 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         AjaxResult result = new AjaxResult();
         result.IsSuccess = false;
         result.Msg = "保存失败！";
-        //int? id = null;
-        //if (!string.IsNullOrEmpty(Request.Form["id"]))
-        //{ id = Convert.ToInt32(Request.Form["id"]); }
 
         FlightPlan entity = null;
         var airlineworkText = "";
@@ -89,7 +90,15 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
             entity.ActorID = User.ID;
             entity.CreateTime = DateTime.Now;
             entity.ModifyTime = DateTime.Now;
-            bll.AddFlightPlanOther(Request.Form["MasterIDs"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+            if (bool.Parse(Request.Form["IsTempFlightPlan"] ?? "false"))
+            {
+                entity.RepetPlanID = Guid.Empty.ToString();
+                bll.AddFlightPlanTempOther(Request.Form["AirlineText"], Request.Form["CWorkText"], Request.Form["PWorkText"], Request.Form["HWorkText"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+            }
+            else
+            {
+                bll.AddFlightPlanOther(Request.Form["MasterIDs"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+            }
             entity.AirlineWorkText = airlineworkText;
             if (bll.Add(entity))
             {
@@ -102,8 +111,15 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
             entity = bll.Get(Guid.Parse(Request.Form["id"]));
             if (entity != null)
             {
-                //      model.AttachFile = Request.Params["AttchFilesInfo"];
                 entity.GetEntitySearchPars<FlightPlan>(this.Context);
+                entity.ModifyTime = DateTime.Now;
+                if (bool.Parse(Request.Form["IsTempFlightPlan"] ?? "false"))
+                {
+                    bll.AddFlightPlanTempOther(Request.Form["AirlineText"], Request.Form["CWorkText"], Request.Form["PWorkText"], Request.Form["HWorkText"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+                }
+                else
+                    bll.AddFlightPlanOther(Request.Form["MasterIDs"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+                entity.AirlineWorkText = airlineworkText;
                 if (bll.Update(entity))
                 {
                     result.IsSuccess = true;
@@ -155,7 +171,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
     /// </summary>
     private void GetData()
     {
-        var planid =Guid.Parse(Request.Form["id"]);
+        var planid = Guid.Parse(Request.Form["id"]);
         var plan = bll.GetvFlightPlan(planid);
         var strJSON = "";
         if (plan != null)
@@ -168,7 +184,90 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         Response.ContentType = "application/json";
         Response.End();
     }
+    /// <summary>
+    /// 临时计划
+    /// </summary>
 
+    private void GetData1()
+    {
+        var planid = Request.Form["id"];
+        FlightPlanVM model = new FlightPlanVM();
+        var data = bll.Get(Guid.Parse(planid));
+        if (data != null)
+        {
+            model.FillObject(data);
+            var filemasterList = bll.GetFileFlightPlanMasterList(u => u.FlightPlanID.Equals(planid)).Select(u=>u.MasterID);
+            var masterList = rpbll.GetFileMasterList(u => filemasterList.Contains(u.ID));
+            var airlinelist = masterList.Where(u => u.WorkType.Equals("airline"));
+            if (airlinelist != null && airlinelist.Any())
+            {
+                foreach (var item in airlinelist)
+                {
+                    var airlinevm = new AirlineVM();
+                    airlinevm.FlyHeight = item.FlyHeight;
+                    var detailList = rpbll.GetFileDetailList(o => o.MasterID == item.ID);
+                    airlinevm.pointList.AddRange(detailList.Select(u => new PointVM()
+                    {
+                        Name = u.PointName,
+                        LatLong = (!string.IsNullOrEmpty(u.Latitude) && !string.IsNullOrEmpty(u.Longitude)) ? string.Concat("N", SpecialFunctions.ConvertDigitalToDegrees(u.Latitude), "E", SpecialFunctions.ConvertDigitalToDegrees(u.Longitude)) : ""
+                    }));
+                    if (airlinevm.pointList.Count > model.airLineMaxCol)
+                    {
+                        model.airLineMaxCol = airlinevm.pointList.Count;
+                    }
+                    model.airlineList.Add(airlinevm);
+                    model.airlineworkList.Add(item.ID);
+                };
+            }
+            var worklist = masterList.Where(u => u.WorkType.Equals("circle") || u.WorkType.Equals("airlinelr") || u.WorkType.Equals("area"));
+            if (worklist != null && worklist.Any())
+            {
+                foreach (var item in worklist)
+                {
+                    var workvm = new WorkVM();
+                    workvm.FlyHeight = item.FlyHeight;
+                    workvm.Raidus = (item.RaidusMile ?? 0).ToString();
+                    var detailList = rpbll.GetFileDetailList(o => o.MasterID == item.ID);
+                    workvm.pointList.AddRange(detailList.Select(u => new PointVM()
+                    {
+                        Name = u.PointName,
+                        LatLong = (!string.IsNullOrEmpty(u.Latitude) && !string.IsNullOrEmpty(u.Longitude)) ? string.Concat("N", SpecialFunctions.ConvertDigitalToDegrees(u.Latitude), "E", SpecialFunctions.ConvertDigitalToDegrees(u.Longitude)) : ""
+                    }));
+
+                    switch (item.WorkType.ToLower())
+                    {
+                        case "circle":
+                            model.cworkList.Add(workvm);
+                            model.airlineworkList.Add(item.ID);
+                            break;
+                        case "airlinelr":
+                            if (workvm.pointList.Count > model.hworkMaxCol)
+                            {
+                                model.hworkMaxCol = workvm.pointList.Count;
+                            }
+                            model.hworkList.Add(workvm);
+                            model.airlineworkList.Add(item.ID);
+                            break;
+                        case "area":
+                            if (workvm.pointList.Count > model.pworkMaxCol)
+                            {
+                                model.pworkMaxCol = workvm.pointList.Count;
+                            }
+                            model.pworkList.Add(workvm);
+                            model.airlineworkList.Add(item.ID);
+                            break;
+                        default:
+                            break;
+                    }
+
+                };
+            }
+
+        }
+        Response.Write(JsonConvert.SerializeObject(model));
+        Response.ContentType = "application/json";
+        Response.End();
+    }
 
     /// <summary>
     /// 查询数据

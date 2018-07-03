@@ -67,7 +67,6 @@ public partial class FlightPlan_MyFinishAuditRepetPlan : BasePage
     /// 
     private Expression<Func<vGetRepetitivePlanNodeInstance, bool>> GetWhere()
     {
-
         Expression<Func<vGetRepetitivePlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetRepetitivePlanNodeInstance>();
         predicate = predicate.And(m => m.ActorID != m.Creator);
         predicate = predicate.And(m => m.ActorID == User.ID);

@@ -28,9 +28,9 @@ public partial class FlightPlan_ExportHandler : BasePage
         {
             switch (Request.QueryString["type"])
             {
-                //    case "1"://查询数据
-                //        MyUnSubmitRepetPlanExport();
-                //        break;
+                //case "1"://查询数据
+                //    MyUnSubmitRepetPlanExport();
+                  //  break;
                 //    case "2":
                 //      //  MyUnSubmitCurrentPlanExport();
                 //        break;
@@ -43,9 +43,9 @@ public partial class FlightPlan_ExportHandler : BasePage
                 //    case "5":
                 //        MyFinishAuditFlightPlanExport();
                 //        break;
-                case "FlightPlanStatistics":
-                    FlightPlanStatisticsExport();
-                    break;
+                //case "FlightPlanStatistics":
+                //    FlightPlanStatisticsExport();
+                //    break;
                 default:
                     break;
             }
@@ -85,7 +85,7 @@ public partial class FlightPlan_ExportHandler : BasePage
     //    headerRow.CreateCell(1).SetCellValue("公司名称");
     //    headerRow.CreateCell(2).SetCellValue("任务类型");
     //    headerRow.CreateCell(3).SetCellValue("航空器类型");
-    //   // headerRow.CreateCell(4).SetCellValue("航线走向和飞行高度");
+    //    // headerRow.CreateCell(4).SetCellValue("航线走向和飞行高度");
     //    headerRow.CreateCell(4).SetCellValue("飞行范围");
     //    headerRow.CreateCell(5).SetCellValue("飞行高度");
     //    headerRow.CreateCell(6).SetCellValue("注册号");

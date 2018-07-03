@@ -104,7 +104,7 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         var planid = Guid.Parse(Request.Form["id"]);
         try
         {
-            var code = "";// LZCodeUnitity.GetLZCode();
+            var code =  LZCodeUnitity.GetLZCode();
             bll.Update(new RepetitivePlan { Code = code, RepetPlanID = planid }, "Code");
             string ControlDep = "";
             if (Request.Form["Auditresult"] == "0")

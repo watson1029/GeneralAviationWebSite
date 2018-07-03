@@ -253,6 +253,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
                         model.airLineMaxCol = airlinevm.pointList.Count;
                     }
                     model.airlineList.Add(airlinevm);
+                    
                 };
             }
             var worklist = masterList.Where(u => u.WorkType.Equals("circle") || u.WorkType.Equals("airlinelr") || u.WorkType.Equals("area"));
