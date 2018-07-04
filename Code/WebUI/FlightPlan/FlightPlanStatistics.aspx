@@ -64,7 +64,7 @@
 
                     columns: [[
                         { title: '航空公司', field: 'CompanyName', width: 150 },
-                        { title: '飞行时长', field: 'SecondDiff', width: 80 },
+                        { title: '飞行时长', field: 'TimeDiff', width: 80 },
                         { title: '飞行架次(数)', field: 'AircraftNum', width: 100 },
                                                      {
                                                          title: '操作', field: 'Creator', width: 80, formatter: function (value, rec) {
@@ -102,7 +102,7 @@
                         { title: '飞行架次(数)', field: 'AircraftNum', width: 150 },
                         { title: '起飞时刻', field: 'SOBT', width: 150 },
                         { title: '降落时刻', field: 'SIBT', width: 150 },
-                        { title: '时长', field: 'StepID', width: 150 }
+                        { title: '时长', field: 'Code', width: 150 }
                     ]],
                     queryParams: { "action": "getinstance", "Creator": uid, "started": $("#started").datebox("getValue"), "ended": $("#ended").datebox("getValue") },
                     pagination: true, //是否开启分页

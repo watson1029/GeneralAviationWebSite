@@ -1,5 +1,6 @@
 ﻿using BLL.FlightPlan;
 using Model.EF;
+using Model.FlightPlan;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,30 @@ public partial class FlightPlan_FlightPlanStatistics : BasePage
         DateTime started = Request.Form["started"] != null ? Convert.ToDateTime(Request.Form["started"]) : DateTime.Now;
         DateTime ended= Request.Form["ended"] != null ? Convert.ToDateTime(Request.Form["ended"]) : DateTime.Now;
         var pageList = currPlanBll.GetList(page, size,out rowCount,started,ended);
-        var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
+        List<FlightPlanStatisticsAll> pagestatis = new List<FlightPlanStatisticsAll>();
+        foreach (var item in pageList)
+        {
+            FlightPlanStatisticsAll statis = new FlightPlanStatisticsAll();
+            statis.TimeDiff= "0";
+            if (item.SecondDiff > 0 && item.SecondDiff < 60)
+            {
+                statis.TimeDiff = item.SecondDiff.ToString() + "秒";
+            }
+            else if (item.SecondDiff >= 60 && item.SecondDiff < 60 * 60)
+            {
+                statis.TimeDiff = (item.SecondDiff / 60).ToString() + "分" + (item.SecondDiff % 60).ToString() + "秒";
+            }
+            else if (item.SecondDiff >= 60 * 60)// && item.SecondDiff < 60 * 60 * 60
+            {
+                statis.TimeDiff = (item.SecondDiff / 3600).ToString() + "时" + ((item.SecondDiff - (item.SecondDiff / 3600) * 3600) / 60).ToString() + "分" + ((item.SecondDiff - (item.SecondDiff / 3600) * 3600) % 60).ToString() + "秒";
+            }
+            statis.AircraftNum = item.AircraftNum;
+            statis.CompanyName = item.CompanyName;
+            statis.Creator = item.Creator;
+            statis.SecondDiff = item.SecondDiff;
+            pagestatis.Add(statis);
+        }
+        var strJSON = Serializer.JsonDate(new { rows = pagestatis, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
         Response.End();
@@ -59,7 +83,20 @@ public partial class FlightPlan_FlightPlanStatistics : BasePage
         List<vGetCurrentPlanNodeInstance> pageList = currPlanBll.GetList(page, size,out rowCount,Creator, DateTime.Parse(Request.Form["started"]), DateTime.Parse(Request.Form["ended"]));
         foreach (var item in pageList)
         {
+            item.Code = "0";
             item.StepID =Convert.ToInt32(item.ActualEndTime.Value.Subtract(item.ActualStartTime.Value).TotalSeconds);//用StepID代表时长
+            if (item.StepID > 0 && item.StepID < 60)
+            {
+                item.Code = item.StepID.ToString() + "秒";
+            }
+            else if (item.StepID >= 60&& item.StepID< 60 * 60)
+            {
+                item.Code =(item.StepID/60).ToString()+"分"+ (item.StepID % 60).ToString()+"秒";
+            }
+            else if (item.StepID >= 60 * 60 && item.StepID < 60 * 60*60)
+            {
+                item.Code = (item.StepID /3600).ToString() + "时" + ((item.StepID-(item.StepID/3600)*3600)/60).ToString() + "分"+ ((item.StepID - (item.StepID / 3600) * 3600)%60).ToString() + "秒";
+            }
         }
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
