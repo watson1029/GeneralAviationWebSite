@@ -28,7 +28,9 @@ public partial class FlightPlan_ExportHandler : BasePage
         {
             switch (Request.QueryString["type"])
             {
-                //        break;
+                //case "1"://查询数据
+                //    MyUnSubmitRepetPlanExport();
+                //  break;
                 //    case "2":
                 //      //  MyUnSubmitCurrentPlanExport();
                 //        break;
@@ -41,6 +43,8 @@ public partial class FlightPlan_ExportHandler : BasePage
                 //    case "5":
                 //        MyFinishAuditFlightPlanExport();
                 //        break;
+                case "FlightPlanStatistics":
+                    FlightPlanStatisticsExport();
                     break;
                 case "FlightPlanData":
                     List<string> plancode = Request.QueryString["plancode"].Split('|').ToList();
