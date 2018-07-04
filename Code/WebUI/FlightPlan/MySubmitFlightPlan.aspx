@@ -215,7 +215,7 @@
       }
       };
     </script>
-    <div id="detail" class="easyui-dialog" style="width: 700px; height:580px;"
+    <div id="detail" class="easyui-dialog" style="width: 1000px; height:700px;"
         modal="true" closed="true" buttons="#detail-buttons">
     </div>
     

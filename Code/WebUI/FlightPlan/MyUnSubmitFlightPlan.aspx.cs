@@ -5,6 +5,7 @@ using Model.FlightPlan;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -296,10 +297,10 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
     /// <returns></returns>
     private Expression<Func<FlightPlan, bool>> GetWhere()
     {
-
+        var currDate = DateTime.Now.Date.AddDays(1);
         Expression<Func<FlightPlan, bool>> predicate = PredicateBuilder.True<FlightPlan>();
         predicate = predicate.And(m => m.PlanState == "0");
-        predicate = predicate.And(m => m.Creator == User.ID);
+        predicate = predicate.And(m => m.Creator == User.ID && DbFunctions.TruncateTime(m.SOBT) == currDate);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

@@ -614,6 +614,8 @@ public partial class FlightPlan_ExportHandler : BasePage
         headerRow.CreateCell(0).SetCellValue("航空公司");
         headerRow.CreateCell(1).SetCellValue("飞行时长");
         headerRow.CreateCell(2).SetCellValue("飞行架次(数)");
+        headerRow.CreateCell(3).SetCellValue("开始时间");
+        headerRow.CreateCell(4).SetCellValue("结束时间");
 
         int rowIndex = 1;
         if (fplist != null && fplist.Count > 0)
@@ -622,8 +624,25 @@ public partial class FlightPlan_ExportHandler : BasePage
             {
                 var dataRow = sheet1.CreateRow(rowIndex);
                 dataRow.CreateCell(0).SetCellValue(item.CompanyName);
-                dataRow.CreateCell(1).SetCellValue(item.SecondDiff);
+                if (item.SecondDiff > 0 && item.SecondDiff < 60)
+                {
+                    dataRow.CreateCell(1).SetCellValue(item.SecondDiff.ToString() + "秒");
+                }
+                else if (item.SecondDiff >= 60 && item.SecondDiff < 60 * 60)
+                {
+                    dataRow.CreateCell(1).SetCellValue((item.SecondDiff / 60).ToString() + "分" + (item.SecondDiff % 60).ToString() + "秒");
+                }
+                else if (item.SecondDiff >= 60 * 60)//&& item.SecondDiff < 60 * 60 * 60
+                {
+                    dataRow.CreateCell(1).SetCellValue((item.SecondDiff / 3600).ToString() + "时" + ((item.SecondDiff - (item.SecondDiff / 3600) * 3600) / 60).ToString() + "分" + ((item.SecondDiff - (item.SecondDiff / 3600) * 3600) % 60).ToString() + "秒");
+                }
+                else {
+                    dataRow.CreateCell(1).SetCellValue(item.SecondDiff);
+                }
+                //dataRow.CreateCell(1).SetCellValue(item.SecondDiff);
                 dataRow.CreateCell(2).SetCellValue(item.AircraftNum);
+                dataRow.CreateCell(3).SetCellValue(started.ToString());
+                dataRow.CreateCell(4).SetCellValue(ended.ToString());
                 rowIndex++;
             }
             var dr = sheet1.CreateRow(rowIndex);

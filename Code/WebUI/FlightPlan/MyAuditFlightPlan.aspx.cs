@@ -71,9 +71,9 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
     /// 
     private Expression<Func<FlightPlan, bool>> GetWhere()
     {
-
+        var rolename = string.Join(",", User.RoleName);
         Expression<Func<FlightPlan, bool>> predicate = PredicateBuilder.True<FlightPlan>();
-        predicate = predicate.And(m => User.RoleName.Contains(m.ActorName));
+        predicate = predicate.And(m => m.ActorName.IndexOf(rolename) > -1);
         predicate = predicate.And(m => m.Creator != User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -102,9 +102,14 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
         result.IsSuccess = false;
         result.Msg = "提交失败！";
         var planid =Guid.Parse(Request.Form["id"]);
+        string ControlDep = "";
         if (Request.Form["Auditresult"] == "0")
         {
-            insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan,User.ID,User.UserName,User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan);
+            if (!string.IsNullOrEmpty(Request.Form["ControlDep"]))
+            {
+                ControlDep = Request.Form["ControlDep"];
+            }
+            insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan,User.ID,User.UserName,User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan, ControlDep);
         }
         else
         {

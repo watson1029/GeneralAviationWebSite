@@ -427,11 +427,11 @@
                             <tr>
                                 <th class="formTitle">计划撤轮挡时间</th>
                                 <td class="formValue">
-                                    <input id="SOBT" name="SOBT" editable="false" required="true" class="easyui-datebox" style="height: 25px;width:200px" />
+                                    <input id="SOBT" name="SOBT" editable="false" required="true" class="easyui-datetimebox" style="height: 25px;width:200px" />
                                 </td>
                                 <th class="formTitle">计划挡轮挡时间</th>
                                 <td class="formValue">
-                                    <input id="SIBT" name="SIBT" editable="false" required="true" class="easyui-datebox" style="height: 25px;width:200px" />
+                                    <input id="SIBT" name="SIBT" editable="false" required="true" class="easyui-datetimebox" style="height: 25px;width:200px" />
                                 </td>
                             </tr>
                             <tr>
