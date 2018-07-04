@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using ViewModel.FlightPlan;
 
 namespace DAL.FlightPlan
 {
@@ -116,27 +117,27 @@ namespace DAL.FlightPlan
             //List<FlightPlanStatistics> fpslist = new List<FlightPlanStatistics>();
             try
             {
-                string sql =string.Format(@"select d.Creator,p.CompanyName,Sum(isnull(convert(int,AircraftNum),0))AircraftNum,sum(isnull(datediff(ss,ActualStartTime,ActualEndTime),0))SecondDiff
+                string sql = string.Format(@"select d.Creator,p.CompanyName,Sum(isnull(convert(int,AircraftNum),0))AircraftNum,sum(isnull(datediff(ss,ActualStartTime,ActualEndTime),0))SecondDiff
  from Company p 
 left join vGetCurrentPlanNodeInstance
 d  on p.CompanyID=d.creator and  d.ActorID != d.Creator and (d.State = 2 or d.State = 3) and d.ActualStartTime >= '{0}' 
 and d.ActualEndTime <= '{1}'
-group by p.CompanyName,d.Creator", started,ended);
+group by p.CompanyName,d.Creator", started, ended);
                 sql += string.Format(@" union select
 d.Creator,p.CompanyName,Sum(isnull(convert(int,AircraftNum),0))AircraftNum,sum(isnull(datediff(ss,ActualStartTime,ActualEndTime),0))SecondDiff
  from Company p 
 left join vGetCurrentPlanNodeInstance
 d  on p.CompanyID=d.creator and  d.ActorID != d.Creator and (d.State = 2 or d.State = 3) and d.ActualStartTime <'{0}'  
 and d.ActualEndTime <='{1}' and d.ActualEndTime >'{2}' 
-group by p.CompanyName,d.Creator",started,ended,started);
+group by p.CompanyName,d.Creator", started, ended, started);
                 sql += string.Format(@" union select
 d.Creator,p.CompanyName,Sum(isnull(convert(int,AircraftNum),0))AircraftNum,sum(isnull(datediff(ss,ActualStartTime,ActualEndTime),0))SecondDiff
  from Company p 
 left join vGetCurrentPlanNodeInstance
 d  on p.CompanyID=d.creator and  d.ActorID != d.Creator and (d.State = 2 or d.State = 3) and d.ActualStartTime>='{0}'  
 and d.ActualEndTime>'{1}' and d.ActualStartTime<'{2}' 
-group by p.CompanyName,d.Creator",started,ended,ended);
-                var fps=context.Database.SqlQuery<FlightPlanStatistics>(sql);
+group by p.CompanyName,d.Creator", started, ended, ended);
+                var fps = context.Database.SqlQuery<FlightPlanStatistics>(sql);
                 //int? SecondDiff = 0;
                 //var fps = (from s in context.Company
                 //           join p in context.vGetCurrentPlanNodeInstance on s.CompanyName equals p.CreatorName
@@ -225,6 +226,14 @@ group by p.CompanyName,d.Creator",started,ended,ended);
             rowCount = cpInstance.ToList().Count;
             List<vGetCurrentPlanNodeInstance> cplist = cpInstance.ToList().Skip((page - 1) * size).Take(size).ToList();
             return cplist;
+        }
+
+        public List<Model.EF.FlightPlan> GetList(List<string> planlist)
+        {
+            var linq = from t in context.FlightPlan
+                       where planlist.Contains(t.RepetPlanID)
+                       select t;
+            return linq.ToList();
         }
     }
 }

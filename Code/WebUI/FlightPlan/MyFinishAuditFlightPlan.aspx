@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
     <link href="../css/fademap.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
+    <%--<script type="text/javascript" src="/Content/JS/BMapInit.js"></script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <%-- <div class="gridsearch">
@@ -145,14 +145,17 @@
                 });
             },
             Export: function () {
-                var selRow = $('#tab_list').datagrid('getData');
-                if (selRow.total == 0) {
-                    $.messager.alert('提示', '无记录导出！', 'info');
+                var selRow = $('#tab_list').datagrid('getSelections');
+                if (selRow.length == 0) {
+                    $.messager.alert('提示', '无选中记录！', 'info');
                     return;
                 }
-                window.open("ExportHandler.aspx?type=5&plancode=" + $('#ipt_search').val());
+                var data;
+                for (var i = 0 ; i < selRow.length ; i++) {
+                    data += selRow[i].RepetPlanID + '|';
+                }
+                window.open("ExportHandler.aspx?type=FlightPlanData&plancode=" + data);
             }
-
         };
     </script>
     <div id="edit" class="easyui-dialog" style="width: 800px; height: 800px;"
