@@ -24,7 +24,7 @@ namespace BLL.FlightPlan
                 export.planbegin = flight.SOBT.ToString("HH:mm");
                 export.planend = flight.SIBT.ToString("HH:mm");
                 export.remark = flight.Remark;
-                export.airport = repetdal.GetAirportName(flight.RepetPlanID);
+                export.airport = string.Join(",", repetdal.GetAirportName(flight.RepetPlanID));
                 export.messiontype = repetdal.GetFlightTaskName(flight.FlightType);
                 exportlist.Add(export);
             }

@@ -282,12 +282,13 @@ namespace DAL.FlightPlan
             return linq.Count();
         }
 
-        public string GetAirportName(string repetid)
+        public List<string> GetAirportName(string repetid)
         {
-            var linq = from t in context.vRepetitivePlanAirport
-                       where t.RepetPlanID == repetid
+            var linq = from t in context.AirportInfo
+                       join t1 in context.File_Airport on t.Id equals t1.AirportID
+                       where t1.RepetPlanID == repetid
                        select t.Name;
-            return linq.ToString();
+            return linq.ToList();
         }
 
 
