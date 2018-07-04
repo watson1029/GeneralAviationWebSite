@@ -223,7 +223,7 @@
                 </div>
                 <div class="center_right_middle">
                     <div class="title">
-                        <h2><a href="#" target="_blank">相关资料</a></h2>
+                        <h2><a href="List.aspx?Type=File&PageIndex=1" target="_blank">相关资料</a></h2>
                     </div>
                     <div class="tuijie" style="margin: 0 auto">
                         <ul>
@@ -231,7 +231,7 @@
                                 foreach (var item in resModel)
                                 {%>
                             <li>
-                                <a href="Handler.ashx?action=download&filepath=<%=item.FilePath %>" target="_blank" class="linktit"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a>
+                                <a href="Handler.ashx?action=download&filepath=<%=item.FilePath %>" target="_blank" class="linktit"><%=HtmlWorkShop.CutTitle(item.Title,18)%></a>
                             </li>
                             <%  }%>
                         </ul>

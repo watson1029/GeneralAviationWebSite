@@ -9,19 +9,19 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="main">
         <div class="center">
-            <script type="text/javascript" src="js/jquery-1.10.2.js"></script>            
-            <script type="text/javascript" src="js/jquery.rcrumbs.js"></script>            
-            <div class="rcrumbs" id="breadcrumbs">                
-                <ul>     
-                    <li>当前位置：</li>               
+            <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+            <script type="text/javascript" src="js/jquery.rcrumbs.js"></script>
+            <div class="rcrumbs" id="breadcrumbs">
+                <ul>
+                    <li>当前位置：</li>
                     <li><a href="Default.aspx">首页</a><span class="divider">></span></li>
                     <li><a href="<%=Request.RawUrl %>"><%=title%></a><span class="divider">></span></li>
                 </ul>
             </div>
             <script type="text/javascript">
-                $("#breadcrumbs").rcrumbs({windowResize:false});
+                $("#breadcrumbs").rcrumbs({ windowResize: false });
             </script>
-            
+
             <div class="list">
                 <ul>
                     <%
@@ -35,7 +35,14 @@
                             </div>
                             <div class="list_text">
                                 <dl>
-                                    <dt><a target="_self" href="/Detail.aspx?Type=<%=item.type%>&Id=<%=item.Id%>"><%=HtmlWorkShop.CutTitle(item.Title,20)%></a></dt>
+                                    <dt>
+                                        <%if (item.type == "File") {%>
+                                        <a href="Handler.ashx?action=download&filepath=<%=item.FilePath %>" target="_blank" class="linktit"><%=item.Title%></a>
+                                        <% }
+                                        else
+                                        { %>
+                                        <a target="_self" href="/Detail.aspx?Type=<%=item.type%>&Id=<%=item.Id%>"><%=HtmlWorkShop.CutTitle(item.Title, 20)%></a></dt>
+                                        <% } %>
                                     <dd>
                                         <p><%=HtmlWorkShop.CutTitle(HttpUtility.UrlDecode(item.Content),150)%></p>
                                     </dd>
@@ -58,8 +65,8 @@
                         start: 1,
                         display: 7,
                         showdata: 6,
-                        pageCount:'<%=totalPage%>',
-                        current:'<%=pageIndex%>',
+                        pageCount: '<%=totalPage%>',
+                        current: '<%=pageIndex%>',
                         images: false,
                         mouse: 'press',
                         onChange: function (page) {
@@ -76,7 +83,7 @@
                             $.getJSON('http://localhost:3000/data.json', data, function (json) {
                                 console.log(json);
                             });
-                            window.location = "List.aspx?Type=<%=type%>&PageIndex="+data.page;
+                            window.location = "List.aspx?Type=<%=type%>&PageIndex=" + data.page;
                         }
                     });
                 </script>

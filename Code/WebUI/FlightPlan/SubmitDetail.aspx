@@ -140,14 +140,14 @@
                 </div>
             </div>
             <div class="step-pane" id="step-2" style="margin: 10px; margin-bottom: 0px;">
-                <div class="panel-body" style="width: 96%;">
-                    <table class="form">
+                <div class="panel-body" style="width: 98%; border-color:#ffffff">
+                    <table class="form table table-bordered" >
                         <thead>
                             <tr>
-                                <th>审核人</th>
-                                <th>审核状态</th>
-                                <th>审核时间</th>
-                                <th>审核意见</th>
+                                <th style="text-align: center">审核人</th>
+                                <th style="text-align: center">审核状态</th>
+                                <th style="text-align: center">审核时间</th>
+                                <th style="text-align: center">审核意见</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -159,10 +159,10 @@
                                         {
                                             %>
                              <tr>
-                                <td><%=subitem.ActorName%></td>
-                                <td><%=((int)subitem.State == 1 ? "审核中" : ((int)subitem.State == 2 ? "审核通过" : "审核不通过"))%></td>
-                                <td><%=subitem.ActorTime%></td>
-                                <td><%=subitem.Comments%></td>
+                                <td class="formValue"><%=subitem.ActorName%></td>
+                                <td class="formValue"><%=((int)subitem.State == 1 ? "审核中" : ((int)subitem.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                <td class="formValue"><%=subitem.ActorTime%></td>
+                                <td class="formValue"><%=subitem.Comments%></td>
                             </tr>
                                     <%    }
                                     }
@@ -171,10 +171,10 @@
                             %>
 
                             <tr>
-                                <td><%=item.ActorName%></td>
-                                <td><%=((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))%></td>
-                                <td><%=item.ActorTime%></td>
-                                <td><%=item.Comments%></td>
+                                <td class="formValue"><%=item.ActorName%></td>
+                                <td class="formValue"><%=((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                <td class="formValue"><%=item.ActorTime%></td>
+                                <td class="formValue"><%=item.Comments%></td>
                             </tr>
                             <%  
                                     }
