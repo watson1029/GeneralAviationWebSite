@@ -13,4 +13,8 @@ namespace Model.FlightPlan
         public int AircraftNum { get; set; }
         public int SecondDiff { get; set;}
     }
+    public class FlightPlanStatisticsAll: FlightPlanStatistics
+    {
+        public string TimeDiff { get; set; }
+    }
 }
