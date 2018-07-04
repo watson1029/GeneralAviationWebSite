@@ -16,7 +16,7 @@
     </table>
 
     <div id="tab_toolbar" style="padding: 2px 2px;height:22px;"">
-
+        
 
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
@@ -153,8 +153,7 @@
                     },
                     prompt: '请输入要查询的信息'
                 });
-            },
-
+            }
         };
     </script>
     <div id="detail" class="easyui-dialog" style="width: 1200px; height: 800px;"

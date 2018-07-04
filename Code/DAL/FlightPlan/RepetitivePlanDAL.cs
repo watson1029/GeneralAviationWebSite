@@ -281,5 +281,22 @@ namespace DAL.FlightPlan
                        select t;
             return linq.Count();
         }
+
+        public string GetAirportName(string repetid)
+        {
+            var linq = from t in context.vRepetitivePlanAirport
+                       where t.RepetPlanID == repetid
+                       select t.Name;
+            return linq.ToString();
+        }
+
+
+        public string GetFlightTaskName(string taskcode)
+        {
+            var linq = from t in context.FlightTask
+                       where t.TaskCode == taskcode
+                       select t.Description;
+            return linq.ToString();
+        }
     }
 }

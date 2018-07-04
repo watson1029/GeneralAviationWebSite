@@ -57,6 +57,7 @@
     <Compile Include="FlightPlan\AirportInfoBLL.cs" />
     <Compile Include="FlightPlan\BusyTimeBLL.cs" />
     <Compile Include="FlightPlan\CurrentPlanBLL.cs" />
+    <Compile Include="FlightPlan\ExportDataBLL.cs" />
     <Compile Include="FlightPlan\FlightPlanBLL.cs" />
     <Compile Include="BasicData\PilotBLL.cs" />
     <Compile Include="BasicData\Quanlification\CompanyBLL.cs" />
