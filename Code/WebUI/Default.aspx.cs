@@ -122,7 +122,7 @@ public partial class Default : System.Web.UI.Page
     }
     private void LoadResource()
     {
-        resModel = resDAL.GetTopList(13, 2);
+        resModel = resDAL.GetTopList(13, 3);
     }
     private void LoadPicture()
     {

@@ -34,7 +34,7 @@ public partial class List : System.Web.UI.Page
             htmlHelper = new HtmlWorkShop();
             resourceDAL = new ResourceDAL();
             predicate = PredicateBuilder.True<Resource>();
-            predicate = predicate.And(m => m.Started <= DateTime.Now).And(m => m.Ended >= DateTime.Now).And(m => m.IsDeleted == 0);
+            predicate = predicate.And(m => m.Status == 3).And(m => m.IsDeleted == 0);
         }
 
         try
@@ -137,7 +137,7 @@ public partial class List : System.Web.UI.Page
     /// </summary>
     private void LoadFile()
     {        
-        listModel = resourceDAL.FindPagedList(pageIndex, 10, out totalPage, out rowCount, predicate, u => u.Created.Value, false).Select(m => new ListModel
+        listModel = resourceDAL.FindPagedList(pageIndex, 5, out totalPage, out rowCount, predicate, u => u.Created.Value, false).Select(m => new ListModel
         {
             //文件标题
             Title = m.Title,
@@ -147,7 +147,8 @@ public partial class List : System.Web.UI.Page
             type = "File",
             CreateTime = m.Created.Value,
             //文件路径
-            ImgPath = m.FilePath
+            ImgPath = m.FilePath.IndexOf(".doc")>-1? "/images/word.jpg": "/images/pdf.jpg",
+            FilePath = m.FilePath
         }).ToList();
     }
 }
@@ -160,4 +161,5 @@ public class ListModel
     public string type;
     public DateTime? CreateTime;
     public string ImgPath;
+    public string FilePath;
 }
