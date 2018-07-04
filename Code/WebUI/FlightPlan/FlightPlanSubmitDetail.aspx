@@ -193,7 +193,7 @@
         
     </div>
 </form>
-<div class="detail-button" id="wizard-actions">
+<div class="detail-button" id="wizard-actions"  style="padding: 2px; float: right">
                <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
                 <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
         </div>
