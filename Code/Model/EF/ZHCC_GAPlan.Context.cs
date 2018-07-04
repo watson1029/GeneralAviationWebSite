@@ -58,20 +58,20 @@ namespace Model.EF
         public virtual DbSet<TWFLibrary> TWFLibrary { get; set; }
         public virtual DbSet<UserInfo> UserInfo { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
-        public virtual DbSet<vGetRepetitivePlanNodeInstance> vGetRepetitivePlanNodeInstance { get; set; }
         public virtual DbSet<vRepetitivePlanAirport> vRepetitivePlanAirport { get; set; }
         public virtual DbSet<LZCodeGenerate> LZCodeGenerate { get; set; }
         public virtual DbSet<vFlightPlan> vFlightPlan { get; set; }
         public virtual DbSet<FlightPlan> FlightPlan { get; set; }
         public virtual DbSet<CurrentFlightPlan> CurrentFlightPlan { get; set; }
         public virtual DbSet<CurrentFlightPlanOld> CurrentFlightPlanOld { get; set; }
-        public virtual DbSet<vGetFlightPlanNodeInstance> vGetFlightPlanNodeInstance { get; set; }
         public virtual DbSet<vGetCurrentPlanNodeInstance> vGetCurrentPlanNodeInstance { get; set; }
         public virtual DbSet<vCurrentPlan> vCurrentPlan { get; set; }
         public virtual DbSet<SubActualSteps> SubActualSteps { get; set; }
         public virtual DbSet<SubTWFSteps> SubTWFSteps { get; set; }
         public virtual DbSet<TWFSteps> TWFSteps { get; set; }
         public virtual DbSet<ActualSteps> ActualSteps { get; set; }
+        public virtual DbSet<vGetRepetitivePlanNodeInstance> vGetRepetitivePlanNodeInstance { get; set; }
+        public virtual DbSet<vGetFlightPlanNodeInstance> vGetFlightPlanNodeInstance { get; set; }
     
         public virtual ObjectResult<System.Data.Entity.Spatial.DbGeography> f_GetGEOAreaByPointString(string pointString, Nullable<int> type)
         {

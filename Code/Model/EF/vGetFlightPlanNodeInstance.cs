@@ -21,7 +21,7 @@ namespace Model.EF
         public Nullable<System.Guid> PrevID { get; set; }
         public Nullable<System.Guid> NextID { get; set; }
         public System.DateTime CreateTime { get; set; }
-        public byte State { get; set; }
+        public Nullable<byte> State { get; set; }
         public Nullable<int> ActorID { get; set; }
         public Nullable<System.DateTime> ApplyTime { get; set; }
         public string Comments { get; set; }

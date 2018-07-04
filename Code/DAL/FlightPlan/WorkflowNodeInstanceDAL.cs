@@ -81,14 +81,29 @@ namespace DAL.FlightPlan
                             context.SaveChanges();
                             if (context.SubActualSteps.Count(u => u.ParentStepID == currInst.Id.ToString() && u.State == (int)WorkflowNodeInstance.StepStateType.Processing) != 0)
                             {
-                                var repplan = context.RepetitivePlan.Find(planId);
-                                if (repplan != null)
+                                if (twfid == 1)
                                 {
-                                    var list = new List<string>(repplan.ActorName.Split(','));
-                                    list.Remove(roleName);
-                                    repplan.ActorName = string.Join(",", list);
-                                    context.SaveChanges();
+                                    var repplan = context.RepetitivePlan.Find(planId);
+                                    if (repplan != null)
+                                    {
+                                        var list = new List<string>(repplan.ActorName.Split(','));
+                                        list.Remove(roleName);
+                                        repplan.ActorName = string.Join(",", list);
+                                        context.SaveChanges();
+                                    }
                                 }
+                                else if (twfid == 2)
+                                {
+                                    var flightplan = context.FlightPlan.Find(planId);
+                                    if (flightplan != null)
+                                    {
+                                        var list = new List<string>(flightplan.ActorName.Split(','));
+                                        list.Remove(roleName);
+                                        flightplan.ActorName = string.Join(",", list);
+                                        context.SaveChanges();
+                                    }
+                                }
+
                                 dbContextTransaction.Commit();
                                 return null;
                             }
