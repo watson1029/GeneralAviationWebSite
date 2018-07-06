@@ -238,6 +238,7 @@
 
             //打开添加窗口
             OpenWin: function () {
+                $("#CompanyCode3").combobox('reload');
                 $("#edit").dialog("open").dialog('setTitle', '新增飞行器');
                 $("#form_edit").form('clear');
                 $("#btn_add").attr("onclick", "Main.Save();")
@@ -262,6 +263,7 @@
 
             //修改链接 事件
             EditData: function (uid) {
+                $("#CompanyCode3").combobox('reload');
                 $("#edit").dialog("open").dialog('setTitle', '编辑飞行器');
                 $("#btn_add").attr("onclick", "Main.Save(" + uid + ");")
 

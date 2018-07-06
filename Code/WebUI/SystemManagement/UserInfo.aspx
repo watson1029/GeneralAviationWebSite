@@ -81,8 +81,8 @@
                          <td>公司名称：
                         </td>
                         <td>
-                               <input type="text" id="CompanyCode3"  name="CompanyCode3" editable="false"  class="easyui-combobox" data-options="url:'<%=Page.ResolveUrl("~/FlightPlan/GetComboboxData.ashx?type=3")%>',method:'get',valueField:'id',textField:'text',panelHeight:'auto',panelMaxHeight:200" style="height:25px;"/>
-           
+                           <input type="text" id="CompanyCode3"  name="CompanyCode3" editable="false"  class="easyui-combobox" data-options="url:'<%=Page.ResolveUrl("~/FlightPlan/GetComboboxData.ashx?type=3")%>',method:'get',valueField:'id',textField:'text',panelHeight:'auto',panelMaxHeight:200" style="height:25px;"/>
+                            <%--<select id="CompanyCode3" class="easyui-combobox" editable="false" name="CompanyCode3"  panelheight=200 style="width:197px;height:25px;"></select>--%>
                         </td>
                     </tr>
                 </table>
@@ -227,6 +227,7 @@
 
             //打开添加窗口
             OpenWin: function () {
+                $("#CompanyCode3").combobox('reload');
                 $("#edit").dialog("open").dialog('setTitle', '新增');
              //   $("#form_edit").form('clear');
                 $("#UserName").val('');
@@ -286,6 +287,7 @@
             },
             //修改链接 事件
             EditData: function (uid) {
+                $("#CompanyCode3").combobox('reload', '<%=Page.ResolveUrl("~/FlightPlan/GetComboboxData.ashx?type=3")%>');
                 $("#edit").dialog("open").dialog('setTitle', '编辑');
                 $("#pwdrow").hide();
                 $("#trcompanyCode3").hide();
@@ -295,7 +297,7 @@
                     if (data.IsGeneralAviation == 1)
                     { $("#trcompanyCode3").show(); }
 
-                });
+                });                
             },
             EditPassword: function (uid) {
                 $("#form_editpwd").form('clear');
