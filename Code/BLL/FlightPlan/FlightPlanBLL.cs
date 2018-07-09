@@ -17,9 +17,12 @@ namespace BLL.FlightPlan
         FlightPlanDAL dal = new FlightPlanDAL();
         private DAL.FlightPlan.FileFlightPlanMasterDAL masterdal = new DAL.FlightPlan.FileFlightPlanMasterDAL();
         private DAL.FlightPlan.FileDetailDAL detaildal = new DAL.FlightPlan.FileDetailDAL();
-        public bool Delete(string id)
+        public bool Delete(string ids)
         {
+            var idArray = ids.Split(',');
             var context = new ZHCC_GAPlanEntities();
+            foreach (var id in idArray)
+            {
             var entity = context.FlightPlan.Where(u => u.FlightPlanID.ToString().Equals(id)).FirstOrDefault();
             if (entity != null)
             {
@@ -30,6 +33,8 @@ namespace BLL.FlightPlan
             foreach (var item in masterlist)
             {
                 context.File_FlightPlanMaster.Remove(item);
+            }
+
             }
             return context.SaveChanges() > 0;
         }
@@ -265,10 +270,10 @@ namespace BLL.FlightPlan
         {
             var context = new ZHCC_GAPlanEntities();
             StringBuilder sb = new StringBuilder("");
-            using (var dbContextTransaction = context.Database.BeginTransaction())
-            {
-                try
-                {
+            //using (var dbContextTransaction = context.Database.BeginTransaction())
+            //{
+                //try
+                //{
                     if (!string.IsNullOrEmpty(keyValue))
                     {
                         var masterlist = context.File_FlightPlanMaster.Where(u => u.FlightPlanID.Equals(keyValue));
@@ -295,16 +300,16 @@ namespace BLL.FlightPlan
                         }
                     }
                     airlineworkText = sb.ToString();
-                    dbContextTransaction.Commit();
-                }
+                //    dbContextTransaction.Commit();
+                //}
 
 
-                catch (Exception ex)
-                {
-                    dbContextTransaction.Rollback();
-                    throw ex;
-                }
-            }
+                //catch (Exception ex)
+                //{
+                //    dbContextTransaction.Rollback();
+                //    throw ex;
+                //}
+           // }
         }
         /// <summary>
         /// 添加机场、航线、作业区

@@ -98,7 +98,7 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
             entity.CompanyName = User.CompanyName;
             entity.Creator = User.ID;
             entity.CreatorName = User.UserName;
-            entity.ActorID = User.ID;
+           // entity.ActorID = User.ID;
             entity.CreateTime = DateTime.Now;
             entity.ModifyTime = DateTime.Now;
             entity.AirportText = airportText;

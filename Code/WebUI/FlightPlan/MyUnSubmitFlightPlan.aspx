@@ -4,9 +4,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
     <link href="../css/fademap.css" rel="stylesheet" type="text/css" /></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <%-- <div class="gridsearch">
-        <label>用户名：</label>
-        <input type="text" id="s_UserName" name="s_UserName" class="easyui-validatebox" />
+     <%--<div class="gridsearch">
+        <label>开始时间：</label>
+        <input type="text" id="s_BeginTime" name="s_BeginTime" class="easyui-datebox" />
+                 <label>结束时间：</label>
+        <input type="text" id="s_EndTime" name="s_EndTime" class="easyui-datebox" />
         <input type="button" class="searchbotton easyui-linkbutton " style="margin-left:60px" iconcls="icon-search" value="查询" onclick="Main.FunSearchData()" />
     </div>--%>
     <%--列表 start--%>
@@ -67,18 +69,17 @@
                         { title: '起飞机场', field: 'ADEP', width: 80 },
                         { title: '目的地机场', field: 'ADES', width: 80 },
                         { title: '应答机编码', field: 'SsrCode', width: 80 },
-                        { title: '航空器数量', field: 'AircraftNumber', width: 80 },
                         { title: '备降机场I', field: 'ALTN1', width: 80 },
                         { title: '备降机场II', field: 'ALTN2', width: 80 },
                         {
-                            title: '计划撤轮挡时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
+                            title: '起飞时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
                                        var timesstamp = new Date(value.dateValFormat());
                                        return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
                                    }
                           },
                           {
-                              title: '计划挡轮挡时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
+                              title: '落地时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
                                               var timesstamp = new Date(value.dateValFormat());
                                               return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
@@ -198,10 +199,16 @@
                     }
                 });
 
+            },
+            FunSearchData: function () {
+                $('#tab_list').datagrid({
+                    url: location.href,
+                    queryParams: { begintime: $('#s_BeginTime').datebox('getValue'), endtime: $('#s_EndTime').datebox('getValue') }
+                });
             }
         };
     </script>
-    <div id="edit" class="easyui-dialog" style="width: 1000px; height: 800px;"
+    <div id="edit" class="easyui-dialog" style="width: 1100px; height: 500px;"
         modal="true" closed="true" buttons="#edit-buttons">
                </div>
 

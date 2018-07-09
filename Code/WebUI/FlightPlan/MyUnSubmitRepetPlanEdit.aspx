@@ -351,12 +351,14 @@
                     $("#name").text(data.CompanyName);
                     $("#form_edit").form('load', data);
                     airportobj['airportdata'] = data.airportList;
+                    console.log(data.airportList);
                     airlineobj['airlinedata'] = data.airlineList;
                     
                     workobj['cworkdata'] = data.cworkList;
                     workobj['pworkdata'] = data.pworkList;
                     workobj['hworkdata'] = data.hworkList;
                     airlineobj.maxCol = data.airLineMaxCol;
+
                     workobj.pworkMaxCol = data.pworkMaxCol;
                     workobj.hworkMaxCol = data.hworkMaxCol;        
                     $.each(data.WeekSchedule.replace(/\*/g, '').toCharArray(), function (i, n) {
@@ -403,14 +405,17 @@
         });
     }
     function SubmitForm() {
-        if (!$("#form_edit").form("validate")) {
-            return false;
+        if ($("#Remark").val().length > 200) {
+            $.messager.alert('提示', '"其他需要说明的事项"不能超过200字符！', 'info');
+            return;
         }
+        if (!$("#form_edit").form("validate")) {
+            return;
+        }
+
         var fileInfo = dj.getCmp("AttachFiles").getUploadedFiles();
         $("#AttachFilesInfo").val(fileInfo);
-        var postData = $("#form1").serialize();
-
-        var qx = $("input[name='WeekSchedule']").map(function () {
+        qx = $("input[name='WeekSchedule']").map(function () {
             var $this = $(this);
             if ($this.is(':checked')) {
                 return $this.val();
@@ -419,17 +424,26 @@
                 return '*';
             }
         }).get().join('');
-        postData["qx"] = qx;
-        postData["AirportText"] = repetPlan.newairportobj.getJsonData();
-        postData["AirlineText"] = repetPlan.newairlineobj.getJsonData();
-        postData["CWorkText"] = repetPlan.newworkobj.getCWorkJsonData();
-        postData["PWorkText"] = repetPlan.newworkobj.getPWorkJsonData();
-        postData["HWorkText"] = repetPlan.newworkobj.getHWorkJsonData();
-        $.submitForm({
-            url: "/RepetPlanNew/SubmitForm?keyValue=" + keyValue,
-            param: postData,
-            success: function () {
-                $.currentWindow().$("#gridList").trigger("reloadGrid");
+      //  var postData = $("#form_edit").serialize();
+
+        $("#btn_finish").attr("disabled", "disabled");
+        var json = $.param({ "action": "save", "qx": qx, "id": pid, "AirportText": repetPlan.newairportobj.getJsonData(), "AirlineText": repetPlan.newairlineobj.getJsonData(), "CWorkText": repetPlan.newworkobj.getCWorkJsonData(), "PWorkText": repetPlan.newworkobj.getPWorkJsonData(), "HWorkText": repetPlan.newworkobj.getHWorkJsonData() }) + '&' + $('#form_edit').serialize();
+        $.ajax({
+            type: 'post',
+            url: 'MyUnSubmitRepetPlan.aspx',
+            data: json,
+            success: function (data) {
+                $.messager.alert('提示', data.msg, 'info', function () {
+                    if (data.isSuccess) {
+                        $("#tab_list").datagrid("reload");
+                        $("#edit").dialog("close");
+                    }
+                    $("#btn_finish").removeAttr("disabled");
+                });
+            },
+            error: function (xhr, err) {
+                $("#btn_finish").removeAttr("disabled");
+                $.messager.alert('提示', '系统繁忙，请稍后再试！', 'info');
             }
         });
     }

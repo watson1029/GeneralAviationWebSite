@@ -401,9 +401,9 @@
                 return '*';
             }
         }).get().join('');
-        var postData = $("#form_edit").serialize();
+    //    var postData = $("#form_edit").serialize();
 
-        $("#btn_finish").attr("disabled", "disabled");
+        $("#btn_finish").linkbutton("disable");
         var json = $.param({ "action": "save", "qx": qx, "AirportText": repetPlan.newairportobj.getJsonData(), "AirlineText": repetPlan.newairlineobj.getJsonData(), "CWorkText": repetPlan.newworkobj.getCWorkJsonData(), "PWorkText": repetPlan.newworkobj.getPWorkJsonData(), "HWorkText": repetPlan.newworkobj.getHWorkJsonData() }) + '&' + $('#form_edit').serialize();
         $.ajax({
             type: 'post',
@@ -415,11 +415,11 @@
                         $("#tab_list").datagrid("reload");
                         $("#add").dialog("close");
                     }
-                    $("#btn_finish").removeAttr("disabled");
+                    $("#btn_finish").linkbutton("enable");
                 });
             },
             error: function (xhr, err) {
-                $("#btn_finish").removeAttr("disabled");
+                $("#btn_finish").linkbutton("enable");
                 $.messager.alert('提示', '系统繁忙，请稍后再试！', 'info');
             }
         });

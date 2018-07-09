@@ -73,14 +73,14 @@
                                { title: '机场及起降点', field: 'AirportText', width: 200 },
                           //{ title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                         {
-                            title: '计划撤轮挡时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
+                            title: '起飞时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
                                 var timesstamp = new Date(value.dateValFormat());
                                 return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
                             }
                         },
                           {
-                              title: '计划挡轮挡时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
+                              title: '落地时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
                                   var timesstamp = new Date(value.dateValFormat());
                                   return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
@@ -194,7 +194,7 @@
     </script>
 
     <%--添加 修改 start--%>
-    <div id="audit" class="easyui-dialog" style="width: 800px; height: 700px;"
+    <div id="audit" class="easyui-dialog" style="width: 1100px; height: 500px;"
         modal="true" closed="true" buttons="#audit-buttons">
         
     </div>

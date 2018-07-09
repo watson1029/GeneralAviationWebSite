@@ -72,6 +72,9 @@ namespace Model.EF
         public virtual DbSet<ActualSteps> ActualSteps { get; set; }
         public virtual DbSet<vGetRepetitivePlanNodeInstance> vGetRepetitivePlanNodeInstance { get; set; }
         public virtual DbSet<vGetFlightPlanNodeInstance> vGetFlightPlanNodeInstance { get; set; }
+        public virtual DbSet<Map_AirLine> Map_AirLine { get; set; }
+        public virtual DbSet<Map_AppControl> Map_AppControl { get; set; }
+        public virtual DbSet<Map_AreaControl> Map_AreaControl { get; set; }
     
         public virtual ObjectResult<System.Data.Entity.Spatial.DbGeography> f_GetGEOAreaByPointString(string pointString, Nullable<int> type)
         {

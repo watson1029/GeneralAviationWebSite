@@ -26,6 +26,6 @@ public partial class FlightPlan_SubmitDetail : BasePage
     private void GetAuditRecord()
     {
         var planid=Guid.Parse(Request.QueryString["id"]);
-        auditList = insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.RepetitivePlan).Where(u => u.ActorID != User.ID).ToList();
+        auditList = insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.RepetitivePlan).Where(u => u.ActorID != User.ID&&u.State!=WorkflowNodeInstance.StepStateType.NoValid && u.State != WorkflowNodeInstance.StepStateType.Initialized).ToList();
     }
 }

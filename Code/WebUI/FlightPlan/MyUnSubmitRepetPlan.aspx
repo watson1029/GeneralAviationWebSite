@@ -278,11 +278,11 @@
     </script>
 
         <%--添加 修改 start--%>
-   <div id="edit" class="easyui-dialog" style="width: 1200px; height:700px;"
+   <div id="edit" class="easyui-dialog" style="width: 1100px; height:500px;"
         modal="true" cache="false"  closed="true" >
         
     </div>
-   <div id="add" class="easyui-dialog" style="width: 1200px; height:700px;"
+   <div id="add" class="easyui-dialog" style="width: 1100px; height:500px;"
         modal="true" cache="false" closed="true">
         
     </div>

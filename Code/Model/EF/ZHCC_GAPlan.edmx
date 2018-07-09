@@ -385,6 +385,36 @@
           <Property Name="LZCode" Type="varchar" MaxLength="14" Nullable="false" />
           <Property Name="CurrentDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Map_AirLine">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="LineID" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Lon" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="Lat" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="Sort" Type="int" />
+        </EntityType>
+        <EntityType Name="Map_AppControl">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="AppID" Type="nvarchar" MaxLength="64" />
+          <Property Name="Lon" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="Lat" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="Sort" Type="int" />
+        </EntityType>
+        <EntityType Name="Map_AreaControl">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="AreaID" Type="nvarchar" MaxLength="64" />
+          <Property Name="Lon" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="Lat" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="Sort" Type="int" />
+        </EntityType>
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="ID" />
@@ -951,6 +981,9 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySet Name="FlyPlanDemo" EntityType="Self.FlyPlanDemo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoginLog" EntityType="Self.LoginLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LZCodeGenerate" EntityType="Self.LZCodeGenerate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Map_AirLine" EntityType="Self.Map_AirLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Map_AppControl" EntityType="Self.Map_AppControl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Map_AreaControl" EntityType="Self.Map_AreaControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OperationLog" EntityType="Self.OperationLog" Schema="dbo" store:Type="Tables" />
@@ -1204,6 +1237,9 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySet Name="ActualSteps" EntityType="ZHCC_GAPlanModel.ActualSteps" />
           <EntitySet Name="vGetRepetitivePlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance" />
           <EntitySet Name="vGetFlightPlanNodeInstance" EntityType="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance" />
+          <EntitySet Name="Map_AirLine" EntityType="ZHCC_GAPlanModel.Map_AirLine" />
+          <EntitySet Name="Map_AppControl" EntityType="ZHCC_GAPlanModel.Map_AppControl" />
+          <EntitySet Name="Map_AreaControl" EntityType="ZHCC_GAPlanModel.Map_AreaControl" />
         </EntityContainer>
         <EntityType Name="Advertisment">
           <Key>
@@ -2093,6 +2129,36 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="AirlineWorkText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AirportText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Map_AirLine">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LineID" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Lon" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="Lat" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="Sort" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Map_AppControl">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="AppID" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Lon" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="Lat" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="Sort" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Map_AreaControl">
+          <Key>
+            <PropertyRef Name="Guid" />
+          </Key>
+          <Property Name="Guid" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="AreaID" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Lon" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="Lat" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="Sort" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2978,6 +3044,39 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
                 <ScalarProperty Name="StepID" ColumnName="StepID" />
                 <ScalarProperty Name="PlanID" ColumnName="PlanID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Map_AirLine">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Map_AirLine">
+              <MappingFragment StoreEntitySet="Map_AirLine">
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="LineID" ColumnName="LineID" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Map_AppControl">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Map_AppControl">
+              <MappingFragment StoreEntitySet="Map_AppControl">
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Map_AreaControl">
+            <EntityTypeMapping TypeName="ZHCC_GAPlanModel.Map_AreaControl">
+              <MappingFragment StoreEntitySet="Map_AreaControl">
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

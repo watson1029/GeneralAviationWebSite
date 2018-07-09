@@ -70,14 +70,14 @@
                         { title: '备降机场I', field: 'ALTN1', width: 80 },
                         { title: '备降机场II', field: 'ALTN2', width: 80 },
                         {
-                            title: '计划撤轮挡时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
+                            title: '起飞时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
                                 var timesstamp = new Date(value.dateValFormat());
                                 return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
                             }
                         },
                           {
-                              title: '计划挡轮挡时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
+                              title: '落地时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
                                   var timesstamp = new Date(value.dateValFormat());
                                   return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
@@ -215,7 +215,7 @@
       }
       };
     </script>
-    <div id="detail" class="easyui-dialog" style="width: 1000px; height:700px;"
+    <div id="detail" class="easyui-dialog" style="width: 1100px; height:500px;"
         modal="true" closed="true" buttons="#detail-buttons">
     </div>
     

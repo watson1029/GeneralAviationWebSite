@@ -158,12 +158,7 @@
                                         foreach (var subitem in item.SubActualStepsList)
                                         {
                                             %>
-                             <tr>
-                                <td class="formValue"><%=subitem.ActorName%></td>
-                                <td class="formValue"><%=((int)subitem.State == 1 ? "审核中" : ((int)subitem.State == 2 ? "审核通过" : "审核不通过"))%></td>
-                                <td class="formValue"><%=subitem.ActorTime%></td>
-                                <td class="formValue"><%=subitem.Comments%></td>
-                            </tr>
+                            
                                     <%    }
                                     }
                                     else

@@ -53,7 +53,7 @@
                     $("#form1").form('load', data);
 
                     if (data.RepetPlanID == '<%=Guid.Empty%>') {
-                        $("#IsTempFlightPlan").prop({ checked: true, 'disabled': 'disabled' });
+                        $("#IsTempFlightPlan").prop({ checked: true, 'onclick': 'return false' });
                         $("#Reptr").hide();
                         $("#Reptd").hide();
                         $("#work1").hide();
@@ -68,6 +68,7 @@
                         workobj.hworkMaxCol = data.hworkMaxCol;
                     }
                     else {
+                        $("#IsTempFlightPlan").prop({ 'onclick': 'return false' });
                         $("#MasterIDs").val(data.airlineworkList);
                     }
 
@@ -134,8 +135,8 @@
         //var postData = $("#form1").serialize();
         //postData["MasterIDs"] = $("#MasterIDs").val().join(',');
        
-        $("#btn_finish").attr("disabled", "disabled");
-        var json ="";
+        $("#btn_finish").linkbutton("disable");
+        var json = "";
         if ($("#IsTempFlightPlan").is(":checked"))
         {
             json = $.param({ "action": "save", "id": pid,  "AirlineText": repetPlan.newairlineobj.getJsonData(), "CWorkText": repetPlan.newworkobj.getCWorkJsonData(), "PWorkText": repetPlan.newworkobj.getPWorkJsonData(), "HWorkText": repetPlan.newworkobj.getHWorkJsonData() });
@@ -156,11 +157,11 @@
                         $("#tab_list").datagrid("reload");
                         $("#edit").dialog("close");
                     }
-                    $("#btn_finish").removeAttr("disabled");
+                    $("#btn_finish").linkbutton("enable");
                 });
             },
             error: function (xhr, err) {
-                $("#btn_finish").removeAttr("disabled");
+                $("#btn_finish").linkbutton("enable");
                 $.messager.alert('提示', '系统繁忙，请稍后再试！', 'info');
             }
         });
@@ -191,9 +192,9 @@
                                 <th class="formTitle">公司名称</th>
                                 <td class="formValue" style="color: red" id="name"></td>
                                 
-                                <th class="formTitle" id="Reptr">临专号</th>
+                                <th class="formTitle" id="Reptr">长期计划编号</th>
                                 <td class="formValue" id="Reptd">
-                                    <input id="RepetPlanID" name="RepetPlanID" editable="false" data-options="url:'GetComboboxData.ashx?type=4',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                                    <input id="RepetPlanID" name="RepetPlanID" editable="false" data-options="url:'GetComboboxData.ashx?type=4&_n='+new Date().getTime(),method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200,onSelect:function(rec){     
                                            $.ajax({
                     url: 'MySubmitRepetPlan.aspx',
@@ -425,13 +426,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle">计划撤轮挡时间</th>
+                                <th class="formTitle">起飞时间</th>
                                 <td class="formValue">
-                                    <input id="SOBT" name="SOBT" editable="false" required="true" class="easyui-datetimebox" style="height: 25px;width:200px" />
+                                    <input id="SOBT" name="SOBT" editable="false" required="true" class="easyui-timespinner" style="height: 25px;width:200px" />
                                 </td>
-                                <th class="formTitle">计划挡轮挡时间</th>
+                                <th class="formTitle">落地时间</th>
                                 <td class="formValue">
-                                    <input id="SIBT" name="SIBT" editable="false" required="true" class="easyui-datetimebox" style="height: 25px;width:200px" />
+                                    <input id="SIBT" name="SIBT" editable="false" required="true" class="easyui-timespinner" style="height: 25px;width:200px" />
                                 </td>
                             </tr>
                             <tr>

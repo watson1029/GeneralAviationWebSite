@@ -71,63 +71,68 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
     }
     private void Save()
     {
-        AjaxResult result = new AjaxResult();
-        result.IsSuccess = false;
-        result.Msg = "保存失败！";
+            AjaxResult result = new AjaxResult();
+            result.IsSuccess = false;
+            result.Msg = "保存失败！";
 
-        FlightPlan entity = null;
-        var airlineworkText = "";
-        if (string.IsNullOrEmpty(Request.Form["id"]))//新增
-        {
-            entity = new FlightPlan();
+            FlightPlan entity = null;
+            var airlineworkText = "";
+            if (string.IsNullOrEmpty(Request.Form["id"]))//新增
+            {
+                entity = new FlightPlan();
 
-            entity.GetEntitySearchPars<FlightPlan>(this.Context);
-            entity.FlightPlanID = Guid.NewGuid();
-            entity.PlanState = "0";
-            entity.CompanyCode3 = User.CompanyCode3 ?? "";
-            entity.CompanyName = User.CompanyName;
-            entity.Creator = User.ID;
-            entity.CreatorName = User.UserName;
-            entity.ActorID = User.ID;
-            entity.CreateTime = DateTime.Now;
-            entity.ModifyTime = DateTime.Now;
-            if (bool.Parse(Request.Form["IsTempFlightPlan"] ?? "false"))
-            {
-                entity.RepetPlanID = Guid.Empty.ToString();
-                bll.AddFlightPlanTempOther(Request.Form["AirlineText"], Request.Form["CWorkText"], Request.Form["PWorkText"], Request.Form["HWorkText"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
-            }
-            else
-            {
-                bll.AddFlightPlanOther(Request.Form["MasterIDs"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
-            }
-            entity.AirlineWorkText = airlineworkText;
-            if (bll.Add(entity))
-            {
-                result.IsSuccess = true;
-                result.Msg = "增加成功！";
-            }
-        }
-        else//编辑
-        {
-            entity = bll.Get(Guid.Parse(Request.Form["id"]));
-            if (entity != null)
-            {
                 entity.GetEntitySearchPars<FlightPlan>(this.Context);
+                entity.SOBT = entity.SOBT.AddDays(1);
+                entity.SIBT = entity.SIBT.AddDays(1);
+                entity.FlightPlanID = Guid.NewGuid();
+                entity.PlanState = "0";
+                entity.CompanyCode3 = User.CompanyCode3 ?? "";
+                entity.CompanyName = User.CompanyName;
+                entity.Creator = User.ID;
+                entity.CreatorName = User.UserName;
+                entity.ActorID = User.ID;
+                entity.CreateTime = DateTime.Now;
                 entity.ModifyTime = DateTime.Now;
                 if (bool.Parse(Request.Form["IsTempFlightPlan"] ?? "false"))
                 {
+                    entity.RepetPlanID = Guid.Empty.ToString();
                     bll.AddFlightPlanTempOther(Request.Form["AirlineText"], Request.Form["CWorkText"], Request.Form["PWorkText"], Request.Form["HWorkText"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
                 }
                 else
+                {
                     bll.AddFlightPlanOther(Request.Form["MasterIDs"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+                }
                 entity.AirlineWorkText = airlineworkText;
-                if (bll.Update(entity))
+                if (bll.Add(entity))
                 {
                     result.IsSuccess = true;
-                    result.Msg = "更新成功！";
+                    result.Msg = "增加成功！";
                 }
             }
-        }
+            else//编辑
+            {
+                entity = bll.Get(Guid.Parse(Request.Form["id"]));
+                if (entity != null)
+                {
+                    entity.GetEntitySearchPars<FlightPlan>(this.Context);
+                    entity.SOBT = entity.SOBT.AddDays(1);
+                    entity.SIBT = entity.SIBT.AddDays(1);
+                    entity.ModifyTime = DateTime.Now;
+                    if (bool.Parse(Request.Form["IsTempFlightPlan"] ?? "false"))
+                    {
+                        bll.AddFlightPlanTempOther(Request.Form["AirlineText"], Request.Form["CWorkText"], Request.Form["PWorkText"], Request.Form["HWorkText"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+                    }
+                    else
+                        bll.AddFlightPlanOther(Request.Form["MasterIDs"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+                    entity.AirlineWorkText = airlineworkText;
+                    if (bll.Update(entity))
+                    {
+                        result.IsSuccess = true;
+                        result.Msg = "更新成功！";
+                    }
+                }
+            }
+ 
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";

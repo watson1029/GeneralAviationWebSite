@@ -211,7 +211,7 @@
         };
     </script>
 
-    <div id="audit" class="easyui-dialog" style="width:1200px; height:800px;"
+    <div id="audit" class="easyui-dialog" style="width:1100px; height:500px;"
         modal="true" closed="true" buttons="#audit-buttons">
     </div>
     <div id="audit-buttons">

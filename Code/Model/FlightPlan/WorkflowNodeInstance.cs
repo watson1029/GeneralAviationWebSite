@@ -27,7 +27,7 @@ namespace Model.FlightPlan
         public StepStateType State { get; set; }
         public Guid PrevId { get; set; }
         public Guid NextId { get; set; }
-        public int ActorID { get; set; }
+        public int? ActorID { get; set; }
         public string ActorName { get; set; }
         public DateTime? ActorTime { get; set; }
         public string Comments { get; set; }

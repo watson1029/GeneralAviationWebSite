@@ -51,7 +51,6 @@ namespace BLL.FlightPlan
         }
         public AirportInfo Add(AirportInfo entity)
         {
-            entity.Id = Guid.NewGuid().ToString();
             entity.DeletedFlag = false;
             entity.CreateTime = DateTime.Now;
             entity.CreateUserId = 0;

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Untity;
 using ViewModel.FlightPlan;
 
@@ -173,10 +174,12 @@ public class RepetitivePlanBLL
         {
             var context = new ZHCC_GAPlanEntities();
             StringBuilder sb = new StringBuilder("");
-            using (var dbContextTransaction = context.Database.BeginTransaction())
-            {
-                try
-                {
+          //   using (TransactionScope scope = new TransactionScope())
+          //  using (var scope = context.Database.BeginTransaction())
+          //  {
+                
+                //try
+                //{
                     if (!string.IsNullOrEmpty(keyValue))
                     {
                         var airlist = context.File_Airport.Where(u => u.RepetPlanID.Equals(repetPlanID));
@@ -207,10 +210,10 @@ public class RepetitivePlanBLL
                             Sort = i
                         };
                         i++;
-                        context.File_Airport.Add(airport);  
-                        context.SaveChanges();
-                    } 
-                    
+                        context.File_Airport.Add(airport);
+                       
+                    }
+                    var a= context.SaveChanges();
                     #endregion
                     #region 航线
                     if (!string.IsNullOrEmpty(airlineText))
@@ -279,7 +282,7 @@ public class RepetitivePlanBLL
                         var sblinedesc = new StringBuilder("");
                         foreach (var item in workList.airlineArray)
                         {
-                            if (item.airlinePointList.Count() > 0&&!string.IsNullOrEmpty(item.Radius))
+                            if (item.airlinePointList.Count() > 0 && !string.IsNullOrEmpty(item.Radius))
                             {
                                 sblinedesc.Clear();
                                 File_Master master = new File_Master()
@@ -307,7 +310,7 @@ public class RepetitivePlanBLL
                                     point.Longitude = splitmodel.Longitude;
                                     point.Latitude = splitmodel.Latitude;
                                     context.File_Detail.Add(point);
-                                    context.SaveChanges();
+                                    var b = context.SaveChanges();
                                     sblinedesc.Append("(");
                                     sblinedesc.Append(pointItem.LatLong);
                                     sblinedesc.Append(")");
@@ -348,7 +351,7 @@ public class RepetitivePlanBLL
                                 }
                                 master.LineDescript = sblinedesc.ToString();
                                 context.File_Master.Add(master);
-                                context.SaveChanges();
+                               var s= context.SaveChanges();
                                 sb.AppendLine(master.LineDescript + "；");
                             }
                         }
@@ -396,7 +399,7 @@ public class RepetitivePlanBLL
                                     sblinedesc.Append("-");
                                     if (!string.IsNullOrEmpty(point.Latitude) && !string.IsNullOrEmpty(point.Longitude))
                                     {
-                                            customAreaStr.Append("N");
+                                        customAreaStr.Append("N");
                                         customAreaStr.Append(point.Latitude);
                                         customAreaStr.Append("E");
                                         customAreaStr.Append(point.Longitude);
@@ -482,7 +485,7 @@ public class RepetitivePlanBLL
                                     sblinedesc.Append("-");
                                     if (!string.IsNullOrEmpty(point.Latitude) && !string.IsNullOrEmpty(point.Longitude))
                                     {
-                                         customAreaStr.Append("N");
+                                        customAreaStr.Append("N");
                                         customAreaStr.Append(point.Latitude);
                                         customAreaStr.Append("E");
                                         customAreaStr.Append(point.Longitude);
@@ -531,14 +534,16 @@ public class RepetitivePlanBLL
                     }
                     #endregion
                     airlineworkText = sb.ToString();
-                    dbContextTransaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    dbContextTransaction.Rollback();
-                    throw ex;
-                }
-            }
+              //      scope.Complete();
+                //}
+                //catch (Exception ex)
+                //{
+
+                //    //var ss = ex.Message + ex.InnerException + ex.StackTrace;
+                //    //dbContextTransaction.();
+                //    throw ex;
+                //}
+           // }
 
         }
 
