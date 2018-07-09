@@ -5,6 +5,8 @@ using DAL.SystemManagement;
 using Model.EF;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Web;
 using Untity;
 
 public partial class Default : System.Web.UI.Page
@@ -126,14 +128,27 @@ public partial class Default : System.Web.UI.Page
     }
     private void LoadPicture()
     {
-        var model = advbll.Get(1);
-        if (model != null)
+        //var model = advbll.Get(1);
+        //if (model != null)
+        //{
+        //    var picarray = (model.PicPath ?? "").Split('|');
+        //    foreach (var item in picarray)
+        //    {
+        //        var p1 = item.Split(',');
+        //        picModel.Add(p1[0]);
+        //    }
+        //}
+
+        string dirPath = Server.MapPath("Files/AdvPic");
+        if(System.IO.Directory.Exists(dirPath))
         {
-            var picarray = (model.PicPath ?? "").Split('|');
-            foreach (var item in picarray)
+            //获得目录信息
+            DirectoryInfo dir = new DirectoryInfo(dirPath);
+            //获得目录文件列表
+            FileInfo[] files = dir.GetFiles("*.jpg");
+            foreach (var item in files)
             {
-                var p1 = item.Split(',');
-                picModel.Add(p1[0]);
+                picModel.Add("Files/AdvPic/" + item.Name);
             }
         }
     }
