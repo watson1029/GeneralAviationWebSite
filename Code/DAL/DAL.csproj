@@ -70,6 +70,9 @@
     <Compile Include="FlightPlan\WorkflowTplNodeDAL.cs" />
     <Compile Include="Log\LoginLogDAL.cs" />
     <Compile Include="Log\OperationLogDAL.cs" />
+    <Compile Include="Map\Map_AirLineDAL.cs" />
+    <Compile Include="Map\Map_AppControlDAL.cs" />
+    <Compile Include="Map\Map_AreaControlDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SupplyDemandInformation\CompanySummaryDAL.cs" />
     <Compile Include="SupplyDemandInformation\SupplyDemandDAL.cs" />
