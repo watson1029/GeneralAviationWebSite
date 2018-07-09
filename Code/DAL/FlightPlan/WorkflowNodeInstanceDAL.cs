@@ -181,14 +181,14 @@ namespace DAL.FlightPlan
                         #endregion
 
                         //判断节点的活动所有者类型
-                        Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processing, ApplyTime = DateTime.Now, ActorName = tnode.AuthorType, ID = currInst.NextId }, "State", "ApplyTime", "ActorID", "ActorName");
+                        Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processing, ApplyTime = DateTime.Now, ActorName = tnode.AuthorType,RoleName= tnode.AuthorType, ID = currInst.NextId }, "State", "ApplyTime", "ActorID", "ActorName", "RoleName");
                         action(new WorkflowPlan { ActorName = tnode.AuthorType, PlanState = tnode.AuthorType, PlanID = planId });
 
                         nextInst = GetNodeInstance(currInst.NextId);
                     }
                     else
                     {
-                        action(new WorkflowPlan { Actor = null, ActorName = null, PlanState = "end", PlanID = planId });
+                        action(new WorkflowPlan {  ActorName = null, PlanState = "end", PlanID = planId });
                     }
 
                     dbContextTransaction.Commit();

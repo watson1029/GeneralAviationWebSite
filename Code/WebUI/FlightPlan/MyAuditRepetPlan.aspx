@@ -152,7 +152,7 @@
             },
             //审核
             Audit: function (uid) {
-                $("#audit").dialog("open").dialog('setTitle', '审核').dialog('refresh', 'RepetPlanAuditForm.aspx?id=' + uid);
+                $("#audit").dialog("open").dialog('setTitle', '审核').dialog('refresh', 'RepetPlanAuditForm1.aspx?id=' + uid);
                 $("#btn_audit").attr("onclick", "Main.AuditSubmit('" + uid + "');")
             },
             AuditSubmit: function (uid) {

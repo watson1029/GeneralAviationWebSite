@@ -41,5 +41,6 @@ namespace Model.EF
         public string CreatorName { get; set; }
         public Nullable<int> Creator { get; set; }
         public string CompanyName { get; set; }
+        public string RoleName { get; set; }
     }
 }

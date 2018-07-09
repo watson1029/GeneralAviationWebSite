@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RepetPlanAuditForm.aspx.cs" Inherits="FlightPlan_RepetPlanAuditForm" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RepetPlanAuditForm1.aspx.cs" Inherits="FlightPlan_RepetPlanAuditForm1" %>
 
 <script src="<%=Page.ResolveUrl("~/Content/js/JqueryUpload/swfobject.js")%>" type="text/javascript"></script>
 <script src="<%=Page.ResolveUrl("~/Content/js/JqueryUpload/jquery.uploadify.v2.1.4.min.js")%>" type="text/javascript"></script>
@@ -110,8 +110,74 @@
                     </td>
 
                 </tr>
+                <%
+                    if (auditList.Count() > 0)
+                    {        %>
                 <tr>
+                    <th class="formTitle" style="padding-top: 5px;">审批记录
+                    </th>
+                    <td class="formValue" colspan="3">
+                        <table class="form table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center">审核人</th>
+                                    <th style="text-align: center">审核状态</th>
+                                    <th style="text-align: center">审核时间</th>
+                                    <th style="text-align: center">审核意见</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% foreach (var item in auditList)
+                                    {
+                                        if (item.IsParallel.HasValue && item.IsParallel.Value)
+                                        {
+                                            foreach (var subitem in item.SubActualStepsList)
+                                            {
+                                %>
+                                <tr>
+                                    <td class="formValue"><%=subitem.ActorName%></td>
+                                    <td class="formValue"><%=((int)subitem.State == 1 ? "审核中" : ((int)subitem.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                    <td class="formValue"><%=subitem.ActorTime%></td>
+                                    <td class="formValue"><%=subitem.Comments%></td>
+                                </tr>
+                                <%    }
+                                    }
+                                    else
+                                    {
+                                %>
+                                <tr>
+                                    <td class="formValue"><%=item.ActorName%></td>
+                                    <td class="formValue"><%=((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                    <td class="formValue"><%=item.ActorTime%></td>
+                                    <td class="formValue"><%=item.Comments%></td>
+                                </tr>
+                                <%  
+                                        }
+                                    } %>
+                            </tbody>
 
+                        </table>
+                    </td>
+
+                </tr>
+                <%} %>
+                <tr>
+                    <%
+                        if (auditList.Count() == 0)
+                        {
+                            if (User.RoleName.Contains("通航服务站"))
+                            {  %>
+                    <th class="formTitle" style="padding-top: 5px;">管制部门
+                    </th>
+                    <td class="formValue">
+                        <select id="ControlDep" class="easyui-combobox" editable="false" name="ControlDep" panelheight="auto" style="width: 200px;" multiple="true">
+                            <option value="区管">区管</option>
+                            <option value="进近">进近</option>
+                            <option value="塔台">塔台</option>
+                        </select>
+                    </td>
+                    <%   }
+                        }%>
                 </tr>
 
 
@@ -119,7 +185,7 @@
                     <th class="formTitle" style="padding-top: 5px;">审核意见
                     </th>
                     <td class="formValue">
-                        <input id="AuditComment" name="AuditComment" maxlength="400" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AuditComment" name="AuditComment"  maxlength="400" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
                 </tr>
             </table>

@@ -14,17 +14,17 @@ public partial class FlightPlan_RepetPlanAuditForm : BasePage
     WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-        {
-            if (Request.QueryString["id"] != null)
-            {
-                GetAuditRecord();
-            }
-        }
+        //if (!IsPostBack)
+        //{
+        //    if (Request.QueryString["id"] != null)
+        //    {
+        //        GetAuditRecord();
+        //    }
+        //}
     }
-    private void GetAuditRecord()
-    {
-        var planid = Guid.Parse(Request.QueryString["id"]);
-        auditList = insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.RepetitivePlan).Where(u => u.ActorID != User.ID&&u.ActorID!=null).Skip(1).ToList();
-    }
+    //private void GetAuditRecord()
+    //{
+    //    var planid = Guid.Parse(Request.QueryString["id"]);
+    //    auditList = insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.RepetitivePlan).Where(u => u.ActorID != User.ID&&u.ActorID!=null).Skip(1).ToList();
+    //}
 }

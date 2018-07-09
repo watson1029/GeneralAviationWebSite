@@ -79,7 +79,8 @@ namespace DAL.FlightPlan
                     ParentStepID = guid.ToString(),
                     State = 0,
                     CreateTime = DateTime.Now,
-                    ActorName= item.AuthorType
+                    ActorName= item.AuthorType,
+                    RoleName = item.AuthorType
             };
                 context.SubActualSteps.Add(_subinstance);
                 nodeInst.SubActualStepsList.Add(_subinstance);
