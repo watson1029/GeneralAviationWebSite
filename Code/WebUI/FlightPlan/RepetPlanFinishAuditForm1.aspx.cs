@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class FlightPlan_MyUnSubmitRepetPlan1 : System.Web.UI.Page
+public partial class FlightPlan_RepetPlanFinishAuditForm1 :BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {

@@ -28,5 +28,6 @@ namespace Model.EF
         public Nullable<System.DateTime> ActorTime { get; set; }
         public string ActorName { get; set; }
         public Nullable<bool> IsParallel { get; set; }
+        public string RoleName { get; set; }
     }
 }

@@ -148,6 +148,8 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
                 {
                     foreach (var item in arr)
                     {
+                        var code = LZCodeUnitity.GetLZCode();
+                        bll.Update(new RepetitivePlan { Code = code, RepetPlanID = Guid.Parse(item) }, "Code");
                         insdal.Submit(Guid.Parse(item), (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName, User.RoleName.First(), auditComment, insdal.UpdateRepetPlan);
                     }
                 }

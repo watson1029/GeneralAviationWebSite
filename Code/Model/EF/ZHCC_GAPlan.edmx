@@ -23,6 +23,7 @@
           <Property Name="ActorTime" Type="datetime" />
           <Property Name="ActorName" Type="nvarchar" MaxLength="50" />
           <Property Name="IsParallel" Type="bit" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Advertisment">
           <Key>
@@ -611,6 +612,7 @@
           <Property Name="Comments" Type="nvarchar" MaxLength="50" />
           <Property Name="ActorTime" Type="datetime" />
           <Property Name="ActorName" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SubTWFSteps">
           <Key>
@@ -897,6 +899,7 @@
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="State" Type="tinyint" />
           <Property Name="ActorID" Type="int" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
           <Property Name="ApplyTime" Type="datetime" />
           <Property Name="Comments" Type="nvarchar" MaxLength="50" />
           <Property Name="ActorTime" Type="datetime" />
@@ -1151,6 +1154,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     [vGetRepetitivePlanNodeInstance].[CreateTime] AS [CreateTime], 
     [vGetRepetitivePlanNodeInstance].[State] AS [State], 
     [vGetRepetitivePlanNodeInstance].[ActorID] AS [ActorID], 
+    [vGetRepetitivePlanNodeInstance].[RoleName] AS [RoleName], 
     [vGetRepetitivePlanNodeInstance].[ApplyTime] AS [ApplyTime], 
     [vGetRepetitivePlanNodeInstance].[Comments] AS [Comments], 
     [vGetRepetitivePlanNodeInstance].[ActorTime] AS [ActorTime], 
@@ -1994,6 +1998,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ActorTime" Type="DateTime" Precision="3" />
           <Property Name="ActorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SubTWFSteps">
           <Key>
@@ -2037,6 +2042,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="ActorTime" Type="DateTime" Precision="3" />
           <Property Name="ActorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsParallel" Type="Boolean" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vGetRepetitivePlanNodeInstance">
           <Key>
@@ -2077,6 +2083,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="CreatorName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Creator" Type="Int32" />
           <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vGetFlightPlanNodeInstance">
           <Key>
@@ -2916,6 +2923,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySetMapping Name="SubActualSteps">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.SubActualSteps">
               <MappingFragment StoreEntitySet="SubActualSteps">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="ActorName" ColumnName="ActorName" />
                 <ScalarProperty Name="ActorTime" ColumnName="ActorTime" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
@@ -2957,6 +2965,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySetMapping Name="ActualSteps">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.ActualSteps">
               <MappingFragment StoreEntitySet="ActualSteps">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="IsParallel" ColumnName="IsParallel" />
                 <ScalarProperty Name="ActorName" ColumnName="ActorName" />
                 <ScalarProperty Name="ActorTime" ColumnName="ActorTime" />
@@ -2977,6 +2986,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySetMapping Name="vGetRepetitivePlanNodeInstance">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance">
               <MappingFragment StoreEntitySet="vGetRepetitivePlanNodeInstance">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="Creator" ColumnName="Creator" />
                 <ScalarProperty Name="CreatorName" ColumnName="CreatorName" />
