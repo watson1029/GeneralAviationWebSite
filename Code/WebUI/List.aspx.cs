@@ -147,7 +147,7 @@ public partial class List : System.Web.UI.Page
             type = "File",
             CreateTime = m.Created.Value,
             //文件路径
-            ImgPath = m.FilePath.IndexOf(".doc")>-1? "/images/word.jpg": "/images/pdf.jpg",
+            ImgPath = m.FilePath.IndexOf(".doc")>-1? "/images/word.jpg": (m.FilePath.IndexOf(".xls") > -1 ? "/images/excel.jpg" : "/images/pdf.jpg"),
             FilePath = m.FilePath
         }).ToList();
     }

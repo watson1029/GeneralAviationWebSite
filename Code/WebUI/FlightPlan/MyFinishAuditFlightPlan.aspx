@@ -164,7 +164,8 @@
         <a id="btn_edit" href="javascript:;" class="easyui-linkbutton">提交</a> <a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
     </div>
-    <div class="fadediv"><div id="map" style="height:400px;"></div></div>
-    <div class="fade"><span>地图显示/隐藏</span></div>
+    <%--<div class="fadediv"><div id="map" style="height:400px;"></div></div>
+    <div class="fade"><span>地图显示/隐藏</span></div>--%>
+    <div id="map" style="height:400px;"></div>
 </asp:Content>
 

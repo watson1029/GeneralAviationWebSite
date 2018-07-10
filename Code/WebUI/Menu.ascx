@@ -21,7 +21,7 @@
             <li id="companyintro"><a href="/List.aspx?Type=CompanyIntro&PageIndex=1">企业<span>Company</span></a></li>
             <li id="file"><a href="/List.aspx?Type=File&PageIndex=1">资料<span>File</span></a></li>
             <li><a href="javascript:void(0)">计划<span>Plan</span></a></li>
-            <li><a href="javascript:void(0)">气象<span>Weather</span></a></li>
+            <li><a href="/Weather/Weather04.aspx" target="_blank">气象<span>Weather</span></a></li>
             <li><a href="javascript:void(0)">情报<span>Information</span></a></li>
             <li><a href="javascript:void(0)">监视<span>Surveillance</span></a></li>
         </ul>

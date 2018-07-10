@@ -34,10 +34,10 @@
           Main.InitGird();
           Main.InitSearch();
           baiduMap.init();
-          $(".fadediv").fadeToggle();
-          $(".fade").click(function () {
-              $(".fadediv").fadeToggle();
-          });
+          //$(".fadediv").fadeToggle();
+          //$(".fade").click(function () {
+          //    $(".fadediv").fadeToggle();
+          //});
       });
       Main = {
           //初始化表格
@@ -49,7 +49,7 @@
                   idField: 'CurrentFlightPlanID', //标识字段,主键
                   iconCls: '', //标题左边的图标
                   width: '99%', //宽度
-                  height: $(parent.document).find("#mainPanel").height() - 60 > 0 ? $(parent.document).find("#mainPanel").height() - 60 : 300, //高度
+                  height: $(parent.document).find("#mainPanel").height() - 380 > 0 ? $(parent.document).find("#mainPanel").height() - 380 : 300, //高度
                   nowrap: false, //是否换行，True 就会把数据显示在一行里
                   striped: true, //True 奇偶行使用不同背景色
                   singleSelect: false,
@@ -275,6 +275,7 @@
  <a href="javascript:;"
             class="easyui-linkbutton" onclick="$('#detail').dialog('close');return false;">取消</a>
     </div>
-    <div class="fadediv"><div id="map" style="height:400px;"></div></div>
-    <div class="fade"><span>地图显示/隐藏</span></div>
+    <%--<div class="fadediv"><div id="map" style="height:400px;"></div></div>
+    <div class="fade"><span>地图显示/隐藏</span></div>--%>
+    <div id="map" style="height:400px;"></div>
 </asp:Content>
