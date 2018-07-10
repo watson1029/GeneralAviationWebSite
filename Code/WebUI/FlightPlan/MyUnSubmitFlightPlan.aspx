@@ -62,24 +62,26 @@
                     ]],
                     columns: [[
                         { title: '公司名称', field: 'CompanyName', width: 200 },
-                        { title: '临专号', field: 'Code', width: 200 },
+                        { title: '长期计划编号', field: 'Code', width: 200 },
                         { title: '任务类型', field: 'FlightType', width: 80 },
-                        { title: '航班号', field: 'CallSign', width: 80 },
+                         { title: '使用机型', field: 'AircraftType', width: 80 },
+                        { title: '航空器数目', field: 'AircraftNum', width: 80 },
+                        { title: '注册号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 80 },
                         { title: '起飞机场', field: 'ADEP', width: 80 },
-                        { title: '目的地机场', field: 'ADES', width: 80 },
+                        { title: '降落机场', field: 'ADES', width: 80 },
+
                         { title: '应答机编码', field: 'SsrCode', width: 80 },
-                        { title: '备降机场I', field: 'ALTN1', width: 80 },
-                        { title: '备降机场II', field: 'ALTN2', width: 80 },
+  
                         {
-                            title: '起飞时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
+                            title: '预计起飞时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
                                        var timesstamp = new Date(value.dateValFormat());
                                        return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
                                    }
                           },
                           {
-                              title: '落地时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
+                              title: '预计落地时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
                                               var timesstamp = new Date(value.dateValFormat());
                                               return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
@@ -211,7 +213,7 @@
     <div id="edit" class="easyui-dialog" style="width: 1100px; height: 500px;"
         modal="true" closed="true" buttons="#edit-buttons">
                </div>
-
+        
     <div class="fadediv"><div id="map" style="height:400px;"></div></div>
     <div class="fade"><span>地图显示/隐藏</span></div>
 </asp:Content>

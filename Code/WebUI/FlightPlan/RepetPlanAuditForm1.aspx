@@ -27,6 +27,20 @@
                 }
             });
         }
+
+        $("#IsGZ").click(function () {
+            if ($(this).is(":checked")) {
+                $("#Auditresulttr").hide();
+                $("#AuditCommenttr").hide();
+                $("#ControlDeptd").show();
+            }
+            else {
+                $("#Auditresulttr").show();
+                $("#AuditCommenttr").show();
+                $("#ControlDeptd").hide();
+            }
+
+        });
     })
 
 </script>
@@ -55,7 +69,16 @@
                         <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                     </td>
                 </tr>
-
+                  <tr>
+                                <th class="formTitle">航空器数目</th>
+                                <td class="formValue">
+                              <input id="AircraftNum" name="AircraftNum" maxlength="50" class="easyui-textbox"  />
+                                </td>
+                                <th class="formTitle">注册号</th>
+                                <td class="formValue">
+                                    <input id="CallSign" name="CallSign" maxlength="50" class="easyui-textbox"  />
+                                </td>
+                            </tr>
                 <tr>
                     <th class="formTitle">预计开始日期</th>
                     <td class="formValue">
@@ -82,7 +105,7 @@
                     <th class="formTitle" style="padding-top: 5px;">机场及临时起降点
                     </th>
                     <td class="formValue" colspan="3">
-                        <input id="AirportText" name="AirportText" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AirportText" name="AirportText" style="width: 800px; height: 100px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
                 </tr>
                 <tr>
@@ -96,20 +119,10 @@
                     <th class="formTitle" style="padding-top: 5px;">其他说明的事项
                     </th>
                     <td class="formValue" colspan="3">
-                        <input id="Remark" name="Remark" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="Remark" name="Remark" style="width: 800px; height: 100px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
                 </tr>
-                <tr>
-                    <th class="formTitle" style="padding-top: 5px;">审核结果
-                    </th>
-                    <td class="formValue">
-                        <select id="Auditresult" class="easyui-combobox" editable="false" name="Auditresult" required="true" panelheight="auto" style="width: 200px;">
-                            <option value="0" selected="true">通过</option>
-                            <option value="1">不通过</option>
-                        </select>
-                    </td>
-
-                </tr>
+                
                 <%
                     if (auditList.Count() > 0)
                     {        %>
@@ -161,31 +174,42 @@
 
                 </tr>
                 <%} %>
-                <tr>
+                
                     <%
                         if (auditList.Count() == 0)
                         {
                             if (User.RoleName.Contains("通航服务站"))
-                            {  %>
-                    <th class="formTitle" style="padding-top: 5px;">管制部门
-                    </th>
-                    <td class="formValue">
-                        <select id="ControlDep" class="easyui-combobox" editable="false" name="ControlDep" panelheight="auto" style="width: 200px;" multiple="true">
+                            {  %> 
+                <tr>
+                                <th class="formTitle">是否管制部审批</th>
+                                <td class="formValue">
+                                    <input id="IsGZ" type="checkbox"  name="IsGZ" value="true" />   </td></tr>
+                      <tr id="ControlDeptd" style="display:none">  <th class="formTitle">管制部门</th>
+                            <td class="formValue"> <select id="ControlDep" class="easyui-combobox"  editable="false" name="ControlDep" panelheight="auto" style="width: 200px;" multiple="true">
                             <option value="区管">区管</option>
                             <option value="进近">进近</option>
                             <option value="塔台">塔台</option>
                         </select>
-                    </td>
+                    </td></tr>
                     <%   }
                         }%>
+                <tr id="Auditresulttr">
+                    <th class="formTitle" style="padding-top: 5px;">审核结果
+                    </th>
+                    <td class="formValue">
+                        <select id="Auditresult" class="easyui-combobox" editable="false" name="Auditresult" required="true" panelheight="auto" style="width: 200px;">
+                            <option value="0" selected="true">通过</option>
+                            <option value="1">不通过</option>
+                        </select>
+                    </td>
+
                 </tr>
 
-
-                <tr>
+                <tr id="AuditCommenttr">
                     <th class="formTitle" style="padding-top: 5px;">审核意见
                     </th>
                     <td class="formValue">
-                        <input id="AuditComment" name="AuditComment"  maxlength="400" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AuditComment" name="AuditComment"  maxlength="200" style="width: 800px; height: 100px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
                 </tr>
             </table>

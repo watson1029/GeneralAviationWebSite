@@ -26,7 +26,7 @@
                        <input id="ssPlanCode" name="ssPlanCode"  type="hidden" value=""/>
                         <div id="search_menu" style="width: 200px">
                             <div name="Code">
-                                临专号
+                                长期计划编号
                             </div>
                         </div>
 </div>
@@ -48,7 +48,7 @@
                 $('#tab_list').datagrid({
                     title: '列表', //表格标题
                     url: location.href, //请求数据的页面
-                    sortName: 'RepetPlanID', //排序字段
+                    sortName: 'CreateTime', //排序字段
                     idField: 'RepetPlanID', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
@@ -57,7 +57,7 @@
                     striped: true, //True 奇偶行使用不同背景色
                     singleSelect: false,
                     collapsible: false, //可折叠
-                    sortOrder: 'desc', //排序类型
+                    sortOrder: 'asc', //排序类型
                     remoteSort: true, //定义是否从服务器给数据排序
                     frozenColumns: [[//冻结的列，不会随横向滚动轴移动
                         { field: 'cbx', checkbox: true },
@@ -65,7 +65,10 @@
                     columns: [[
                         { title: '公司名称', field: 'CompanyName', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
-                        { title: '使用机型', field: 'AircraftType', width: 100 },       {
+                        { title: '使用机型', field: 'AircraftType', width: 100 },
+                        { title: '航空器数目', field: 'AircraftNum', width: 100 },
+                        { title: '注册号', field: 'CallSign', width: 100 },
+                        {
                             title: '执行开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
                         
                             var timesstamp = new Date(value.dateValFormat());
@@ -91,7 +94,7 @@
 
                             }
                         },
-                          { title: '机场及起降点', field: 'AirportText', width: 200 },
+                          //{ title: '机场及起降点', field: 'AirportText', width: 200 },
                           //{ title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
                            {
@@ -143,49 +146,6 @@
             OpenWin: function () {
                 $("#edit").html("");
                 $("#add").dialog("open").dialog('setTitle', '新增长期计划').dialog('refresh', 'MyUnSubmitRepetPlanAdd.aspx');
-            },
-            //提交按钮事件
-            Save: function (uid) {
-                if ($("#Remark").val().length > 200)
-                {
-                    $.messager.alert('提示', '"其他需要说明的事项"不能超过200字符！', 'info');
-                    return;
-                }
-                if (!$("#form_edit").form("validate")) {
-                    return;
-                }
-               
-                var fileInfo = dj.getCmp("AttchFiles").getUploadedFiles();
-                $("#AttchFilesInfo").val(fileInfo);
-                qx = $("input[name='WeekSchedule']").map(function () {
-                    var $this = $(this);
-                    if ($this.is(':checked')) {
-                        return $this.val();
-                    }
-                    else {
-                          return '*';
-                    }
-                }).get().join('');
-                $("#btn_finish").attr("disabled", "disabled");
-                var json = $.param({ "id": uid, "action": "save", "qx": qx }) + '&' + $('#form_edit').serialize();
-                $.ajax({
-                    type: 'post',
-                    url: location.href,
-                    data: json,
-                    success: function (data) {
-                        $.messager.alert('提示', data.msg, 'info', function () {
-                                    if (data.isSuccess) {
-                                        $("#tab_list").datagrid("reload");
-                                        $("#edit").dialog("close");
-                                    }
-                                    $("#btn_add").removeAttr("disabled");
-                                });
-                    },
-                    error: function (xhr, err) {
-                        $("#btn_add").removeAttr("disabled");
-                        $.messager.alert('提示', '系统繁忙，请稍后再试！', 'info');
-                    }
-                });
             },
 
             //修改链接 事件

@@ -74,7 +74,6 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
         var rolename=string.Join(",",User.RoleName);
         Expression<Func<RepetitivePlan, bool>> predicate = PredicateBuilder.True<RepetitivePlan>();
         predicate = predicate.And(m => m.ActorName.IndexOf(rolename)>-1);
-        predicate = predicate.And(m => m.Creator != User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             var val=Request.Form["search_value"].Trim();
@@ -117,7 +116,7 @@ public partial class FlightPlan_MyAuditRepetPlan : BasePage
             }
             else
             {
-                insdal.Terminate(planid, (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName, User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
+                insdal.TerminateGZ(planid, (int)TWFTypeEnum.RepetitivePlan,User.ID,User.UserName, User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateRepetPlan);
             }
             result.IsSuccess = true;
             result.Msg = "提交成功！";

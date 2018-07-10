@@ -36,5 +36,6 @@ namespace Model.EF
         public string AirlineWorkText { get; set; }
         public string ActorName { get; set; }
         public string CallSign { get; set; }
+        public string AircraftNum { get; set; }
     }
 }

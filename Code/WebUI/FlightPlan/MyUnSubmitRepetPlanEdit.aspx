@@ -49,6 +49,16 @@
                                     <input id="EndDate" name="EndDate" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']"style="width: 250px" />
                                 </td>
                             </tr>
+                             <tr>
+                                <th class="formTitle">航空器数目</th>
+                                <td class="formValue">
+                              <input id="AircraftNum" name="AircraftNum" maxlength="50" class="easyui-textbox" style="width: 250px" />
+                                </td>
+                                <th class="formTitle">注册号</th>
+                                <td class="formValue">
+                                    <input id="CallSign" name="CallSign" maxlength="50" class="easyui-textbox" style="width: 250px" />
+                                </td>
+                            </tr>
                             <tr>
                                 <th class="formTitle">周执行计划</th>
                                 <td colspan="3" class="formValue">
@@ -351,7 +361,6 @@
                     $("#name").text(data.CompanyName);
                     $("#form_edit").form('load', data);
                     airportobj['airportdata'] = data.airportList;
-                    console.log(data.airportList);
                     airlineobj['airlinedata'] = data.airlineList;
                     
                     workobj['cworkdata'] = data.cworkList;

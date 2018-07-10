@@ -48,7 +48,6 @@ namespace Model.EF
         public virtual DbSet<News> News { get; set; }
         public virtual DbSet<OperationLog> OperationLog { get; set; }
         public virtual DbSet<Pilot> Pilot { get; set; }
-        public virtual DbSet<RepetitivePlan> RepetitivePlan { get; set; }
         public virtual DbSet<RepetitivePlanOld> RepetitivePlanOld { get; set; }
         public virtual DbSet<RepetPlanNew> RepetPlanNew { get; set; }
         public virtual DbSet<Resource> Resource { get; set; }
@@ -61,7 +60,6 @@ namespace Model.EF
         public virtual DbSet<vRepetitivePlanAirport> vRepetitivePlanAirport { get; set; }
         public virtual DbSet<LZCodeGenerate> LZCodeGenerate { get; set; }
         public virtual DbSet<vFlightPlan> vFlightPlan { get; set; }
-        public virtual DbSet<FlightPlan> FlightPlan { get; set; }
         public virtual DbSet<CurrentFlightPlan> CurrentFlightPlan { get; set; }
         public virtual DbSet<CurrentFlightPlanOld> CurrentFlightPlanOld { get; set; }
         public virtual DbSet<vGetCurrentPlanNodeInstance> vGetCurrentPlanNodeInstance { get; set; }
@@ -75,6 +73,9 @@ namespace Model.EF
         public virtual DbSet<Map_AirLine> Map_AirLine { get; set; }
         public virtual DbSet<Map_AppControl> Map_AppControl { get; set; }
         public virtual DbSet<Map_AreaControl> Map_AreaControl { get; set; }
+        public virtual DbSet<FlightPlan> FlightPlan { get; set; }
+        public virtual DbSet<RepetitivePlan> RepetitivePlan { get; set; }
+        public virtual DbSet<File_CurrentPlanMaster> File_CurrentPlanMaster { get; set; }
     
         public virtual ObjectResult<System.Data.Entity.Spatial.DbGeography> f_GetGEOAreaByPointString(string pointString, Nullable<int> type)
         {

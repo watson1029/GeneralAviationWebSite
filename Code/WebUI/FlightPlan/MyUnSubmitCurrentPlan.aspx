@@ -37,8 +37,8 @@
                 $('#tab_list').datagrid({
                     title: '列表', //表格标题
                     url: location.href, //请求数据的页面
-                    sortName: 'FlightPlanID', //排序字段
-                    idField: 'FlightPlanID', //标识字段,主键
+                    sortName: 'CurrentPlanID', //排序字段
+                    idField: 'CurrentFlightPlanID', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
                     height: $(parent.document).find("#mainPanel").height() - 60 > 0 ? $(parent.document).find("#mainPanel").height() - 60 : 300, //高度
@@ -53,31 +53,29 @@
                     ]],
                     columns: [[
                          { title: '公司名称', field: 'CompanyName', width: 200 },
-                        { title: '临专号', field: 'Code', width: 200 },
+                        { title: '长期计划编号', field: 'Code', width: 200 },
                         { title: '任务类型', field: 'FlightType', width: 80 },
                         { title: '航班号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 80 },
                         { title: '起飞机场', field: 'ADEP', width: 80 },
                         { title: '目的地机场', field: 'ADES', width: 80 },
                         { title: '应答机编码', field: 'SsrCode', width: 80 },
-                        { title: '航空器数量', field: 'AircraftNumber', width: 80 },
-                        { title: '备降机场I', field: 'ALTN1', width: 80 },
-                        { title: '备降机场II', field: 'ALTN2', width: 80 },
+                        { title: '航空器数量', field: 'AircraftNum', width: 80 },
                         {
-                            title: '计划撤轮挡时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
+                            title: '实际起飞时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
                                 var timesstamp = new Date(value.dateValFormat());
                                 return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
                             }
                         },
                           {
-                              title: '计划挡轮挡时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
+                              title: '实际降落时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
                                   var timesstamp = new Date(value.dateValFormat());
                                   return timesstamp.format("yyyy-MM-dd HH:mm:ss");
 
                               }
                           },
-                             { title: '机场及起降点', field: 'AirportText', width: 200 },
+                             //{ title: '机场及起降点', field: 'AirportText', width: 200 },
                           //{ title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                         { title: '创建人', field: 'CreatorName1', width: 80 },
              
@@ -98,8 +96,8 @@
                     pageSize: 10, //默认一页数据条数
                     rownumbers: true, //行号
                     onClickRow: function (index, row) {
-                        var keyValue = row["FlightPlanID"];
-                        zhccMap.addFlyPlan(keyValue);
+                        var keyValue = row["CurrentPlanID"];
+                       // zhccMap.addFlyPlan(keyValue);
                     }
                 });
             },

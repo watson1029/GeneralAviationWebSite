@@ -44,5 +44,6 @@ namespace Model.EF
         public string ActorName { get; set; }
         public Nullable<bool> DeletedFlag { get; set; }
         public Nullable<bool> IsTempFlightPlan { get; set; }
+        public string AircraftNum { get; set; }
     }
 }
