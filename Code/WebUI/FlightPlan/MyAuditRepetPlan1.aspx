@@ -21,7 +21,7 @@
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
                 <div name="Code">
-                    临专号
+                    长期计划编号
                 </div>
             </div>
         </div>
@@ -64,6 +64,8 @@
                         { title: '公司名称', field: 'CompanyName', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
                         { title: '使用机型', field: 'AircraftType', width: 100 },
+                               { title: '航空器数目', field: 'AircraftNum', width: 100 },
+                        { title: '注册号', field: 'CallSign', width: 100 },
                         {
                             title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
 
@@ -166,18 +168,33 @@
                 if (!$("#form_audit").form("validate")) {
                     return;
                 }
-
+                if ($("#IsGZ").is(":checked")) {
+                    if ($("#ControlDep").combobox('getValues') == "") {
+                        $.messager.alert('提示', '请选择管制部门！', 'info');
+                        return;
+                    }
+                    $("#Auditresult").combobox('setValues', '0');
+                }
+                $("#btn_audit").linkbutton("disable");
                 var json = $.param({ "id": uid, "action": "auditsubmit" }) + '&' + $('#form_audit').serialize();
-
-                $.post(location.href, json, function (data) {
-                    $.messager.alert('提示', data.msg, 'info', function () {
-                        if (data.isSuccess) {
-                            $("#tab_list").datagrid("reload");
-                            $("#audit").dialog("close");
-                        }
-                    });
+                $.ajax({
+                    type: 'post',
+                    url: location.href,
+                    data: json,
+                    success: function (data) {
+                        $.messager.alert('提示', data.msg, 'info', function () {
+                            if (data.isSuccess) {
+                                $("#tab_list").datagrid("reload");
+                                $("#audit").dialog("close");
+                            }
+                            $("#btn_audit").linkbutton("enable");
+                        });
+                    },
+                    error: function (xhr, err) {
+                        $("#btn_audit").linkbutton("enable");
+                        $.messager.alert('提示', '系统繁忙，请稍后再试！', 'info');
+                    }
                 });
-
             },
             BatchAuditSubmit: function (uid) {
                 if ($("#BatchAuditComment").val().length > 200) {
@@ -200,12 +217,23 @@
                 $.messager.confirm('提示', '确认要提交审核结果吗？', function (r) {
                     if (r) {
                         var json = $.param({ "cbx_select": idArray.join(','), "action": "batchaudit" }) + '&' + $('#form_batchaudit').serialize();
-                        $.post(location.href, json, function (data) {
-                            $.messager.alert('提示', data.msg, 'info');
-                            if (data.isSuccess) {
-                                $("#batchaudit").dialog("close");
-                                $("#tab_list").datagrid("reload");
-                                selRow.length = 0;
+                        $.ajax({
+                            type: 'post',
+                            url: location.href,
+                            data: json,
+                            success: function (data) {
+                                $.messager.alert('提示', data.msg, 'info', function () {
+                                    if (data.isSuccess) {
+                                        $("#tab_list").datagrid("reload");
+                                        $("#batchaudit").dialog("close");
+                                        selRow.length = 0;
+                                    }
+                                    $("#btn_batchaudit").linkbutton("enable");
+                                });
+                            },
+                            error: function (xhr, err) {
+                                $("#btn_batchaudit").linkbutton("enable");
+                                $.messager.alert('提示', '系统繁忙，请稍后再试！', 'info');
                             }
                         });
                     }

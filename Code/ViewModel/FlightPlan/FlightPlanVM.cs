@@ -34,6 +34,7 @@ namespace ViewModel.FlightPlan
         public int AircraftNumber { get; set; }
         public string CreatorName { get; set; }
         public string CallSign { get; set; }
+        public string AircraftNum { get; set; }
         public Nullable<System.DateTime> ATOT { get; set; }
         public Nullable<System.DateTime> ALDT { get; set; }
         public Nullable<System.DateTime> AOBT { get; set; }

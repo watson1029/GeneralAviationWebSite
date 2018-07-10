@@ -55,7 +55,16 @@
                         <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                     </td>
                 </tr>
-
+                  <tr>
+                                <th class="formTitle">航空器数目</th>
+                                <td class="formValue">
+                              <input id="AircraftNum" name="AircraftNum" maxlength="50" class="easyui-textbox"/>
+                                </td>
+                                <th class="formTitle">注册号</th>
+                                <td class="formValue">
+                                    <input id="CallSign" name="CallSign" maxlength="50" class="easyui-textbox" />
+                                </td>
+                            </tr>
                 <tr>
                     <th class="formTitle">预计开始日期</th>
                     <td class="formValue">
@@ -82,7 +91,7 @@
                     <th class="formTitle" style="padding-top: 5px;">机场及临时起降点
                     </th>
                     <td class="formValue" colspan="3">
-                        <input id="AirportText" name="AirportText" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="AirportText" name="AirportText" style="width: 800px; height: 100px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
                 </tr>
                 <tr>
@@ -96,7 +105,7 @@
                     <th class="formTitle" style="padding-top: 5px;">其他说明的事项
                     </th>
                     <td class="formValue" colspan="3">
-                        <input id="Remark" name="Remark" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="Remark" name="Remark" style="width: 800px; height: 100px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
                 </tr>
                 <tr>

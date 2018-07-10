@@ -80,7 +80,7 @@ public class RepetitivePlanBLL
 
         public List<RepetitivePlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<RepetitivePlan, bool>> where)
         {
-            return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.RepetPlanID, true);
+            return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.CreateTime, true);
         }
 
         public List<vGetRepetitivePlanNodeInstance> GetNodeInstanceList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<vGetRepetitivePlanNodeInstance, bool>> where)

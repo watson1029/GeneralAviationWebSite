@@ -119,6 +119,8 @@ public partial class FlightPlan_MyUnSubmitRepetPlan : BasePage
             {
                 entity.AircraftType =Request.Form["AircraftType"];
                 entity.FlightType = Request.Form["FlightType"];
+                entity.AircraftNum = Request.Form["AircraftNum"];
+                entity.CallSign = Request.Form["CallSign"];
                 entity.StartDate =DateTime.Parse(Request.Form["StartDate"]);
                 entity.EndDate = DateTime.Parse(Request.Form["EndDate"]);
                 entity.ModifyTime = DateTime.Now;

@@ -89,6 +89,7 @@ namespace BLL.FlightPlan
                         Id = airportid,
                         Name = item.AirportName,
                         Type = "TH",
+                        Code4= item.CodeF,
                         Longitude = splitmodel.Longitude ?? "",
                         Latitude = splitmodel.Latitude ?? "",
                         FrameOfAxes = "",

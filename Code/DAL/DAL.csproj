@@ -52,6 +52,7 @@
     <Compile Include="DBHelper.cs" />
     <Compile Include="FlightPlan\AirportInfoDAL.cs" />
     <Compile Include="FlightPlan\FileAirportDAL.cs" />
+    <Compile Include="FlightPlan\FileCurrentPlanMasterDAL.cs" />
     <Compile Include="FlightPlan\FileDetailDAL.cs" />
     <Compile Include="FlightPlan\FileFlightPlanMasterDAL.cs" />
     <Compile Include="FlightPlan\FileMasterDAL.cs" />

@@ -13,6 +13,7 @@ namespace ViewModel.FlightPlan
     public class AirportFillText
     {
         public string AirportName { get; set; }
+        public string CodeF { get; set; }
         public string LatLong { get; set; }
     }
     public class AirlineFillTotal

@@ -70,7 +70,7 @@ public partial class FlightPlan_MyFinishAuditRepetPlan1 : BasePage
         Expression<Func<vGetRepetitivePlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetRepetitivePlanNodeInstance>();
        // predicate = predicate.And(m => m.PlanState == "end");
         //predicate = predicate.And(m => m.ActorID != m.Creator);
-        predicate = predicate.And(m =>User.RoleName.Contains(m.RoleName));
+        predicate = predicate.And(m =>User.RoleName.Contains(m.RoleName)&&m.NextID==Guid.Empty);
         predicate = predicate.And(m => m.State == 2 || m.State == 3);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
