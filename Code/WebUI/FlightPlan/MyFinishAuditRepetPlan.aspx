@@ -18,8 +18,8 @@
             <div style="float:right">
                         <input id="ipt_search" menu="#search_menu"/>
                         <div id="search_menu" style="width: 200px">
-                            <div name="PlanCode">
-                                临专号
+                            <div name="Code">
+                                长期计划编号
                             </div>
                         </div>
 </div>
@@ -58,6 +58,8 @@
                       { title: '公司名称', field: 'CompanyName', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
                         { title: '使用机型', field: 'AircraftType', width: 100 },
+                            { title: '航空器数目', field: 'AircraftNum', width: 100 },
+                        { title: '注册号', field: 'CallSign', width: 100 },
                         {
                             title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
 
@@ -86,7 +88,7 @@
 
                             }
                         },
-                          { title: '机场及起降点', field: 'AirportText', width: 200 },
+                          //{ title: '机场及起降点', field: 'AirportText', width: 200 },
                           //{ title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
                           { title: '其他需要说明的事项', field: 'Remark', width: 120, hidden: 'true' },
@@ -94,7 +96,7 @@
                           { title: '审核时间', field: 'ActorTime', width: 120 },
                                                        {
                                                            title: '操作', field: 'PlanID', width: 80, formatter: function (value, rec) {
-                                                               var str = "<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.EditData('" + value + "');$(this).parent().click();return false;\">修改</a>";
+                                                               var str = "<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.EditData('" + value + "');$(this).parent().click();return false;\">查看</a>";
                                                                return str;
                                                            }
                                                        }
@@ -129,7 +131,7 @@
             EditData: function (uid) {
                 $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'RepetPlanFinishAuditForm.aspx?id=' + uid);
   
-                $("#btn_edit").attr("onclick", "Main.Save('" + uid + "');")
+                //$("#btn_edit").attr("onclick", "Main.Save('" + uid + "');")
             },
             Save: function (uid) {
                 if ($("#Comments").val().length > 200) {
@@ -152,8 +154,8 @@
         modal="true" closed="true" buttons="#edit-buttons">
     
     <div id="edit-buttons">
-        <a id="btn_edit" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
-            class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
+       <%-- <a id="btn_edit" href="javascript:;" class="easyui-linkbutton">保存</a>--%>
+         <a href="javascript:;" class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">关闭</a>
     </div></div>
     <div class="fadediv"><div id="map" style="height:400px;"></div></div>
     <div class="fade"><span>地图显示/隐藏</span></div>

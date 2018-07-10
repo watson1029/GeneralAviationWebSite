@@ -1,5 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="MyUnSubmitFlightPlanAdd.aspx.cs" Inherits="FlightPlan_MyUnSubmitFlightPlanAdd" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="MyUnSubmitCurrentPlanAdd.aspx.cs" Inherits="FlightPlan_MyUnSubmitCurrentPlanAdd" %>
 
+<script src="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.js")%>" type="text/javascript"></script>
+<link href="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.css?v=1.3")%>" rel="stylesheet" type="text/css" />
 <script src="<%=Page.ResolveUrl("~/Content/JS/GA/airlineTable.js")%>" type="text/javascript"></script>
 <script src="<%=Page.ResolveUrl("~/Content/JS/GA/workTable.js")%>" type="text/javascript"></script>
 <script>
@@ -41,7 +43,7 @@
       
         if (!!pid) {
             $.ajax({
-                url: "MyUnSubmitFlightPlan.aspx",
+                url: "MyUnSubmitCurrentPlan.aspx",
                 data: { id: pid, "action": "queryone1" },
                 type:"post",
                 dataType: "json",
@@ -49,13 +51,7 @@
                 success: function (data) {
                     $("#form1").form('load', data);
 
-                    if (data.RepetPlanID == '<%=Guid.Empty%>') {
-                        $("#IsTempFlightPlan").prop({ checked: true, 'onclick': 'return false' });
-                        $("#Reptr").hide();
-                        $("#Reptd").hide();
-                        $("#work1").hide();
-                        $("#airline2").show();
-                        $("#work2").show();
+                    if (data.FlightPlanID == '<%=Guid.Empty%>') {
                         airlineobj['airlinedata'] = data.airlineList;
                         workobj['cworkdata'] = data.cworkList;
                         workobj['pworkdata'] = data.pworkList;
@@ -65,7 +61,6 @@
                         workobj.hworkMaxCol = data.hworkMaxCol;
                     }
                     else {
-                        $("#IsTempFlightPlan").prop({ 'onclick': 'return false' });
                         $("#MasterIDs").val(data.airlineworkList);
                     }
 
@@ -83,51 +78,29 @@
         $(this).addClass("active").siblings().removeClass("active");
         $('#con div').eq(i).show().siblings().hide();
     });
-    $("#IsTempFlightPlan").click(function () {
-
-        if ($(this).is(":checked")) {
-            $("#Reptr").hide(); $("#Reptd").hide();
-            $("#work1").hide();
-            $("#airline2").show();
-            $("#work2").show();
-
-        }
-        else {
-            $("#Reptr").show(); $("#Reptd").show();
-            $("#work1").show();
-            $("#airline2").hide();
-            $("#work2").hide();
-        }
-
-    });
-
+ 
     function submitForm() {
         if (!$("#form1").form("validate")){
             return false;
         }
         //var postData = $("#form1").serialize();
         //postData["MasterIDs"] = $("#MasterIDs").val().join(',');
+       
+        $("#btn_finish").linkbutton("disable");
         var json = "";
         if ($("#IsTempFlightPlan").is(":checked"))
         {
             json = $.param({ "action": "save", "id": pid,  "AirlineText": repetPlan.newairlineobj.getJsonData(), "CWorkText": repetPlan.newworkobj.getCWorkJsonData(), "PWorkText": repetPlan.newworkobj.getPWorkJsonData(), "HWorkText": repetPlan.newworkobj.getHWorkJsonData() });
-        }
+        
+            }
         else
         {
-            if (!$("#RepetPlanID").combobox('getValues') == "")
-            {
-                $.messager.alert('提示', '请选择长期计划编号！', 'info');
-                return;
-            }
-           
             json = $.param({ "action": "save", "id": pid, "MasterIDs": $("#MasterIDs").combobox('getValues').join(',') });
         }
         json += '&' + $('#form1').serialize();
-        $("#btn_finish").linkbutton("disable");
-       
         $.ajax({
             type: 'post',
-            url: 'MyUnSubmitFlightPlan.aspx',
+            url: 'MyUnSubmitCurrentPlan.aspx',
             data: json,
             success: function (data) {
                 $.messager.alert('提示', data.msg, 'info', function () {
@@ -150,42 +123,15 @@
         <div class="panel-heading">
             <h3 class="panel-title">基础信息</h3>
         </div>
-        <div class="panel-body" style="width: 100%;">
+        <div class="panel-body" style="width: 96%;">
             <table class="form">
                             <tr>
                                 <th class="formTitle">公司名称</th>
                                 <td class="formValue" style="color: red" id="name"></td>
                                                           
                             </tr>
+                          
                             <tr> 
-                                <th class="formTitle">是否临时计划</th>
-                                <td class="formValue">
-                                    <input id="IsTempFlightPlan" type="checkbox"  name="IsTempFlightPlan" value="true" />
-                                </td>
-                            </tr>
-                            <tr> 
-                                 <th class="formTitle" id="Reptr">长期计划编号</th>
-                <td class="formValue" id="Reptd">
-                                    <input id="RepetPlanID" name="RepetPlanID" style="height: 25px;width: 200px"  editable="false" data-options="url:'GetComboboxData.ashx?type=4&_n='+new Date().getTime(),method:'get',valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200,onSelect:function(rec){     
-                                           $.ajax({
-                    url: 'MySubmitRepetPlan.aspx',
-                      type:'post',                  
-                   data: { id: rec.id,'action': 'queryone' },
-                    dataType: 'json',
-                    async: false,
-                    success: function (data) {
-                        $('#Code').val(data.Code);
-                        $('#FlightType').textbox('setValue',data.FlightType);
-                        $('#AircraftType').textbox('setValue',data.AircraftType);
-                        $('#CallSign').textbox('setValue',data.CallSign);
-                        $('#AircraftNum').textbox('setValue',data.AircraftNum);
-                        $('#Remark').textbox('setValue',data.Remark);
-                        $('#AirportText').textbox('setValue',data.AirportText);
-                        $('#MasterIDs').combobox('reload','GetComboboxData.ashx?type=5&id='+rec.id);
-                    }
-                });  }"  class="easyui-combobox" style="height: 25px;" />
-                                </td>
                                 <th class="formTitle">任务类型</th>
                                 <td class="formValue">
 
@@ -207,9 +153,9 @@
                                
                             </tr>
                             <tr>
-                                                <th class="formTitle">航空器数目</th>
+                                  <th class="formTitle">航空器数目</th>
                                 <td class="formValue">
-                                    <input id="AircraftNum" name="AircraftNum" maxlength="50" class="easyui-textbox" style="height: 25px;width:200px" />
+                                    <input id="AircraftNum" name="AircraftNum" maxlength="50" required="true" class="easyui-textbox" style="height: 25px;width:200px" />
                                 </td>
                                 <th class="formTitle">应答机编码</th>
                                 <td class="formValue">
@@ -227,11 +173,11 @@
                                 </td>
                             </tr>   
                    <tr>
-                                <th class="formTitle">预计起飞时间</th>
+                                <th class="formTitle">实际起飞时间</th>
                                 <td class="formValue">
                                     <input id="SOBT" name="SOBT" editable="false" class="easyui-datetimebox" style="height: 25px;width:200px" />
                                 </td>
-                                <th class="formTitle">预计落地时间</th>
+                                <th class="formTitle">实际落地时间</th>
                                 <td class="formValue">
                                     <input id="SIBT" name="SIBT" editable="false" class="easyui-datetimebox" style="height: 25px;width:200px" />
                                 </td>
@@ -243,7 +189,7 @@
                                 </td>
                             </tr>
 
-                            <tr id ="work1">
+                            <tr>
                                 <th class="formTitle">航线及作业区</th>
                                 <td class="formValue" colspan="3">
                                     <input id="MasterIDs" name="MasterIDs" editable="false" class="easyui-combobox" data-options="method:'get',multiple:true,valueField:'id',textField:'text',panelHeight:'auto'
@@ -251,7 +197,7 @@
                                         style="height: 25px; width: 600px;" />
                                 </td>
                             </tr>
-                            <tr id ="airline2" style="display:none;">
+                            <tr style="display:none;">
                                 <th style="padding-top: 5px; width: 50px">航线
                                 </th>
                                 <td colspan="3">
@@ -287,7 +233,7 @@
                                     <a id="airline-MinusCol" class="easyui-linkbutton" style="margin-top: 20px;">删除列</a>
                                 </td>
                             </tr>
-                            <tr id ="work2" style="padding: 2px;display:none;">
+                            <tr style="padding: 2px;display:none;">
                                 <th  style="padding-top: 5px;">作业区
                                 </th>
                                 <td colspan="3">
@@ -402,12 +348,9 @@
                                     <input id="Remark" name="Remark" style="width: 800px; height: 100px" type="text" data-options="multiline:true" class="easyui-textbox" />
                                 </td>
                             </tr>                
+                          
                    </table>
+
         </div> 
-           <div class="form-button"  style="padding:2px;float:right">
-                <a id="btn_finish" class="easyui-linkbutton"  onclick="submitForm()">保存</a>  
-               <a id="btn_cancel" class="easyui-linkbutton"  onclick="$('#edit').dialog('close');return false;">取消</a>                     
-        </div>
-                  </div>
+                    </div>
 </form>
-       

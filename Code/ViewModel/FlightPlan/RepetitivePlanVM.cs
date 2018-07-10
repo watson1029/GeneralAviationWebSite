@@ -33,6 +33,8 @@ namespace ViewModel.FlightPlan
         public string CreatorName { get; set; }
         public string CompanyName { get; set; }
         public string DocuText { get; set; }
+        public string AircraftNum { get; set; }
+        public string CallSign { get; set; }
         public string WeekSchedule { get; set; }
         public string AirportText { get; set; }
         public string AirlineText { get; set; }

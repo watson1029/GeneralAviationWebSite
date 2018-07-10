@@ -68,8 +68,7 @@ public partial class FlightPlan_MyFinishAuditRepetPlan : BasePage
     private Expression<Func<vGetRepetitivePlanNodeInstance, bool>> GetWhere()
     {
         Expression<Func<vGetRepetitivePlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetRepetitivePlanNodeInstance>();
-        predicate = predicate.And(m => m.ActorID != m.Creator);
-        predicate = predicate.And(m => m.ActorID == User.ID);
+        predicate = predicate.And(m => User.RoleName.Contains(m.RoleName));
         predicate = predicate.And(m => m.State == 2 || m.State == 3);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -87,8 +86,7 @@ public partial class FlightPlan_MyFinishAuditRepetPlan : BasePage
         var planid = Guid.Parse(Request.Form["id"]);
 
         Expression<Func<vGetRepetitivePlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetRepetitivePlanNodeInstance>();
-        predicate = predicate.And(m => m.ActorID != m.Creator);
-        predicate = predicate.And(m => m.ActorID == User.ID);
+        predicate = predicate.And(m => User.RoleName.Contains(m.RoleName));
         predicate = predicate.And(m => m.State == 2 || m.State == 3);
         predicate = predicate.And(m => m.PlanID == planid);
         predicate = predicate.And(m => m.TWFID == (int)TWFTypeEnum.RepetitivePlan);

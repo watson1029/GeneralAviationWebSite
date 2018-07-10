@@ -25,7 +25,7 @@
                                     <div id="PlanFiles-fileQueue"></div>
                                     <div id="PlanFiles-fileList" style="margin-top: 2px; zoom: 1"></div>
                                     <div>
-                                        <textarea id="PlanFiles-textArea" name="PlanFiles-textArea" style="height: 475px; width: 998px"></textarea>
+                                        <textarea id="PlanFiles-textArea" name="PlanFiles-textArea" style="height: 475px; width: 900px"></textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -70,6 +70,16 @@
                                 <th class="formTitle">执行结束日期</th>
                                 <td class="formValue">
                                     <input id="EndDate" name="EndDate" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="width: 250px" />
+                                </td>
+                            </tr>
+                             <tr>
+                                <th class="formTitle">航空器数目</th>
+                                <td class="formValue">
+                              <input id="AircraftNum" name="AircraftNum" maxlength="50" class="easyui-textbox" style="width: 250px" />
+                                </td>
+                                <th class="formTitle">注册号</th>
+                                <td class="formValue">
+                                    <input id="CallSign" name="CallSign" maxlength="50" class="easyui-textbox" style="width: 250px" />
                                 </td>
                             </tr>
                             <tr>
@@ -404,6 +414,7 @@
     //    var postData = $("#form_edit").serialize();
 
         $("#btn_finish").linkbutton("disable");
+
         var json = $.param({ "action": "save", "qx": qx, "AirportText": repetPlan.newairportobj.getJsonData(), "AirlineText": repetPlan.newairlineobj.getJsonData(), "CWorkText": repetPlan.newworkobj.getCWorkJsonData(), "PWorkText": repetPlan.newworkobj.getPWorkJsonData(), "HWorkText": repetPlan.newworkobj.getHWorkJsonData() }) + '&' + $('#form_edit').serialize();
         $.ajax({
             type: 'post',

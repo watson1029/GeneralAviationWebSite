@@ -23,7 +23,7 @@
             <input id="ssPlanCode" name="ssPlanCode" type="hidden" value="" />
             <div id="search_menu" style="width: 200px">
                 <div name="Code">
-                    临专号
+                    长期计划编号
                 </div>
             </div>
         </div>
@@ -62,9 +62,11 @@
                     ]],
                     columns: [[
                         { title: '公司名称', field: 'CompanyName', width: 180 },
-                         { title: '临专号', field: 'Code', width: 180 },
+                        { title: '长期计划编号', field: 'Code', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
                         { title: '使用机型', field: 'AircraftType', width: 70 },
+                        { title: '航空器数目', field: 'AircraftNum', width: 100 },
+                        { title: '注册号', field: 'CallSign', width: 100 },
                         {
                             title: '执行开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
 
@@ -91,7 +93,7 @@
 
                             }
                         },
-                          { title: '机场及起降点', field: 'AirportText', width: 200 },
+                          //{ title: '机场及起降点', field: 'AirportText', width: 200 },
                           //{ title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
                          { title: '创建人', field: 'CreatorName', width: 60, hidden: 'true' },
                           {

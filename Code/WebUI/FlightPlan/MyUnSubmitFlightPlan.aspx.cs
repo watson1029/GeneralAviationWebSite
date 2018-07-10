@@ -82,8 +82,8 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
                 entity = new FlightPlan();
 
                 entity.GetEntitySearchPars<FlightPlan>(this.Context);
-                entity.SOBT = entity.SOBT.AddDays(1);
-                entity.SIBT = entity.SIBT.AddDays(1);
+                //entity.SOBT = entity.SOBT.AddDays(1);
+                //entity.SIBT = entity.SIBT.AddDays(1);
                 entity.FlightPlanID = Guid.NewGuid();
                 entity.PlanState = "0";
                 entity.CompanyCode3 = User.CompanyCode3 ?? "";
@@ -100,7 +100,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
                 }
                 else
                 {
-                    bll.AddFlightPlanOther(Request.Form["MasterIDs"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+                    bll.AddFlightPlanOther(Request.Form["MasterIDs"]??"", entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
                 }
                 entity.AirlineWorkText = airlineworkText;
                 if (bll.Add(entity))
@@ -115,15 +115,13 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
                 if (entity != null)
                 {
                     entity.GetEntitySearchPars<FlightPlan>(this.Context);
-                    entity.SOBT = entity.SOBT.AddDays(1);
-                    entity.SIBT = entity.SIBT.AddDays(1);
                     entity.ModifyTime = DateTime.Now;
                     if (bool.Parse(Request.Form["IsTempFlightPlan"] ?? "false"))
                     {
                         bll.AddFlightPlanTempOther(Request.Form["AirlineText"], Request.Form["CWorkText"], Request.Form["PWorkText"], Request.Form["HWorkText"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
                     }
                     else
-                        bll.AddFlightPlanOther(Request.Form["MasterIDs"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+                        bll.AddFlightPlanOther(Request.Form["MasterIDs"]??"", entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
                     entity.AirlineWorkText = airlineworkText;
                     if (bll.Update(entity))
                     {
@@ -302,11 +300,11 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
     /// <returns></returns>
     private Expression<Func<FlightPlan, bool>> GetWhere()
     {
-        var currDate = DateTime.Now.Date.AddDays(1);
+      //  var currDate = DateTime.Now.Date.AddDays(1);
         Expression<Func<FlightPlan, bool>> predicate = PredicateBuilder.True<FlightPlan>();
         predicate = predicate.And(m => m.PlanState == "0");
-        predicate = predicate.And(m => m.Creator == User.ID && DbFunctions.TruncateTime(m.SOBT) == currDate);
-
+        predicate = predicate.And(m => m.Creator == User.ID );
+//&& DbFunctions.TruncateTime(m.SOBT) == currDate
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             var val = Request.Form["search_value"].Trim();

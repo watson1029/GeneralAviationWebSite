@@ -172,6 +172,7 @@ namespace DAL.FlightPlan
                                     Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.NoValid, ID = nextid }, "State");
                                     nextid = GetNodeInstance(nextid).NextId;
                                 }
+                                Update(new ActualSteps { NextID = Guid.Empty, ID = currInst.Id }, "NextID");
                                 action(new WorkflowPlan { Actor = null, ActorName = null, PlanState = "end", PlanID = planId });
 
                                 dbContextTransaction.Commit();
@@ -230,7 +231,7 @@ namespace DAL.FlightPlan
         }
 
         /// <summary>
-        /// 审核不通过
+        /// 审核不通过(服务站)
         /// </summary>
         /// <param name="planId"></param>
         /// <param name="comments"></param>
@@ -263,7 +264,7 @@ namespace DAL.FlightPlan
                         }
                     }
 
-                    Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Deserted, ActorID = userID, ActorName = userName, ActorTime = DateTime.Now, Comments = comments, ID = currInst.Id }, "State", "ActorID", "ActorName", "ActorTime", "Comments");
+                    Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Deserted,NextID=Guid.Empty, ActorID = userID, ActorName = userName, ActorTime = DateTime.Now, Comments = comments, ID = currInst.Id }, "State", "ActorID","NextID", "ActorName", "ActorTime", "Comments");
                     func(new WorkflowPlan { Actor = null, ActorName = null, PlanState = WorkflowNodeInstance.StepStateType.Deserted.ToString(), PlanID = planId });
                     dbContextTransaction.Commit();
                 }
@@ -274,6 +275,106 @@ namespace DAL.FlightPlan
                 }
             }
             return result;
+        }
+
+        /// <summary>
+        /// 审核不通过(管制)
+        /// </summary>
+        /// <param name="planId"></param>
+        /// <param name="comments"></param>
+        /// <returns></returns>
+        public void TerminateGZ(Guid planId, int twfid, int userID, string userName, string roleName, string comments, Action<WorkflowPlan> func)
+        {
+            List<WorkflowNodeInstance> ninstList = GetAllNodeInstance(planId, twfid);
+            var currInst = ninstList.First(item => item.State == WorkflowNodeInstance.StepStateType.Processing);
+            WorkflowNodeInstance nextInst = null;
+            using (var dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    if (currInst.IsParallel.HasValue && currInst.IsParallel.Value)
+                    {
+                        //根据登陆角色获取流程实例
+                        var entity = context.SubActualSteps.FirstOrDefault(u => u.ParentStepID == currInst.Id.ToString() && roleName.Contains(u.ActorName) && u.State == (int)WorkflowNodeInstance.StepStateType.Processing);
+                        if (entity != null)
+                        {
+                            entity.State = (byte)WorkflowNodeInstance.StepStateType.Deserted;
+                            entity.Comments = comments;
+                            entity.ActorID = userID;
+                            entity.ActorName = userName;
+                            entity.ActorTime = DateTime.Now;
+                            context.SaveChanges();
+                            if (context.SubActualSteps.Count(u => u.ParentStepID == currInst.Id.ToString() && u.State == (int)WorkflowNodeInstance.StepStateType.Processing) != 0)
+                            {
+                                if (twfid == 1)
+                                {
+                                    var repplan = context.RepetitivePlan.Find(planId);
+                                    if (repplan != null)
+                                    {
+                                        var list = new List<string>(repplan.ActorName.Split(','));
+                                        list.Remove(roleName);
+                                        repplan.ActorName = string.Join(",", list);
+                                        context.SaveChanges();
+                                    }
+                                }
+                                else if (twfid == 2)
+                                {
+                                    var flightplan = context.FlightPlan.Find(planId);
+                                    if (flightplan != null)
+                                    {
+                                        var list = new List<string>(flightplan.ActorName.Split(','));
+                                        list.Remove(roleName);
+                                        flightplan.ActorName = string.Join(",", list);
+                                        context.SaveChanges();
+                                    }
+                                }
+                                else if (twfid == 3)
+                                {
+                                    var currentplan = context.CurrentFlightPlan.Find(planId);
+                                    if (currentplan != null)
+                                    {
+                                        var list = new List<string>(currentplan.ActorName.Split(','));
+                                        list.Remove(roleName);
+                                        currentplan.ActorName = string.Join(",", list);
+                                        context.SaveChanges();
+                                    }
+                                }
+                                dbContextTransaction.Commit();
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception("找不到流程实例！");
+                        }
+                    }
+                    Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processed, Comments = comments, ActorID = userID, ActorName = userName, ActorTime = DateTime.Now, ID = currInst.Id }, "State", "ActorID", "ActorName", "Comments", "ActorTime");
+                    currInst.State = WorkflowNodeInstance.StepStateType.Processed;
+                    //更新下一个节点状态为处理中
+                    if (currInst.NextId != Guid.Empty)
+                    {
+                        nextInst = GetNodeInstance(currInst.NextId);
+                        WorkflowTplNode tnode = _dal.GetNode(nextInst.StepId);
+                        
+                        //判断节点的活动所有者类型
+                        Update(new ActualSteps { State = (byte)WorkflowNodeInstance.StepStateType.Processing, ApplyTime = DateTime.Now, ActorName = tnode.AuthorType, RoleName = tnode.AuthorType, ID = currInst.NextId }, "State", "ApplyTime", "ActorID", "ActorName", "RoleName");
+                        func(new WorkflowPlan { ActorName = tnode.AuthorType, PlanState = tnode.AuthorType, PlanID = planId });
+
+                        nextInst = GetNodeInstance(currInst.NextId);
+                    }
+                    else
+                    {
+                        func(new WorkflowPlan { ActorName = null, PlanState = "end", PlanID = planId });
+                    }
+
+                    dbContextTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+                    throw ex;
+                }
+            }
         }
         public List<WorkflowNodeInstance> GetAllNodeInstance(Guid planId, int twfid)
         {
@@ -331,6 +432,7 @@ namespace DAL.FlightPlan
             if (entity.ActorID.HasValue)
                 ninst.ActorID = entity.ActorID.Value;
             ninst.ActorName = entity.ActorName ?? "";
+            ninst.RoleName = entity.RoleName ?? "";
             if (entity.ActorTime.HasValue)
                 ninst.ActorTime = entity.ActorTime.Value;
             ninst.Comments = entity.Comments ?? "";

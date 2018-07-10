@@ -92,6 +92,9 @@
     <Compile Include="EF\File_Airport.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\File_CurrentPlanMaster.cs">
+      <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\File_Detail.cs">
       <DependentUpon>ZHCC_GAPlan.tt</DependentUpon>
     </Compile>

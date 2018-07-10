@@ -54,8 +54,8 @@
                     airportArray: []
             };
             j("#" + this.conid + " tr").each(function (n, value) {
-                if (j("#AirportName" + (n + 1)).val().trim() != "" || j("#LatLong" + (n + 1)).val().trim() != "") {
-                    data.airportArray.push({ "AirportName": j("#AirportName" + (n + 1)).val(), "LatLong": j("#LatLong" + (n + 1)).val() });
+                if (j("#AirportName" + (n + 1)).val().trim() != "" || j("#Code4" + (n + 1)).val().trim() != "" || j("#LatLong" + (n + 1)).val().trim() != "") {
+                    data.airportArray.push({ "AirportName": j("#AirportName" + (n + 1)).val(), "CodeF": j("#CodeF" + (n + 1)).val(), "LatLong": j("#LatLong" + (n + 1)).val() });
                 }
             });
            return JSON.stringify(data);      

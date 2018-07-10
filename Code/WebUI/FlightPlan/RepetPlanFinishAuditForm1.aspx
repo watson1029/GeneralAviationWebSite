@@ -109,7 +109,59 @@
                           <input id="Remark" name="Remark" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                                 </td>
                             </tr>
-                              <tr>
+
+                                            <%
+                    if (auditList.Count() > 0)
+                    {        %>
+                <tr>
+                    <th class="formTitle" style="padding-top: 5px;">审批记录
+                    </th>
+                    <td class="formValue" colspan="3">
+                        <table class="form table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center">审核人</th>
+                                    <th style="text-align: center">审核状态</th>
+                                    <th style="text-align: center">审核时间</th>
+                                    <th style="text-align: center">审核意见</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% foreach (var item in auditList)
+                                    {
+                                        if (item.IsParallel.HasValue && item.IsParallel.Value)
+                                        {
+                                            foreach (var subitem in item.SubActualStepsList)
+                                            {
+                                %>
+                                <tr>
+                                    <td class="formValue"><%=subitem.ActorName%></td>
+                                    <td class="formValue"><%=((int)subitem.State == 1 ? "审核中" : ((int)subitem.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                    <td class="formValue"><%=subitem.ActorTime%></td>
+                                    <td class="formValue"><%=subitem.Comments%></td>
+                                </tr>
+                                <%    }
+                                    }
+                                    else
+                                    {
+                                %>
+                                <tr>
+                                    <td class="formValue"><%=item.ActorName%></td>
+                                    <td class="formValue"><%=((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))%></td>
+                                    <td class="formValue"><%=item.ActorTime%></td>
+                                    <td class="formValue"><%=item.Comments%></td>
+                                </tr>
+                                <%  
+                                        }
+                                    } %>
+                            </tbody>
+
+                        </table>
+                    </td>
+
+                </tr>
+                <%} %>
+                        <%--      <tr>
                                 <th class="formTitle" style="padding-top: 5px;">
                                     审核结果
                                 </th>
@@ -127,7 +179,7 @@
                                 <td class="formValue">
                            <input id="Comments" name="Comments" required="true" maxlength="400" style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
                                 </td>
-                            </tr>
+                            </tr>--%>
                         </table>
                     </div>
                 </div>

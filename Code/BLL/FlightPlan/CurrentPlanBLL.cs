@@ -18,6 +18,7 @@ namespace BLL.FlightPlan
     public class CurrentPlanBLL
     {
         CurrentFlightPlanDAL dal = new CurrentFlightPlanDAL();
+        private DAL.FlightPlan.FileCurrentPlanMasterDAL masterdal = new DAL.FlightPlan.FileCurrentPlanMasterDAL();
         vCurrentPlanDAL vdal = new vCurrentPlanDAL();
         WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
         WorkflowNodeInstanceDAL instal = new WorkflowNodeInstanceDAL();
@@ -71,8 +72,8 @@ namespace BLL.FlightPlan
             entity.FlightPlanID = planid.ToString();
             entity.ActorID = userid;
             entity.PlanState = "";
-            entity.Pilot = model.Pilot;
-            entity.ContractWay = model.ContractWay;
+            //entity.Pilot = model.Pilot;
+            //entity.ContractWay = model.ContractWay;
             entity.AircraftNum = model.AircraftNum;
             entity.ActualStartTime = model.ActualStartTime;
             entity.ActualEndTime = model.ActualEndTime;
@@ -230,6 +231,10 @@ namespace BLL.FlightPlan
         public int GetFlyTime(string company, DateTime begin, DateTime end)
         {
             return dal.GetFlyTime(company, begin, end);
+        }
+        public List<File_CurrentPlanMaster> GetFileCurrentPlanMasterList(Expression<Func<File_CurrentPlanMaster, bool>> where)
+        {
+            return masterdal.FindList(where, m => m.ID, true);
         }
     }
 }

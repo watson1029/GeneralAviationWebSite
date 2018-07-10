@@ -58,6 +58,8 @@
                       { title: '公司名称', field: 'CompanyName', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
                         { title: '使用机型', field: 'AircraftType', width: 100 },
+                         { title: '航空器数目', field: 'AircraftNum', width: 100 },
+                        { title: '注册号', field: 'CallSign', width: 100 },
                         {
                             title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {
 
@@ -94,7 +96,7 @@
                           { title: '审核时间', field: 'ActorTime', width: 120 },
                                                        {
                                                            title: '操作', field: 'PlanID', width: 80, formatter: function (value, rec) {
-                                                               var str = "<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.EditData('" + value + "');$(this).parent().click();return false;\">修改</a>";
+                                                               var str = "<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.EditData('" + value + "');$(this).parent().click();return false;\">查看</a>";
                                                                return str;
                                                            }
                                                        }
@@ -107,7 +109,7 @@
                     rownumbers: true, //行号
                     onClickRow: function (index, row) {
                         var keyValue = row["PlanID"];
-                        zhccMap.addRepetPlan(keyValue);
+                      //  zhccMap.addRepetPlan(keyValue);
                     }
                 });
             },
@@ -127,9 +129,8 @@
             },
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'RepetPlanFinishAuditForm1.aspx?id=' + uid);
-  
-                $("#btn_edit").attr("onclick", "Main.Save('" + uid + "');")
+                $("#edit").dialog("open").dialog('setTitle', '查看').dialog('refresh', 'RepetPlanFinishAuditForm1.aspx?id=' + uid);
+          //    $("#btn_edit").attr("onclick", "Main.Save('" + uid + "');")
             },
             Save: function (uid) {
                 if ($("#Comments").val().length > 200) {
@@ -152,8 +153,8 @@
         modal="true" closed="true" buttons="#edit-buttons">
     
     <div id="edit-buttons">
-        <a id="btn_edit" href="javascript:;" class="easyui-linkbutton">保存</a> <a href="javascript:;"
-            class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
+       <%-- <a id="btn_edit" href="javascript:;" class="easyui-linkbutton">保存</a>--%>
+         <a href="javascript:;"  class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">关闭</a>
     </div></div>
     <div class="fadediv"><div id="map" style="height:400px;"></div></div>
     <div class="fade"><span>地图显示/隐藏</span></div>

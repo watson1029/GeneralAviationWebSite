@@ -30,5 +30,13 @@ namespace Model.EF
         public bool DeletedFlag { get; set; }
         public string ContractWay { get; set; }
         public string ActorName { get; set; }
+        public string FlightType { get; set; }
+        public string AircraftType { get; set; }
+        public string SsrCode { get; set; }
+        public string CallSign { get; set; }
+        public string ADEP { get; set; }
+        public string ADES { get; set; }
+        public string AirportText { get; set; }
+        public string AirlineWorkText { get; set; }
     }
 }

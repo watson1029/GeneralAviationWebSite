@@ -61,7 +61,7 @@ public partial class BasicData_ExportHandler : BasePage
 
         var headerRow = sheet1.CreateRow(0);
 
-        headerRow.CreateCell(0).SetCellValue("国籍和登记标志");
+        headerRow.CreateCell(0).SetCellValue("注册号");
         headerRow.CreateCell(1).SetCellValue("最大加油量");
         headerRow.CreateCell(2).SetCellValue("机型");
         headerRow.CreateCell(3).SetCellValue("最大航程");

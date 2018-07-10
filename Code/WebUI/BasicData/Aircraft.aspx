@@ -18,7 +18,7 @@
                 <input id="ipt_search" menu="#search_menu"/>
                 <div id="search_menu" style="width: 200px">
                     <div name="AircraftSign">
-                        国籍和登记标志：
+                        注册号：
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
          <form id="form_edit"  method="post" >
                 <table class="table_edit">
                     <tr>
-                        <td class="tdal">国籍和登记标志：
+                        <td class="tdal">注册号：
                         </td>
                         <td class="tdar">
                             <input id="AircraftSign" name="AircraftSign"  style="height:20px" maxlength="10"  class="easyui-validatebox textbox" data-options="required:true" />
@@ -184,7 +184,7 @@
                     ]],
                     columns: [[
                               { title: '公司三字码', field: 'CompanyCode3', width: 100 },
-                        { title: '国籍和登记标志', field: 'AircraftSign', width: 120 },
+                        { title: '注册号', field: 'AircraftSign', width: 120 },
                         { title: '最大加油量', field: 'FuelCapacity', width: 80 },
                         { title: '机型', field: 'AcfType', width: 120 },
                         { title: '航程', field: 'Range', width: 50 },
