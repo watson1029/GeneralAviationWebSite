@@ -4,6 +4,7 @@ using Model.EF;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -45,7 +46,7 @@ public partial class BackLog : BasePage
         if (menuListJson.Contains("MyUnSubmitFlightPlan.aspx"))//飞行计划列表(待提交)
         {
             MenuStatis statis = new MenuStatis("待提交飞行计划", "MyUnSubmitFlightPlan.aspx", 0, "unsubmit.jpg");
-            statis.MenuPlanCount = FlightPlanList.Where(m => m.PlanState == "0" && m.Creator == User.ID).Count();
+            statis.MenuPlanCount = FlightPlanList.Where(m => m.PlanState == "0" && m.Creator == User.ID && DbFunctions.TruncateTime(m.SOBT) == DateTime.Now.Date.AddDays(1)).Count();
             StatisList.Add(statis);
         }
         if (menuListJson.Contains("MyAuditFlightPlan.aspx"))//飞行计划列表(待审核)
@@ -58,7 +59,7 @@ public partial class BackLog : BasePage
         {
             MenuStatis statis = new MenuStatis("待提交当日起飞申请", "MyUnSubmitCurrentPlan.aspx", 0, "uncurrent.jpg");
             //vcpredicate = vcpredicate.And(m => m.CurrentFlightPlanID == null && DbFunctions.TruncateTime(m.SOBT) == currDate);
-            statis.MenuPlanCount = VCurrentPlanList.Where(m => m.CurrentFlightPlanID == null && m.SOBT.ToString("yyyy-MM-dd") == currDate.ToString("yyyy-MM-dd")).Count();
+            statis.MenuPlanCount = VCurrentPlanList.Where(m => m.CurrentFlightPlanID == null && m.SOBT.ToString("yyyy-MM-dd") == currDate.ToString("yyyy-MM-dd") && m.Creator1 == User.ID).Count();
             StatisList.Add(statis);
         }
         if (menuListJson.Contains("MyAuditCurrentPlan.aspx"))
