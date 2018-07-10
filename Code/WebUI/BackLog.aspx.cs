@@ -46,7 +46,7 @@ public partial class BackLog : BasePage
         if (menuListJson.Contains("MyUnSubmitFlightPlan.aspx"))//飞行计划列表(待提交)
         {
             MenuStatis statis = new MenuStatis("待提交飞行计划", "MyUnSubmitFlightPlan.aspx", 0, "unsubmit.jpg");
-            statis.MenuPlanCount = FlightPlanList.Where(m => m.PlanState == "0" && m.Creator == User.ID && DbFunctions.TruncateTime(m.SOBT) == DateTime.Now.Date.AddDays(1)).Count();
+            statis.MenuPlanCount = FlightPlanList.Where(m => m.PlanState == "0" && m.Creator == User.ID && m.SOBT.ToString("yyyy-MM-dd") == DateTime.Now.Date.AddDays(1).ToString("yyyy-MM-dd")).Count();
             StatisList.Add(statis);
         }
         if (menuListJson.Contains("MyAuditFlightPlan.aspx"))//飞行计划列表(待审核)
