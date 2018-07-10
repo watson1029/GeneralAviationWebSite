@@ -142,7 +142,7 @@ public partial class List : System.Web.UI.Page
             //文件标题
             Title = m.Title,
             //有效时间段
-            Content = m.UsefulTime,
+            //Content = m.UsefulTime,
             Id = m.ID,
             type = "File",
             CreateTime = m.Created.Value,
