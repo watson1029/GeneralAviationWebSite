@@ -114,11 +114,12 @@
         }
         else
         {
-            if (!$("#RepetPlanID").combobox('getValues') == "")
-            {
-                $.messager.alert('提示', '请选择长期计划编号！', 'info');
-                return;
-            }
+
+            //if (!$("#RepetPlanID").combobox('getValues') == "")
+            //{
+            //    $.messager.alert('提示', '请选择长期计划编号！', 'info');
+            //    return;
+            //}
            
             json = $.param({ "action": "save", "id": pid, "MasterIDs": $("#MasterIDs").combobox('getValues').join(',') });
         }
@@ -229,11 +230,11 @@
                    <tr>
                                 <th class="formTitle">预计起飞时间</th>
                                 <td class="formValue">
-                                    <input id="SOBT" name="SOBT" editable="false" class="easyui-datetimebox" style="height: 25px;width:200px" />
+                                    <input id="SOBT" name="SOBT" editable="false"  required="true"  class="easyui-datetimebox" style="height: 25px;width:200px" />
                                 </td>
                                 <th class="formTitle">预计落地时间</th>
                                 <td class="formValue">
-                                    <input id="SIBT" name="SIBT" editable="false" class="easyui-datetimebox" style="height: 25px;width:200px" />
+                                    <input id="SIBT" name="SIBT" editable="false" required="true"  class="easyui-datetimebox" style="height: 25px;width:200px" />
                                 </td>
                             </tr>
                             <tr>

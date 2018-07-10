@@ -48,5 +48,7 @@ namespace Model.EF
         public string CreatorName { get; set; }
         public string AirlineWorkText { get; set; }
         public string AirportText { get; set; }
+        public string RoleName { get; set; }
+        public string AircraftNum { get; set; }
     }
 }

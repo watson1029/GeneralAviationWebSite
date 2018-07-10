@@ -7,13 +7,13 @@
     <table id="tab_list">
     </table>
     <div id="tab_toolbar" style="padding: 2px 2px;height:22px;">
-        <!--<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>-->
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="Main.OpenWin()">新增</a>
+        <!--<a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="Main.Delete()">删除</a>-->
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
-                <div name="PlanCode">
-                    临专号
+                <div name="Code">
+                    长期计划编号
                 </div>
             </div>
         </div>
@@ -114,7 +114,11 @@
                     prompt: '请输入要查询的信息'
                 });
             },
-
+            //打开添加窗口
+            OpenWin: function () {
+                $("#edit").dialog("open").dialog('setTitle', '新增起飞申请').dialog('refresh', 'MyUnSubmitCurrentPlanAdd.aspx');
+                $("#btn_add").attr("onclick", "Main.Save();");
+            },
             Edit: function (uid) {
                 $("#form1").form('clear');
                 $("#edit").dialog("open").dialog('setTitle', '补充数据');
@@ -142,7 +146,7 @@
     </script>
     <div id="edit" class="easyui-dialog" style="width: 600px; height: 300px;"
         modal="true" closed="true" buttons="#edit-buttons">
-          <form id="form1"  method="post">
+          <%--<form id="form1"  method="post">
           <table class="table_edit">
                     <tr>
                         <td>飞行员：
@@ -187,7 +191,7 @@
                         </td>
                     </tr>
                 </table>
-             </form>
+             </form>--%>
                </div>
     <div id="edit-buttons">
         <a id="btn_add" href="javascript:;"  class="easyui-linkbutton">提交</a><a href="javascript:;"

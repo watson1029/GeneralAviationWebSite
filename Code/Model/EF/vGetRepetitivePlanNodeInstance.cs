@@ -42,5 +42,7 @@ namespace Model.EF
         public Nullable<int> Creator { get; set; }
         public string CompanyName { get; set; }
         public string RoleName { get; set; }
+        public string CallSign { get; set; }
+        public string AircraftNum { get; set; }
     }
 }

@@ -38,5 +38,7 @@ namespace Model.EF
         public string ADES { get; set; }
         public string AirportText { get; set; }
         public string AirlineWorkText { get; set; }
+        public string CompanyCode3 { get; set; }
+        public string CompanyName { get; set; }
     }
 }

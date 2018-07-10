@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true"
-    CodeFile="MyFinishAuditFlightPlan.aspx.cs" Inherits="FlightPlan_MyFinishAuditFlightPlan" %>
+    CodeFile="MyFinishAuditFlightPlan1.aspx.cs" Inherits="FlightPlan_MyFinishAuditFlightPlan1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
     <link href="../css/fademap.css" rel="stylesheet" type="text/css" />
@@ -92,7 +92,7 @@
                           { title: '审核时间', field: 'ActorTime', width: 120 },
                              {
                                  title: '操作', field: 'PlanID', width: 80, formatter: function (value, rec) {
-                                     var str = "<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.EditData('" + value + "');$(this).parent().click();return false;\">修改</a>";
+                                     var str = "<a style=\"color:red\" href=\"javascript:;\" onclick=\"Main.EditData('" + value + "');$(this).parent().click();return false;\">查看</a>";
                                      return str;
                                  }
                              }
@@ -125,7 +125,7 @@
             },
             //修改链接 事件
             EditData: function (uid) {
-                $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'FlightPlanFinishAuditForm.aspx?id=' + uid);
+                $("#edit").dialog("open").dialog('setTitle', '编辑').dialog('refresh', 'FlightPlanFinishAuditForm1.aspx?id=' + uid);
                 $("#btn_edit").attr("onclick", "Main.Save(" + uid + ");")
             },
             Save: function (uid) {
@@ -157,12 +157,11 @@
             }
         };
     </script>
-    <div id="edit" class="easyui-dialog" style="width: 800px; height: 800px;"
+    <div id="edit" class="easyui-dialog" style="width: 1100px; height: 500px;"
         modal="true" closed="true" buttons="#edit-buttons">
     </div>
     <div id="edit-buttons">
-        <a id="btn_edit" href="javascript:;" class="easyui-linkbutton">提交</a> <a href="javascript:;"
-            class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">取消</a>
+         <a href="javascript:;" class="easyui-linkbutton" onclick="$('#edit').dialog('close');return false;">关闭</a>
     </div>
     <div class="fadediv"><div id="map" style="height:400px;"></div></div>
     <div class="fade"><span>地图显示/隐藏</span></div>

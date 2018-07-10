@@ -11,7 +11,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
+public partial class FlightPlan_MyFinishAuditFlightPlan1 : BasePage
 {
     FlightPlanBLL bll = new FlightPlanBLL();
     protected void Page_Load(object sender, EventArgs e)
@@ -68,7 +68,7 @@ public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
     {
 
         Expression<Func<vGetFlightPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetFlightPlanNodeInstance>();
-        predicate = predicate.And(m => User.RoleName.Contains(m.RoleName));
+        predicate = predicate.And(m => User.RoleName.Contains(m.RoleName) && m.NextID == Guid.Empty);
         predicate = predicate.And(m => m.State == 2 || m.State == 3);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -126,7 +126,7 @@ public partial class FlightPlan_MyFinishAuditFlightPlan : BasePage
         Response.End();
 
     }
-        #region 权限编码
+    #region 权限编码
     public override string PageRightCode
     {
         get

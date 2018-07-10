@@ -117,13 +117,9 @@
                             <option value="1">不通过</option>
                         </select>
                     </td>
-
                 </tr>
                 <tr>
-
                 </tr>
-
-
                 <tr>
                     <th class="formTitle" style="padding-top: 5px;">审核意见
                     </th>

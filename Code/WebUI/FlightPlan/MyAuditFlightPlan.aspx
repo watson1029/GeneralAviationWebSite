@@ -19,8 +19,8 @@
         <div style="float: right">
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
-                <div name="PlanCode">
-                    临专号
+                <div name="Code">
+                    长期计划编号
                 </div>
             </div>
         </div>

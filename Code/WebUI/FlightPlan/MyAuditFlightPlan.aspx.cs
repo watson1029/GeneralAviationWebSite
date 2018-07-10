@@ -74,7 +74,6 @@ public partial class FlightPlan_MyAuditFlightPlan : BasePage
         var rolename = string.Join(",", User.RoleName);
         Expression<Func<FlightPlan, bool>> predicate = PredicateBuilder.True<FlightPlan>();
         predicate = predicate.And(m => m.ActorName.IndexOf(rolename) > -1);
-        predicate = predicate.And(m => m.Creator != User.ID);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
             var val = Request.Form["search_value"].Trim();

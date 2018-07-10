@@ -186,6 +186,8 @@
           <Property Name="ADES" Type="char" MaxLength="4" />
           <Property Name="AirportText" Type="nvarchar" MaxLength="2000" />
           <Property Name="AirlineWorkText" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CompanyCode3" Type="nchar" MaxLength="3" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CurrentFlightPlanOld">
           <Key>
@@ -854,10 +856,10 @@
             <PropertyRef Name="AircraftType" />
             <PropertyRef Name="SOBT" />
             <PropertyRef Name="SIBT" />
-            <PropertyRef Name="ADEP" />
-            <PropertyRef Name="ADES" />
             <PropertyRef Name="CallSign" />
             <PropertyRef Name="CreatorName" />
+            <PropertyRef Name="ADEP" />
+            <PropertyRef Name="ADES" />
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="PlanID" Type="uniqueidentifier" Nullable="false" />
@@ -868,6 +870,7 @@
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
           <Property Name="State" Type="tinyint" />
           <Property Name="ActorID" Type="int" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
           <Property Name="ApplyTime" Type="datetime" />
           <Property Name="Comments" Type="nvarchar" MaxLength="50" />
           <Property Name="ActorTime" Type="datetime" />
@@ -893,6 +896,7 @@
           <Property Name="CreatorName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="AirlineWorkText" Type="nvarchar" MaxLength="2000" />
           <Property Name="AirportText" Type="nvarchar" MaxLength="2000" />
+          <Property Name="AircraftNum" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“ZHCC_GAPlan.dbo.vGetRepetitivePlanNodeInstance”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -936,6 +940,8 @@
           <Property Name="CreatorName" Type="nvarchar" MaxLength="20" />
           <Property Name="Creator" Type="int" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="200" />
+          <Property Name="CallSign" Type="nvarchar" MaxLength="50" />
+          <Property Name="AircraftNum" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“ZHCC_GAPlan.dbo.vRepetitivePlanAirport”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1135,6 +1141,7 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     [vGetFlightPlanNodeInstance].[CreateTime] AS [CreateTime], 
     [vGetFlightPlanNodeInstance].[State] AS [State], 
     [vGetFlightPlanNodeInstance].[ActorID] AS [ActorID], 
+    [vGetFlightPlanNodeInstance].[RoleName] AS [RoleName], 
     [vGetFlightPlanNodeInstance].[ApplyTime] AS [ApplyTime], 
     [vGetFlightPlanNodeInstance].[Comments] AS [Comments], 
     [vGetFlightPlanNodeInstance].[ActorTime] AS [ActorTime], 
@@ -1159,7 +1166,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     [vGetFlightPlanNodeInstance].[Creator] AS [Creator], 
     [vGetFlightPlanNodeInstance].[CreatorName] AS [CreatorName], 
     [vGetFlightPlanNodeInstance].[AirlineWorkText] AS [AirlineWorkText], 
-    [vGetFlightPlanNodeInstance].[AirportText] AS [AirportText]
+    [vGetFlightPlanNodeInstance].[AirportText] AS [AirportText], 
+    [vGetFlightPlanNodeInstance].[AircraftNum] AS [AircraftNum]
     FROM [dbo].[vGetFlightPlanNodeInstance] AS [vGetFlightPlanNodeInstance]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vGetRepetitivePlanNodeInstance" EntityType="Self.vGetRepetitivePlanNodeInstance" store:Type="Views" store:Schema="dbo">
@@ -1191,7 +1199,9 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     [vGetRepetitivePlanNodeInstance].[AttachFile] AS [AttachFile], 
     [vGetRepetitivePlanNodeInstance].[CreatorName] AS [CreatorName], 
     [vGetRepetitivePlanNodeInstance].[Creator] AS [Creator], 
-    [vGetRepetitivePlanNodeInstance].[CompanyName] AS [CompanyName]
+    [vGetRepetitivePlanNodeInstance].[CompanyName] AS [CompanyName], 
+    [vGetRepetitivePlanNodeInstance].[CallSign] AS [CallSign], 
+    [vGetRepetitivePlanNodeInstance].[AircraftNum] AS [AircraftNum]
     FROM [dbo].[vGetRepetitivePlanNodeInstance] AS [vGetRepetitivePlanNodeInstance]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vRepetitivePlanAirport" EntityType="Self.vRepetitivePlanAirport" store:Type="Views" store:Schema="dbo">
@@ -1851,6 +1861,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="ADES" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="AirportText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AirlineWorkText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CurrentFlightPlanOld">
           <Key>
@@ -2050,6 +2062,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="Creator" Type="Int32" />
           <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CallSign" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AircraftNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vGetFlightPlanNodeInstance">
           <Key>
@@ -2101,6 +2115,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AirlineWorkText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="AirportText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AircraftNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Map_AirLine">
           <Key>
@@ -2791,6 +2807,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySetMapping Name="CurrentFlightPlan">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.CurrentFlightPlan">
               <MappingFragment StoreEntitySet="CurrentFlightPlan">
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyCode3" ColumnName="CompanyCode3" />
                 <ScalarProperty Name="AirlineWorkText" ColumnName="AirlineWorkText" />
                 <ScalarProperty Name="AirportText" ColumnName="AirportText" />
                 <ScalarProperty Name="ADES" ColumnName="ADES" />
@@ -2968,6 +2986,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySetMapping Name="vGetRepetitivePlanNodeInstance">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vGetRepetitivePlanNodeInstance">
               <MappingFragment StoreEntitySet="vGetRepetitivePlanNodeInstance">
+                <ScalarProperty Name="AircraftNum" ColumnName="AircraftNum" />
+                <ScalarProperty Name="CallSign" ColumnName="CallSign" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="Creator" ColumnName="Creator" />
@@ -3002,6 +3022,8 @@ ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <EntitySetMapping Name="vGetFlightPlanNodeInstance">
             <EntityTypeMapping TypeName="ZHCC_GAPlanModel.vGetFlightPlanNodeInstance">
               <MappingFragment StoreEntitySet="vGetFlightPlanNodeInstance">
+                <ScalarProperty Name="AircraftNum" ColumnName="AircraftNum" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="AirportText" ColumnName="AirportText" />
                 <ScalarProperty Name="AirlineWorkText" ColumnName="AirlineWorkText" />
                 <ScalarProperty Name="CreatorName" ColumnName="CreatorName" />

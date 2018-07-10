@@ -36,7 +36,7 @@
                                 <td class="formValue" style="color:red">
                                     <span id="name"></span>
                                 </td>  
-                                 <th class="formTitle">临专号</th>
+                                 <th class="formTitle">长期计划编号</th>
                         <td class="formValue" style="color:red">
                             <span id="code"></span>
                         </td>
@@ -54,46 +54,36 @@
                                 </td>
                             </tr>
                               <tr>
-                                <th class="formTitle">航班号</th>
+                                <th class="formTitle">注册号</th>
                                 <td class="formValue">
-                                    <input id="CallSign" name="CallSign" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="CallSign" name="CallSign" maxlength="50" class="easyui-textbox" style="height: 25px" />
                                 </td>
                                 <th class="formTitle">应答机编码</th>
                                 <td class="formValue">
-                                    <input id="SsrCode" name="SsrCode" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="SsrCode" name="SsrCode" maxlength="50"  class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
                                <tr>
-                                <th class="formTitle">计划撤轮挡时间</th>
+                                <th class="formTitle">预计起飞时间</th>
                                 <td class="formValue">
-                                    <input id="SOBT" name="SOBT" maxlength="50" required="true" class="easyui-datebox" style="height: 25px" />
+                                    <input id="SOBT" name="SOBT" maxlength="50"  class="easyui-datebox" style="height: 25px" />
                                 </td>
-                                <th class="formTitle">计划挡轮挡时间</th>
+                                <th class="formTitle">预计落地时间</th>
                                 <td class="formValue">
-                                    <input id="SIBT" name="SIBT" maxlength="50" required="true" class="easyui-datebox" style="height: 25px" />
+                                    <input id="SIBT" name="SIBT" maxlength="50"  class="easyui-datebox" style="height: 25px" />
                                 </td>
                             </tr>
                             <tr>
                                 <th class="formTitle">起飞机场</th>
                                 <td class="formValue">
-                                    <input id="ADEP" name="ADEP" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="ADEP" name="ADEP" maxlength="50" class="easyui-textbox" style="height: 25px" />
                                 </td>
                                 <th class="formTitle">目的地机场</th>
                                 <td class="formValue">
-                                    <input id="ADES" name="ADES" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="ADES" name="ADES" maxlength="50"  class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
-                           <tr>
-                                <th class="formTitle">备降机场I</th>
-                                <td class="formValue">
-                                    <input id="ALTN1" name="ALTN1" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
-                                </td>
-                                <th class="formTitle">备降机场II</th>
-                                <td class="formValue">
-                                    <input id="ALTN2" name="ALTN2" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
-                                </td>
-                            </tr>
-                  
+                     
                             <tr>
                                 <th class="formTitle" style="padding-top: 5px;">
                                     航线及作业区
@@ -121,75 +111,6 @@
                         </select>
                                 </td>  
                             </tr>
-                                         <%
-                    if (auditList.Count() > 0)
-                    {        %>
-                <tr>
-                    <th class="formTitle" style="padding-top: 5px;">审批记录
-                    </th>
-                    <td class="formValue" colspan="3">
-                        <table class="form table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th style="text-align: center">审核人</th>
-                                    <th style="text-align: center">审核状态</th>
-                                    <th style="text-align: center">审核时间</th>
-                                    <th style="text-align: center">审核意见</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% foreach (var item in auditList)
-                                    {
-                                        if (item.IsParallel.HasValue && item.IsParallel.Value)
-                                        {
-                                            foreach (var subitem in item.SubActualStepsList)
-                                            {
-                                %>
-                                <tr>
-                                    <td class="formValue"><%=subitem.ActorName%></td>
-                                    <td class="formValue"><%=((int)subitem.State == 1 ? "审核中" : ((int)subitem.State == 2 ? "审核通过" : "审核不通过"))%></td>
-                                    <td class="formValue"><%=subitem.ActorTime%></td>
-                                    <td class="formValue"><%=subitem.Comments%></td>
-                                </tr>
-                                <%    }
-                                    }
-                                    else
-                                    {
-                                %>
-                                <tr>
-                                    <td class="formValue"><%=item.ActorName%></td>
-                                    <td class="formValue"><%=((int)item.State == 1 ? "审核中" : ((int)item.State == 2 ? "审核通过" : "审核不通过"))%></td>
-                                    <td class="formValue"><%=item.ActorTime%></td>
-                                    <td class="formValue"><%=item.Comments%></td>
-                                </tr>
-                                <%  
-                                        }
-                                    } %>
-                            </tbody>
-
-                        </table>
-                    </td>
-
-                </tr>
-                <%} %>
-                <tr>
-                    <%
-                        if (auditList.Count() == 0)
-                        {
-                            if (User.RoleName.Contains("通航服务站"))
-                            {  %>
-                    <th class="formTitle" style="padding-top: 5px;">管制部门
-                    </th>
-                    <td class="formValue">
-                        <select id="ControlDep" class="easyui-combobox" editable="false" name="ControlDep" panelheight="auto" style="width: 200px;" multiple="true">
-                            <option value="区管">区管</option>
-                            <option value="进近">进近</option>
-                            <option value="塔台">塔台</option>
-                        </select>
-                    </td>
-                    <%   }
-                        }%>
-                </tr>
                             <tr>
                                 <th class="formTitle" style="padding-top: 5px;">
                                     审核意见

@@ -22,7 +22,7 @@
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
                 <div name="Code">
-                    临专号
+                    长期计划编号
                 </div>
             </div>
         </div>
