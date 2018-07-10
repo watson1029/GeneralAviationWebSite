@@ -14,7 +14,7 @@ namespace ViewModel.FlightPlan
         public string airtype { get; set; }
         public string aircraft { get; set; }
         public string airline { get; set; }
-        public string high { get; set; }
+        public List<string> high { get; set; }
         public string messiontype { get; set; }
         public string planbegin { get; set; }
         public string planend { get; set; }
