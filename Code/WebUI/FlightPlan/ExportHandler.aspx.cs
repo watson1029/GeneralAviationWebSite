@@ -4,7 +4,9 @@ using Model.EF;
 using Model.FlightPlan;
 using Newtonsoft.Json;
 using NPOI.HSSF.UserModel;
+using NPOI.OpenXmlFormats.Wordprocessing;
 using NPOI.SS.UserModel;
+using NPOI.XWPF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -60,110 +62,229 @@ public partial class FlightPlan_ExportHandler : BasePage
     {
         AjaxResult result = new AjaxResult();
         result.IsSuccess = true;
-        var book = new HSSFWorkbook();
-        //设置默认工作表的默认列宽和行高
-        var sheet = book.CreateSheet("通航计划表-范围内");
-        sheet.DefaultRowHeight = 20 * 20;
-        sheet.DefaultColumnWidth = 12;
-        sheet.SetColumnWidth(5, 60 * 256);
-        //设置标题样式
-        var titleStyle = book.CreateCellStyle();
-        titleStyle.Alignment = HorizontalAlignment.Center;
-        titleStyle.VerticalAlignment = VerticalAlignment.Center;
-        var titleFont = book.CreateFont();
-        titleFont.FontHeightInPoints = 20;
-        titleFont.IsBold = true;
-        titleStyle.SetFont(titleFont);
-        //设置表头样式
-        var headStyle = book.CreateCellStyle();
-        headStyle.Alignment = HorizontalAlignment.Center;
-        headStyle.VerticalAlignment = VerticalAlignment.Center;
-        var headFont = book.CreateFont();
-        headFont.FontHeightInPoints = 14;
-        headFont.IsBold = true;
-        headStyle.SetFont(headFont);
-        //设置标题样式
-        var listStyle = book.CreateCellStyle();
-        listStyle.Alignment = HorizontalAlignment.Center;
-        listStyle.VerticalAlignment = VerticalAlignment.Center;
-        var listFont = book.CreateFont();
-        listFont.FontHeightInPoints = 14;
-        listStyle.SetFont(listFont);
-        //填入标题内容并合并
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 12));
-        var titleRow = sheet.CreateRow(0);
-        titleRow.CreateCell(0).SetCellValue("通航计划表-范围内");
-        titleRow.Cells[0].CellStyle = titleStyle;
-        titleRow.Height = 50 * 20;
-        //填入表头内容并合并
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 0, 0));
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 1, 1));
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 2, 2));
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 3, 3));
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 4, 4));
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 5, 5));
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 6, 6));
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 7, 7));
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 8, 9));
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 10, 11));
-        sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 12, 12));
-        var headRow1 = sheet.CreateRow(1);
-        headRow1.CreateCell(0).SetCellValue("序号");
-        headRow1.CreateCell(1).SetCellValue("起降场");
-        headRow1.CreateCell(2).SetCellValue("单位");
-        headRow1.CreateCell(3).SetCellValue("机型/架次");
-        headRow1.CreateCell(4).SetCellValue("机号");
-        headRow1.CreateCell(5).SetCellValue("空域/航线");
-        headRow1.CreateCell(6).SetCellValue("高度");
-        headRow1.CreateCell(7).SetCellValue("任务");
-        headRow1.CreateCell(8).SetCellValue("开飞时间");
-        headRow1.CreateCell(10).SetCellValue("结束时间");
-        headRow1.CreateCell(12).SetCellValue("备注");
-        foreach (var cell in headRow1.Cells)
-        {
-            cell.CellStyle = headStyle;
-        }
-        headRow1.Height = 25 * 20;
-        var headRow2 = sheet.CreateRow(2);
-        headRow2.CreateCell(8).SetCellValue("计划");
-        headRow2.CreateCell(9).SetCellValue("实施");
-        headRow2.CreateCell(10).SetCellValue("计划");
-        headRow2.CreateCell(11).SetCellValue("实施");
-        foreach (var cell in headRow2.Cells)
-        {
-            cell.CellStyle = headStyle;
-        }
-        headRow2.Height = 25 * 20;
+        XWPFDocument doc = new XWPFDocument();
+        CT_SectPr m_SectPr = new CT_SectPr();
+        //设置宽度（这里是一个ulong类型）
+        m_SectPr.pgSz.w = 16838;
+        //设置高度（这里是一个ulong类型）
+        m_SectPr.pgSz.h = 11906;
+        m_SectPr.pgMar.left = (ulong)300;//左边距
+        m_SectPr.pgMar.right = (ulong)300;//右边距
+        m_SectPr.pgMar.top = "300";//上边距
+        m_SectPr.pgMar.bottom = "300";//下边距
+        //设置页面的尺寸
+        doc.Document.body.sectPr = m_SectPr;
+
+        XWPFParagraph p0 = doc.CreateParagraph();//创建段落
+        p0.Alignment = ParagraphAlignment.CENTER;//居中显示
+        XWPFRun r0 = p0.CreateRun();
+        //设置字体
+        r0.FontFamily = "宋体";
+        //设置字体大小
+        r0.FontSize = 16;
+        //字体是否加粗，这里加粗了
+        r0.IsBold = true;
+        r0.SetText("武汉管制分区（河南地区）通用航空计划表");//写入文本
+
+        XWPFParagraph p1 = doc.CreateParagraph();//创建段落
+        p1.Alignment = ParagraphAlignment.CENTER;//居中显示
+        XWPFRun r1 = p1.CreateRun();
+        //设置字体
+        r1.FontFamily = "宋体";
+        //设置字体大小
+        r1.FontSize = 16;
+        //字体是否加粗，这里加粗了
+        r1.IsBold = true;
+        r1.SetText("武基范围内");//写入文本
+
+        var wordlist = new ExportDataBLL().FlightPlanDataExport(planlist);
+
+        XWPFTable table = doc.CreateTable(2 + wordlist.Count, 13);
+        table.SetColumnWidth(0, 4 * 256);//设置列的宽度
+        table.SetColumnWidth(1, 4 * 256);
+        table.SetColumnWidth(2, 4 * 256);
+        table.SetColumnWidth(3, 4 * 256);
+        table.SetColumnWidth(4, 4 * 256);
+        table.SetColumnWidth(5, 20 * 256);
+        table.SetColumnWidth(6, 4 * 256);
+        table.SetColumnWidth(7, 4 * 256);
+        table.SetColumnWidth(8, 3 * 256);
+        table.SetColumnWidth(9, 3 * 256);
+        table.SetColumnWidth(10, 3 * 256);
+        table.SetColumnWidth(11, 3 * 256);
+        table.SetColumnWidth(12, 2 * 256);
+        CT_Tbl m_CTTbl = doc.Document.body.GetTblArray()[0];//获得文档第一张表
+        m_CTTbl.AddNewTblPr().jc = new CT_Jc();
+        m_CTTbl.AddNewTblPr().jc.val = ST_Jc.center;//表在页面水平居中
+
+
+        table.GetRow(0).Height = 1200;
+        setCell(table.GetRow(0).GetCell(0), "序号");
+        setCell(table.GetRow(0).GetCell(1), "起降场");
+        setCell(table.GetRow(0).GetCell(2), "单位");
+        setCell(table.GetRow(0).GetCell(3), "机型/架数");
+        setCell(table.GetRow(0).GetCell(4), "机号");
+        setCell(table.GetRow(0).GetCell(5), "空域/航线");
+        setCell(table.GetRow(0).GetCell(6), "高度");
+        setCell(table.GetRow(0).GetCell(7), "任务");
+        setCell(table.GetRow(0).GetCell(8), "开飞时间");
+        setCell(table.GetRow(0).GetCell(10), "结束时间");
+        setCell(table.GetRow(0).GetCell(12), "备注");
+        table.GetRow(1).Height = 1200;
+        setCell(table.GetRow(1).GetCell(8), "计划");
+        setCell(table.GetRow(1).GetCell(9), "实施");
+        setCell(table.GetRow(1).GetCell(10), "计划");
+        setCell(table.GetRow(1).GetCell(11), "实施");
+
+        mergeCellsVertically(table, 0, 0, 1);
+        table.GetRow(0).GetCell(0).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        mergeCellsVertically(table, 1, 0, 1);
+        table.GetRow(0).GetCell(1).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        mergeCellsVertically(table, 2, 0, 1);
+        table.GetRow(0).GetCell(2).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        mergeCellsVertically(table, 3, 0, 1);
+        table.GetRow(0).GetCell(3).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        mergeCellsVertically(table, 4, 0, 1);
+        table.GetRow(0).GetCell(4).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        mergeCellsVertically(table, 5, 0, 1);
+        table.GetRow(0).GetCell(5).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        mergeCellsVertically(table, 6, 0, 1);
+        table.GetRow(0).GetCell(6).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        mergeCellsVertically(table, 7, 0, 1);
+        table.GetRow(0).GetCell(7).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        mergeCellsHorizontal(table, 0, 8, 9);
+        table.GetRow(0).GetCell(8).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        mergeCellsHorizontal(table, 0, 10, 11);
+        table.GetRow(0).GetCell(10).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        mergeCellsVertically(table, 12, 0, 1);
+        table.GetRow(0).GetCell(12).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        table.GetRow(1).GetCell(8).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        table.GetRow(1).GetCell(9).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        table.GetRow(1).GetCell(10).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+        table.GetRow(1).GetCell(11).SetVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
         
-        var exportlist = new ExportDataBLL().FlightPlanDataExport(planlist);
-        for (int i = 0; i < exportlist.Count; i++)
+        for (int i = 0; i < wordlist.Count; i++)
         {
-            var row = sheet.CreateRow(3 + i);
-            row.CreateCell(0).SetCellValue(i + 1);
-            row.CreateCell(1).SetCellValue(exportlist[i].airport);
-            row.CreateCell(2).SetCellValue(exportlist[i].company);
-            row.CreateCell(3).SetCellValue(exportlist[i].airtype);
-            row.CreateCell(4).SetCellValue(exportlist[i].aircraft);
-            row.CreateCell(5).SetCellValue(exportlist[i].airline);
-            row.CreateCell(6).SetCellValue(exportlist[i].high);
-            row.CreateCell(7).SetCellValue(exportlist[i].airtype);
-            row.CreateCell(8).SetCellValue(exportlist[i].planbegin);
-            row.CreateCell(10).SetCellValue(exportlist[i].planend);
-            row.CreateCell(12).SetCellValue(exportlist[i].remark);
-            foreach (var cell in row.Cells)
-            {
-                cell.CellStyle = listStyle;
-            }
-            //row.Height = 30 * 20;
+            setCell(table.GetRow(2 + i).GetCell(0), (i + 1).ToString());
+            setCell(table.GetRow(2 + i).GetCell(1), wordlist[i].airport);
+            setCell(table.GetRow(2 + i).GetCell(2), wordlist[i].company);
+            setCell(table.GetRow(2 + i).GetCell(3), wordlist[i].airtype);
+            setCell(table.GetRow(2 + i).GetCell(4), "");
+            setCell(table.GetRow(2 + i).GetCell(5), wordlist[i].airline);
+            setCell(table.GetRow(2 + i).GetCell(6), wordlist[i].high);
+            setCell(table.GetRow(2 + i).GetCell(7), wordlist[i].messiontype);
+            setCell(table.GetRow(2 + i).GetCell(8), wordlist[i].planbegin);
+            setCell(table.GetRow(2 + i).GetCell(9), "");
+            setCell(table.GetRow(2 + i).GetCell(10), wordlist[i].planend);
+            setCell(table.GetRow(2 + i).GetCell(11), "");
+            setCell(table.GetRow(2 + i).GetCell(12), wordlist[i].remark);
         }
-        //生成Excel文件
+        
+        //var book = new HSSFWorkbook();
+        ////设置默认工作表的默认列宽和行高
+        //var sheet = book.CreateSheet("通航计划表-范围内");
+        //sheet.DefaultRowHeight = 20 * 20;
+        //sheet.DefaultColumnWidth = 12;
+        //sheet.SetColumnWidth(5, 60 * 256);
+        ////设置标题样式
+        //var titleStyle = book.CreateCellStyle();
+        //titleStyle.Alignment = HorizontalAlignment.Center;
+        //titleStyle.VerticalAlignment = VerticalAlignment.Center;
+        //var titleFont = book.CreateFont();
+        //titleFont.FontHeightInPoints = 20;
+        //titleFont.IsBold = true;
+        //titleStyle.SetFont(titleFont);
+        ////设置表头样式
+        //var headStyle = book.CreateCellStyle();
+        //headStyle.Alignment = HorizontalAlignment.Center;
+        //headStyle.VerticalAlignment = VerticalAlignment.Center;
+        //var headFont = book.CreateFont();
+        //headFont.FontHeightInPoints = 14;
+        //headFont.IsBold = true;
+        //headStyle.SetFont(headFont);
+        ////设置标题样式
+        //var listStyle = book.CreateCellStyle();
+        //listStyle.Alignment = HorizontalAlignment.Center;
+        //listStyle.VerticalAlignment = VerticalAlignment.Center;
+        //var listFont = book.CreateFont();
+        //listFont.FontHeightInPoints = 14;
+        //listStyle.SetFont(listFont);
+        ////填入标题内容并合并
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(0, 0, 0, 12));
+        //var titleRow = sheet.CreateRow(0);
+        //titleRow.CreateCell(0).SetCellValue("通航计划表-范围内");
+        //titleRow.Cells[0].CellStyle = titleStyle;
+        //titleRow.Height = 50 * 20;
+        ////填入表头内容并合并
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 0, 0));
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 1, 1));
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 2, 2));
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 3, 3));
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 4, 4));
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 5, 5));
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 6, 6));
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 7, 7));
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 8, 9));
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 1, 10, 11));
+        //sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(1, 2, 12, 12));
+        //var headRow1 = sheet.CreateRow(1);
+        //headRow1.CreateCell(0).SetCellValue("序号");
+        //headRow1.CreateCell(1).SetCellValue("起降场");
+        //headRow1.CreateCell(2).SetCellValue("单位");
+        //headRow1.CreateCell(3).SetCellValue("机型/架次");
+        //headRow1.CreateCell(4).SetCellValue("机号");
+        //headRow1.CreateCell(5).SetCellValue("空域/航线");
+        //headRow1.CreateCell(6).SetCellValue("高度");
+        //headRow1.CreateCell(7).SetCellValue("任务");
+        //headRow1.CreateCell(8).SetCellValue("开飞时间");
+        //headRow1.CreateCell(10).SetCellValue("结束时间");
+        //headRow1.CreateCell(12).SetCellValue("备注");
+        //foreach (var cell in headRow1.Cells)
+        //{
+        //    cell.CellStyle = headStyle;
+        //}
+        //headRow1.Height = 25 * 20;
+        //var headRow2 = sheet.CreateRow(2);
+        //headRow2.CreateCell(8).SetCellValue("计划");
+        //headRow2.CreateCell(9).SetCellValue("实施");
+        //headRow2.CreateCell(10).SetCellValue("计划");
+        //headRow2.CreateCell(11).SetCellValue("实施");
+        //foreach (var cell in headRow2.Cells)
+        //{
+        //    cell.CellStyle = headStyle;
+        //}
+        //headRow2.Height = 25 * 20;
+
+        //var exportlist = new ExportDataBLL().FlightPlanDataExport(planlist);
+        //for (int i = 0; i < exportlist.Count; i++)
+        //{
+        //    var row = sheet.CreateRow(3 + i);
+        //    row.CreateCell(0).SetCellValue(i + 1);
+        //    row.CreateCell(1).SetCellValue(exportlist[i].airport);
+        //    row.CreateCell(2).SetCellValue(exportlist[i].company);
+        //    row.CreateCell(3).SetCellValue(exportlist[i].airtype);
+        //    row.CreateCell(4).SetCellValue(exportlist[i].aircraft);
+        //    row.CreateCell(5).SetCellValue(exportlist[i].airline);
+        //    row.CreateCell(6).SetCellValue(exportlist[i].high);
+        //    row.CreateCell(7).SetCellValue(exportlist[i].airtype);
+        //    row.CreateCell(8).SetCellValue(exportlist[i].planbegin);
+        //    row.CreateCell(10).SetCellValue(exportlist[i].planend);
+        //    row.CreateCell(12).SetCellValue(exportlist[i].remark);
+        //    foreach (var cell in row.Cells)
+        //    {
+        //        cell.CellStyle = listStyle;
+        //    }
+        //    //row.Height = 30 * 20;
+        //}
+        //生成文件
         var file = new MemoryStream();
-        book.Write(file);
-        Response.ContentType = "application/vnd.ms-excel";
+        doc.Write(file);
+        Response.ContentType = "application/msword";
         Response.ContentEncoding = Encoding.UTF8;
         Response.Charset = "";
         Response.Clear();
-        Response.AppendHeader("Content-Disposition", "attachment;filename=" + HttpUtility.UrlEncode("通航计划表-范围内.xls", Encoding.UTF8));
+        Response.AppendHeader("Content-Disposition", "attachment;filename=" + HttpUtility.UrlEncode("通航计划表-范围内.doc", Encoding.UTF8));
         file.WriteTo(Response.OutputStream);
         file.Close();
         Response.End();
@@ -772,4 +893,63 @@ public partial class FlightPlan_ExportHandler : BasePage
 
     //    return predicate;
     //}
+
+    public void mergeCellsHorizontal(XWPFTable table, int row, int fromCell, int toCell)
+    {
+        for (int cellIndex = fromCell; cellIndex <= toCell; cellIndex++)
+        {
+            XWPFTableCell cell = table.GetRow(row).GetCell(cellIndex);
+            if (cellIndex == fromCell)
+            {
+                // The first merged cell is set with RESTART merge value  
+                cell.GetCTTc().AddNewTcPr().AddNewHMerge().val = ST_Merge.restart;
+            }
+            else
+            {
+                // Cells which join (merge) the first one, are set with CONTINUE  
+                cell.GetCTTc().AddNewTcPr().AddNewHMerge().val = ST_Merge.@continue;
+            }
+        }
+    }
+    // word跨行并单元格
+    public void mergeCellsVertically(XWPFTable table, int col, int fromRow, int toRow)
+    {
+        for (int rowIndex = fromRow; rowIndex <= toRow; rowIndex++)
+        {
+            XWPFTableCell cell = table.GetRow(rowIndex).GetCell(col);
+            if (rowIndex == fromRow)
+            {
+                // The first merged cell is set with RESTART merge value  
+                cell.GetCTTc().AddNewTcPr().AddNewVMerge().val = ST_Merge.restart;
+            }
+            else
+            {
+                // Cells which join (merge) the first one, are set with CONTINUE  
+                cell.GetCTTc().AddNewTcPr().AddNewVMerge().val = ST_Merge.@continue;
+            }
+        }
+    }
+
+    private void setCell(XWPFTableCell cell, string cellText)
+    {
+        XWPFParagraph pIO = cell.AddParagraph();
+        pIO.Alignment = ParagraphAlignment.CENTER;
+        XWPFRun rIO = pIO.CreateRun();
+        rIO.FontFamily = "宋体";
+        rIO.FontSize = 12;
+        rIO.SetText(cellText);
+    }
+
+    private void setCell(XWPFTableCell cell, List<string> cellText)
+    {
+        foreach (var txt in cellText)
+        {
+            XWPFParagraph pIO = cell.AddParagraph();
+            pIO.Alignment = ParagraphAlignment.CENTER;
+            XWPFRun rIO = pIO.CreateRun();
+            rIO.FontFamily = "宋体";
+            rIO.FontSize = 12;
+            rIO.SetText(txt);
+        }
+    }
 }

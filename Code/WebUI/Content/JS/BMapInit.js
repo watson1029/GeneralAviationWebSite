@@ -1,6 +1,7 @@
 ﻿document.write("<script type='text/javascript' src='http://api.map.baidu.com/api?v=2.0&ak=H8Sf2KQqz7cThrYThPacBFuOMKOe0vxu'></script>");
 
 var map;
+var areaLayer = [], appLayer = [], airlineLayer = [], flyAreaLayer = [];
 var opts = {
 	width : 250,     // 信息窗口宽度
 	height: 120,     // 信息窗口高度
@@ -12,14 +13,19 @@ baiduMap = {
     init: function () {
         map = new BMap.Map("map");
         map.enableScrollWheelZoom();
-        this.setCenter(new BMap.Point(113.28, 23.12));
+        this.setCenter(new BMap.Point(113.65, 34.76));
         this.addMapType();
-        this.addAreaControl({ strokeColor: "#001C53", strokeStyle: "dashed", strokeWeight: 2, strokeOpacity: 0.7 });
-        this.addAppControl({ strokeColor: "#E96800", strokeStyle: "dashed", strokeWeight: 2, strokeOpacity: 1 });
+        this.addAreaControl({ strokeColor: "#00FF00", strokeStyle: "dashed", strokeWeight: 2, strokeOpacity: 0.7 });
+        this.addAppControl({ strokeColor: "#0000FF", strokeStyle: "dashed", strokeWeight: 2, strokeOpacity: 1 });
         this.addAirLine({ strokeColor: "#6E186E", strokeWeight: 2, strokeOpacity: 0.7 });
+        /*注册事件*/
+        if (document.addEventListener) {
+            document.addEventListener('DOMMouseScroll', this.scrollFunc, false);
+        }//W3C
+        window.onmousewheel = document.onmousewheel = this.scrollFunc;//IE/Opera/Chrome
     },
     setCenter: function (point) {
-        map.centerAndZoom(point, 8);
+        map.centerAndZoom(point, 7);
     },
     addMapType: function () {
         var mapType = new BMap.MapTypeControl({ mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP] });
@@ -67,13 +73,82 @@ baiduMap = {
         });
     },
     addAreaControl: function (options) {
-        this.addBaseData("/Ajax/Map/GetAreaControl.ashx", options);
+        $.ajax({
+            url: "/Ajax/Map/GetAreaControl.ashx",
+            type: "get",
+            dataType: "json",
+            async: true,
+            error: function (xml, msg) {
+                alert(msg);
+            },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var points = [];
+                    for (var j = 0; j < data[i].location.length; j++) {
+                        points.push(new BMap.Point(data[i].location[j]["Lon"], data[i].location[j]["Lat"]));
+                    }
+                    var polyline;
+                    if (!options)
+                        polyline = new BMap.Polyline(points, { strokeColor: "red", strokeWeight: 2 });
+                    else
+                        polyline = new BMap.Polyline(points, options);
+                    areaLayer.push(polyline);
+                    map.addOverlay(polyline);
+                }
+            }
+        });
     },
     addAppControl: function (options) {
-        this.addBaseData("/Ajax/Map/GetAppControl.ashx", options);
+        $.ajax({
+            url: "/Ajax/Map/GetAppControl.ashx",
+            type: "get",
+            dataType: "json",
+            async: true,
+            error: function (xml, msg) {
+                alert(msg);
+            },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var points = [];
+                    for (var j = 0; j < data[i].location.length; j++) {
+                        points.push(new BMap.Point(data[i].location[j]["Lon"], data[i].location[j]["Lat"]));
+                    }
+                    var polyline;
+                    if (!options)
+                        polyline = new BMap.Polyline(points, { strokeColor: "red", strokeWeight: 2 });
+                    else
+                        polyline = new BMap.Polyline(points, options);
+                    appLayer.push(polyline);
+                    map.addOverlay(polyline);
+                }
+            }
+        });
     },
     addAirLine: function (options) {
-        this.addBaseData("/Ajax/Map/GetAirLine.ashx", options);
+        $.ajax({
+            url: "/Ajax/Map/GetAirLine.ashx",
+            type: "get",
+            dataType: "json",
+            async: true,
+            error: function (xml, msg) {
+                alert(msg);
+            },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var points = [];
+                    for (var j = 0; j < data[i].location.length; j++) {
+                        points.push(new BMap.Point(data[i].location[j]["Lon"], data[i].location[j]["Lat"]));
+                    }
+                    var polyline;
+                    if (!options)
+                        polyline = new BMap.Polyline(points, { strokeColor: "red", strokeWeight: 2 });
+                    else
+                        polyline = new BMap.Polyline(points, options);
+                    airlineLayer.push(polyline);
+                    map.addOverlay(polyline);
+                }
+            }
+        });
     },
     addBaseData: function (url, options) {
         $.ajax({
@@ -94,6 +169,55 @@ baiduMap = {
                 }
             }
         });
+    },
+    scrollFunc: function (e) {
+        e = e || window.event;
+        var zoomlevel = map.getZoom()
+        if (zoomlevel <= 2) {
+            for (var i = 0; i < areaLayer.length; i++) {
+                map.removeOverlay(areaLayer[i]);
+            }
+            for (var j = 0; j < appLayer.length; j++) {
+                map.removeOverlay(appLayer[j]);
+            }
+            for (var k = 0; k < airlineLayer.length; k++) {
+                map.removeOverlay(airlineLayer[k]);
+            }
+        }
+        if (zoomlevel <= 4) {
+            for (var i = 0; i < areaLayer.length; i++) {
+                map.addOverlay(areaLayer[i]);
+            }
+            for (var j = 0; j < appLayer.length; j++) {
+                map.removeOverlay(appLayer[j]);
+            }
+            for (var k = 0; k < airlineLayer.length; k++) {
+                map.removeOverlay(airlineLayer[k]);
+            }
+        }
+        else if (zoomlevel <= 6) {
+            for (var i = 0; i < areaLayer.length; i++) {
+                map.addOverlay(areaLayer[i]);
+            }
+            for (var j = 0; j < appLayer.length; j++) {
+                map.addOverlay(appLayer[j]);
+            }
+            for (var k = 0; k < airlineLayer.length; k++) {
+                map.removeOverlay(airlineLayer[k]);
+            }
+
+        }
+        else {
+             for (var i = 0; i < areaLayer.length; i++) {
+                 map.addOverlay(areaLayer[i]);
+             }
+             for (var j = 0; j < appLayer.length; j++) {
+                 map.addOverlay(appLayer[j]);
+             }
+             for (var k = 0; k < airlineLayer.length; k++) {
+                 map.addOverlay(airlineLayer[k]);
+             }
+        }
     }
 };
 
@@ -131,6 +255,7 @@ zhccMap = {
     addFeature: function (data) {
         // 移除覆盖物
         baiduMap.removeFeature();
+        baiduMap.scrollFunc();
         // 设置地图中心
         if (data.length > 0)
             baiduMap.setCenter(new BMap.Point(parseFloat(data[0].Location[0].Longitude), parseFloat(data[0].Location[0].Latitude)));

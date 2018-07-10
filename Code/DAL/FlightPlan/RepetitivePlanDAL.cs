@@ -299,5 +299,23 @@ namespace DAL.FlightPlan
                        select t.Description;
             return linq.ToString();
         }
+
+        public List<string> GetFlyHigh(string repetID, string workTxt)
+        {
+            var linq = from t in context.File_Master
+                       where t.RepetPlanID == repetID
+                       select t;
+            Dictionary<int, string> list = new Dictionary<int, string>();
+            foreach (var l in linq.ToList())
+            {
+                list.Add(workTxt.IndexOf(l.LineDescript), l.FlyHeight);
+            }
+            var highList = new List<string>();
+            foreach (var s in list.OrderBy(p => p.Key))
+            {
+                highList.Add(s.Value);
+            }
+            return highList;
+        }
     }
 }

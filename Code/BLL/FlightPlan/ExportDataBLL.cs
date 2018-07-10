@@ -21,6 +21,7 @@ namespace BLL.FlightPlan
                 export.airtype = flight.AircraftType;
                 export.aircraft = flight.AircraftType;
                 export.airline = flight.AirlineWorkText;
+                export.high = repetdal.GetFlyHigh(flight.RepetPlanID, flight.AirlineWorkText);
                 export.planbegin = flight.SOBT.ToString("HH:mm");
                 export.planend = flight.SIBT.ToString("HH:mm");
                 export.remark = flight.Remark;
@@ -30,5 +31,7 @@ namespace BLL.FlightPlan
             }
             return exportlist;
         }
+
+        
     }
 }
