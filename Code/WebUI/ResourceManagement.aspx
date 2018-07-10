@@ -200,7 +200,7 @@
                     <tr>
                         <th>附件(小于50M)</th>
                         <td>
-                            <input id="file" name="file" type="file" value="请选择附件（不大于50M）" style="width: 80%;" />
+                            <input id="file" name="file" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,application/msword,application/msexcel" value="请选择附件（不大于50M）" style="width: 80%;" onchange="checkFileType(this.value)" />
                         </td>
                     </tr>
                 </table>
@@ -303,6 +303,18 @@
 
             function clearForm() {
                 $('#ff').form('clear');
+                $('#dealuser').textbox('setValue', "<%=username%>");
+            }
+
+            function checkFileType(str)
+            {
+                var pos = str.lastIndexOf(".");
+                var lastname = str.substring(pos, str.length).toLowerCase();
+                if (lastname != ".xlsx"&&lastname != ".xls"&&lastname != ".docx"&&lastname != ".doc"&&lastname != ".pdf")
+                {
+                    alert("只能上传Word|Excel|PDF文件，请重新上传！");
+                    document.getElementById("file").value = "";
+                }
             }
         </script>
     </div>

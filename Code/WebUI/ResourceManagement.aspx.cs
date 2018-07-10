@@ -10,10 +10,11 @@ using DAL;
 using DAL.SystemManagement;
 using Model.EF;
 
-public partial class ResourceManagement : System.Web.UI.Page
+public partial class ResourceManagement : BasePage
 {
+    public string username = string.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        username = User.UserName;
     }
 }
