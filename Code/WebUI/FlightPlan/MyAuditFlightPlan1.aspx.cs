@@ -107,7 +107,7 @@ public partial class FlightPlan_MyAuditFlightPlan1 : BasePage
         var plan = bll.Get(planid);
         if (plan != null)
         {
-        var ControlDep = "";
+          var ControlDep = "";
             if (Request.Form["Auditresult"] == "0")
             {
                 if (!string.IsNullOrEmpty(Request.Form["ControlDep"]))
@@ -120,14 +120,32 @@ public partial class FlightPlan_MyAuditFlightPlan1 : BasePage
                 {
                     #region 飞行计划审核完成后直接转到明天的当日动态，并提交
                     var entity = new CurrentFlightPlan();
-                    entity.FillObject(plan);
+                  //  entity.FillObject(plan);
                     entity.CurrentFlightPlanID = Guid.NewGuid();
-                    entity.PlanState = "0";
+                entity.RepetPlanID = plan.RepetPlanID;
+                entity.FlightPlanID = plan.FlightPlanID.ToString();
+                entity.AircraftType = plan.AircraftType;
+                entity.FlightType = plan.FlightType;
+               // entity.AircraftNum =int.Parse(plan.AircraftNum);
+                entity.AirlineWorkText = plan.AirlineWorkText;
+                entity.AirportText = plan.AirportText;
+                entity.ADEP = plan.ADEP;
+                entity.ADES = plan.ADES;
+                entity.SsrCode = plan.SsrCode;
+                entity.CallSign = plan.CallSign;
+                entity.Code = plan.Code;
+                entity.PlanState = "0";
+                entity.CompanyName = plan.CompanyName;
+                entity.CompanyCode3 = plan.CompanyCode3;
+                entity.Creator = plan.Creator.Value;
+                entity.CreatorName = plan.CreatorName;
+                entity.ActorID = plan.Creator.Value;
+                    entity.Code = plan.Code;
                     entity.CreateTime = DateTime.Now.Date.AddDays(1);
                     if (currPlanBll.Add(entity))
                     {
-                        wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, entity.Creator, entity.CreatorName);
-                        insdal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, entity.Creator, entity.CreatorName, "", "", insdal.UpdateCurrentFlightPlan);
+                        wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, entity.CurrentFlightPlanID, entity.Creator, entity.CreatorName);
+                        insdal.Submit(entity.CurrentFlightPlanID, (int)TWFTypeEnum.CurrentPlan, entity.Creator, entity.CreatorName, "", "", insdal.UpdateCurrentFlightPlan);
                     }
                     #endregion
                 }

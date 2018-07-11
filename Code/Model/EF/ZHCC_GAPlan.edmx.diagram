@@ -38,7 +38,6 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vFlightPlan" Width="1.5" PointX="19.375" PointY="11.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.CurrentFlightPlan" Width="1.5" PointX="15.375" PointY="18.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.CurrentFlightPlanOld" Width="1.5" PointX="5.375" PointY="19.75" />
-        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance" Width="1.5" PointX="19.375" PointY="19.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.vCurrentPlan" Width="1.5" PointX="21.375" PointY="19.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.SubActualSteps" Width="1.5" PointX="5.375" PointY="22.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.SubTWFSteps" Width="1.5" PointX="7.375" PointY="22.75" />
@@ -52,6 +51,7 @@
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.RepetitivePlan" Width="1.5" PointX="0.75" PointY="24.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.File_CurrentPlanMaster" Width="1.5" PointX="15.375" PointY="11.75" />
         <EntityTypeShape EntityType="ZHCC_GAPlanModel.FlightPlan" Width="1.5" PointX="23.375" PointY="17.75" />
+        <EntityTypeShape EntityType="ZHCC_GAPlanModel.vGetCurrentPlanNodeInstance" Width="1.5" PointX="17.375" PointY="19.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

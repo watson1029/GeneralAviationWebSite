@@ -64,13 +64,13 @@
                                 </td>
                             </tr>
                                <tr>
-                                <th class="formTitle">计划撤轮挡时间</th>
+                                <th class="formTitle">实际起飞时间</th>
                                 <td class="formValue">
-                                    <input id="SOBT" name="SOBT" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="ActualStartTime" name="ActualStartTime" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
-                                <th class="formTitle">计划挡轮挡时间</th>
+                                <th class="formTitle">实际落地时间</th>
                                 <td class="formValue">
-                                    <input id="SIBT" name="SIBT" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="ActualEndTime" name="ActualEndTime" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
                             <tr>
@@ -83,16 +83,7 @@
                                     <input id="ADES" name="ADES" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
-                           <tr>
-                                <th class="formTitle">备降机场I</th>
-                                <td class="formValue">
-                                    <input id="ALTN1" name="ALTN1" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
-                                </td>
-                                <th class="formTitle">备降机场II</th>
-                                <td class="formValue">
-                                    <input id="ALTN2" name="ALTN2" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
-                                </td>
-                            </tr>
+                          
                               <tr>
                                 <th class="formTitle">航空器数量</th>
                                 <td class="formValue">

@@ -1,7 +1,6 @@
 ﻿using BLL.FlightPlan;
 using DAL.FlightPlan;
 using Model.EF;
-using Model.FlightPlan;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,9 +11,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Untity;
 
-public partial class FlightPlan_MyFinishAuditRepetPlan1 : BasePage
+public partial class FlightPlan_MyFinishAuditCurrentPlan1 : BasePage
 {
-    RepetitivePlanBLL bll = new RepetitivePlanBLL();
+    CurrentPlanBLL bll = new CurrentPlanBLL();
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["action"] != null)
@@ -52,8 +51,8 @@ public partial class FlightPlan_MyFinishAuditRepetPlan1 : BasePage
         int pageCount = 0;
         int rowCount = 0;
         // string orderField = sort.Replace("JSON_", "");
-        var strWhere = GetWhere(); 
-          var pageList = bll.GetNodeInstanceList(page, size, out pageCount, out rowCount, strWhere);
+        var strWhere = GetWhere();
+        var pageList = bll.GetNodeInstanceList(page, size, out pageCount, out rowCount, strWhere);
         var strJSON = Serializer.JsonDate(new { rows = pageList, total = rowCount });
         Response.Write(strJSON);
         Response.ContentType = "application/json";
@@ -65,12 +64,12 @@ public partial class FlightPlan_MyFinishAuditRepetPlan1 : BasePage
     /// </summary>
     /// <returns></returns>
     /// 
-    private Expression<Func<vGetRepetitivePlanNodeInstance, bool>> GetWhere()
+    private Expression<Func<vGetCurrentPlanNodeInstance, bool>> GetWhere()
     {
-        Expression<Func<vGetRepetitivePlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetRepetitivePlanNodeInstance>();
-       // predicate = predicate.And(m => m.PlanState == "end");
-        //predicate = predicate.And(m => m.ActorID != m.Creator);
-        predicate = predicate.And(m =>User.RoleName.Contains(m.RoleName)&&m.NextID==Guid.Empty);
+        var date = DateTime.Now.Date;
+        var tomorrow = DateTime.Now.Date.AddDays(1);
+        Expression<Func<vGetCurrentPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetCurrentPlanNodeInstance>();
+        predicate = predicate.And(m => User.RoleName.Contains(m.RoleName) && m.NextID == Guid.Empty );
         predicate = predicate.And(m => m.State == 2 || m.State == 3);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -86,13 +85,13 @@ public partial class FlightPlan_MyFinishAuditRepetPlan1 : BasePage
     private void GetData()
     {
         var planid = Guid.Parse(Request.Form["id"]);
-
-        Expression<Func<vGetRepetitivePlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetRepetitivePlanNodeInstance>();
-    
+        Expression<Func<vGetCurrentPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetCurrentPlanNodeInstance>();
+        //predicate = predicate.And(m => m.ActorID != m.Creator);
+        //predicate = predicate.And(m => m.ActorID == User.ID);
         predicate = predicate.And(m => m.State == 2 || m.State == 3);
         predicate = predicate.And(m => m.PlanID == planid);
-        predicate = predicate.And(m => m.TWFID == (int)TWFTypeEnum.RepetitivePlan);
-        var plan = bll.GetRepetitivePlanNodeInstance(predicate);
+        predicate = predicate.And(m => m.TWFID == (int)TWFTypeEnum.CurrentPlan);
+        var plan =  bll.GetCurrentFlightPlanNodeInstance(predicate);
         var strJSON = JsonConvert.SerializeObject(plan);
         Response.Clear();
         Response.Write(strJSON);
@@ -109,7 +108,7 @@ public partial class FlightPlan_MyFinishAuditRepetPlan1 : BasePage
         try
         {
 
-            var instance = insdal.GetNodeInstance(User.ID, (int)TWFTypeEnum.RepetitivePlan, planid);
+            var instance = insdal.GetNodeInstance(User.ID, (int)TWFTypeEnum.CurrentPlan, planid);
             if (instance != null)
             {
                 if (insdal.UpdateComment(instance.ID, Request.Form["Comments"] ?? ""))
@@ -128,15 +127,4 @@ public partial class FlightPlan_MyFinishAuditRepetPlan1 : BasePage
         Response.End();
 
     }
-
-    #region 权限编码
-    public override string PageRightCode
-    {
-        get
-        {
-            return "MyFinishAuditRepetPlanCheck";
-        }
-    }
-    #endregion
-
 }

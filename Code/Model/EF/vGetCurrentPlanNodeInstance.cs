@@ -21,23 +21,30 @@ namespace Model.EF
         public Nullable<System.Guid> PrevID { get; set; }
         public Nullable<System.Guid> NextID { get; set; }
         public System.DateTime CreateTime { get; set; }
-        public byte State { get; set; }
+        public Nullable<byte> State { get; set; }
         public Nullable<int> ActorID { get; set; }
+        public string RoleName { get; set; }
         public Nullable<System.DateTime> ApplyTime { get; set; }
         public string Comments { get; set; }
         public Nullable<System.DateTime> ActorTime { get; set; }
         public string ActorName { get; set; }
-        public string RepetPlanID { get; set; }
-        public string Code { get; set; }
-        public int Creator { get; set; }
-        public string CreatorName { get; set; }
+        public string FlightType { get; set; }
+        public string AircraftType { get; set; }
+        public string CompanyCode3 { get; set; }
         public Nullable<System.DateTime> ActualStartTime { get; set; }
         public Nullable<System.DateTime> ActualEndTime { get; set; }
-        public string PlanState { get; set; }
-        public bool DeletedFlag { get; set; }
-        public System.DateTime Expr2 { get; set; }
+        public string ADEP { get; set; }
+        public string ADES { get; set; }
+        public string SsrCode { get; set; }
+        public string FlightPlanID { get; set; }
+        public string RepetPlanID { get; set; }
+        public string Code { get; set; }
+        public string CallSign { get; set; }
+        public string CompanyName { get; set; }
+        public int Creator { get; set; }
+        public string CreatorName { get; set; }
+        public string AirlineWorkText { get; set; }
+        public string AirportText { get; set; }
         public Nullable<int> AircraftNum { get; set; }
-        public string Pilot { get; set; }
-        public string ContractWay { get; set; }
     }
 }

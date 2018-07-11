@@ -145,7 +145,7 @@
                             <tr>
                                   <th class="formTitle">航空器数目</th>
                                 <td class="formValue">
-                                    <input id="AircraftNum" name="AircraftNum" maxlength="50" required="true" class="easyui-textbox" style="height: 25px;width:200px" />
+                                    <input id="AircraftNum" name="AircraftNum" maxlength="50" class="easyui-textbox" style="height: 25px;width:200px" />
                                 </td>
                                 <th class="formTitle">应答机编码</th>
                                 <td class="formValue">

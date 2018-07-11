@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="FlightPlanAuditForm1.aspx.cs" Inherits="FlightPlan_FlightPlanAuditForm1" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CurrentPlanAuditForm1.aspx.cs" Inherits="FlightPlan_CurrentPlanAuditForm1" %>
 
 <script>
     $(function () {
         var pid = '<%=Request.QueryString["id"] %>';
         if (!!pid) {  
             $.ajax({
-                url: "MyAuditFlightPlan.aspx",
+                url: "MyAuditCurrentPlan.aspx",
                 data: { id: pid,"action": "queryone" },
                 type:'post',
                 dataType: "json",
@@ -77,26 +77,32 @@
                                 </td>
                             </tr>
                                <tr>
-                                <th class="formTitle">预计起飞时间</th>
+                                <th class="formTitle">实际起飞时间</th>
                                 <td class="formValue">
-                                    <input id="SOBT" name="SOBT" maxlength="50"  class="easyui-datebox" style="height: 25px" />
+                                    <input id="ActualStartTime" name="ActualStartTime" maxlength="50"  class="easyui-datebox" style="height: 25px" />
                                 </td>
-                                <th class="formTitle">预计落地时间</th>
+                                <th class="formTitle">实际落地时间</th>
                                 <td class="formValue">
-                                    <input id="SIBT" name="SIBT" maxlength="50"  class="easyui-datebox" style="height: 25px" />
+                                    <input id="ActualEndTime" name="ActualEndTime" maxlength="50"  class="easyui-datebox" style="height: 25px" />
                                 </td>
                             </tr>
+
                             <tr>
                                 <th class="formTitle">起飞机场</th>
                                 <td class="formValue">
-                                    <input id="ADEP" name="ADEP" maxlength="50"  class="easyui-textbox" style="height: 25px" />
+                                    <input id="ADEP" name="ADEP" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                                 <th class="formTitle">目的地机场</th>
                                 <td class="formValue">
-                                    <input id="ADES" name="ADES" maxlength="50" class="easyui-textbox" style="height: 25px" />
+                                    <input id="ADES" name="ADES" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
-                   
+                      <tr>
+                                <th class="formTitle">航空器数量</th>
+                                <td class="formValue">
+                                    <input id="AircraftNumber" name="AircraftNumber" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                </td>
+                            </tr>
                             <tr>
                                 <th class="formTitle" style="padding-top: 5px;">
                                     航线及作业区

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class FlightPlan_CurrentPlanFinishAuditForm : BasePage
+public partial class FlightPlan_MyFinishAuditCurrentPlan : BasePage
 {
     protected void Page_Load(object sender, EventArgs e)
     {

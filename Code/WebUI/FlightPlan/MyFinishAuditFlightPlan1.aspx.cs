@@ -86,8 +86,8 @@ public partial class FlightPlan_MyFinishAuditFlightPlan1 : BasePage
     {
         var planid = Guid.Parse(Request.Form["id"]);
         Expression<Func<vGetFlightPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetFlightPlanNodeInstance>();
-        predicate = predicate.And(m => m.ActorID != m.Creator);
-        predicate = predicate.And(m => m.ActorID == User.ID);
+        //predicate = predicate.And(m => m.ActorID != m.Creator);
+        //predicate = predicate.And(m => m.ActorID == User.ID);
         predicate = predicate.And(m => m.State == 2 || m.State == 3);
         predicate = predicate.And(m => m.PlanID == planid);
         predicate = predicate.And(m => m.TWFID == (int)TWFTypeEnum.FlightPlan);

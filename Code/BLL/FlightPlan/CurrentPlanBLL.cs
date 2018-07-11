@@ -133,6 +133,11 @@ namespace BLL.FlightPlan
         {
             return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.CreateTime, true);
         }
+        public vGetCurrentPlanNodeInstance GetCurrentFlightPlanNodeInstance(Expression<Func<vGetCurrentPlanNodeInstance, bool>> where)
+        {
+            var insdal = new DBHelper<vGetCurrentPlanNodeInstance>();
+            return insdal.Find(where);
+        }
         /// <summary>
         /// 按条件获取记录
         /// </summary>
@@ -613,6 +618,11 @@ namespace BLL.FlightPlan
                 }
             }
 
+        }
+        public List<vGetCurrentPlanNodeInstance> GetNodeInstanceList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<vGetCurrentPlanNodeInstance, bool>> where)
+        {
+            var insdal = new DBHelper<vGetCurrentPlanNodeInstance>();
+            return insdal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.PlanID, true);
         }
     }
 }
