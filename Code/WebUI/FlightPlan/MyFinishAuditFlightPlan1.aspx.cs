@@ -66,9 +66,10 @@ public partial class FlightPlan_MyFinishAuditFlightPlan1 : BasePage
     /// 
     private Expression<Func<vGetFlightPlanNodeInstance, bool>> GetWhere()
     {
-
+        var date = DateTime.Now.Date;
+        var tomorrow = DateTime.Now.Date.AddDays(1);
         Expression<Func<vGetFlightPlanNodeInstance, bool>> predicate = PredicateBuilder.True<vGetFlightPlanNodeInstance>();
-        predicate = predicate.And(m => User.RoleName.Contains(m.RoleName) && m.NextID == Guid.Empty);
+        predicate = predicate.And(m => User.RoleName.Contains(m.RoleName) && m.NextID == Guid.Empty && m.CreateTime >= date && m.CreateTime < tomorrow);
         predicate = predicate.And(m => m.State == 2 || m.State == 3);
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {

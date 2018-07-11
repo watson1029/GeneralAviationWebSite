@@ -12,6 +12,7 @@ using RIPS.Util.Collections;
 using Newtonsoft.Json;
 using Model.FlightPlan;
 using ViewModel.FlightPlan;
+using System.Data.Entity.Spatial;
 
 namespace BLL.FlightPlan
 {
@@ -128,9 +129,9 @@ namespace BLL.FlightPlan
         /// <param name="rowCount"></param>
         /// <param name="where"></param>
         /// <returns></returns>
-        public List<vCurrentPlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<vCurrentPlan, bool>> where)
+        public List<CurrentFlightPlan> GetList(int pageIndex, int pageSize, out int pageCount, out int rowCount, Expression<Func<CurrentFlightPlan, bool>> where)
         {
-            return vdal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.FlightPlanID, true);
+            return dal.FindPagedList(pageIndex, pageSize, out pageCount, out rowCount, where, m => m.CreateTime, true);
         }
         /// <summary>
         /// 按条件获取记录
@@ -149,6 +150,10 @@ namespace BLL.FlightPlan
         public vCurrentPlan Get(Guid id)
         {
             return vdal.Find(u => u.CurrentFlightPlanID == id);
+        }
+        public CurrentFlightPlan GetCurrentFlightPlan(Guid id)
+        {
+            return dal.Find(u => u.CurrentFlightPlanID == id);
         }
         public vCurrentPlan GetByCurrid(Guid id)
         {
@@ -235,6 +240,379 @@ namespace BLL.FlightPlan
         public List<File_CurrentPlanMaster> GetFileCurrentPlanMasterList(Expression<Func<File_CurrentPlanMaster, bool>> where)
         {
             return masterdal.FindList(where, m => m.ID, true);
+        }
+        /// <summary>
+        /// 添加机场、航线、作业区
+        /// </summary>
+        /// <param name="airportidList"></param>
+        /// <param name="airlineText"></param>
+        /// <param name="repetPlanID"></param>
+        public void AddCurrentPlanTempOther(string airlineText, string cworkText, string pworkText, string hworkText, string currentPlanID, string keyValue, ref string airlineworkText)
+        {
+            var context = new ZHCC_GAPlanEntities();
+            StringBuilder sb = new StringBuilder("");
+            List<string> masterIDs = new List<string>();
+            using (var dbContextTransaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    if (!string.IsNullOrEmpty(keyValue))
+                    {
+                        var flightmasterlist = context.File_CurrentPlanMaster.Where(u => u.CurrentPlanID.Equals(currentPlanID));
+                        foreach (var item in flightmasterlist)
+                        {
+                            var master = context.File_Master.Find(item.MasterID);
+                            context.File_Master.Remove(master);
+
+                            var detaillist = context.File_Detail.Where(u => u.MasterID.Equals(item.MasterID));
+                            foreach (var sitem in detaillist)
+                            {
+                                context.File_Detail.Remove(sitem);
+                            }
+                            context.SaveChanges();
+                        }
+
+                    }
+
+                    #region 航线
+                    if (!string.IsNullOrEmpty(airlineText))
+                    {
+                        var airlineList = (AirlineFillTotal)JsonConvert.DeserializeObject(airlineText, typeof(AirlineFillTotal));
+                        var sblinedesc = new StringBuilder("");
+                        foreach (var item in airlineList.airlineArray)
+                        {
+                            if (item.airlinePointList.Count() > 0)
+                            {
+                                sblinedesc.Clear();
+                                File_Master master = new File_Master()
+                                {
+                                    ID = Guid.NewGuid().ToString(),
+                                    WorkType = "airline",
+                                    FlyHeight = item.FlyHeight,
+                                };
+                                masterIDs.Add(master.ID);
+                                var index = 1;
+                                foreach (var pointItem in item.airlinePointList)
+                                {
+                                    if (string.IsNullOrEmpty(pointItem.PointName)) continue;
+                                    sblinedesc.Append(pointItem.PointName);
+                                    File_Detail point = new File_Detail()
+                                    {
+                                        ID = Guid.NewGuid().ToString(),
+                                        MasterID = master.ID,
+                                        PointName = pointItem.PointName,
+                                        Sort = index
+                                    };
+
+                                    var splitmodel = SpecialFunctions.latLongSplit(pointItem.LatLong);
+                                    point.Longitude = splitmodel.Longitude;
+                                    point.Latitude = splitmodel.Latitude;
+                                    context.File_Detail.Add(point);
+                                    context.SaveChanges();
+                                    sblinedesc.Append("(");
+                                    sblinedesc.Append(pointItem.LatLong);
+                                    sblinedesc.Append(")");
+                                    sblinedesc.Append("-");
+                                    index++;
+                                }
+                                if (sblinedesc.Length > 0)
+                                {
+                                    sblinedesc.Remove(sblinedesc.Length - 1, 1);
+                                }
+                                if (!string.IsNullOrEmpty(master.FlyHeight))
+                                {
+                                    sblinedesc.Append(",高度");
+                                    sblinedesc.Append(master.FlyHeight);
+                                    sblinedesc.Append("米（含）以下");
+                                }
+                                master.LineDescript = sblinedesc.ToString();
+                                context.File_Master.Add(master);
+                                context.SaveChanges();
+                                sb.AppendLine(master.LineDescript + "；");
+                            }
+                        }
+                    }
+                    #endregion
+                    #region 作业区(圆)
+                    if (!string.IsNullOrEmpty(cworkText))
+                    {
+                        var workList = (AirlineFillTotal)JsonConvert.DeserializeObject(cworkText, typeof(AirlineFillTotal));
+                        var sblinedesc = new StringBuilder("");
+                        foreach (var item in workList.airlineArray)
+                        {
+                            if (item.airlinePointList.Count() > 0 && !string.IsNullOrEmpty(item.Radius))
+                            {
+                                sblinedesc.Clear();
+                                File_Master master = new File_Master()
+                                {
+                                    ID = Guid.NewGuid().ToString(),
+                                    FlyHeight = item.FlyHeight,
+                                    WorkType = "circle"
+                                };
+                                masterIDs.Add(master.ID);
+                                var customAreaStr = new StringBuilder("");
+                                var index = 1;
+                                foreach (var pointItem in item.airlinePointList)
+                                {
+                                    if (string.IsNullOrEmpty(pointItem.PointName)) continue;
+                                    sblinedesc.Append(pointItem.PointName);
+                                    File_Detail point = new File_Detail()
+                                    {
+                                        ID = Guid.NewGuid().ToString(),
+                                        MasterID = master.ID,
+                                        PointName = pointItem.PointName,
+                                        Sort = index
+                                    };
+                                    var splitmodel = SpecialFunctions.latLongSplit(pointItem.LatLong);
+                                    point.Longitude = splitmodel.Longitude;
+                                    point.Latitude = splitmodel.Latitude;
+                                    context.File_Detail.Add(point);
+                                    context.SaveChanges();
+                                    sblinedesc.Append("(");
+                                    sblinedesc.Append(pointItem.LatLong);
+                                    sblinedesc.Append(")");
+                                    if (!string.IsNullOrEmpty(point.Latitude) && !string.IsNullOrEmpty(point.Longitude))
+                                    {
+                                        customAreaStr.Append("N");
+                                        customAreaStr.Append(point.Latitude);
+                                        customAreaStr.Append("E");
+                                        customAreaStr.Append(point.Longitude);
+                                        customAreaStr.Append(",");
+                                    }
+                                    index++;
+                                }
+                                DbGeography geoArea = null;
+                                try
+                                {
+                                    geoArea = context.f_GetGEOAreaByPointString(customAreaStr.ToString(), 4).First();
+                                }
+                                catch
+                                {
+                                }
+                                //计算管制区
+                                var customAreaList = context.CustomControlArea.Where(m => m.ControlAreaBoundary.Intersects(geoArea)).Select(m => m.ControlAreaName);
+                                master.CustomArea = string.Join(",", customAreaList.ToArray());
+
+                                Int16 _radius = 0;
+                                if (!string.IsNullOrWhiteSpace(item.Radius) && Int16.TryParse(item.Radius, out _radius))
+                                {
+                                    master.RaidusMile = _radius;
+                                    var tempraidus = "为圆心半径" + item.Radius + "公里范围内";
+                                    sblinedesc.Append(tempraidus);
+                                }
+                                if (!string.IsNullOrEmpty(master.FlyHeight))
+                                {
+                                    sblinedesc.Append(",高度");
+                                    sblinedesc.Append(master.FlyHeight);
+                                    sblinedesc.Append("米（含）以下");
+                                }
+                                master.LineDescript = sblinedesc.ToString();
+                                context.File_Master.Add(master);
+                                context.SaveChanges();
+                                sb.AppendLine(master.LineDescript + "；");
+                            }
+                        }
+                    }
+                    #endregion
+                    #region 作业区(点)
+                    if (!string.IsNullOrEmpty(pworkText))
+                    {
+                        var workList = (AirlineFillTotal)JsonConvert.DeserializeObject(pworkText, typeof(AirlineFillTotal));
+                        var sblinedesc = new StringBuilder("");
+                        foreach (var item in workList.airlineArray)
+                        {
+                            if (item.airlinePointList.Count() > 0)
+                            {
+                                sblinedesc.Clear();
+                                File_Master master = new File_Master()
+                                {
+                                    ID = Guid.NewGuid().ToString(),
+                                    FlyHeight = item.FlyHeight,
+                                    WorkType = "area"
+                                };
+                                masterIDs.Add(master.ID);
+                                var customAreaStr = new StringBuilder("");
+                                var index = 1;
+                                foreach (var pointItem in item.airlinePointList)
+                                {
+                                    if (string.IsNullOrEmpty(pointItem.PointName)) continue;
+                                    sblinedesc.Append(pointItem.PointName);
+                                    File_Detail point = new File_Detail()
+                                    {
+                                        ID = Guid.NewGuid().ToString(),
+                                        MasterID = master.ID,
+                                        PointName = pointItem.PointName,
+                                        Sort = index
+                                    };
+                                    var splitmodel = SpecialFunctions.latLongSplit(pointItem.LatLong);
+                                    point.Longitude = splitmodel.Longitude;
+                                    point.Latitude = splitmodel.Latitude;
+                                    context.File_Detail.Add(point);
+                                    context.SaveChanges();
+                                    sblinedesc.Append("(");
+                                    sblinedesc.Append(pointItem.LatLong);
+                                    sblinedesc.Append(")");
+                                    sblinedesc.Append("-");
+                                    if (!string.IsNullOrEmpty(point.Latitude) && !string.IsNullOrEmpty(point.Longitude))
+                                    {
+                                        customAreaStr.Append("N");
+                                        customAreaStr.Append(point.Latitude);
+                                        customAreaStr.Append("E");
+                                        customAreaStr.Append(point.Longitude);
+                                        customAreaStr.Append(",");
+                                    }
+                                    index++;
+
+                                }
+                                if (customAreaStr.Length > 0)
+                                {
+                                    customAreaStr.Remove(customAreaStr.Length - 1, 1);
+                                }
+                                if (sblinedesc.Length > 0)
+                                {
+                                    sblinedesc.Remove(sblinedesc.Length - 1, 1);
+                                }
+                                DbGeography geoArea = null;
+                                try
+                                {
+                                    geoArea = context.f_GetGEOAreaByPointString(customAreaStr.ToString(), 3).First();
+                                }
+                                catch
+                                {
+                                }
+                                //计算管制区         
+                                var customAreaList = context.CustomControlArea.Where(m => m.ControlAreaBoundary.Intersects(geoArea)).Select(m => m.ControlAreaName);
+                                master.CustomArea = string.Join(",", customAreaList.ToArray());
+                                var tempraidus = item.airlinePointList.Count() + "点连线范围内";
+                                sblinedesc.Append(tempraidus);
+                                if (!string.IsNullOrEmpty(master.FlyHeight))
+                                {
+                                    sblinedesc.Append(",高度");
+                                    sblinedesc.Append(master.FlyHeight);
+                                    sblinedesc.Append("米（含）以下");
+                                }
+                                master.LineDescript = sblinedesc.ToString();
+                                context.File_Master.Add(master);
+                                context.SaveChanges();
+                                sb.AppendLine(master.LineDescript + "；");
+                            }
+                        }
+                    }
+                    #endregion
+                    #region 作业区(线)
+                    if (!string.IsNullOrEmpty(hworkText))
+                    {
+                        var workList = (AirlineFillTotal)JsonConvert.DeserializeObject(hworkText, typeof(AirlineFillTotal));
+                        var sblinedesc = new StringBuilder("");
+                        foreach (var item in workList.airlineArray)
+                        {
+                            if (item.airlinePointList.Count() > 0)
+                            {
+                                sblinedesc.Clear();
+                                File_Master master = new File_Master()
+                                {
+                                    ID = Guid.NewGuid().ToString(),
+                                    FlyHeight = item.FlyHeight,
+                                    WorkType = "airlinelr"
+                                };
+                                masterIDs.Add(master.ID);
+                                var customAreaStr = new StringBuilder("");
+                                var index = 1;
+                                foreach (var pointItem in item.airlinePointList)
+                                {
+                                    if (string.IsNullOrEmpty(pointItem.PointName)) continue;
+                                    sblinedesc.Append(pointItem.PointName);
+                                    File_Detail point = new File_Detail()
+                                    {
+                                        ID = Guid.NewGuid().ToString(),
+                                        MasterID = master.ID,
+                                        PointName = pointItem.PointName,
+                                        Sort = index
+                                    };
+                                    var splitmodel = SpecialFunctions.latLongSplit(pointItem.LatLong);
+                                    point.Longitude = splitmodel.Longitude;
+                                    point.Latitude = splitmodel.Latitude;
+                                    context.File_Detail.Add(point);
+                                    context.SaveChanges();
+                                    sblinedesc.Append("(");
+                                    sblinedesc.Append(pointItem.LatLong);
+                                    sblinedesc.Append(")");
+                                    sblinedesc.Append("-");
+                                    if (!string.IsNullOrEmpty(point.Latitude) && !string.IsNullOrEmpty(point.Longitude))
+                                    {
+                                        customAreaStr.Append("N");
+                                        customAreaStr.Append(point.Latitude);
+                                        customAreaStr.Append("E");
+                                        customAreaStr.Append(point.Longitude);
+                                        customAreaStr.Append(",");
+                                    }
+                                    index++;
+                                }
+                                if (customAreaStr.Length > 0)
+                                {
+                                    customAreaStr.Remove(customAreaStr.Length - 1, 1);
+                                }
+                                if (sblinedesc.Length > 0)
+                                {
+                                    sblinedesc.Remove(sblinedesc.Length - 1, 1);
+                                }
+                                Int16 _radius = 0;
+                                if (!string.IsNullOrWhiteSpace(item.Radius) && Int16.TryParse(item.Radius, out _radius))
+                                {
+                                    master.RaidusMile = _radius;
+                                    var tempraidus = "航线左右" + item.Radius + "公里范围内";
+                                    sblinedesc.Append(tempraidus);
+                                }
+                                if (!string.IsNullOrEmpty(master.FlyHeight))
+                                {
+                                    sblinedesc.Append(",高度");
+                                    sblinedesc.Append(master.FlyHeight);
+                                    sblinedesc.Append("米（含）以下");
+                                }
+                                DbGeography geoArea = null;
+                                try
+                                {
+                                    geoArea = context.f_GetGEOAreaByPointString(customAreaStr.ToString(), 2).First();
+                                }
+                                catch
+                                {
+                                }
+                                //计算管制区
+                                var customAreaList = context.CustomControlArea.Where(m => m.ControlAreaBoundary.Intersects(geoArea)).Select(m => m.ControlAreaName);
+                                master.CustomArea = string.Join(",", customAreaList.ToArray());
+                                master.LineDescript = sblinedesc.ToString();
+                                context.File_Master.Add(master);
+                                context.SaveChanges();
+                                sb.AppendLine(master.LineDescript + "；");
+                            }
+                        }
+                    }
+                    #endregion
+                    foreach (var item in masterIDs)
+                    {
+                        File_CurrentPlanMaster master = new File_CurrentPlanMaster()
+                        {
+                            MasterID = item,
+                            CurrentPlanID = currentPlanID
+                        };
+                        context.File_CurrentPlanMaster.Add(master);
+                        context.SaveChanges();
+                        var fileMaster = context.File_Master.Where(u => u.ID.Equals(item)).FirstOrDefault();
+                        if (fileMaster != null)
+                        {
+                            sb.AppendLine(fileMaster.LineDescript + "；");
+                        }
+                    }
+                    airlineworkText = sb.ToString();
+                    dbContextTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+                    throw ex;
+                }
+            }
+
         }
     }
 }

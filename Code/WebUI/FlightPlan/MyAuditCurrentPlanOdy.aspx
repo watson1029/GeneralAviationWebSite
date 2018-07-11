@@ -19,7 +19,7 @@
             <input id="ipt_search" menu="#search_menu" />
             <div id="search_menu" style="width: 200px">
                 <div name="PlanCode">
-                    临专号
+                    长期计划编号
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
 
                     columns: [[
                       { title: '公司名称', field: 'CompanyName', width: 200 },
-                        { title: '临专号', field: 'Code', width: 200 },
+                        { title: '长期计划编号', field: 'Code', width: 200 },
                         { title: '任务类型', field: 'FlightType', width: 80 },
                         { title: '航班号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 80 },

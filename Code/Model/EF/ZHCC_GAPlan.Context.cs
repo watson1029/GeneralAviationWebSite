@@ -73,9 +73,9 @@ namespace Model.EF
         public virtual DbSet<Map_AirLine> Map_AirLine { get; set; }
         public virtual DbSet<Map_AppControl> Map_AppControl { get; set; }
         public virtual DbSet<Map_AreaControl> Map_AreaControl { get; set; }
-        public virtual DbSet<FlightPlan> FlightPlan { get; set; }
         public virtual DbSet<RepetitivePlan> RepetitivePlan { get; set; }
         public virtual DbSet<File_CurrentPlanMaster> File_CurrentPlanMaster { get; set; }
+        public virtual DbSet<FlightPlan> FlightPlan { get; set; }
     
         public virtual ObjectResult<System.Data.Entity.Spatial.DbGeography> f_GetGEOAreaByPointString(string pointString, Nullable<int> type)
         {

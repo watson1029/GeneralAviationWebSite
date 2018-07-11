@@ -67,11 +67,10 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<vCurrentPlan, bool>> GetWhere()
+    private Expression<Func<CurrentFlightPlan, bool>> GetWhere()
     {
-        Expression<Func<vCurrentPlan, bool>> predicate = PredicateBuilder.True<vCurrentPlan>();
-        var currDate = DateTime.Now.Date;
-        predicate = predicate.And(m => m.CurrentFlightPlanID !=null && m.Creator == User.ID && m.PlanState != "0");
+        Expression<Func<CurrentFlightPlan, bool>> predicate = PredicateBuilder.True<CurrentFlightPlan>();
+        predicate = predicate.And(m => m.PlanState != "0" && m.Creator == User.ID);
 
         if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
         {
@@ -83,7 +82,7 @@ public partial class FlightPlan_MySubmitCurrentPlan :BasePage
     private void GetData()
     {
         var planid = Guid.Parse(Request.Form["id"]);
-        var plan = currPlanBll.GetByCurrid(planid);
+        var plan = currPlanBll.GetCurrentFlightPlan(planid);
         var strJSON = JsonConvert.SerializeObject(plan);
         Response.Clear();
         Response.Write(strJSON);

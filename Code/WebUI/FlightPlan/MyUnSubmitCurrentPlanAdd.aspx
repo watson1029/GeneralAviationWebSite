@@ -83,20 +83,10 @@
         if (!$("#form1").form("validate")){
             return false;
         }
-        //var postData = $("#form1").serialize();
-        //postData["MasterIDs"] = $("#MasterIDs").val().join(',');
        
-        $("#btn_finish").linkbutton("disable");
-        var json = "";
-        if ($("#IsTempFlightPlan").is(":checked"))
-        {
-            json = $.param({ "action": "save", "id": pid,  "AirlineText": repetPlan.newairlineobj.getJsonData(), "CWorkText": repetPlan.newworkobj.getCWorkJsonData(), "PWorkText": repetPlan.newworkobj.getPWorkJsonData(), "HWorkText": repetPlan.newworkobj.getHWorkJsonData() });
-        
-            }
-        else
-        {
-            json = $.param({ "action": "save", "id": pid, "MasterIDs": $("#MasterIDs").combobox('getValues').join(',') });
-        }
+        $("#btn_add").linkbutton("disable");
+        var json = $.param({ "action": "save", "id": pid,  "AirlineText": repetPlan.newairlineobj.getJsonData(), "CWorkText": repetPlan.newworkobj.getCWorkJsonData(), "PWorkText": repetPlan.newworkobj.getPWorkJsonData(), "HWorkText": repetPlan.newworkobj.getHWorkJsonData() });
+         
         json += '&' + $('#form1').serialize();
         $.ajax({
             type: 'post',
@@ -108,11 +98,11 @@
                         $("#tab_list").datagrid("reload");
                         $("#edit").dialog("close");
                     }
-                    $("#btn_finish").linkbutton("enable");
+                    $("#btn_add").linkbutton("enable");
                 });
             },
             error: function (xhr, err) {
-                $("#btn_finish").linkbutton("enable");
+                $("#btn_add").linkbutton("enable");
                 $.messager.alert('提示', '系统繁忙，请稍后再试！', 'info');
             }
         });
@@ -175,11 +165,11 @@
                    <tr>
                                 <th class="formTitle">实际起飞时间</th>
                                 <td class="formValue">
-                                    <input id="SOBT" name="SOBT" editable="false" class="easyui-datetimebox" style="height: 25px;width:200px" />
+                                    <input id="ActualStartTime" name="ActualStartTime" editable="false" required="true" class="easyui-datetimebox" style="height: 25px;width:200px" />
                                 </td>
                                 <th class="formTitle">实际落地时间</th>
                                 <td class="formValue">
-                                    <input id="SIBT" name="SIBT" editable="false" class="easyui-datetimebox" style="height: 25px;width:200px" />
+                                    <input id="ActualEndTime" name="ActualEndTime" editable="false" required="true" class="easyui-datetimebox" style="height: 25px;width:200px" />
                                 </td>
                             </tr>
                             <tr>
@@ -190,14 +180,6 @@
                             </tr>
 
                             <tr>
-                                <th class="formTitle">航线及作业区</th>
-                                <td class="formValue" colspan="3">
-                                    <input id="MasterIDs" name="MasterIDs" editable="false" class="easyui-combobox" data-options="method:'get',multiple:true,valueField:'id',textField:'text',panelHeight:'auto'
-                                ,panelMaxHeight:200"
-                                        style="height: 25px; width: 600px;" />
-                                </td>
-                            </tr>
-                            <tr style="display:none;">
                                 <th style="padding-top: 5px; width: 50px">航线
                                 </th>
                                 <td colspan="3">
@@ -233,7 +215,7 @@
                                     <a id="airline-MinusCol" class="easyui-linkbutton" style="margin-top: 20px;">删除列</a>
                                 </td>
                             </tr>
-                            <tr style="padding: 2px;display:none;">
+                            <tr style="padding: 2px;">
                                 <th  style="padding-top: 5px;">作业区
                                 </th>
                                 <td colspan="3">

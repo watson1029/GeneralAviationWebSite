@@ -229,7 +229,19 @@ namespace DAL.FlightPlan
             context.Configuration.ValidateOnSaveEnabled = false;
             context.SaveChanges();
         }
+        public void UpdateCurrentFlightPlan(WorkflowPlan plan)
+        {
+            var entity = new Model.EF.CurrentFlightPlan() { ActorName = plan.ActorName, PlanState = plan.PlanState, CurrentFlightPlanID = plan.PlanID };
 
+            var entry = context.Entry(entity);
+            entry.State = EntityState.Unchanged;
+            foreach (string propertyName in new string[] { "ActorName", "PlanState" })
+            {
+                entry.Property(propertyName).IsModified = true;
+            }
+            context.Configuration.ValidateOnSaveEnabled = false;
+            context.SaveChanges();
+        }
         /// <summary>
         /// 审核不通过(服务站)
         /// </summary>

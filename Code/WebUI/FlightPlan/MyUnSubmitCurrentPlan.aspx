@@ -37,7 +37,7 @@
                 $('#tab_list').datagrid({
                     title: '列表', //表格标题
                     url: location.href, //请求数据的页面
-                    sortName: 'CurrentPlanID', //排序字段
+                    sortName: 'CurrentFlightPlanID', //排序字段
                     idField: 'CurrentFlightPlanID', //标识字段,主键
                     iconCls: '', //标题左边的图标
                     width: '99%', //宽度
@@ -53,7 +53,7 @@
                     ]],
                     columns: [[
                          { title: '公司名称', field: 'CompanyName', width: 200 },
-                        { title: '长期计划编号', field: 'Code', width: 200 },
+                        //{ title: '长期计划编号', field: 'Code', width: 200 },
                         { title: '任务类型', field: 'FlightType', width: 80 },
                         { title: '航班号', field: 'CallSign', width: 80 },
                         { title: '使用机型', field: 'AircraftType', width: 80 },
@@ -62,29 +62,35 @@
                         { title: '应答机编码', field: 'SsrCode', width: 80 },
                         { title: '航空器数量', field: 'AircraftNum', width: 80 },
                         {
-                            title: '实际起飞时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
-                                var timesstamp = new Date(value.dateValFormat());
-                                return timesstamp.format("yyyy-MM-dd HH:mm:ss");
+                            title: '实际起飞时间', field: 'ActualStartTime', width: 120, formatter: function (value, rec, index) {
+                                if (value) {
+                                    var timesstamp = new Date(value.dateValFormat());
+                                    return timesstamp.format("yyyy-MM-dd HH:mm:ss");
+                                }
+                                else return "";
 
                             }
                         },
                           {
-                              title: '实际降落时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
+                              title: '实际降落时间', field: 'ActualEndTime', width: 120, formatter: function (value, rec, index) {
+                                  if (value) {
                                   var timesstamp = new Date(value.dateValFormat());
                                   return timesstamp.format("yyyy-MM-dd HH:mm:ss");
+                                  }
+                                  else return "";
 
                               }
                           },
                              //{ title: '机场及起降点', field: 'AirportText', width: 200 },
                           //{ title: '航线及作业区', field: 'AirlineWorkText', width: 200 },
-                        { title: '创建人', field: 'CreatorName1', width: 80 },
+                        { title: '创建人', field: 'CreatorName', width: 80 },
              
                           { title: '其他需要说明的事项', field: 'Remark', width: 150 },
 
                         { title: '状态', field: 'PlanState', formatter: function (value, rec, index) { return value == 0 ? '草稿中' : '' }, width: 50 },
                         {
-                            title: '操作', field: 'FlightPlanID1', width: 80, formatter: function (value, rec) {
-                                var str ="<a style=\"color:red\" id=\"sub-btn_'" + value + "'\" href=\"javascript:;\" onclick=\"Main.Edit('" + value + "');$(this).parent().click();return false;\">补充</a>";
+                            title: '操作', field: 'CurrentFlightPlanID', width: 80, formatter: function (value, rec) {
+                                var str = "<a style=\"color:red\" id=\"sub-btn_'" + value + "'\" href=\"javascript:;\" onclick=\"Main.Edit('" + value + "');$(this).parent().click();return false;\">编辑</a>&nbsp;&nbsp;<a style=\"color:red\" id=\"sub-btn_'" + value + "'\" href=\"javascript:;\" onclick=\"Main.Submit('" + value + "');$(this).parent().click();return false;\">提交</a>";
                                 return str;
                             }
                         }
@@ -96,7 +102,7 @@
                     pageSize: 10, //默认一页数据条数
                     rownumbers: true, //行号
                     onClickRow: function (index, row) {
-                        var keyValue = row["CurrentPlanID"];
+                        var keyValue = row["CurrentFlightPlanID"];
                        // zhccMap.addFlyPlan(keyValue);
                     }
                 });
@@ -117,12 +123,11 @@
             //打开添加窗口
             OpenWin: function () {
                 $("#edit").dialog("open").dialog('setTitle', '新增起飞申请').dialog('refresh', 'MyUnSubmitCurrentPlanAdd.aspx');
-                $("#btn_add").attr("onclick", "Main.Save();");
+                $("#btn_add").attr("onclick", "submitForm();");
             },
             Edit: function (uid) {
-                $("#form1").form('clear');
-                $("#edit").dialog("open").dialog('setTitle', '补充数据');
-                $("#btn_add").attr("onclick", "Main.Submit('" + uid + "');")
+                $("#edit").dialog("open").dialog('setTitle', '编辑飞行计划').dialog('refresh', 'MyUnSubmitCurrentPlanAdd.aspx?id=' + uid);
+                $("#btn_add").attr("onclick", "submitForm();")
             },
             Submit: function (uid)
             {
@@ -144,7 +149,7 @@
             }
         };
     </script>
-    <div id="edit" class="easyui-dialog" style="width: 600px; height: 300px;"
+    <div id="edit" class="easyui-dialog" style="width: 1100px; height: 600px;"
         modal="true" closed="true" buttons="#edit-buttons">
           <%--<form id="form1"  method="post">
           <table class="table_edit">
