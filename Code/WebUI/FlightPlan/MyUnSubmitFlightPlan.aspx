@@ -195,12 +195,10 @@
                                 if (data.isSuccess) {
                                     $("#tab_list").datagrid("reload");
                                 }
-                            });
-             
+                            });          
                         });
                     }
                 });
-
             },
             FunSearchData: function () {
                 $('#tab_list').datagrid({

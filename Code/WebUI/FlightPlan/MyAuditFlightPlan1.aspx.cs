@@ -14,6 +14,8 @@ using Untity;
 
 public partial class FlightPlan_MyAuditFlightPlan1 : BasePage
 {
+    WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
+    CurrentPlanBLL currPlanBll = new CurrentPlanBLL();
     FlightPlanBLL bll = new FlightPlanBLL();
     WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
     protected void Page_Load(object sender, EventArgs e)
@@ -71,6 +73,7 @@ public partial class FlightPlan_MyAuditFlightPlan1 : BasePage
     /// 
     private Expression<Func<FlightPlan, bool>> GetWhere()
     {
+
         var rolename = string.Join(",", User.RoleName);
         Expression<Func<FlightPlan, bool>> predicate = PredicateBuilder.True<FlightPlan>();
         predicate = predicate.And(m => m.PlanState != "end" && m.PlanState != "0" && m.PlanState != "Deserted");
@@ -101,22 +104,42 @@ public partial class FlightPlan_MyAuditFlightPlan1 : BasePage
         result.IsSuccess = false;
         result.Msg = "提交失败！";
         var planid = Guid.Parse(Request.Form["id"]);
-        string ControlDep = "";
-        if (Request.Form["Auditresult"] == "0")
+        var plan = bll.Get(planid);
+        if (plan != null)
         {
-            if (!string.IsNullOrEmpty(Request.Form["ControlDep"]))
+        var ControlDep = "";
+            if (Request.Form["Auditresult"] == "0")
             {
-                ControlDep = Request.Form["ControlDep"];
+                if (!string.IsNullOrEmpty(Request.Form["ControlDep"]))
+                {
+                    ControlDep = Request.Form["ControlDep"];
+                }
+                insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan, User.ID, User.UserName, User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan, ControlDep);
+                var plan1 = bll.Get(planid);
+                if (plan1 != null && plan1.PlanState == "end")
+                {
+                    #region 飞行计划审核完成后直接转到明天的当日动态，并提交
+                    var entity = new CurrentFlightPlan();
+                    entity.FillObject(plan);
+                    entity.CurrentFlightPlanID = Guid.NewGuid();
+                    entity.PlanState = "0";
+                    entity.CreateTime = DateTime.Now.Date.AddDays(1);
+                    if (currPlanBll.Add(entity))
+                    {
+                        wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, entity.Creator, entity.CreatorName);
+                        insdal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, entity.Creator, entity.CreatorName, "", "", insdal.UpdateCurrentFlightPlan);
+                    }
+                    #endregion
+                }
             }
-            insdal.Submit(planid, (int)TWFTypeEnum.FlightPlan, User.ID, User.UserName, User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan, ControlDep);
-        }
-        else
+            
+            else
         {
             insdal.Terminate(planid, (int)TWFTypeEnum.FlightPlan, User.ID, User.UserName, User.RoleName.First(), Request.Form["AuditComment"] ?? "", insdal.UpdateFlightPlan);
         }
         result.IsSuccess = true;
         result.Msg = "提交成功！";
-
+        }
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";

@@ -1,8 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="FlightPlanSubmitDetail.aspx.cs" Inherits="FlightPlan_FlightPlanSubmitDetail" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="CurrentFlightPlanSubmitDetail.aspx.cs" Inherits="FlightPlan_CurrentFlightPlanSubmitDetail" %>
 <script src="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.js")%>" type="text/javascript"></script>
 <link href="<%=Page.ResolveUrl("~/Content/JS/wizard/wizard.css?v=1.3")%>" rel="stylesheet" type="text/css" />
-
 
 <script>
     $(function () {
@@ -10,7 +8,7 @@
         var pid = '<%=Request.QueryString["id"] %>';
         if (!!pid) {
             $.ajax({
-                url: "MySubmitFlightPlan.aspx",
+                url: "MySubmitCurrentPlan.aspx",
                 data: { id: pid,"action": "queryone" },
                 type:'post',
                 dataType: "json",
@@ -79,14 +77,14 @@
                                 <td class="formValue">
                                   <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
-                                        required="true" class="easyui-combobox" style="height: 25px" />
+                                        class="easyui-combobox" style="height: 25px" />
                                 </td>
                                 <th class="formTitle">使用机型</th>
                                 <td class="formValue">
-                                    <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="AircraftType" name="AircraftType" maxlength="50"  class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
-                               <tr>
+                                <tr>
                                 <th class="formTitle">航班号</th>
                                 <td class="formValue">
                                     <input id="CallSign" name="CallSign" maxlength="50"  class="easyui-textbox" style="height: 25px" />
@@ -97,27 +95,27 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="formTitle">预计起飞时间</th>
+                                <th class="formTitle">实际起飞时间</th>
                                 <td class="formValue">
-                                   <input id="SOBT" name="SOBT" editable="false" required="true" class="easyui-datebox" style="height: 25px" />
+                                   <input id="ActualStartTime" name="ActualStartTime" editable="false"  class="easyui-datebox" style="height: 25px" />
                                 </td>
-                                <th class="formTitle">预计落地时间</th>
+                                <th class="formTitle">实际降落时间</th>
                                 <td class="formValue">
-                                    <input id="SIBT" name="SIBT" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height: 25px" />
+                                    <input id="ActualEndTime" name="ActualEndTime" editable="false"  class="easyui-datebox"  style="height: 25px" />
                                 </td>
                             </tr>
                             <tr>
                             <th class="formTitle">起飞机场</th>
                                 <td class="formValue">
-                                    <input id="ADEP" name="ADEP" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="ADEP" name="ADEP" maxlength="50" class="easyui-textbox" style="height: 25px" />
                                 </td>
                                          <th class="formTitle">目的地机场</th>
                                 <td class="formValue">
-                                    <input id="ADES" name="ADES" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                                    <input id="ADES" name="ADES" maxlength="50"  class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
-                            <tr>
-        
+                            
+                            
                             <tr>
                                 <th class="formTitle" style="padding-top: 5px;">
                                     航线及作业区
@@ -191,3 +189,4 @@
                <a id="btn_last" href="javascript:void(0);" disabled class="btn-prev easyui-linkbutton">上一步</a>
                 <a id="btn_next" href="javascript:void(0);" class="btn-next easyui-linkbutton">下一步</a>
         </div>
+

@@ -144,7 +144,7 @@ public partial class FlightPlan_MyUnSubmitFlightPlan : BasePage
         var planid = Guid.Parse(Request.Form["id"]);
         if (insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.FlightPlan).Count > 0)
         {
-            result.Msg = "一条长期计划无法创建两条申请流程，请联系管理员！";
+            result.Msg = "一条飞行计划无法创建两条申请流程，请联系管理员！";
         }
         else
         {

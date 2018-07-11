@@ -36,7 +36,7 @@
                                 <td class="formValue" style="color:red">
                                     <span id="name"></span>
                                 </td>  
-                                 <th class="formTitle">临专号</th>
+                                 <th class="formTitle">长期计划编号</th>
                         <td class="formValue" style="color:red">
                             <span id="code"></span>
                         </td>

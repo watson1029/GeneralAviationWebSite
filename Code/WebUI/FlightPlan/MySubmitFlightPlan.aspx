@@ -21,7 +21,7 @@
                 <input id="ssPlanCode" name="ssPlanCode"  type="hidden" value=""/>
                         <div id="search_menu" style="width: 200px">
                             <div name="PlanCode">
-                                临专号
+                                长期计划编号
                             </div>
                         </div>
 </div>

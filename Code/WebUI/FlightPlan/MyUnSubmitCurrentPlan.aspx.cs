@@ -20,6 +20,8 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
 {
     CurrentPlanBLL currPlanBll = new CurrentPlanBLL();
     RepetitivePlanBLL rpbll = new RepetitivePlanBLL();
+    WorkflowTemplateBLL wftbll = new WorkflowTemplateBLL();
+    WorkflowNodeInstanceDAL insdal = new WorkflowNodeInstanceDAL();
     public override string PageRightCode
     {
         get
@@ -45,36 +47,95 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
                 case "submit":
                     Submit();
                     break;
+                case "save":
+                    Save();
+                    break;
                 default:
                     break;
             }
         }
     }
+    private void Save()
+    {
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "保存失败！";
 
+        CurrentFlightPlan entity = null;
+        var airlineworkText = "";
+        if (string.IsNullOrEmpty(Request.Form["id"]))//新增
+        {
+            entity = new CurrentFlightPlan();
+
+            entity.GetEntitySearchPars<CurrentFlightPlan>(this.Context);
+            //entity.SOBT = entity.SOBT.AddDays(1);
+            //entity.SIBT = entity.SIBT.AddDays(1);
+            entity.CurrentFlightPlanID = Guid.NewGuid();
+            entity.PlanState = "0";
+            entity.CompanyCode3 = User.CompanyCode3 ?? "";
+            entity.CompanyName = User.CompanyName;
+            entity.Creator = User.ID;
+            entity.CreatorName = User.UserName;
+            entity.ActorID = User.ID;
+            entity.CreateTime = DateTime.Now;
+            currPlanBll.AddCurrentPlanTempOther(Request.Form["AirlineText"], Request.Form["CWorkText"], Request.Form["PWorkText"], Request.Form["HWorkText"], entity.CurrentFlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+
+            entity.AirlineWorkText = airlineworkText;
+            if (currPlanBll.Add(entity))
+            {
+                result.IsSuccess = true;
+                result.Msg = "增加成功！";
+            }
+        }
+        else//编辑
+        {
+            entity = currPlanBll.GetCurrentFlightPlan(Guid.Parse(Request.Form["id"]));
+            if (entity != null)
+            {
+                entity.GetEntitySearchPars<CurrentFlightPlan>(this.Context);
+
+                currPlanBll.AddCurrentPlanTempOther(Request.Form["AirlineText"], Request.Form["CWorkText"], Request.Form["PWorkText"], Request.Form["HWorkText"], entity.FlightPlanID.ToString(), Request.Form["id"], ref airlineworkText);
+
+                entity.AirlineWorkText = airlineworkText;
+                if (currPlanBll.Update(entity))
+                {
+                    result.IsSuccess = true;
+                    result.Msg = "更新成功！";
+                }
+            }
+        }
+
+        Response.Clear();
+        Response.Write(result.ToJsonString());
+        Response.ContentType = "application/json";
+        Response.End();
+    }
     private void Submit()
     {
-        AjaxResult result = new AjaxResult();        
+        AjaxResult result = new AjaxResult();
+        result.IsSuccess = false;
+        result.Msg = "提交失败！";
         var planid = Guid.Parse(Request.Form["id"]);
-
-        try
+        if (insdal.GetAllNodeInstance(planid, (int)TWFTypeEnum.CurrentPlan).Count > 0)
         {
-            CurrentFlightPlanVM model = new CurrentFlightPlanVM() {
-                AircraftNum=int.Parse(Request.Form["AircraftNum"]),
-                //ContractWay= Request.Form["ContractWay"],
-                //Pilot = Request.Form["Pilot"],
-                ActualStartTime =DateTime.Parse(Request.Form["ActualStartTime"]),
-                ActualEndTime = DateTime.Parse(Request.Form["ActualEndTime"])
-            };
-            currPlanBll.Submit(planid,User.ID,User.UserName, User.RoleName.First(), model);
-            result.IsSuccess = true;
-            result.Msg = "提交成功！";
+            result.Msg = "一条飞行动态法创建两条申请流程，请联系管理员！";
         }
-        catch(Exception ex) 
+        else
         {
-            result.IsSuccess = false;
-            result.Msg = "提交失败！"+ex.Message; 
-        }
+            try
+            {
+                wftbll.CreateWorkflowInstance((int)TWFTypeEnum.CurrentPlan, planid, User.ID, User.UserName);
+                insdal.Submit(planid, (int)TWFTypeEnum.CurrentPlan, User.ID, User.UserName, User.RoleName.First(), "", insdal.UpdateCurrentFlightPlan);
 
+                result.IsSuccess = true;
+                result.Msg = "提交成功！";
+            }
+            catch (Exception e)
+            {
+                result.IsSuccess = false;
+                result.Msg = "提交失败！";
+            }
+        }
         Response.Clear();
         Response.Write(result.ToJsonString());
         Response.ContentType = "application/json";
@@ -135,7 +196,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
     {
         var planid = Request.Form["id"];
         CurrentFlightPlanVM model = new CurrentFlightPlanVM();
-        var data = currPlanBll.Get(Guid.Parse(planid));
+        var data = currPlanBll.GetCurrentFlightPlan(Guid.Parse(planid));
         if (data != null)
         {
             model.FillObject(data);
@@ -224,7 +285,7 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
         int rowCount = 0;
         string orderField = sort.Replace("JSON_", "");
         var strWhere = GetWhere();
-        var pageList = new List<vCurrentPlan>();
+        var pageList = new List<CurrentFlightPlan>();
         try
         {
             pageList=currPlanBll.GetList(page, size, out pageCount, out rowCount, strWhere);
@@ -244,13 +305,15 @@ public partial class FlightPlan_MyUnSubmitCurrentPlan : BasePage
     /// 组合搜索条件
     /// </summary>
     /// <returns></returns>
-    private Expression<Func<vCurrentPlan, bool>> GetWhere()
+    private Expression<Func<CurrentFlightPlan, bool>> GetWhere()
     {
-        Expression<Func<vCurrentPlan, bool>> predicate = PredicateBuilder.True<vCurrentPlan>();
+        Expression<Func<CurrentFlightPlan, bool>> predicate = PredicateBuilder.True<CurrentFlightPlan>();
         try
-        {            
-            var currDate = DateTime.Now.Date;
-            predicate = predicate.And(m => m.CurrentFlightPlanID == null && DbFunctions.TruncateTime(m.SOBT) == currDate&&m.Creator1 == User.ID);
+        {
+            predicate = predicate.And(m => m.PlanState == "0");
+            predicate = predicate.And(m => m.Creator == User.ID);
+            //var currDate = DateTime.Now.Date;
+            //predicate = predicate.And(m => m.CurrentFlightPlanID == null && DbFunctions.TruncateTime(m.SOBT) == currDate&&m.Creator == User.ID);
 
             if (!string.IsNullOrEmpty(Request.Form["search_type"]) && !string.IsNullOrEmpty(Request.Form["search_value"]))
             {
