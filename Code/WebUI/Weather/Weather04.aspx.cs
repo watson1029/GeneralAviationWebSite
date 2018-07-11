@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -9,8 +10,13 @@ using System.Web.UI.WebControls;
 
 public partial class Weather_Weather04 : System.Web.UI.Page
 {
+    public int interval = 300000;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (ConfigurationManager.AppSettings["interval"] != null)
+        {
+            interval = Convert.ToInt32(ConfigurationManager.AppSettings["interval"]);
+        }
         string code = "57083";
         string city = "zhengzhou";
         if (Request.QueryString["code"] != null && Request.QueryString["city"] != null)
@@ -86,7 +92,7 @@ public partial class Weather_Weather04 : System.Web.UI.Page
             str = str.Replace("/publish/forecast/china.html", "javascript:void();");
             str = str.Replace("/publish/forecast/AHA.html", "javascript:void();");
             str = str.Replace("http://image.nmc.cn/static2/site/nmc/themes/basic/js/weather_chart.js?v=2017112220180325", "weather_chart.js");
-            str = str.Replace("initReal('" + code + "');", "initReal('" + json_real + "');");
+            str = str.Replace("initReal('" + code + "');", "document.title = '河南通航飞行服务站'; initReal('" + json_real.Replace(@"\r\n", "") + "');");
             str = str.Replace("initAqi('" + code + "');", "initAqi('" + json_aqi + "');");
             str = str.Replace("drawTemperature('" + code + "');", "drawTemperature('" + json_tempchart + "'); json_passed='" + json_passed + "';");
             Response.Write(str);

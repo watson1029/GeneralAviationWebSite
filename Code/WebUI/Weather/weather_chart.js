@@ -569,7 +569,7 @@ function initAqi(stationcode) {
     //    dataType: 'json',
     //    cache: false,
     //    success: function (data) {
-            if (data.aq) {
+            if (data.aq && data.aq <=6 ) {
                 $('#aqi').html('<span style="color:' + AQIDICT[data.aq].border + '">' + AQIDICT[data.aq].level + '</span>');
             } else {
                 $('#aqi').html('-');
