@@ -12,5 +12,10 @@
         <div>
         </div>
     </form>
+    <script type="text/javascript">
+        setTimeout(function () {
+            window.location = window.location;
+        }, <%=interval%>);
+    </script>
 </body>
 </html>
