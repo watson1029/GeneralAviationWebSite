@@ -28,7 +28,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">基础信息</h3>
                     </div>
-                    <div class="panel-body" style="width: 96%;">
+                    <div class="panel-body" style="width: 100%;">
                         <table class="form">
                             <tr>
                              
@@ -97,7 +97,7 @@
                                     其他说明的事项
                                 </th>
                                 <td class="formValue" colspan="3">
-                          <input id="Remark" name="Remark" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                          <input id="Remark" name="Remark" style="width: 800px; height: 100px" type="text" data-options="multiline:true" class="easyui-textbox" />
                                 </td>
                             </tr>
                               <tr>
@@ -116,7 +116,7 @@
                                     审核意见
                                 </th>
                                 <td class="formValue">
-                           <input id="AuditComment" name="AuditComment" required="true" maxlength="400" style="width: 600px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                           <input id="AuditComment" name="AuditComment" maxlength="400" style="width: 800px; height: 100px" type="text" data-options="multiline:true" class="easyui-textbox" />
                                 </td>
                             </tr>
                         </table>

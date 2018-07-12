@@ -34,7 +34,7 @@
       $(function () {
           Main.InitGird();
           Main.InitSearch();
-          //  baiduMap.init();
+          baiduMap.init();
           //$(".fadediv").fadeToggle();
           //$(".fade").click(function () {
           //    $(".fadediv").fadeToggle();
@@ -67,7 +67,20 @@
                         { title: '使用机型', field: 'AircraftType', width: 80 },
                         { title: '起飞机场', field: 'ADEP', width: 80 },
                         { title: '降落机场', field: 'ADES', width: 80 },
-                        { title: '应答机编码', field: 'SsrCode', width: 80 },
+                      { title: '应答机编码', field: 'SsrCode', width: 80 },
+                                title: '预计起飞时间', field: 'SOBT', width: 120, formatter: function (value, rec, index) {
+                                       var timesstamp = new Date(value.dateValFormat());
+                                       return timesstamp.format("yyyy-MM-dd HH:mm:ss");
+
+                                   }
+                          },
+                          {
+                              title: '预计落地时间', field: 'SIBT', width: 120, formatter: function (value, rec, index) {
+                                              var timesstamp = new Date(value.dateValFormat());
+                                              return timesstamp.format("yyyy-MM-dd HH:mm:ss");
+
+                                          }
+                            },
                         { title: '创建人', field: 'CreatorName', width: 80 },
                         {
                             title: '创建时间', field: 'CreateTime', width: 120, formatter: function (value, rec, index) {

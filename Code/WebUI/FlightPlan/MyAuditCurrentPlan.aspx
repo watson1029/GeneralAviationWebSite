@@ -98,8 +98,8 @@
                     pageSize: 10, //默认一页数据条数
                     rownumbers: true, //行号
                     onClickRow: function (index, row) {
-                        var keyValue = row["FlightPlanID"];
-                        zhccMap.addFlyPlan(keyValue);
+                        var keyValue = row["CurrentFlightPlanID"];
+                        zhccMap.addCurrentPlan(keyValue);
                     }
                 });
             },

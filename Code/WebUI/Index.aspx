@@ -12,6 +12,13 @@
     <script src="<%=Page.ResolveUrl("~/")%>Content/JS/wikmain.js" type="text/javascript"></script>
     <link href="<%=Page.ResolveUrl("~/")%>Content/css/default.css" rel="stylesheet" type="text/css" />
     <link href="<%=Page.ResolveUrl("~/")%>css/indexstatics.css" rel="stylesheet" type="text/css" />
+    <link href="Content/Css/jBox.css" rel="stylesheet" />
+    <link href="Content/Css/jBox.Notice.css" rel="stylesheet" />
+    <link href="Content/Css/jBox.NoticeFancy.css" rel="stylesheet" />
+    <script src="Content/JS/jbox/jBox.min.js"></script>
+    <script src="Content/JS/jbox/jBox.Notice.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="signalr/hubs"></script>
     <script type="text/javascript">
         //获取左侧导航的图标
         function getIcon(menuid) {
@@ -114,6 +121,40 @@
 
         $(function () {
             InitLeftMenu();
+            // 定义noticeHub对象
+            var hub = $.connection.noticeHub;
+            // 连接noticeHub对象
+            $.connection.hub.start().done(function () {
+                hub.server.noticeLogin();
+            });
+            // 定义sendNotice_callback回调函数
+            hub.client.sendNotice_callback = function (type, notice) {
+                new jBox('Notice', {
+                    theme: 'NoticeFancy',
+                    attributes: {
+                        x: 'right',
+                        y: 'bottom'
+                    },
+                    color: 'red',
+                    content: notice,
+                    title: '待办事项提醒',
+                    maxWidth: 600,
+                    audio: '~/Content/js/jbox/bling2',
+                    volume: 80,
+                    autoClose: false,
+                    animation: 'tada',
+                    onClose: function () {
+                        $(".easyui-accordion1 li a", window.top.document).each(function (i) {
+                            var rel = $(this).attr("rel");
+                            console.log(rel);
+                            if (rel.indexOf(type) > -1) {
+                                $(this)[0].click();
+                                return;
+                            }
+                        });
+                    }
+                });
+            }
             //GetUserData();
             $('#loginOut').click(function () {
                 $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function (r) {

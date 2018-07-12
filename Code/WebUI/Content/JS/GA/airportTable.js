@@ -21,7 +21,7 @@
         addAirportRow: function () {
             if (this.rowIndex < this.maxRowCount) {
                 this.rowIndex++;
-                j("#" + this.conid).append("<tr><td class=\"formValue\"><input id='AirportName" + this.rowIndex + "'  name='AirportName" + this.rowIndex + "'  type=\"text\" required=\"true\" maxlength=\"50\" style=\"height: 25px;width:200px\"/></td><td class=\"formValue\"><input id='CodeF" + this.rowIndex + "' name='CodeF" + this.rowIndex + "'  type=\"text\" maxlength=\"50\"  style=\"height: 25px;width:200px\"/></td><td class=\"formValue\"><input id='LatLong" + this.rowIndex + "' name='LatLong" + this.rowIndex + "'  type=\"text\" maxlength=\"50\" style=\"height: 25px;width:200px\"/></td></tr>");
+                j("#" + this.conid).append("<tr><td class=\"formValue\"><input id='AirportName" + this.rowIndex + "'  name='AirportName" + this.rowIndex + "'  type=\"text\" required=\"true\" maxlength=\"50\" style=\"height: 25px;width:200px\"/></td><td class=\"formValue\"><input id='CodeF" + this.rowIndex + "' name='CodeF" + this.rowIndex + "'  type=\"text\" maxlength=\"4\"  style=\"height: 25px;width:200px\"/></td><td class=\"formValue\"><input id='LatLong" + this.rowIndex + "' name='LatLong" + this.rowIndex + "'  type=\"text\" maxlength=\"50\" style=\"height: 25px;width:200px\"/></td></tr>");
             }
             else {
                 $.modalAlert('行数不能超过' + this.maxRowCount, 'warning');

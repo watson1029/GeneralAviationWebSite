@@ -51,13 +51,13 @@
                             <tr>
                                 <th class="formTitle">任务类型</th>
                                 <td class="formValue">
-                                    <input id="FlightType" name="FlightType" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
+                                    <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
                                         required="true" class="easyui-combobox" style="width: 250px" />
                                 </td>
                                 <th class="formTitle">使用机型</th>
                                 <td class="formValue">
-                                    <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="width: 250px" />
+                                    <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="width: 250px" data-options="validType:'length[0,50]'" />
                                 </td>
 
                             </tr>
@@ -75,11 +75,13 @@
                              <tr>
                                 <th class="formTitle">航空器数目</th>
                                 <td class="formValue">
-                              <input id="AircraftNum" name="AircraftNum" maxlength="50" class="easyui-textbox" style="width: 250px" />
+                              <input id="AircraftNum" name="AircraftNum" maxlength="50" class="easyui-textbox" style="width: 250px" data-options="validType:'length[0,50]'" 
+
+ />
                                 </td>
                                 <th class="formTitle">注册号</th>
                                 <td class="formValue">
-                                    <input id="CallSign" name="CallSign" maxlength="50" class="easyui-textbox" style="width: 250px" />
+                                    <input id="CallSign" name="CallSign" maxlength="50" class="easyui-textbox" style="width: 250px" data-options="validType:'length[0,50]'" />
                                 </td>
                             </tr>
                             <tr>
@@ -111,7 +113,7 @@
                                                 <td class="formValue">
                                                     <input id="AirportName1" name="AirportName1" required="true"  type="text" maxlength="50" style="height: 25px;width:200px" /></td>
                                                 <td class="formValue">
-                                                    <input id="CodeF1" name="CodeF1" maxlength="50" type="text" style="height: 25px;width:200px" /></td>
+                                                    <input id="CodeF1" name="CodeF1" maxlength="4" type="text" style="height: 25px;width:200px" /></td>
                                                 <td class="formValue">
                                                     <input id="LatLong1" name="LatLong1" maxlength="50" type="text" style="height: 25px;width:200px" /></td>
                                             </tr>

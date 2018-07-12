@@ -40,5 +40,6 @@ namespace Model.EF
         public string AirlineWorkText { get; set; }
         public string CompanyCode3 { get; set; }
         public string CompanyName { get; set; }
+        public string Remark { get; set; }
     }
 }

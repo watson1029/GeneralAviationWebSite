@@ -41,7 +41,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">基础信息</h3>
                     </div>
-                    <div class="panel-body" style="width: 96%;">
+                    <div class="panel-body" style="width: 100%;">
                         <table class="form">
                             <tr>
                              

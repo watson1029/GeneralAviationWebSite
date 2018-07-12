@@ -58,7 +58,7 @@
                       { title: '公司名称', field: 'CompanyName', width: 180 },
                         { title: '任务类型', field: 'FlightType', width: 70 },
                         { title: '使用机型', field: 'AircraftType', width: 100 },
-                            { title: '航空器数目', field: 'AircraftNum', width: 100 },
+                        { title: '航空器数目', field: 'AircraftNum', width: 100 },
                         { title: '注册号', field: 'CallSign', width: 100 },
                         {
                             title: '预计开始时间', field: 'StartDate', width: 100, formatter: function (value, rec, index) {

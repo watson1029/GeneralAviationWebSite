@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
     <link href="../css/fademap.css" rel="stylesheet" type="text/css" />
-  <%-- <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>--%>
+    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
    <%-- <div class="gridsearch">
@@ -36,7 +36,7 @@
       $(function () {
             Main.InitGird();
             Main.InitSearch();
-          //  baiduMap.init();
+            baiduMap.init();
             //$(".fadediv").fadeToggle();
             //$(".fade").click(function () {
             //    $(".fadediv").fadeToggle();
@@ -123,7 +123,7 @@
                     rownumbers: true, //行号
                     onClickRow: function (index, row) {
                         var keyValue = row["RepetPlanID"];
-                      //  zhccMap.addRepetPlan(keyValue);
+                        zhccMap.addRepetPlan(keyValue);
                     }
                 });
             },

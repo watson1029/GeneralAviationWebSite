@@ -29,31 +29,19 @@
 
     <script>
         $(function () {
-            var json = '<%=GetUserDataJson()%>';
-            var html = '';
-            $.each($.parseJSON(json), function (i, n) {
-                switch (n.MenuName) {
-                    case "待提交长期计划":
-                        html += '<a class="button button-glow button-border button-rounded button-primary" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待提交的长期计划</a>';
-                        break;
-                    case "待审核长期计划":
-                        html += '<a class="button button-glow button-border button-rounded button-caution" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待审核的长期计划</a>';
-                        break;
-                    case "待提交飞行计划":
-                        html += '<a class="button button-glow button-border button-rounded button-highlight" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待提交的飞行计划</a>';
-                        break;
-                    case "待审核飞行计划":
-                        html += '<a class="button button-glow button-border button-rounded button-royal" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待审核的飞行计划</a>';
-                        break;
-                    case "待提交当日起飞申请":
-                        html += '<a class="button button-glow button-border button-rounded button-inverse" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待提交的当日动态</a>';
-                        break;
-                    case "待审核当日起飞申请":
-                        html += '<a class="button button-glow button-border button-rounded button-action" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待审核的当日动态</a>';
-                        break;
-                }
+            //设置待办数量
+            SetBackLogNum();
+            // 定义noticeHub对象
+            var hub = $.connection.noticeHub;
+            // 连接noticeHub对象
+            $.connection.hub.start().done(function () {
+                hub.server.noticeLogin();
             });
-            $('#backlog').html(html);
+            // 定义sendChange_callback回调函数
+            hub.client.sendChange_callback = function (type) {
+                // 获取待办数量
+                SetBackLogNum();
+            }
             ReSize();
             $(window).resize(function () {
                 ReSize();
@@ -88,6 +76,34 @@
                 $(this).css("height", setHeight);
                 $(this).css("line-height", setHeight + "px");
             });
+        }
+
+        function SetBackLogNum() {
+            var json = '<%=GetUserDataJson()%>';
+            var html = '';
+            $.each($.parseJSON(json), function (i, n) {
+                switch (n.MenuName) {
+                    case "待提交长期计划":
+                        html += '<a class="button button-glow button-border button-rounded button-primary" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待提交的长期计划</a>';
+                        break;
+                    case "待审核长期计划":
+                        html += '<a class="button button-glow button-border button-rounded button-caution" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待审核的长期计划</a>';
+                        break;
+                    case "待提交飞行计划":
+                        html += '<a class="button button-glow button-border button-rounded button-highlight" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待提交的飞行计划</a>';
+                        break;
+                    case "待审核飞行计划":
+                        html += '<a class="button button-glow button-border button-rounded button-royal" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待审核的飞行计划</a>';
+                        break;
+                    case "待提交当日起飞申请":
+                        html += '<a class="button button-glow button-border button-rounded button-inverse" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待提交的当日动态</a>';
+                        break;
+                    case "待审核当日起飞申请":
+                        html += '<a class="button button-glow button-border button-rounded button-action" data-menucode="' + n.MenuUrl + '"><span></span>' + n.MenuPlanCount + '条待审核的当日动态</a>';
+                        break;
+                }
+            });
+            $('#backlog').html(html);
         }
     </script>
 </head>

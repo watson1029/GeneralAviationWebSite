@@ -46,5 +46,6 @@ namespace Model.EF
         public string AirlineWorkText { get; set; }
         public string AirportText { get; set; }
         public Nullable<int> AircraftNum { get; set; }
+        public string Remark { get; set; }
     }
 }

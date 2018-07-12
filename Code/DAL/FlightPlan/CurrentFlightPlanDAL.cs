@@ -151,5 +151,13 @@ namespace DAL.FlightPlan
             }
             return sum;
         }
+
+        public CurrentFlightPlan GetData(string currentID)
+        {
+            var linq = from t in context.CurrentFlightPlan
+                       where t.CurrentFlightPlanID.ToString() == currentID
+                       select t;
+            return linq.FirstOrDefault();
+        }
     }
 }

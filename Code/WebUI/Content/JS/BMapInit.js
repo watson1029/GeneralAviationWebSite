@@ -252,6 +252,21 @@ zhccMap = {
             }
         });
     },
+    addCurrentPlan: function (data) {
+        $.ajax({
+            url: "/Ajax/Map/GetCurrentPlanData.ashx",
+            type: "get",
+            data: { "keyValue": keyValue },
+            dataType: "json",
+            async: true,
+            error: function (xml, msg) {
+                alert(msg);
+            },
+            success: function (data) {
+                zhccMap.addFeature(data);
+            }
+        });
+    },
     addFeature: function (data) {
         // 移除覆盖物
         baiduMap.removeFeature();

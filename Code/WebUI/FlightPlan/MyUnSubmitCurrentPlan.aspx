@@ -2,7 +2,9 @@
     CodeFile="MyUnSubmitCurrentPlan.aspx.cs" Inherits="FlightPlan_MyUnSubmitCurrentPlan" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
-    <link href="../css/fademap.css" rel="stylesheet" type="text/css" /></asp:Content>
+    <link href="../css/fademap.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/Content/JS/BMapInit.js"></script>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <table id="tab_list">
     </table>
@@ -25,7 +27,7 @@
         $(function () {
             Main.InitGird();
             Main.InitSearch();
-            //    baiduMap.init();
+            baiduMap.init();
             //$(".fadediv").fadeToggle();
             //$(".fade").click(function () {
             //    $(".fadediv").fadeToggle();
@@ -103,7 +105,7 @@
                     rownumbers: true, //行号
                     onClickRow: function (index, row) {
                         var keyValue = row["CurrentFlightPlanID"];
-                       // zhccMap.addFlyPlan(keyValue);
+                        zhccMap.addCurrentPlan(keyValue);
                     }
                 });
             },

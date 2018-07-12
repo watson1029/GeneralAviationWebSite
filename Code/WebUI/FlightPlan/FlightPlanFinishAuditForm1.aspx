@@ -49,42 +49,42 @@
                     <td class="formValue">
                         <input id="FlightType" name="FlightType" editable="false" data-options="url:'GetComboboxData.ashx?type=1',method:'get',valueField:'id',textField:'text',panelHeight:'auto'
                                 ,panelMaxHeight:200"
-                            required="true" class="easyui-combobox" style="height: 25px" />
+                             class="easyui-combobox" style="height: 25px" />
                     </td>
                     <th class="formTitle">使用机型</th>
                     <td class="formValue">
-                        <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                        <input id="AircraftType" name="AircraftType" class="easyui-textbox" style="height: 25px" />
                     </td>
                 </tr>
                 <tr>
                     <th class="formTitle">预计起飞时间</th>
                     <td class="formValue">
-                        <input id="SOBT" name="SOBT" editable="false" required="true" class="easyui-datebox" style="height: 25px" />
+                        <input id="SOBT" name="SOBT" editable="false" class="easyui-datebox" style="height: 25px" />
                     </td>
                     <th class="formTitle">预计落地时间</th>
                     <td class="formValue">
-                        <input id="SIBT" name="SIBT" editable="false" required="true" class="easyui-datebox" validtype="md['#StartDate']" style="height: 25px" />
+                        <input id="SIBT" name="SIBT" editable="false"  class="easyui-datebox"  style="height: 25px" />
                     </td>
                 </tr>
                 <tr>
                     <th class="formTitle">起飞机场</th>
                     <td class="formValue">
-                        <input id="ADEP" name="ADEP" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                        <input id="ADEP" name="ADEP"  class="easyui-textbox" style="height: 25px" />
                     </td>
                     <th class="formTitle">目的地机场</th>
                     <td class="formValue">
-                        <input id="ADES" name="ADES" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                        <input id="ADES" name="ADES"  class="easyui-textbox" style="height: 25px" />
                     </td>
                 </tr>
          
                 <tr>
                     <th class="formTitle">航空器数量</th>
                     <td class="formValue">
-                        <input id="AircraftNum" name="AircraftNum" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                        <input id="AircraftNum" name="AircraftNum" class="easyui-textbox" style="height: 25px" />
                     </td>
                     <th class="formTitle">应答机编码</th>
                     <td class="formValue">
-                        <input id="SsrCode" name="SsrCode" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
+                        <input id="SsrCode" name="SsrCode" class="easyui-textbox" style="height: 25px" />
                     </td>
                 </tr>
                 <tr>
@@ -98,7 +98,7 @@
                     <th class="formTitle" style="padding-top: 5px;">其他说明的事项
                     </th>
                     <td class="formValue" colspan="3">
-                        <input id="Remark" name="Remark" style="width: 800px; height: 150px" type="text" data-options="multiline:true" class="easyui-textbox" />
+                        <input id="Remark" name="Remark" style="width: 800px; height: 100px" type="text" data-options="multiline:true" class="easyui-textbox" />
                     </td>
                 </tr>
                                            <%

@@ -62,7 +62,16 @@
                                     <input id="AircraftType" name="AircraftType" maxlength="50" required="true" class="easyui-textbox" style="height: 25px" />
                                 </td>
                             </tr>
-
+                             <tr>
+                                <th class="formTitle">航空器数目</th>
+                                <td class="formValue">
+                              <input id="AircraftNum" name="AircraftNum" maxlength="50" class="easyui-textbox" />
+                                </td>
+                                <th class="formTitle">注册号</th>
+                                <td class="formValue">
+                                    <input id="CallSign" name="CallSign" maxlength="50" class="easyui-textbox" />
+                                </td>
+                            </tr>
                             <tr>
                                 <th class="formTitle">预计开始日期</th>
                                 <td class="formValue">
